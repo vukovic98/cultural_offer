@@ -4,8 +4,9 @@
 
 <Workspace>
 	<Local Expanded="Yes">
-		<Model Expanded="Yes" ID="{B9B5568F-70E2-45A9-97EF-A1ED198DAB05}" Loaded="No" Name="KST_NVT_CulturalOffers" Selected="Yes" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="KST_NVT_CulturalOffers.oom"/>
-		<Model Expanded="Yes" ID="{B9B5568F-70E2-45A9-97EF-A1ED198DAB05}" Name="KST_NVT_CulturalOffers" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="KST_NVT_CulturalOffers.oom"/>
+		<Model Expanded="Yes" ID="{B9B5568F-70E2-45A9-97EF-A1ED198DAB05}" Loaded="No" Name="KST_NVT_CulturalOffers" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="KST_NVT_CulturalOffers.oom"/>
+		<Model Expanded="Yes" ID="{B9B5568F-70E2-45A9-97EF-A1ED198DAB05}" Loaded="No" Name="KST_NVT_CulturalOffers" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="KST_NVT_CulturalOffers.oom"/>
+		<Model Expanded="Yes" ID="{B9B5568F-70E2-45A9-97EF-A1ED198DAB05}" Name="KST_NVT_CulturalOffers" Selected="Yes" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="KST_NVT_CulturalOffers.oom"/>
 	</Local>
 	<BrowserModule Name="Repository"/>
 </Workspace>
