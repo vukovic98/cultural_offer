@@ -2,14 +2,22 @@ package com.ftn.kts_nvt.beans;
 
 import java.util.ArrayList;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "monument")
 public class Monument extends CulturalOffer {
+	
+	@Column(name = "year", nullable = false)
 	private int year;
 
 	public Monument() {
 		super();
 	}
 
-	public Monument(String name, ArrayList<String> images, String description, int year) {
+	public Monument(String name, ArrayList<Image> images, String description, int year) {
 		super(name, images, description);
 		this.year = year;
 	}
