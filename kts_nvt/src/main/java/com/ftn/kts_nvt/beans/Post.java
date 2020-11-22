@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -26,15 +28,20 @@ public class Post {
 	@Column(name = "post_time", nullable = false)
 	private Instant postTime;
 
+	@ManyToOne
+	@JoinColumn(name = "offer_id")
+	private CulturalOffer offer;
+
 	public Post() {
 		super();
 	}
 
-	public Post(String title, String content, Instant postTime) {
+	public Post(String title, String content, Instant postTime, CulturalOffer offer) {
 		super();
 		this.title = title;
 		this.content = content;
 		this.postTime = postTime;
+		this.offer = offer;
 	}
 
 	public Long getPostId() {
@@ -67,6 +74,14 @@ public class Post {
 
 	public void setPostTime(Instant postTime) {
 		this.postTime = postTime;
+	}
+
+	public CulturalOffer getOffer() {
+		return offer;
+	}
+
+	public void setOffer(CulturalOffer offer) {
+		this.offer = offer;
 	}
 
 }
