@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -26,15 +28,20 @@ public class Comment {
 	@Column(name = "grade", nullable = false)
 	private int grade;
 
+	@ManyToOne
+	@JoinColumn(name = "commenter_id", nullable = false)
+	private RegisteredUser commenter;
+
 	public Comment() {
 		super();
 	}
 
-	public Comment(String content, List<String> images, int grade) {
+	public Comment(String content, List<String> images, int grade, RegisteredUser commenter) {
 		super();
 		this.content = content;
 		this.images = images;
 		this.grade = grade;
+		this.commenter = commenter;
 	}
 
 	public Long getCommentId() {
@@ -67,6 +74,14 @@ public class Comment {
 
 	public void setGrade(int grade) {
 		this.grade = grade;
+	}
+
+	public RegisteredUser getCommenter() {
+		return commenter;
+	}
+
+	public void setCommenter(RegisteredUser commenter) {
+		this.commenter = commenter;
 	}
 
 }
