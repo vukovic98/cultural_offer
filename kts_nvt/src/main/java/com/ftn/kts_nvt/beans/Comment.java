@@ -2,7 +2,9 @@ package com.ftn.kts_nvt.beans;
 
 import java.util.List;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +25,9 @@ public class Comment {
 	@Column(name = "content", nullable = false)
 	private String content;
 
-	private List<String> images;
+	@ElementCollection
+	@CollectionTable(name = "comment_images", joinColumns = @JoinColumn(name = "comment_ID"))
+	private List<Image> images;
 
 	@Column(name = "grade", nullable = false)
 	private int grade;
@@ -36,7 +40,7 @@ public class Comment {
 		super();
 	}
 
-	public Comment(String content, List<String> images, int grade, RegisteredUser commenter) {
+	public Comment(String content, List<Image> images, int grade, RegisteredUser commenter) {
 		super();
 		this.content = content;
 		this.images = images;
@@ -60,11 +64,11 @@ public class Comment {
 		this.content = content;
 	}
 
-	public List<String> getImages() {
+	public List<Image> getImages() {
 		return images;
 	}
 
-	public void setImages(List<String> images) {
+	public void setImages(List<Image> images) {
 		this.images = images;
 	}
 

@@ -4,17 +4,19 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "manifestation")
+@DiscriminatorValue("MANIFESTATION")
 public class Manifestation extends CulturalOffer {
 	
-	@Column(name = "start_date", nullable = false)
+	@Column(name = "start_date")
 	private LocalDate startDate;
 	
-	@Column(name = "end_date", nullable = false)
+	@Column(name = "end_date")
 	private LocalDate endDate;
 
 	public Manifestation() {

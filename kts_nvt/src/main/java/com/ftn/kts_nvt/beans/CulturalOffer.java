@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
@@ -24,8 +25,9 @@ import javax.persistence.ManyToOne;
 @Entity
 @Table(name = "cultural_offer")
 @Embeddable
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class CulturalOffer {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "CulturalOffer_Type")
+public class CulturalOffer {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

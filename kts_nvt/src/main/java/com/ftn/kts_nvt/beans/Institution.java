@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -11,6 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "institution")
+@DiscriminatorValue("INSTITUTION")
 public class Institution extends CulturalOffer {
 	
 	@ElementCollection

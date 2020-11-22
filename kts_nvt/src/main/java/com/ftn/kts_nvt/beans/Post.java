@@ -2,8 +2,10 @@ package com.ftn.kts_nvt.beans;
 
 import java.time.Instant;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +30,7 @@ public class Post {
 	@Column(name = "post_time", nullable = false)
 	private Instant postTime;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "offer_id")
 	private CulturalOffer offer;
 
