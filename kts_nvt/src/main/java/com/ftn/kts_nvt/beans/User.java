@@ -1,11 +1,32 @@
 package com.ftn.kts_nvt.beans;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "user")
 public abstract class User {
-	Long id;
-	String firstName;
-	String lastName;
-	String email;
-	String password;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id")
+	private Long id;
+	
+	@Column(name = "firstName", nullable = false)
+	private String firstName;
+	
+	@Column(name = "lastName", nullable = false)
+	private String lastName;
+	
+	@Column(name = "email", nullable = false)
+    private	String email;
+	
+	@Column(name = "password", nullable = false)
+	private String password;
 
 	public User() {
 
