@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ftn.kts_nvt.services.CommentService;
 
 @RestController
-@RequestMapping("/kts-nvt")
+@RequestMapping("/comment")
 public class CommentController {
 
 	@Autowired

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ftn.kts_nvt.services.PostService;
 
 @RestController
-@RequestMapping("/kts-nvt")
+@RequestMapping("/post")
 public class PostController {
 
 	@Autowired

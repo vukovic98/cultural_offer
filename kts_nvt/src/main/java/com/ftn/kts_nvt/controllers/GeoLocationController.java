@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ftn.kts_nvt.services.GeoLocationService;
 
 @RestController
-@RequestMapping("/kts-nvt")
+@RequestMapping("/geolocation")
 public class GeoLocationController {
 
 	@Autowired
