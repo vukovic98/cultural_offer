@@ -1,7 +1,7 @@
 package com.ftn.kts_nvt.beans;
 
 public abstract class User {
-	
+	Long id;
 	String firstName;
 	String lastName;
 	String email;
