@@ -1,6 +1,7 @@
 package com.ftn.kts_nvt.beans;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +11,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Entity
+@Embeddable
 @Table(name = "user")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User {
