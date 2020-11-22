@@ -1,28 +1,34 @@
 package com.ftn.kts_nvt.beans;
 
-import java.util.Collection;
+import java.util.List;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "admin")
 public class Admin extends User {
-	private Collection<CulturalOffer> culturalOffers;
+	
+	@ElementCollection
+	@CollectionTable(name = "admin_culturalOffers", joinColumns = @JoinColumn(name = "user_id"))
+	private List<CulturalOffer> culturalOffers;
 	
 	public Admin() {
 		
 	}
-	public Admin(Collection<CulturalOffer> culturalOffers) {
+	public Admin(List<CulturalOffer> culturalOffers) {
 		super();
 		this.culturalOffers = culturalOffers;
 	}
 
-	public Collection<CulturalOffer> getCulturalOffers() {
+	public List<CulturalOffer> getCulturalOffers() {
 		return culturalOffers;
 	}
 
-	public void setCulturalOffers(Collection<CulturalOffer> culturalOffers) {
+	public void setCulturalOffers(List<CulturalOffer> culturalOffers) {
 		this.culturalOffers = culturalOffers;
 	}
 
