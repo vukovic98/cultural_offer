@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ftn.kts_nvt.services.PostService;
+import com.ftn.kts_nvt.services.CulturalOfferService;
 
 @RestController
-@RequestMapping("/post")
-public class PostController {
+@RequestMapping("/culturalOffer")
+public class CulturalOfferController {
 
 	@Autowired
-	private PostService postService;
-	
+	private CulturalOfferService culturalOfferService;
 }

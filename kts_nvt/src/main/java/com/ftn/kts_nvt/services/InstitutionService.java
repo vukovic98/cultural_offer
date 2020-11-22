@@ -3,12 +3,11 @@ package com.ftn.kts_nvt.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ftn.kts_nvt.repositories.CommentRepository;
+import com.ftn.kts_nvt.repositories.InstitutionRepository;
 
 @Service
-public class CommentService {
+public class InstitutionService {
 
 	@Autowired
-	private CommentRepository commentRepository;
-	
+	private InstitutionRepository institutionRepository;
 }

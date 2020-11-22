@@ -3,12 +3,11 @@ package com.ftn.kts_nvt.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ftn.kts_nvt.repositories.GeoLocationRepository;
+import com.ftn.kts_nvt.repositories.ManifestationRepository;
 
 @Service
-public class GeoLocationService {
-
+public class ManifestationService {
+	
 	@Autowired
-	private GeoLocationRepository geoLocationRepository;
-
+	private ManifestationRepository manifestationRepository;
 }
