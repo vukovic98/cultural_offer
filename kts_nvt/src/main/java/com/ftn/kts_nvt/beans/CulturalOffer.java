@@ -15,8 +15,11 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import com.ftn.kts_nvt.beans.RegisteredUser;
+
 
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Table(name = "cultural_offer")
@@ -35,6 +38,22 @@ public abstract class CulturalOffer {
 	@ElementCollection
 	@CollectionTable(name = "culturalOffer_images", joinColumns = @JoinColumn(name = "culturalOffer_ID"))
 	private List<Image> images;
+	
+	@ElementCollection
+	@CollectionTable(name = "culturalOffer_user", joinColumns = @JoinColumn(name = "culturalOffer_ID"))
+	private List<RegisteredUser> subscribedUsers;
+	
+	@ElementCollection
+	@CollectionTable(name = "culturalOffer_post", joinColumns = @JoinColumn(name = "culturalOffer_ID"))
+	private List<Post> posts;
+	
+	@ManyToOne
+	@JoinColumn(name = "geoLocation_id", nullable = false)
+	private GeoLocation location;
+	
+	@ElementCollection
+	@CollectionTable(name = "culturalOffer_comment", joinColumns = @JoinColumn(name = "culturalOffer_ID"))
+	private List<Comment> comments;
 	
 	@Column(name = "description", nullable = true)
 	private String description;
