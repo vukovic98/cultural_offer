@@ -1,6 +1,7 @@
 package com.ftn.kts_nvt.beans;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -13,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+
+
 import javax.persistence.JoinColumn;
 
 @Entity
@@ -31,7 +34,7 @@ public abstract class CulturalOffer {
 	
 	@ElementCollection
 	@CollectionTable(name = "culturalOffer_images", joinColumns = @JoinColumn(name = "culturalOffer_ID"))
-	private ArrayList<Image> images;
+	private List<Image> images;
 	
 	@Column(name = "description", nullable = true)
 	private String description;
@@ -63,7 +66,7 @@ public abstract class CulturalOffer {
 		this.name = name;
 	}
 
-	public ArrayList<Image> getImages() {
+	public List<Image> getImages() {
 		return images;
 	}
 

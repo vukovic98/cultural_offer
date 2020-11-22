@@ -1,6 +1,7 @@
 package com.ftn.kts_nvt.beans;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
@@ -14,7 +15,7 @@ public class Institution extends CulturalOffer {
 	
 	@ElementCollection
 	@CollectionTable(name = "institution_workingHours", joinColumns = @JoinColumn(name = "institution_ID"))
-	private ArrayList<WorkingHour> workingHours;
+	private List<WorkingHour> workingHours;
 
 	public Institution() {
 		super();
@@ -25,7 +26,7 @@ public class Institution extends CulturalOffer {
 		this.workingHours = workingHours;
 	}
 
-	public ArrayList<WorkingHour> getWorkingHours() {
+	public List<WorkingHour> getWorkingHours() {
 		return workingHours;
 	}
 
