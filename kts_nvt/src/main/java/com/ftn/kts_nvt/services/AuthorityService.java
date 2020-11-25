@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import com.ftn.kts_nvt.beans.Authority;
 import com.ftn.kts_nvt.repositories.AuthorityRepository;
 
-
-
 @Service
 public class AuthorityService {
 

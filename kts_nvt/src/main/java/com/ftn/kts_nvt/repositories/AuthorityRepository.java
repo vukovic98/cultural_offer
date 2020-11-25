@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ftn.kts_nvt.beans.Authority;
 
+
 @Repository
 public interface AuthorityRepository extends JpaRepository<Authority, Long> {
 
