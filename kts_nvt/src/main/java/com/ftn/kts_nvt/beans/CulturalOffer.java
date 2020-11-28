@@ -91,7 +91,7 @@ public class CulturalOffer {
 		return images;
 	}
 
-	public void setImages(ArrayList<Image> images) {
+	public void setImages(List<Image> images) {
 		this.images = images;
 	}
 

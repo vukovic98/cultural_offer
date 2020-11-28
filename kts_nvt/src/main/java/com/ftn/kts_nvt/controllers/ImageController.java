@@ -14,74 +14,79 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ftn.kts_nvt.beans.GeoLocation;
-import com.ftn.kts_nvt.services.GeoLocationService;
+import com.ftn.kts_nvt.beans.Image;
+import com.ftn.kts_nvt.services.ImageService;
 
 @RestController
-@RequestMapping("/geolocation")
-public class GeoLocationController {
+@RequestMapping("/image")
+public class ImageController {
 
 	@Autowired
-	private GeoLocationService geoLocationService;
+	private ImageService imageService;
 
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<GeoLocation> findById(@PathVariable("id") long id) {
-		GeoLocation found = this.geoLocationService.findById(id);
+	public ResponseEntity<Image> findById(@PathVariable("id") long id) {
+		Image found = this.imageService.findById(id);
 
 		if (found != null)
-			return new ResponseEntity<GeoLocation>(found, HttpStatus.FOUND);
+			return new ResponseEntity<>(found, HttpStatus.FOUND);
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	@GetMapping
-	public ResponseEntity<ArrayList<GeoLocation>> findAll() {
-		ArrayList<GeoLocation> geoLocations = this.geoLocationService.findAll();
-
-		if (!geoLocations.isEmpty())
-			return new ResponseEntity<ArrayList<GeoLocation>>(geoLocations, HttpStatus.FOUND);
+	public ResponseEntity<ArrayList<Image>> findAll() {
+		ArrayList<Image> images = this.imageService.findAll();
+		if (!images.isEmpty())
+			return new ResponseEntity<ArrayList<Image>>(images, HttpStatus.FOUND);
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	@PostMapping(consumes = "application/json")
-	public ResponseEntity<HttpStatus> create(@RequestBody GeoLocation geoLocation) {
-		//TODO provera poslate lokacije
-		GeoLocation created = this.geoLocationService.save(geoLocation);
+	public ResponseEntity<HttpStatus> create(@RequestBody Image image) {
+		//TODO provera poslate slike
+		Image created = this.imageService.save(image);
 		if (created != null)
-			// TODO proveriti da li su ispravni podaci poslati
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.CREATED);
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
 	}
 
 	@DeleteMapping(consumes = "application/json")
-	public ResponseEntity<HttpStatus> delete(@RequestBody GeoLocation geoLocation) {
-		boolean deleted = this.geoLocationService.delete(geoLocation);
+	public ResponseEntity<HttpStatus> delete(@RequestBody Image image) {
+
+		boolean deleted = this.imageService.delete(image);
 
 		if (deleted)
 			return new ResponseEntity<>(HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
 	}
 
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") long id) {
-		boolean deleted = this.geoLocationService.deleteById(id);
+
+		boolean deleted = this.imageService.deleteById(id);
 
 		if (deleted)
 			return new ResponseEntity<>(HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
 	}
 
 	@PutMapping(path = "/{id}", consumes = "application/json")
-	public ResponseEntity<HttpStatus> update(@PathVariable("id") long id, @RequestBody GeoLocation geoLocation) {
-		//TODO provera unete lokacije
-		GeoLocation updatedGeoLocation = this.geoLocationService.update(geoLocation, id);
-		if (updatedGeoLocation != null)
+	public ResponseEntity<HttpStatus> update(@RequestBody Image image, @PathVariable("id") long id) {
+		//TODO provera unete slike
+		Image updatedImage = this.imageService.update(image, id);
+		if (updatedImage != null)
 			return new ResponseEntity<>(HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
 	}
+
 }

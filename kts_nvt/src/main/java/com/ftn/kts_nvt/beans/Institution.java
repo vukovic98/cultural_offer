@@ -32,7 +32,7 @@ public class Institution extends CulturalOffer {
 		return workingHours;
 	}
 
-	public void setWorkingHours(ArrayList<WorkingHour> workingHours) {
+	public void setWorkingHours(List<WorkingHour> workingHours) {
 		this.workingHours = workingHours;
 	}
 
