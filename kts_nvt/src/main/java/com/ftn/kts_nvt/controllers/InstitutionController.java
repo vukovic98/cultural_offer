@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.kts_nvt.beans.Institution;
+import com.ftn.kts_nvt.dto.InstitutionDTO;
+import com.ftn.kts_nvt.helper.InstitutionMapper;
 import com.ftn.kts_nvt.services.InstitutionService;
 
 @RestController
@@ -23,62 +25,79 @@ public class InstitutionController {
 
 	@Autowired
 	private InstitutionService institutionService;
-	
+
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<Institution> findById(@PathVariable ("id") long id){
+	public ResponseEntity<Institution> findById(@PathVariable("id") long id) {
 		Institution found = this.institutionService.findById(id);
-		
-		if(found != null)
+
+		if (found != null)
 			return new ResponseEntity<Institution>(found, HttpStatus.FOUND);
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			
+
 	}
-	
+
 	@GetMapping
-	public ResponseEntity<ArrayList<Institution>> findAll(){
+	public ResponseEntity<ArrayList<Institution>> findAll() {
 		ArrayList<Institution> institutions = this.institutionService.findAll();
-		if(!institutions.isEmpty())
+		if (!institutions.isEmpty())
 			return new ResponseEntity<ArrayList<Institution>>(institutions, HttpStatus.FOUND);
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
-	
+
 	@PostMapping(consumes = "application/json")
-	public ResponseEntity<HttpStatus> create(@RequestBody Institution institution){
-		//TODO provera poslate institucije
-		Institution created = this.institutionService.save(institution);
-		if(created != null)
+	public ResponseEntity<HttpStatus> create(@RequestBody InstitutionDTO institution) {
+		// TODO provera poslate institucije
+		InstitutionMapper mapper = new InstitutionMapper();
+		
+		Institution i = mapper.toEntity(institution);
+		
+		Institution created = this.institutionService.save(i);
+		
+		if (created != null)
 			return new ResponseEntity<>(HttpStatus.CREATED);
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
-	
+
 	@DeleteMapping(consumes = "application/json")
-	public ResponseEntity<HttpStatus> delete(@RequestBody Institution institution){
-		boolean deleted = this.institutionService.delete(institution);
-		
-		if(deleted)
-			return new ResponseEntity<>(HttpStatus.OK);
-		else
+	public ResponseEntity<HttpStatus> delete(@RequestBody InstitutionDTO institution) {
+
+		Institution i = this.institutionService.findById(institution.getId());
+
+		if (i != null) {
+			boolean deleted = this.institutionService.delete(i);
+
+			if (deleted)
+				return new ResponseEntity<>(HttpStatus.OK);
+			else
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
 	}
-	
+
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<HttpStatus> deleteById(@PathVariable ("id") long id){
+	public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") long id) {
 		boolean deleted = this.institutionService.deleteById(id);
-		
-		if(deleted)
+
+		if (deleted)
 			return new ResponseEntity<>(HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
-	
-	@PutMapping(path ="/{id}", consumes = "application/json")
-	public ResponseEntity<HttpStatus> update(@PathVariable("id") long id, @RequestBody Institution institution){
-		//TODO provera unete institucije
-		Institution updatedInstitution = this.institutionService.update(institution, id);
-		if(updatedInstitution!= null)
+
+	@PutMapping(path = "/{id}", consumes = "application/json")
+	public ResponseEntity<HttpStatus> update(@PathVariable("id") long id, @RequestBody InstitutionDTO institution) {
+		// TODO provera unete institucije
+		InstitutionMapper mapper = new InstitutionMapper();
+
+		Institution i = mapper.toEntity(institution);
+
+		Institution updatedInstitution = this.institutionService.update(i, id);
+
+		if (updatedInstitution != null)
 			return new ResponseEntity<>(HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

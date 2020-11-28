@@ -57,10 +57,13 @@ public class InstitutionService {
 
 		if (found.isPresent()) {
 			Institution oldInstitution = found.get();
+
 			oldInstitution.setDescription(changedInstitution.getDescription());
 			oldInstitution.setImages(changedInstitution.getImages());
 			oldInstitution.setName(changedInstitution.getName());
+			oldInstitution.setLocation(changedInstitution.getLocation());
 			oldInstitution.setWorkingHours(changedInstitution.getWorkingHours());
+
 			return this.institutionRepository.save(oldInstitution);
 		} else
 			return null;
