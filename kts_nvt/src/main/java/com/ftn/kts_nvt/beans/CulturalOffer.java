@@ -16,8 +16,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
-import com.ftn.kts_nvt.beans.RegisteredUser;
-
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -102,5 +100,39 @@ public class CulturalOffer {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public List<RegisteredUser> getSubscribedUsers() {
+		return subscribedUsers;
+	}
+
+	public void setSubscribedUsers(List<RegisteredUser> subscribedUsers) {
+		this.subscribedUsers = subscribedUsers;
+	}
+
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
+
+	public GeoLocation getLocation() {
+		return location;
+	}
+
+	public void setLocation(GeoLocation location) {
+		this.location = location;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+	
+	
 
 }
