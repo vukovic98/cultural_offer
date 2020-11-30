@@ -16,47 +16,52 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
-
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
 @Table(name = "cultural_offer")
 @Embeddable
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "CulturalOffer_Type")
 public class CulturalOffer {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "culturalOffer_ID")
 	private Long id;
-	
-	@Column(name="name", nullable = false)
+
+	@Column(name = "name", nullable = false)
 	private String name;
-	
+
 	@ElementCollection
 	@CollectionTable(name = "culturalOffer_images", joinColumns = @JoinColumn(name = "culturalOffer_ID"))
 	private List<Image> images;
-	
+
 	@ElementCollection
 	@CollectionTable(name = "culturalOffer_user", joinColumns = @JoinColumn(name = "culturalOffer_ID"))
 	private List<RegisteredUser> subscribedUsers;
-	
+
 	@ElementCollection
 	@CollectionTable(name = "culturalOffer_post", joinColumns = @JoinColumn(name = "culturalOffer_ID"))
 	private List<Post> posts;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "geoLocation_id", nullable = false)
 	private GeoLocation location;
-	
+
 	@ElementCollection
 	@CollectionTable(name = "culturalOffer_comment", joinColumns = @JoinColumn(name = "culturalOffer_ID"))
 	private List<Comment> comments;
-	
+
 	@Column(name = "description", nullable = true)
 	private String description;
+
+	@ManyToOne
+	@JoinColumn(name = "cultural_offer_type_id", nullable = false)
+	private CulturalOfferType type;
+
+	@ElementCollection
+	@CollectionTable(name = "culturalOffer_grade", joinColumns = @JoinColumn(name = "culturalOffer_ID"))
+	private List<Grade> grades;
 
 	public CulturalOffer() {
 		super();
@@ -132,7 +137,21 @@ public class CulturalOffer {
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
-	
-	
+
+	public CulturalOfferType getType() {
+		return type;
+	}
+
+	public void setType(CulturalOfferType type) {
+		this.type = type;
+	}
+
+	public List<Grade> getGrades() {
+		return grades;
+	}
+
+	public void setGrades(List<Grade> grades) {
+		this.grades = grades;
+	}
 
 }

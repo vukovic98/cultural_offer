@@ -60,7 +60,6 @@ public class CommentService {
 			
 			found.setContent(changedComment.getContent());
 			found.setImages(changedComment.getImages());
-			found.setGrade(changedComment.getGrade());
 			
 			return this.commentRepository.save(found);
 		} else {

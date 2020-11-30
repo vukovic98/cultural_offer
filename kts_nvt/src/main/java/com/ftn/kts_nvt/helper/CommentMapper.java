@@ -11,7 +11,6 @@ public class CommentMapper implements MapperInterface<Comment, CommentDTO> {
 		
 		comment.setCommentId(dto.getId());
 		comment.setContent(dto.getContent());
-		comment.setGrade(dto.getGrade());
 		comment.setImages(dto.getImages());
 		
 		return comment;

@@ -29,9 +29,6 @@ public class Comment {
 	@CollectionTable(name = "comment_images", joinColumns = @JoinColumn(name = "comment_ID"))
 	private List<Image> images;
 
-	@Column(name = "grade", nullable = false)
-	private int grade;
-
 	@ManyToOne
 	@JoinColumn(name = "commenter_id", nullable = false)
 	private RegisteredUser commenter;
@@ -40,11 +37,10 @@ public class Comment {
 		super();
 	}
 
-	public Comment(String content, List<Image> images, int grade, RegisteredUser commenter) {
+	public Comment(String content, List<Image> images, RegisteredUser commenter) {
 		super();
 		this.content = content;
 		this.images = images;
-		this.grade = grade;
 		this.commenter = commenter;
 	}
 
@@ -70,14 +66,6 @@ public class Comment {
 
 	public void setImages(List<Image> images) {
 		this.images = images;
-	}
-
-	public int getGrade() {
-		return grade;
-	}
-
-	public void setGrade(int grade) {
-		this.grade = grade;
 	}
 
 	public RegisteredUser getCommenter() {
