@@ -2,14 +2,23 @@ package com.ftn.kts_nvt.dto;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
 import com.ftn.kts_nvt.beans.GeoLocation;
 import com.ftn.kts_nvt.beans.Image;
 
 public class CulturalOfferDTO {
 	private long id;
+	
+	@NotBlank(message = "Name should not be blank!")
 	private String name;
+	
 	private List<Image> images;
+	
+	@NotBlank(message = "Location should exist!")
 	private GeoLocation location;
+	
+	@NotBlank(message = "You should add description!")
 	private String description;
 
 	public CulturalOfferDTO() {

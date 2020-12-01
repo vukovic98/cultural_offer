@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "geo_location")
@@ -16,12 +17,15 @@ public class GeoLocation {
 	@Column(name = "location_id")
 	private Long locationId;
 
+	@NotBlank(message = "Latitude should exist!")
 	@Column(name = "latitude", nullable = false)
 	private double latitude;
 
+	@NotBlank(message = "Longitude should exist!")
 	@Column(name = "longitude", nullable = false)
 	private double longitude;
 
+	@NotBlank(message = "Place should exist!")
 	@Column(name = "place")
 	private String place;
 

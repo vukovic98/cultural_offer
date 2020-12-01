@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ftn.kts_nvt.beans.GeoLocation;
@@ -39,6 +41,10 @@ public class GeoLocationService {
 
 	public ArrayList<GeoLocation> findAll() {
 		return (ArrayList<GeoLocation>) this.geoLocationRepository.findAll();
+	}
+	
+	public Page<GeoLocation> findAll(Pageable pageable) {
+		return (Page<GeoLocation>) this.geoLocationRepository.findAll(pageable);
 	}
 
 	public GeoLocation findById(Long id) {
