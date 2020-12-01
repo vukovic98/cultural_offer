@@ -3,6 +3,8 @@ package com.ftn.kts_nvt.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ftn.kts_nvt.beans.CulturalOfferCategory;
@@ -19,6 +21,10 @@ public class CulturalOfferCategoryService implements ServiceInterface<CulturalOf
 		return repository.findAll();
 	}
 
+	public Page<CulturalOfferCategory> findAll(Pageable pagable) {
+		return repository.findAll(pagable);
+	}
+	
 	@Override
 	public CulturalOfferCategory findOne(Long id) {
 		return repository.findById(id).orElse(null);

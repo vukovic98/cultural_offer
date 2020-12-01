@@ -1,12 +1,15 @@
 package com.ftn.kts_nvt.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,9 +41,24 @@ public class GradeController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<GradeDTO>> getAll() {
         List<Grade> grades = gradeService.findAll();
-        return new ResponseEntity<>(toGradeDTOList(grades), HttpStatus.OK);
+        return new ResponseEntity<>(gradeMapper.toGradeDTOList(grades), HttpStatus.OK);
     }
     
+    /*
+     * GET
+     * http://localhost:8080/grades/by-page
+     * */
+ 	@GetMapping(value = "/by-page")
+ 	public ResponseEntity<Page<GradeDTO>> getAll(Pageable pageable) {
+ 		Page<Grade> page = gradeService.findAll(pageable);
+ 		List<GradeDTO> gradeDTOS = gradeMapper.toGradeDTOList(page.toList());
+ 		Page<GradeDTO> pageGradeDTOS = new PageImpl<>(gradeDTOS,
+										 				page.getPageable(), 
+										 				page.getTotalElements());
+
+ 		return new ResponseEntity<>(pageGradeDTOS, HttpStatus.OK);
+ 	}
+ 	
     /*
      * GET
      * http://localhost:8080/grades/1
@@ -65,7 +83,7 @@ public class GradeController {
         if(grades == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(toGradeDTOList(grades), HttpStatus.OK);
+        return new ResponseEntity<>(gradeMapper.toGradeDTOList(grades), HttpStatus.OK);
     }
     
     /*
@@ -78,7 +96,7 @@ public class GradeController {
         if(grades == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(toGradeDTOList(grades), HttpStatus.OK);
+        return new ResponseEntity<>(gradeMapper.toGradeDTOList(grades), HttpStatus.OK);
     }
     /*
      * POST 
@@ -139,11 +157,4 @@ public class GradeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     
-    private List<GradeDTO> toGradeDTOList(List<Grade> grades){
-        List<GradeDTO> gradeDTOS = new ArrayList<>();
-        for (Grade grade: grades) {
-        	gradeDTOS.add(gradeMapper.toDto(grade));
-        }
-        return gradeDTOS;
-    }
 }

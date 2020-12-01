@@ -1,5 +1,8 @@
 package com.ftn.kts_nvt.helper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.ftn.kts_nvt.beans.CulturalOfferCategory;
 import com.ftn.kts_nvt.dto.CulturalOfferCategoryDTO;
 
@@ -14,5 +17,12 @@ public class CulturalOfferCategoryMapper implements MapperInterface<CulturalOffe
 	public CulturalOfferCategoryDTO toDto(CulturalOfferCategory entity) {
 		return new CulturalOfferCategoryDTO(entity.getId(), entity.getName(), entity.getTypes());
 	}
-
+	
+	public List<CulturalOfferCategoryDTO> toDTOList(List<CulturalOfferCategory> list){
+        List<CulturalOfferCategoryDTO> categoryDTOS = new ArrayList<>();
+        for (CulturalOfferCategory c: list) {
+        	categoryDTOS.add(toDto(c));
+        }
+        return categoryDTOS;
+	}
 }

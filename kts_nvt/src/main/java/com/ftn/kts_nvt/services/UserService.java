@@ -3,6 +3,8 @@ package com.ftn.kts_nvt.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ftn.kts_nvt.beans.User;
@@ -19,6 +21,10 @@ public class UserService implements ServiceInterface<User> {
 		return userRepository.findAll();
 	}
 
+	public Page<User> findAll(Pageable pagable) {
+		return userRepository.findAll(pagable);
+	}
+	
 	@Override
 	public User findOne(Long id) {
 		return userRepository.findById(id).orElse(null);

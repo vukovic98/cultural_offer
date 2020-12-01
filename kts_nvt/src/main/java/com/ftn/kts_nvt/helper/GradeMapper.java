@@ -1,5 +1,8 @@
 package com.ftn.kts_nvt.helper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.ftn.kts_nvt.beans.Grade;
 import com.ftn.kts_nvt.dto.GradeDTO;
 
@@ -16,4 +19,11 @@ public class GradeMapper implements MapperInterface<Grade, GradeDTO>{
 				entity.getUser(), entity.getCulturalOffer());
 	}
 
+	public List<GradeDTO> toGradeDTOList(List<Grade> grades){
+        List<GradeDTO> gradeDTOS = new ArrayList<>();
+        for (Grade grade: grades) {
+        	gradeDTOS.add(toDto(grade));
+        }
+        return gradeDTOS;
+    }
 }

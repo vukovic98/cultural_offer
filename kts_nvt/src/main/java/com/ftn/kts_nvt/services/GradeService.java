@@ -3,13 +3,12 @@ package com.ftn.kts_nvt.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ftn.kts_nvt.beans.Grade;
-import com.ftn.kts_nvt.dto.GradeDTO;
-import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
 import com.ftn.kts_nvt.repositories.GradeRepository;
-import com.ftn.kts_nvt.repositories.RegisteredUserRepository;
 
 @Service
 public class GradeService implements ServiceInterface<Grade>{
@@ -22,6 +21,10 @@ public class GradeService implements ServiceInterface<Grade>{
 		return gradeRepository.findAll();
 	}
 
+	public Page<Grade> findAll(Pageable pagable) {
+		return gradeRepository.findAll(pagable);
+	}
+	
 	public List<Grade> findByUser(Long id){
 		return gradeRepository.findGradesByUser_Id(id);
 	}
