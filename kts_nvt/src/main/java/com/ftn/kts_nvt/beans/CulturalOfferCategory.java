@@ -39,6 +39,11 @@ public class CulturalOfferCategory {
 		this.types = types;
 	}
 
+	public CulturalOfferCategory(String name) {
+		super();
+		this.name = name;
+	}
+	
 	public Long getId() {
 		return id;
 	}

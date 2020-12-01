@@ -33,6 +33,10 @@ public class CulturalOfferTypeController {
 	@Autowired
 	private CulturalOfferTypeMapper mapper;
 
+	public CulturalOfferTypeController() {
+		mapper = new CulturalOfferTypeMapper();
+	}
+	
 	@GetMapping(path = "/byCategory/{categoryId}")
 	public ResponseEntity<List<CulturalOfferTypeDTO>> findAll(@PathVariable("categoryId") long categoryId) {
 		ArrayList<CulturalOfferType> types = this.culturalOfferTypeService.findAll(categoryId);
