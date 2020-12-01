@@ -1,8 +1,12 @@
 package com.ftn.kts_nvt.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.kts_nvt.beans.CulturalOffer;
+import com.ftn.kts_nvt.dto.CommentDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferDTO;
 import com.ftn.kts_nvt.helper.CulturalOfferMapper;
 import com.ftn.kts_nvt.services.CulturalOfferService;
@@ -26,6 +31,8 @@ public class CulturalOfferController {
 	@Autowired
 	private CulturalOfferService culturalOfferService;
 	
+	private CulturalOfferMapper mapper;
+	
 	//GET: http://localhost:8080/culturalOffers
 	@GetMapping
 	public ResponseEntity<ArrayList<CulturalOffer>> findAll() {
@@ -35,6 +42,17 @@ public class CulturalOfferController {
 			return new ResponseEntity<ArrayList<CulturalOffer>>(offers, HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+	
+	//GET: http://localhost:8080/culturalOffers/by-page
+	@GetMapping(path="/by-page")
+	public ResponseEntity<Page<CulturalOfferDTO>> findAll(Pageable pageable) {
+		Page<CulturalOffer> page = this.culturalOfferService.findAll(pageable);
+		
+		List<CulturalOfferDTO> offersDTOS = this.mapper.listToDTO(page.toList());
+		Page<CulturalOfferDTO> pageOffersDTOS = new PageImpl<>(offersDTOS, page.getPageable(), page.getTotalElements());
+
+		return new ResponseEntity<>(pageOffersDTOS, HttpStatus.OK);
 	}
 	
 	@GetMapping(path="/{id}")
@@ -49,9 +67,8 @@ public class CulturalOfferController {
 	
 	@PostMapping(consumes = "application/json")
 	public ResponseEntity<HttpStatus> create(@RequestBody CulturalOfferDTO offerDto) {
-		CulturalOfferMapper mapper = new CulturalOfferMapper();
 		
-		CulturalOffer offer = mapper.toEntity(offerDto);
+		CulturalOffer offer = this.mapper.toEntity(offerDto);
 		
 		CulturalOffer ok = this.culturalOfferService.save(offer);
 		
@@ -87,9 +104,9 @@ public class CulturalOfferController {
 	
 	@PutMapping(path="/{id}", consumes = "application/json")
 	public ResponseEntity<HttpStatus> update(@PathVariable("id") long id, @RequestBody CulturalOfferDTO dto) {
-		CulturalOfferMapper mapper = new CulturalOfferMapper();
 		
-		CulturalOffer offer = mapper.toEntity(dto);
+		
+		CulturalOffer offer = this.mapper.toEntity(dto);
 		
 		CulturalOffer changed = this.culturalOfferService.update(offer, id);
 		

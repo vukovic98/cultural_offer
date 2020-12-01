@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ftn.kts_nvt.beans.CulturalOffer;
@@ -21,6 +23,10 @@ public class CulturalOfferService {
 	
 	public ArrayList<CulturalOffer> findAll() {
 		return (ArrayList<CulturalOffer>) this.culturalOfferRepository.findAll();
+	}
+	
+	public Page<CulturalOffer> findAll(Pageable pageable) {
+		return (Page<CulturalOffer>) this.culturalOfferRepository.findAll(pageable);
 	}
 	
 	public CulturalOffer findById(long id) {

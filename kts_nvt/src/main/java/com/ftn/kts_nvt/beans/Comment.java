@@ -25,9 +25,9 @@ public class Comment {
 	@Column(name = "content", nullable = false)
 	private String content;
 
-	@ElementCollection
-	@CollectionTable(name = "comment_images", joinColumns = @JoinColumn(name = "comment_ID"))
-	private List<Image> images;
+	@ManyToOne
+	@JoinColumn(name = "image_id", nullable = false)
+	private Image image;
 
 	@ManyToOne
 	@JoinColumn(name = "commenter_id", nullable = false)
@@ -37,10 +37,10 @@ public class Comment {
 		super();
 	}
 
-	public Comment(String content, List<Image> images, RegisteredUser commenter) {
+	public Comment(String content, Image image, RegisteredUser commenter) {
 		super();
 		this.content = content;
-		this.images = images;
+		this.image = image;
 		this.commenter = commenter;
 	}
 
@@ -60,12 +60,12 @@ public class Comment {
 		this.content = content;
 	}
 
-	public List<Image> getImages() {
-		return images;
+	public Image getImage() {
+		return image;
 	}
 
-	public void setImages(List<Image> images) {
-		this.images = images;
+	public void setImage(Image image) {
+		this.image = image;
 	}
 
 	public RegisteredUser getCommenter() {

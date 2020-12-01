@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.ftn.kts_nvt.beans.Comment;
 import com.ftn.kts_nvt.repositories.CommentRepository;
@@ -21,6 +23,10 @@ public class CommentService {
 	
 	public ArrayList<Comment> findAll() {
 		return (ArrayList<Comment>) this.commentRepository.findAll();
+	}
+	
+	public Page<Comment> findAll(Pageable pagable) {
+		return this.commentRepository.findAll(pagable);
 	}
 	
 	public Comment findById(long id) {
@@ -59,7 +65,7 @@ public class CommentService {
 			Comment found = oldComment.get();
 			
 			found.setContent(changedComment.getContent());
-			found.setImages(changedComment.getImages());
+			found.setImage(changedComment.getImage());
 			
 			return this.commentRepository.save(found);
 		} else {
