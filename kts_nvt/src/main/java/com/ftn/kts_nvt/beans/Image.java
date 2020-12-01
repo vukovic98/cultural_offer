@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "image")
@@ -19,13 +20,14 @@ public class Image {
 	private Long id;
 
 	@Column(name = "url", nullable = false)
+	@NotBlank(message = "Image url cannot be empty.")
 	private String url;
 
 	public Image() {
 		super();
 	}
 
-	public Image(Long id, String url) {
+	public Image(Long id, @NotBlank(message = "Image url cannot be empty.") String url) {
 		super();
 		this.id = id;
 		this.url = url;

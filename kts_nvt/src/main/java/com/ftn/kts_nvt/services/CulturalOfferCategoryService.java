@@ -10,5 +10,6 @@ public class CulturalOfferCategoryService {
 	
 	@Autowired
 	private CulturalOfferCategoryRepository culturalOfferCategoryRepository;
-
+	
+	
 }
