@@ -31,17 +31,20 @@ public class GradeController {
         gradeMapper = new GradeMapper();
     }
 
-    //http://localhost:8080/grades
+    /*
+     * GET
+     * http://localhost:8080/grades
+     */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<GradeDTO>> getAll() {
         List<Grade> grades = gradeService.findAll();
-        for(Grade u : grades) {
-        	System.out.println(u);
-        }
         return new ResponseEntity<>(toGradeDTOList(grades), HttpStatus.OK);
     }
     
-    //http://localhost:8080/grades/1
+    /*
+     * GET
+     * http://localhost:8080/grades/1
+     */
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
     public ResponseEntity<GradeDTO> getGrade(@PathVariable Long id){
         Grade grade = gradeService.findOne(id);
@@ -52,6 +55,31 @@ public class GradeController {
         return new ResponseEntity<>(gradeMapper.toDto(grade), HttpStatus.OK);
     }
     
+    /*
+     * GET
+     * http://localhost:8080/grades/user/1
+     * */
+    @RequestMapping(value="/user/{id}", method=RequestMethod.GET)
+    public ResponseEntity<List<GradeDTO>> getGradeForUser(@PathVariable Long id){
+        List<Grade> grades = gradeService.findByUser(id);
+        if(grades == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(toGradeDTOList(grades), HttpStatus.OK);
+    }
+    
+    /*
+     * GET
+     * http://localhost:8080/offer/user/1
+     * */
+    @RequestMapping(value="/offer/{id}", method=RequestMethod.GET)
+    public ResponseEntity<List<GradeDTO>> getGradeForOffer(@PathVariable Long id){
+    	List<Grade> grades = gradeService.findByOffer(id);
+        if(grades == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(toGradeDTOList(grades), HttpStatus.OK);
+    }
     /*
      * POST 
      * http://localhost:8080/grades

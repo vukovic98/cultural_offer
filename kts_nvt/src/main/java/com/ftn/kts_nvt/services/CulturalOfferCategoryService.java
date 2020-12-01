@@ -24,6 +24,10 @@ public class CulturalOfferCategoryService implements ServiceInterface<CulturalOf
 		return repository.findById(id).orElse(null);
 	}
 
+	public CulturalOfferCategory findByName(String name) {
+		return repository.findCulturalOfferCategoryByName(name).orElse(null);
+	}
+	
 	@Override
 	public CulturalOfferCategory create(CulturalOfferCategory entity) throws Exception {
 		return repository.save(entity);

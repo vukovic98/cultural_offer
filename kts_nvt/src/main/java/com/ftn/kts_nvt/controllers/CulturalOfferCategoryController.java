@@ -31,12 +31,20 @@ public class CulturalOfferCategoryController {
         mapper = new CulturalOfferCategoryMapper();
     }
 
+    /*
+     * GET
+     * http://localhost:8080/cultural-offer-categories
+     * */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<CulturalOfferCategoryDTO>> getAll() {
         List<CulturalOfferCategory> list = service.findAll();
         return new ResponseEntity<>(toDTOList(list), HttpStatus.OK);
     }
     
+    /*
+     * GET
+     * http://localhost:8080/cultural-offer-categories/2
+     * */
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
     public ResponseEntity<CulturalOfferCategoryDTO> getCategory(@PathVariable Long id){
         CulturalOfferCategory category = service.findOne(id);
@@ -47,6 +55,26 @@ public class CulturalOfferCategoryController {
         return new ResponseEntity<>(mapper.toDto(category), HttpStatus.OK);
     }
     
+    /*
+     * GET
+     * http://localhost:8080/cultural-offer-categories/name/categoryname
+     * */
+    @RequestMapping(value="/name/{name}", method=RequestMethod.GET)
+    public ResponseEntity<CulturalOfferCategoryDTO> getCategoryByName(@PathVariable String name){
+        CulturalOfferCategory category = service.findByName(name);
+        if(category == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(mapper.toDto(category), HttpStatus.OK);
+    }
+    
+    /*
+     * POST
+     * http://localhost:8080/cultural-offer-categories
+     * {
+    	"name": "categoryname" 
+	   }*/
     @RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CulturalOfferCategoryDTO> create(@RequestBody CulturalOfferCategoryDTO categoryDTO){
         CulturalOfferCategory category;
@@ -59,6 +87,12 @@ public class CulturalOfferCategoryController {
         return new ResponseEntity<>(mapper.toDto(category), HttpStatus.CREATED);
     }
 
+    /*
+     * PUT
+     * http://localhost:8080/cultural-offer-categories/2
+     * {
+	     "name": "newcategoryname" 
+	   }*/
     @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CulturalOfferCategoryDTO> update(@RequestBody CulturalOfferCategoryDTO categoryDTO,
     															@PathVariable Long id){
@@ -72,6 +106,10 @@ public class CulturalOfferCategoryController {
         return new ResponseEntity<>(mapper.toDto(category), HttpStatus.OK);
     }
 
+    /*
+     * DELETE
+     * http://localhost:8080/cultural-offer-categories/2
+     * */
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id){
         try {

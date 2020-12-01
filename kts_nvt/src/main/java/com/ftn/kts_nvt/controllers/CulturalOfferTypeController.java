@@ -30,7 +30,6 @@ public class CulturalOfferTypeController {
 	@Autowired
 	private CulturalOfferTypeService culturalOfferTypeService;
 
-	@Autowired
 	private CulturalOfferTypeMapper mapper;
 
 	public CulturalOfferTypeController() {

@@ -16,18 +16,20 @@ public class GradeService implements ServiceInterface<Grade>{
 
 	@Autowired
 	private GradeRepository gradeRepository;
-
-	@Autowired
-	private RegisteredUserRepository regUserRepository;
-	
-	@Autowired
-	private CulturalOfferRepository culturalOfferRepository;
 	
 	@Override
 	public List<Grade> findAll() {
 		return gradeRepository.findAll();
 	}
 
+	public List<Grade> findByUser(Long id){
+		return gradeRepository.findGradesByUser_Id(id);
+	}
+	
+	public List<Grade> findByOffer(Long id){
+		return gradeRepository.findGradesByCulturalOffer_Id(id);
+	}
+	
 	@Override
 	public Grade findOne(Long id) {
 		return gradeRepository.findById(id).orElse(null);
@@ -35,7 +37,6 @@ public class GradeService implements ServiceInterface<Grade>{
 
 	@Override
 	public Grade create(Grade entity) throws Exception {
-		System.out.println("adding grade");
 		return gradeRepository.save(entity);
 	}
 	
