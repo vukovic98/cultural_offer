@@ -32,7 +32,12 @@ public class Grade {
 	public Grade() {
 		super();
 	}
-
+	public Grade(int value, RegisteredUser user, CulturalOffer culturalOffer) {
+		super();
+		this.value = value;
+		this.user = user;
+		this.culturalOffer = culturalOffer;
+	}
 	public Grade(Long id, int value, RegisteredUser user, CulturalOffer culturalOffer) {
 		super();
 		this.id = id;
