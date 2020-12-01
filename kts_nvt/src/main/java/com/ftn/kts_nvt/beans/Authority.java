@@ -1,6 +1,7 @@
 package com.ftn.kts_nvt.beans;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Table(name="authority")
+@Embeddable
 public class Authority implements GrantedAuthority {
 
     @Id

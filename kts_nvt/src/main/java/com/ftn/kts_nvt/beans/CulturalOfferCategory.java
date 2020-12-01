@@ -25,7 +25,7 @@ public class CulturalOfferCategory {
 	private String name;
 
 	@ElementCollection
-	@CollectionTable(name = "culturalOffer_types", joinColumns = @JoinColumn(name = "culturalOfferCategory_ID"))
+	@CollectionTable(name = "culturalOfferCategory_types", joinColumns = @JoinColumn(name = "culturalOfferCategory_ID"))
 	private List<CulturalOfferType> types;
 
 	public CulturalOfferCategory() {

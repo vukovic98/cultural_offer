@@ -8,18 +8,22 @@ public class UserDTO {
 
 	private Long id;
 
-    @NotBlank(message = "First name cannot be empty.")
+	@NotBlank(message = "First name cannot be empty.")
 	private String firstName;
 
-    @NotBlank(message = "Last name cannot be empty.")
+	@NotBlank(message = "Last name cannot be empty.")
 	private String lastName;
 
-    @NotBlank(message = "Email cannot be empty.")
-    @Email(message = "Email format is not valid.")
-    private String email;
+	@NotBlank(message = "Email cannot be empty.")
+	@Email(message = "Email format is not valid.")
+	private String email;
 
-    @NotBlank(message = "Password cannot be empty.")
-    private String password;
+	@NotBlank(message = "Password cannot be empty.")
+	private String password;
+
+	public UserDTO() {
+		super();
+	}
 
 	public UserDTO(Long id, @NotBlank(message = "First name cannot be empty.") String firstName,
 			@NotBlank(message = "Last name cannot be empty.") String lastName,
@@ -78,5 +82,5 @@ public class UserDTO {
 		return "UserDTO [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", password=" + password + "]";
 	}
-    
+
 }

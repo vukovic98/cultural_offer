@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import com.ftn.kts_nvt.beans.User;
 import com.ftn.kts_nvt.dto.UserDTO;
 import com.ftn.kts_nvt.dto.UserLoginDTO;
@@ -63,6 +65,7 @@ public class AuthenticationController {
 
 		// Kreiraj token za tog korisnika
 		User user = (User) authentication.getPrincipal();
+		System.out.println(user);
 		String jwt = tokenUtils.generateToken(user.getEmail()); // prijavljujemo se na sistem sa email adresom
 		int expiresIn = tokenUtils.getExpiredIn();
 
@@ -78,7 +81,8 @@ public class AuthenticationController {
 		if (existUser != null) {
 			throw new Exception("Username already exists");
 		}
-
+		BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
+		userRequest.setPassword(enc.encode(userRequest.getPassword()));
 		try {
 			existUser = userService.create(userMapper.toEntity(userRequest));
 		} catch (Exception e) {
