@@ -19,9 +19,12 @@ import com.ftn.kts_nvt.security.auth.RestAuthenticationEntryPoint;
 import com.ftn.kts_nvt.security.auth.TokenAuthenticationFilter;
 import com.ftn.kts_nvt.services.CustomUserDetailsService;
 
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 @Configuration
 //Ukljucivanje podrske za anotacije "@Pre*" i "@Post*" koje ce aktivirati autorizacione provere za svaki pristup metodi
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableSwagger2
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	// Implementacija PasswordEncoder-a koriscenjem BCrypt hashing funkcije.

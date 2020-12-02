@@ -1,6 +1,5 @@
 package com.ftn.kts_nvt.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
