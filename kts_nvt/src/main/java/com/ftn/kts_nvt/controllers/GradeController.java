@@ -88,7 +88,7 @@ public class GradeController {
     
     /*
      * GET
-     * http://localhost:8080/offer/user/1
+     * http://localhost:8080/grades/offer/1
      * */
     @RequestMapping(value="/offer/{id}", method=RequestMethod.GET)
     public ResponseEntity<List<GradeDTO>> getGradeForOffer(@PathVariable Long id){

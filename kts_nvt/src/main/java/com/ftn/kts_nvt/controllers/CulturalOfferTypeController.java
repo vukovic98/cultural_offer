@@ -24,7 +24,7 @@ import com.ftn.kts_nvt.helper.CulturalOfferTypeMapper;
 import com.ftn.kts_nvt.services.CulturalOfferTypeService;
 
 @RestController
-@RequestMapping("/culturalOfferTypes")
+@RequestMapping("/cultural-offer-types")
 public class CulturalOfferTypeController {
 
 	@Autowired

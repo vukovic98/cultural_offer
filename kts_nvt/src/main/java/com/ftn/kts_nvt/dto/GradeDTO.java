@@ -1,25 +1,26 @@
 package com.ftn.kts_nvt.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.RegisteredUser;
 
 public class GradeDTO {
 
 	private Long id;
+	@NotNull(message = "Value cannot be null.")
 	private int value;
+	@NotNull(message = "User cannot be null.")
 	private RegisteredUser user;
+	@NotNull(message = "CulturalOFfer cannot be null.")
 	private CulturalOffer culturalOffer;
 	
 	public GradeDTO() {}
 
-	public GradeDTO(int value, RegisteredUser user, CulturalOffer culturalOffer) {
-		super();
-		this.value = value;
-		this.user = user;
-		this.culturalOffer = culturalOffer;
-	}
-	
-	public GradeDTO(Long id, int value, RegisteredUser user, CulturalOffer culturalOffer) {
+	public GradeDTO(Long id, @NotNull(message = "Value cannot be null.") int value,
+			@NotNull(message = "User cannot be null.") RegisteredUser user,
+			@NotNull(message = "CulturalOFfer cannot be null.") CulturalOffer culturalOffer) {
 		super();
 		this.id = id;
 		this.value = value;
@@ -27,6 +28,15 @@ public class GradeDTO {
 		this.culturalOffer = culturalOffer;
 	}
 
+	public GradeDTO(@NotNull(message = "Value cannot be null.") int value,
+			@NotNull(message = "User cannot be null.") RegisteredUser user,
+			@NotNull(message = "CulturalOFfer cannot be null.") CulturalOffer culturalOffer) {
+		super();
+		this.value = value;
+		this.user = user;
+		this.culturalOffer = culturalOffer;
+	}
+	
 	public Long getId() {
 		return id;
 	}

@@ -132,11 +132,11 @@ public class CulturalOfferCategoryController {
      * http://localhost:8080/cultural-offer-categories/2
      * */
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id){
+    public ResponseEntity<String> deleteCategory(@PathVariable Long id){
         try {
             service.delete(id);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
