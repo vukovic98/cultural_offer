@@ -31,15 +31,17 @@ public class CulturalOfferController {
 	@Autowired
 	private CulturalOfferService culturalOfferService;
 	
-	private CulturalOfferMapper mapper;
+	private CulturalOfferMapper mapper = new CulturalOfferMapper();
 	
 	//GET: http://localhost:8080/culturalOffers
 	@GetMapping
-	public ResponseEntity<ArrayList<CulturalOffer>> findAll() {
+	public ResponseEntity<ArrayList<CulturalOfferDTO>> findAll() {
 		ArrayList<CulturalOffer> offers = this.culturalOfferService.findAll();
 		
+		ArrayList<CulturalOfferDTO> dtos = (ArrayList<CulturalOfferDTO>) this.mapper.listToDTO(offers);
+		
 		if(!offers.isEmpty())
-			return new ResponseEntity<ArrayList<CulturalOffer>>(offers, HttpStatus.OK);
+			return new ResponseEntity<>(dtos, HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
@@ -56,11 +58,11 @@ public class CulturalOfferController {
 	}
 	
 	@GetMapping(path="/{id}")
-	public ResponseEntity<CulturalOffer> findById(@PathVariable("id") long id) {
+	public ResponseEntity<CulturalOfferDTO> findById(@PathVariable("id") long id) {
 		CulturalOffer found = this.culturalOfferService.findById(id);
 		
 		if(found != null)
-			return new ResponseEntity<CulturalOffer>(found, HttpStatus.OK);
+			return new ResponseEntity<>(this.mapper.toDto(found), HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
