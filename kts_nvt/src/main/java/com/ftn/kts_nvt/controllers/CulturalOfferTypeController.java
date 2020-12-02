@@ -78,7 +78,12 @@ public class CulturalOfferTypeController {
 
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") long id) {
-		boolean deleted = this.culturalOfferTypeService.deleteById(id);
+		boolean deleted;
+		try {
+			deleted = this.culturalOfferTypeService.deleteById(id);
+		} catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		if (deleted)
 			return new ResponseEntity<>(HttpStatus.OK);
 		else
@@ -88,7 +93,12 @@ public class CulturalOfferTypeController {
 	@DeleteMapping(consumes = "application/json")
 	public ResponseEntity<HttpStatus> deleteEntity(@RequestBody CulturalOfferTypeDTO dto) {
 		CulturalOfferType type = this.mapper.toEntity(dto);
-		boolean deleted = this.culturalOfferTypeService.delete(type);
+		boolean deleted;
+		try {
+			deleted = this.culturalOfferTypeService.delete(type);
+		} catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		if (deleted)
 			return new ResponseEntity<>(HttpStatus.OK);
 		else
