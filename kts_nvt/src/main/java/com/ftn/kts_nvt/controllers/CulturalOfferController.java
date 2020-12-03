@@ -48,9 +48,9 @@ public class CulturalOfferController {
 	}
 	
 	//GET: http://localhost:8080/culturalOffers/by-page
-	@GetMapping(path="/by-page/{pageNum}")
+	@GetMapping(path="/by-page/{id}")
 	public ResponseEntity<Page<CulturalOfferDTO>> findAll(@PathVariable int pageNum, Pageable pageable) {
-		Pageable pageRequest = PageRequest.of(pageNum-1, 10);
+		Pageable pageRequest = PageRequest.of(pageNum, 10);
 	
 		Page<CulturalOffer> page = this.culturalOfferService.findAll(pageRequest);
 		
