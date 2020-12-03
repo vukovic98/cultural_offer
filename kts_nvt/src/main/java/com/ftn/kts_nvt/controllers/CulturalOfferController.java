@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.kts_nvt.beans.CulturalOffer;
-import com.ftn.kts_nvt.dto.CommentDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferDTO;
 import com.ftn.kts_nvt.helper.CulturalOfferMapper;
 import com.ftn.kts_nvt.services.CulturalOfferService;
@@ -53,6 +52,7 @@ public class CulturalOfferController {
 	
 	public ResponseEntity<Page<CulturalOfferDTO>> findAll(@PathVariable int pageNum) {
 	
+		Pageable pageRequest = PageRequest.of(pageNum-1, 10);
 	
 		Page<CulturalOffer> page = this.culturalOfferService.findAll(pageRequest);
 		
