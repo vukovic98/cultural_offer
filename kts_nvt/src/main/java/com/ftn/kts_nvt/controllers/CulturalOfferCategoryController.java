@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -51,8 +52,9 @@ public class CulturalOfferCategoryController {
      * GET
      * http://localhost:8080/cultural-offer-categories/by-page
      * */
- 	@GetMapping(value = "/by-page")
- 	public ResponseEntity<Page<CulturalOfferCategoryDTO>> getAll(Pageable pageable) {
+ 	@GetMapping(value = "/by-page/{pageNum}")
+ 	public ResponseEntity<Page<CulturalOfferCategoryDTO>> getAll(@PathVariable int pageNum) {
+ 		Pageable pageable = PageRequest.of(pageNum-1, 10);
  		Page<CulturalOfferCategory> page = service.findAll(pageable);
  		List<CulturalOfferCategoryDTO> offerDTOS = mapper.toDTOList(page.toList());
  		Page<CulturalOfferCategoryDTO> pageOfferDTOS = new PageImpl<>(offerDTOS ,

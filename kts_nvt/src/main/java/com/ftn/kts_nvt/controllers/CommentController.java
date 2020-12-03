@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import com.ftn.kts_nvt.beans.Comment;
@@ -44,9 +45,11 @@ public class CommentController {
 	}
 
 	// GET: http://localhost:8080/comments/by-page
-	@GetMapping(value = "/by-page")
-	public ResponseEntity<Page<CommentDTO>> getAllCulturalContentCategories(Pageable pageable) {
-		Page<Comment> page = this.commentService.findAll(pageable);
+	@GetMapping(value = "/by-page/{pageNum}")
+	public ResponseEntity<Page<CommentDTO>> getAllCulturalContentCategories(@PathVariable int pageNum) {
+		Pageable pageRequest = PageRequest.of(pageNum-1, 10);
+		
+		Page<Comment> page = this.commentService.findAll(pageRequest);
 		List<CommentDTO> commentDTOS = mapper.listToDto(page.toList());
 		Page<CommentDTO> pageCommentDTOS = new PageImpl<>(commentDTOS, page.getPageable(), page.getTotalElements());
 

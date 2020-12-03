@@ -47,10 +47,12 @@ public class CulturalOfferController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
-	//GET: http://localhost:8080/culturalOffers/by-page
-	@GetMapping(path="/by-page/{id}")
-	public ResponseEntity<Page<CulturalOfferDTO>> findAll(@PathVariable int pageNum, Pageable pageable) {
-		Pageable pageRequest = PageRequest.of(pageNum, 10);
+
+	//GET: http://localhost:8080/culturalOffers/by-page/{pageNum}
+	@GetMapping(path="/by-page/{pageNum}")
+	
+	public ResponseEntity<Page<CulturalOfferDTO>> findAll(@PathVariable int pageNum) {
+	
 	
 		Page<CulturalOffer> page = this.culturalOfferService.findAll(pageRequest);
 		
