@@ -3,6 +3,8 @@ package com.ftn.kts_nvt.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ftn.kts_nvt.beans.Post;
@@ -17,6 +19,10 @@ public class PostService implements ServiceInterface<Post>{
 	@Override
 	public List<Post> findAll() {
         return postRepository.findAll();
+	}
+	
+	public Page<Post> findAll(Pageable pageable) {
+        return postRepository.findAll(pageable);
 	}
 
 	@Override

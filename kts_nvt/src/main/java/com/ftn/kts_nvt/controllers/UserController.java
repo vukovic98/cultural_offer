@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -40,8 +41,9 @@ public class UserController {
         return new ResponseEntity<>(userMapper.toUserDTOList(users), HttpStatus.OK);
     }
     
-    @GetMapping(value = "/by-page")
- 	public ResponseEntity<Page<UserDTO>> getAll(Pageable pageable) {
+    @GetMapping(value = "/by-page/{pageNum}")
+ 	public ResponseEntity<Page<UserDTO>> getAll(@PathVariable int pageNum) {
+    	Pageable pageable = PageRequest.of(pageNum-1, 10);
  		Page<User> page = userService.findAll(pageable);
  		List<UserDTO> userDTOS = userMapper.toUserDTOList(page.toList());
  		Page<UserDTO> pageUserDTOS = new PageImpl<>(userDTOS,

@@ -4,16 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.Post;
+import com.ftn.kts_nvt.dto.CulturalOfferDTO;
 import com.ftn.kts_nvt.dto.PostDTO;
 import com.ftn.kts_nvt.helper.PostMapper;
 import com.ftn.kts_nvt.services.PostService;
@@ -36,6 +43,18 @@ public class PostController {
         List<Post> posts = postService.findAll();
         return new ResponseEntity<>(toPostDTOList(posts), HttpStatus.OK);
     }
+    
+    @GetMapping(path="/by-page/{pageNum}")
+	public ResponseEntity<Page<PostDTO>> findAll(@PathVariable int pageNum) {
+		Pageable pageRequest = PageRequest.of(pageNum-1, 10);
+	
+		Page<Post> page = this.postService.findAll(pageRequest);
+		
+		List<PostDTO> postDTOS = this.postMapper.listToDto(page.toList());
+		Page<PostDTO> pagePostDTOS = new PageImpl<>(postDTOS, page.getPageable(), page.getTotalElements());
+
+		return new ResponseEntity<>(pagePostDTOS, HttpStatus.OK);
+	}
     
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
     public ResponseEntity<PostDTO> getPost(@PathVariable Long id){
