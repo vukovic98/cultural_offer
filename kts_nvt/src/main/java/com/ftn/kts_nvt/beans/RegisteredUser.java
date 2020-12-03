@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "registeredUser")
+@Table(name = "registered_user")
 public class RegisteredUser extends User {
 	
 	@ElementCollection

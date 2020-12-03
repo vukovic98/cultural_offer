@@ -26,7 +26,7 @@ public class Comment {
 	private String content;
 
 	@ManyToOne
-	@JoinColumn(name = "image_id", nullable = false)
+	@JoinColumn(name = "image_id", nullable = true)
 	private Image image;
 
 	@ManyToOne

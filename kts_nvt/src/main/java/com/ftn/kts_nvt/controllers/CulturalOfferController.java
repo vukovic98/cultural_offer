@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,9 +48,11 @@ public class CulturalOfferController {
 	}
 	
 	//GET: http://localhost:8080/culturalOffers/by-page
-	@GetMapping(path="/by-page")
-	public ResponseEntity<Page<CulturalOfferDTO>> findAll(Pageable pageable) {
-		Page<CulturalOffer> page = this.culturalOfferService.findAll(pageable);
+	@GetMapping(path="/by-page/{id}")
+	public ResponseEntity<Page<CulturalOfferDTO>> findAll(@PathVariable int pageNum, Pageable pageable) {
+		Pageable pageRequest = PageRequest.of(pageNum, 10);
+	
+		Page<CulturalOffer> page = this.culturalOfferService.findAll(pageRequest);
 		
 		List<CulturalOfferDTO> offersDTOS = this.mapper.listToDTO(page.toList());
 		Page<CulturalOfferDTO> pageOffersDTOS = new PageImpl<>(offersDTOS, page.getPageable(), page.getTotalElements());

@@ -27,9 +27,11 @@ import com.ftn.kts_nvt.beans.User;
 import com.ftn.kts_nvt.dto.UserDTO;
 import com.ftn.kts_nvt.dto.UserLoginDTO;
 import com.ftn.kts_nvt.dto.UserTokenStateDTO;
+import com.ftn.kts_nvt.helper.RegisteredUserMapper;
 import com.ftn.kts_nvt.helper.UserMapper;
 import com.ftn.kts_nvt.security.TokenUtils;
 import com.ftn.kts_nvt.services.CustomUserDetailsService;
+import com.ftn.kts_nvt.services.RegisteredUserService;
 import com.ftn.kts_nvt.services.UserService;
 
 //Kontroler zaduzen za autentifikaciju korisnika
@@ -42,6 +44,9 @@ public class AuthenticationController {
 
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
+	
+	@Autowired
+	private RegisteredUserService registeredUserService;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -50,13 +55,14 @@ public class AuthenticationController {
 	private UserService userService;
 
 	private UserMapper userMapper;
+	private RegisteredUserMapper regUserMapper = new RegisteredUserMapper();
 
 	// Prvi endpoint koji pogadja korisnik kada se loguje.
 	// Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
 	@PostMapping("/log-in")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody UserLoginDTO authenticationRequest,
 			HttpServletResponse response) {
-
+		
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 				authenticationRequest.getUsername(), authenticationRequest.getPassword()));
 
@@ -65,7 +71,7 @@ public class AuthenticationController {
 
 		// Kreiraj token za tog korisnika
 		User user = (User) authentication.getPrincipal();
-		System.out.println(user);
+		
 		String jwt = tokenUtils.generateToken(user.getEmail()); // prijavljujemo se na sistem sa email adresom
 		int expiresIn = tokenUtils.getExpiredIn();
 
@@ -76,7 +82,7 @@ public class AuthenticationController {
 	// Endpoint za registraciju novog korisnika
 	@PostMapping("/sign-up")
 	public ResponseEntity<?> addUser(@RequestBody UserDTO userRequest) throws Exception {
-
+		
 		User existUser = this.userService.findByEmail(userRequest.getEmail());
 		if (existUser != null) {
 			throw new Exception("Username already exists");
@@ -84,7 +90,7 @@ public class AuthenticationController {
 		BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
 		userRequest.setPassword(enc.encode(userRequest.getPassword()));
 		try {
-			existUser = userService.create(userMapper.toEntity(userRequest));
+			existUser = registeredUserService.create(regUserMapper.toEntity(userRequest));
 		} catch (Exception e) {
 			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 		}

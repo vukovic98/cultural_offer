@@ -11,7 +11,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.beans.User;
+import com.ftn.kts_nvt.repositories.RegisteredUserRepository;
 import com.ftn.kts_nvt.repositories.UserRepository;
 
 @Service
@@ -32,7 +34,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		// ako se ne radi nasledjivanje, paziti gde sve treba da se proveri email
 		User user = userRepository.findByEmail(email);
 		if (user == null) {
-			throw new UsernameNotFoundException(String.format("No user found with username '%s'.", email));
+			throw new UsernameNotFoundException(String.format("No user found with username '%s'.", email)); 
 		} else {
 			return user;
 		}
