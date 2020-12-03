@@ -7,7 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.CulturalOfferType;
+import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
 import com.ftn.kts_nvt.repositories.CulturalOfferTypeRepository;
 
 @Service
@@ -16,6 +18,9 @@ public class CulturalOfferTypeService {
 	@Autowired
 	private CulturalOfferTypeRepository culturalOfferTypeRepository;
 
+	@Autowired 
+	CulturalOfferRepository culturalOfferRepository;
+	
 	public ArrayList<CulturalOfferType> findAll(long categoryId) {
 		return this.culturalOfferTypeRepository.findByCategoryId(categoryId);
 
@@ -26,22 +31,40 @@ public class CulturalOfferTypeService {
 	}
 
 	public CulturalOfferType findById(long culturalOfferTypeId) {
-		return this.findById(culturalOfferTypeId);
+		return this.culturalOfferTypeRepository.findById(culturalOfferTypeId).orElse(null);
 	}
 
-	public boolean delete(CulturalOfferType culturalOfferType) {
+	public boolean delete(CulturalOfferType culturalOfferType) throws Exception {
 		boolean exists = this.culturalOfferTypeRepository.existsById(culturalOfferType.getId());
 
-		if (exists)
-			this.culturalOfferTypeRepository.delete(culturalOfferType);
+		if (exists) {
+			ArrayList<CulturalOffer> list = culturalOfferRepository.findByTypeId(culturalOfferType.getId());
+			for(CulturalOffer c : list) {
+				System.out.println("for = " + c.getName());
+			}
+			if(list.size() != 0) {
+				throw new Exception("CulturalOfferType with given id exist CulturalOffer");
+			}else {
+				this.culturalOfferTypeRepository.delete(culturalOfferType);			
+			}
+		}
 		return exists;
 	}
 
-	public boolean deleteById(long id) {
+	public boolean deleteById(long id) throws Exception {
 		boolean exists = this.culturalOfferTypeRepository.existsById(id);
 
-		if (exists)
-			this.culturalOfferTypeRepository.deleteById(id);
+		if (exists) {
+			ArrayList<CulturalOffer> list = culturalOfferRepository.findByTypeId(id);
+			for(CulturalOffer c : list) {
+				System.out.println("for = " + c.getName());
+			}
+			if(list.size() != 0) {
+				throw new Exception("CulturalOfferType with given id exist CulturalOffer");
+			}else {
+				this.culturalOfferTypeRepository.deleteById(id);
+			}
+		}
 		return exists;
 	}
 
