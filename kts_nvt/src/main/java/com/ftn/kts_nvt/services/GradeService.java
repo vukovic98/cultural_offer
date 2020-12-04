@@ -40,7 +40,17 @@ public class GradeService implements ServiceInterface<Grade>{
 
 	@Override
 	public Grade create(Grade entity) throws Exception {
-		return gradeRepository.save(entity);
+		Grade grade = gradeRepository.findGradeByUser_IdAndCulturalOffer_Id(entity.getUser().getId(),
+				entity.getCulturalOffer().getId()).orElse(null);
+		
+		if(grade == null) {
+			return gradeRepository.save(entity);			
+		}else {
+			System.out.println(grade.getUser().getId() + " " + 
+					grade.getCulturalOffer().getId() + " " + 
+					grade.getValue());
+			throw new Exception("Grade already exist");
+		}
 	}
 	
 	@Override

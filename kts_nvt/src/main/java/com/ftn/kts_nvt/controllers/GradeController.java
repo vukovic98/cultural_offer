@@ -47,7 +47,7 @@ public class GradeController {
 	/*
 	 * GET http://localhost:8080/grades/byPage/1
 	 */
-	@GetMapping(value = "/byPage")
+ 	@GetMapping(value = "/by-page/{pageNum}")
 	public ResponseEntity<Page<GradeDTO>> getAll(@PathVariable int pageNum) {
 		Pageable pageRequest = PageRequest.of(pageNum - 1, 10);
 		Page<Grade> page = gradeService.findAll(pageRequest);
@@ -112,7 +112,16 @@ public class GradeController {
 	}
 
 	/*
-	 * PUT http://localhost:8080/grades/1 { "value" : 10 }
+	 * PUT http://localhost:8080/grades/1 
+	 * { 
+	 *	  "value" : 5,
+	 * 	  "user" : { 
+	 * 	    "id" : 1 
+	 * 	  },
+	 * 	  "culturalOffer" : {
+	 *      "id" : 1 
+	 *    } 
+	 * }
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<GradeDTO> updateGrade(@RequestBody GradeDTO gradeDTO, @PathVariable Long id) {
