@@ -32,11 +32,9 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 	
+	@Autowired
 	private PostMapper postMapper;
 	
-    public PostController() {
-    	postMapper = new PostMapper();
-    }
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<PostDTO>> getAllPosts() {

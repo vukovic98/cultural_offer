@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.ftn.kts_nvt.beans.CulturalOfferType;
 import com.ftn.kts_nvt.dto.CulturalOfferTypeDTO;
 import com.ftn.kts_nvt.repositories.CulturalOfferCategoryRepository;
 
+@Component
 public class CulturalOfferTypeMapper implements MapperInterface<CulturalOfferType, CulturalOfferTypeDTO> {
 
 	@Autowired

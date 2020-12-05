@@ -29,11 +29,9 @@ public class GradeController {
 	@Autowired
 	private GradeService gradeService;
 
+	@Autowired
 	private GradeMapper gradeMapper;
 
-	public GradeController() {
-		gradeMapper = new GradeMapper();
-	}
 
 	/*
 	 * GET http://localhost:8080/grades

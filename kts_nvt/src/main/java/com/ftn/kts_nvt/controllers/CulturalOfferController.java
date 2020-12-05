@@ -31,7 +31,8 @@ public class CulturalOfferController {
 	@Autowired
 	private CulturalOfferService culturalOfferService;
 	
-	private CulturalOfferMapper mapper = new CulturalOfferMapper();
+	@Autowired
+	private CulturalOfferMapper mapper;
 	
 	//GET: http://localhost:8080/culturalOffers
 	@GetMapping

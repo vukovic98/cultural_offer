@@ -31,6 +31,7 @@ public class CommentController {
 	@Autowired
 	private CommentService commentService;
 
+	@Autowired
 	private CommentMapper mapper;
 
 	// GET: http://localhost:8080/comments

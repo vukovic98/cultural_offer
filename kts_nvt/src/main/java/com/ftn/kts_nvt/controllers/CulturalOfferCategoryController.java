@@ -32,11 +32,9 @@ public class CulturalOfferCategoryController {
 	@Autowired
 	private CulturalOfferCategoryService service;
 	
+	@Autowired
 	private CulturalOfferCategoryMapper mapper;
-	
-    public CulturalOfferCategoryController() {
-        mapper = new CulturalOfferCategoryMapper();
-    }
+
 
     /*
      * GET

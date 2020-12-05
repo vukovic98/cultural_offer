@@ -29,11 +29,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
     private UserMapper userMapper;
 	
-    public UserController() {
-        userMapper = new UserMapper();
-    }
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<UserDTO>> getAllUsers() {

@@ -54,8 +54,11 @@ public class AuthenticationController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
 	private UserMapper userMapper;
-	private RegisteredUserMapper regUserMapper = new RegisteredUserMapper();
+	
+	@Autowired
+	private RegisteredUserMapper regUserMapper;
 
 	// Prvi endpoint koji pogadja korisnik kada se loguje.
 	// Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.

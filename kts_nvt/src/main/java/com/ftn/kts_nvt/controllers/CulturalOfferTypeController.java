@@ -31,11 +31,9 @@ public class CulturalOfferTypeController {
 	@Autowired
 	private CulturalOfferTypeService culturalOfferTypeService;
 
+	@Autowired
 	private CulturalOfferTypeMapper mapper;
 
-	public CulturalOfferTypeController() {
-		mapper = new CulturalOfferTypeMapper();
-	}
 
 	// GET http://localhost:8080/culturalOfferTypes/byCategory/{categoryId}
 	@GetMapping(path = "/byCategory/{categoryId}")

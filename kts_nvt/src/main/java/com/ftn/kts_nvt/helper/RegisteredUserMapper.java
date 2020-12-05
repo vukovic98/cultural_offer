@@ -2,12 +2,15 @@ package com.ftn.kts_nvt.helper;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Component;
+
 import com.ftn.kts_nvt.beans.Authority;
 import com.ftn.kts_nvt.beans.Comment;
 import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.dto.UserDTO;
 import com.ftn.kts_nvt.dto.UserLoginDTO;
 
+@Component
 public class RegisteredUserMapper implements MapperInterface<RegisteredUser, UserDTO> {
 
 	@Override

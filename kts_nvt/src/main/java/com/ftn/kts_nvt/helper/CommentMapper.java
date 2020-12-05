@@ -3,9 +3,12 @@ package com.ftn.kts_nvt.helper;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.ftn.kts_nvt.beans.Comment;
 import com.ftn.kts_nvt.dto.CommentDTO;
 
+@Component
 public class CommentMapper implements MapperInterface<Comment, CommentDTO> {
 
 	@Override
