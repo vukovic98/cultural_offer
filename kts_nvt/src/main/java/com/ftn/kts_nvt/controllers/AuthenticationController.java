@@ -148,7 +148,8 @@ public class AuthenticationController {
 		else {
 			return new ResponseEntity<>(er.getAllErrors(), HttpStatus.BAD_REQUEST);
 
-
+		}
+	}
 	// U slucaju isteka vazenja JWT tokena, endpoint koji se poziva da se token
 	// osvezi
 	@PostMapping(value = "/refresh")
