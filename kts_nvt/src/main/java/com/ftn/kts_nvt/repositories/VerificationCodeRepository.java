@@ -12,6 +12,6 @@ public interface VerificationCodeRepository extends JpaRepository<VerificationCo
 	@Query(
 			value = "SELECT * FROM verification_code WHERE user_id = ?1",
 			nativeQuery = true)
-	public VerificationCode findByUserId(long id);
+	public VerificationCode findByUserId(Long id);
 	
 }
