@@ -112,8 +112,8 @@ public class AuthenticationController {
 	public ResponseEntity<UserTokenStateDTO> refreshAuthenticationToken(HttpServletRequest request) {
 
 		String token = tokenUtils.getToken(request);
-		String username = this.tokenUtils.getUsernameFromToken(token);
-		User user = (User) this.userDetailsService.loadUserByUsername(username);
+		//String username = this.tokenUtils.getUsernameFromToken(token);
+		//User user = (User) this.userDetailsService.loadUserByUsername(username);
 		String refreshedToken = tokenUtils.refreshToken(token);
 		int expiresIn = tokenUtils.getExpiredIn();
 

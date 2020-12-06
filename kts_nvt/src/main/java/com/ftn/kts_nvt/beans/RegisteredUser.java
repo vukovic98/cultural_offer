@@ -3,6 +3,7 @@ package com.ftn.kts_nvt.beans;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -12,6 +13,11 @@ import javax.persistence.Table;
 @Table(name = "registered_user")
 public class RegisteredUser extends User {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@ElementCollection
 	@CollectionTable(name = "registeredUser_comments", joinColumns = @JoinColumn(name = "user_id"))
 	private List<Comment> comments;
@@ -20,6 +26,9 @@ public class RegisteredUser extends User {
 	@CollectionTable(name = "registeredUser_culturalOffers", joinColumns = @JoinColumn(name = "user_id"))
 	private List<CulturalOffer> culturalOffers;
 	
+	@Column(name="verified", nullable=false)
+	private boolean verified = false;
+	
 	public RegisteredUser() {
 		
 	}
@@ -27,6 +36,7 @@ public class RegisteredUser extends User {
 		super();
 		this.comments = comments;
 		this.culturalOffers = culturalOffers;
+		this.verified = false;
 	}
 	public List<Comment> getComments() {
 		return comments;
