@@ -23,16 +23,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.beans.User;
+import com.ftn.kts_nvt.beans.VerificationCode;
 import com.ftn.kts_nvt.dto.UserDTO;
 import com.ftn.kts_nvt.dto.UserLoginDTO;
 import com.ftn.kts_nvt.dto.UserTokenStateDTO;
+import com.ftn.kts_nvt.dto.VerificationCodeDTO;
 import com.ftn.kts_nvt.helper.RegisteredUserMapper;
 import com.ftn.kts_nvt.helper.UserMapper;
 import com.ftn.kts_nvt.security.TokenUtils;
 import com.ftn.kts_nvt.services.CustomUserDetailsService;
 import com.ftn.kts_nvt.services.RegisteredUserService;
 import com.ftn.kts_nvt.services.UserService;
+import com.ftn.kts_nvt.services.VerificationCodeService;
 
 //Kontroler zaduzen za autentifikaciju korisnika
 @RestController
@@ -44,9 +48,12 @@ public class AuthenticationController {
 
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
-	
+
 	@Autowired
 	private RegisteredUserService registeredUserService;
+
+	@Autowired
+	private VerificationCodeService verificationCodeService;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -56,7 +63,7 @@ public class AuthenticationController {
 
 	@Autowired
 	private UserMapper userMapper;
-	
+
 	@Autowired
 	private RegisteredUserMapper regUserMapper;
 
@@ -65,7 +72,7 @@ public class AuthenticationController {
 	@PostMapping("/log-in")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody UserLoginDTO authenticationRequest,
 			HttpServletResponse response) {
-		
+
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 				authenticationRequest.getEmail(), authenticationRequest.getPassword()));
 
@@ -74,7 +81,7 @@ public class AuthenticationController {
 
 		// Kreiraj token za tog korisnika
 		User user = (User) authentication.getPrincipal();
-		
+
 		String jwt = tokenUtils.generateToken(user.getEmail()); // prijavljujemo se na sistem sa email adresom
 		int expiresIn = tokenUtils.getExpiredIn();
 
@@ -82,14 +89,35 @@ public class AuthenticationController {
 		return ResponseEntity.ok(new UserTokenStateDTO(jwt, expiresIn));
 	}
 
+	@PostMapping("/verify")
+	public ResponseEntity<HttpStatus> verifyUser(@RequestBody VerificationCodeDTO dto) {
+		RegisteredUser user = this.registeredUserService.findOneByEmail(dto.getUserEmail());
+
+		if (user != null) {
+			VerificationCode code = this.verificationCodeService.findCodeByUser(user.getId());
+
+			if (dto.getCode().equalsIgnoreCase(code.getCode())) {
+				this.verificationCodeService.deleteCodeForUser(user.getId());
+
+				user.setVerified(true);
+				this.registeredUserService.save(user);
+
+				return new ResponseEntity<>(HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		} else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
 	// Endpoint za registraciju novog korisnika
 	@PostMapping("/sign-up")
 	public ResponseEntity<?> addUser(@RequestBody UserDTO userRequest) throws Exception {
 		System.out.println("signUp userDTO = " + userRequest);
-		
+
 		User existUser = this.userService.findByEmail(userRequest.getEmail());
 		if (existUser != null) {
-			//throw new Exception("Username already exists");
+			// throw new Exception("Username already exists");
 			return new ResponseEntity<>("Username already exists", HttpStatus.BAD_REQUEST);
 
 		}
@@ -98,6 +126,9 @@ public class AuthenticationController {
 		userRequest.setPassword(enc.encode(userRequest.getPassword()));
 		try {
 			existUser = registeredUserService.create(regUserMapper.toEntity(userRequest));
+			VerificationCode code = new VerificationCode((RegisteredUser) existUser);
+
+			this.verificationCodeService.create(code);
 			System.out.println("existUser create = " + existUser);
 
 		} catch (Exception e) {
@@ -112,8 +143,8 @@ public class AuthenticationController {
 	public ResponseEntity<UserTokenStateDTO> refreshAuthenticationToken(HttpServletRequest request) {
 
 		String token = tokenUtils.getToken(request);
-		//String username = this.tokenUtils.getUsernameFromToken(token);
-		//User user = (User) this.userDetailsService.loadUserByUsername(username);
+		// String username = this.tokenUtils.getUsernameFromToken(token);
+		// User user = (User) this.userDetailsService.loadUserByUsername(username);
 		String refreshedToken = tokenUtils.refreshToken(token);
 		int expiresIn = tokenUtils.getExpiredIn();
 

@@ -17,6 +17,26 @@ public class VerificationCodeService {
 	}
 	
 	public VerificationCode findCodeByUser(long id) {
-		return this.verificationCodeRepository.findByUser(id);
+		return this.verificationCodeRepository.findByUserId(id);
 	}
+	
+	public boolean deleteCodeForUser(long id) {
+		VerificationCode exists = this.verificationCodeRepository.findByUser(id);
+		
+		if(exists != null) {
+			this.verificationCodeRepository.delete(exists);
+			return true;
+		} else
+			return false;
+	}
+	
+	public boolean create(VerificationCode c) {
+		VerificationCode code = this.verificationCodeRepository.save(c);
+		
+		if(code != null)
+			return true;
+		else
+			return false;
+	}
+	
 }
