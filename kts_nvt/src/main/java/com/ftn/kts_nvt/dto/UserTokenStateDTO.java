@@ -1,34 +1,56 @@
 package com.ftn.kts_nvt.dto;
 
+import java.time.Instant;
+
 // DTO koji enkapsulira generisani JWT i njegovo trajanje koji se vracaju klijentu
 public class UserTokenStateDTO {
 
-    private String accessToken;
-    private Long expiresIn;
+	private String authenticationToken;
+	//private String refreshToken;
+	private int expiresAt;
+	private String email;
+	    
+    //private String accessToken;
+    //private Long expiresIn;
 
     public UserTokenStateDTO() {
-        this.accessToken = null;
-        this.expiresIn = null;
     }
 
-    public UserTokenStateDTO(String accessToken, long expiresIn) {
-        this.accessToken = accessToken;
-        this.expiresIn = expiresIn;
-    }
+    public UserTokenStateDTO(String authenticationToken, int expiresAt) {
+		super();
+		this.authenticationToken = authenticationToken;
+		this.expiresAt = expiresAt;
+	}
 
-    public String getAccessToken() {
-        return accessToken;
-    }
+    public UserTokenStateDTO(String authenticationToken, int expiresAt, String email) {
+		super();
+		this.authenticationToken = authenticationToken;
+		this.expiresAt = expiresAt;
+		this.email = email;
+	}
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
+	public String getAuthenticationToken() {
+		return authenticationToken;
+	}
 
-    public Long getExpiresIn() {
-        return expiresIn;
-    }
+	public void setAuthenticationToken(String authenticationToken) {
+		this.authenticationToken = authenticationToken;
+	}
 
-    public void setExpiresIn(Long expiresIn) {
-        this.expiresIn = expiresIn;
-    }
+	public int getExpiresAt() {
+		return expiresAt;
+	}
+
+	public void setExpiresAt(int expiresAt) {
+		this.expiresAt = expiresAt;
+	}
+
+	public String getEmail() { 
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+    
 }

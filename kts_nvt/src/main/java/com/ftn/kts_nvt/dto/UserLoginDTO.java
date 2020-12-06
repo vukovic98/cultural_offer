@@ -3,22 +3,22 @@ package com.ftn.kts_nvt.dto;
 // DTO za login
 public class UserLoginDTO {
 
-    private String username;
+    private String email;
     private String password;
 
     public UserLoginDTO() {}
 
-    public UserLoginDTO(String username, String password) {
-        this.username = username;
+    public UserLoginDTO(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String email) {
-        this.username = email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -28,4 +28,10 @@ public class UserLoginDTO {
     public void setPassword(String password) {
         this.password = password;
     }
+
+	@Override
+	public String toString() {
+		return "UserLoginDTO [email=" + email + ", password=" + password + "]";
+	}
+    
 }
