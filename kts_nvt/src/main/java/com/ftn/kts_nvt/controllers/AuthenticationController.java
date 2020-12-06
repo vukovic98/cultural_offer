@@ -67,7 +67,7 @@ public class AuthenticationController {
 			HttpServletResponse response) {
 		
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-				authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+				authenticationRequest.getEmail(), authenticationRequest.getPassword()));
 
 		// Ubaci korisnika u trenutni security kontekst
 		SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -85,15 +85,21 @@ public class AuthenticationController {
 	// Endpoint za registraciju novog korisnika
 	@PostMapping("/sign-up")
 	public ResponseEntity<?> addUser(@RequestBody UserDTO userRequest) throws Exception {
+		System.out.println("signUp userDTO = " + userRequest);
 		
 		User existUser = this.userService.findByEmail(userRequest.getEmail());
 		if (existUser != null) {
-			throw new Exception("Username already exists");
+			//throw new Exception("Username already exists");
+			return new ResponseEntity<>("Username already exists", HttpStatus.BAD_REQUEST);
+
 		}
+		System.out.println("existUser = " + existUser);
 		BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
 		userRequest.setPassword(enc.encode(userRequest.getPassword()));
 		try {
 			existUser = registeredUserService.create(regUserMapper.toEntity(userRequest));
+			System.out.println("existUser create = " + existUser);
+
 		} catch (Exception e) {
 			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 		}
