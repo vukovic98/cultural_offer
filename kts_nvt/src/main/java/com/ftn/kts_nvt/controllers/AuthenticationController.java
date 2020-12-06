@@ -129,6 +129,7 @@ public class AuthenticationController {
 			VerificationCode code = new VerificationCode((RegisteredUser) existUser);
 
 			this.verificationCodeService.create(code);
+			this.verificationCodeService.sendCode(existUser, code);
 			System.out.println("existUser create = " + existUser);
 
 		} catch (Exception e) {

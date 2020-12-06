@@ -1,8 +1,14 @@
 package com.ftn.kts_nvt.services;
 
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import com.ftn.kts_nvt.beans.User;
 import com.ftn.kts_nvt.beans.VerificationCode;
 import com.ftn.kts_nvt.repositories.VerificationCodeRepository;
 
@@ -12,16 +18,19 @@ public class VerificationCodeService {
 	@Autowired
 	private VerificationCodeRepository verificationCodeRepository;
 	
+	@Autowired
+	private JavaMailSender javaMailSender;
+	
 	public VerificationCode findCodeById(long id) {
 		return this.verificationCodeRepository.findById(id).orElse(null);
 	}
 	
-	public VerificationCode findCodeByUser(long id) {
+	public VerificationCode findCodeByUser(Long id) {
 		return this.verificationCodeRepository.findByUserId(id);
 	}
 	
-	public boolean deleteCodeForUser(long id) {
-		VerificationCode exists = this.verificationCodeRepository.findByUser(id);
+	public boolean deleteCodeForUser(Long id) {
+		VerificationCode exists = this.verificationCodeRepository.findByUserId(id);
 		
 		if(exists != null) {
 			this.verificationCodeRepository.delete(exists);
@@ -37,6 +46,31 @@ public class VerificationCodeService {
 			return true;
 		else
 			return false;
+	}
+
+	@Async
+	public void sendCode(User existUser, VerificationCode code) {
+		try {
+			MimeMessage msg = this.javaMailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+
+			helper.setTo(existUser.getEmail());
+			helper.setSubject("Cultural Offer: Verification Mail");
+
+			StringBuffer sb = new StringBuffer();
+
+			sb.append("<h2>" + existUser.getFirstName() + ", in order to successfully register on our website, please use code</h2><br>");
+			sb.append("<h3>" + code.getCode() + "</h3> <br><br>");
+			sb.append("<h2>to verify your account on your next login!</h2>");
+
+			helper.setText(sb.toString(), true);
+			this.javaMailSender.send(msg);
+
+			System.out.println("SENT ACCEPTED MAIL!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 }
