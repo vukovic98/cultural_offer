@@ -2,6 +2,8 @@ package com.ftn.kts_nvt.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -97,7 +99,7 @@ public class GradeController {
 	 * "culturalOffer" : { "id" : 1 } }
 	 */
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<GradeDTO> createGrade(@RequestBody GradeDTO gradeDTO) {
+	public ResponseEntity<GradeDTO> createGrade(@Valid @RequestBody GradeDTO gradeDTO) {
 		System.out.println("gradeDTO = " + gradeDTO);
 		Grade grade;
 		try {

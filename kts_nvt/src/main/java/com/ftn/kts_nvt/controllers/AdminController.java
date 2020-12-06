@@ -2,6 +2,8 @@ package com.ftn.kts_nvt.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -65,7 +67,7 @@ public class AdminController {
     }
     
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO){
         Admin user;
         try {
              user = adminService.create((Admin)userMapper.toEntity(userDTO));
@@ -77,7 +79,7 @@ public class AdminController {
     }
     
     @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable Long id){
+    public ResponseEntity<UserDTO> updateUser(@Valid @RequestBody UserDTO userDTO, @PathVariable Long id){
     	Admin user;
         try {
             user = adminService.update((Admin)userMapper.toEntity(userDTO), id);

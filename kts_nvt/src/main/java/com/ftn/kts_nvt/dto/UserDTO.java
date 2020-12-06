@@ -1,6 +1,7 @@
 package com.ftn.kts_nvt.dto;
 
 
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -8,6 +9,7 @@ public class UserDTO {
 
 	private Long id;
 
+	
 	@NotBlank(message = "First name cannot be empty.")
 	private String firstName;
 

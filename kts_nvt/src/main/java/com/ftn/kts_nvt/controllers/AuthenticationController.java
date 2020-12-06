@@ -1,10 +1,12 @@
 package com.ftn.kts_nvt.controllers;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.Errors;
 
 import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.beans.User;
@@ -111,32 +114,40 @@ public class AuthenticationController {
 	}
 
 	// Endpoint za registraciju novog korisnika
+	
 	@PostMapping("/sign-up")
-	public ResponseEntity<?> addUser(@RequestBody UserDTO userRequest) throws Exception {
-		System.out.println("signUp userDTO = " + userRequest);
+	public ResponseEntity<?> addUser(@Valid @RequestBody UserDTO userRequest, Errors er) throws Exception {
+		
+		if(!er.hasErrors()) {
+			System.out.println("signUp userDTO = " + userRequest);
 
-		User existUser = this.userService.findByEmail(userRequest.getEmail());
-		if (existUser != null) {
-			// throw new Exception("Username already exists");
-			return new ResponseEntity<>("Username already exists", HttpStatus.BAD_REQUEST);
+			User existUser = this.userService.findByEmail(userRequest.getEmail());
+			if (existUser != null) {
+				// throw new Exception("Username already exists");
+				return new ResponseEntity<>("Username already exists", HttpStatus.BAD_REQUEST);
 
+			}
+			System.out.println("existUser = " + existUser);
+			BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
+			userRequest.setPassword(enc.encode(userRequest.getPassword()));
+			try {
+				existUser = registeredUserService.create(regUserMapper.toEntity(userRequest));
+        VerificationCode code = new VerificationCode((RegisteredUser) existUser);
+
+        this.verificationCodeService.create(code);
+        this.verificationCodeService.sendCode(existUser, code);
+				System.out.println("existUser create = " + existUser);
+
+			} catch (Exception e) {
+				
+				return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+			}
+			return new ResponseEntity<>(userMapper.toDto(existUser), HttpStatus.CREATED);
+			
 		}
-		System.out.println("existUser = " + existUser);
-		BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
-		userRequest.setPassword(enc.encode(userRequest.getPassword()));
-		try {
-			existUser = registeredUserService.create(regUserMapper.toEntity(userRequest));
-			VerificationCode code = new VerificationCode((RegisteredUser) existUser);
+		else {
+			return new ResponseEntity<>(er.getAllErrors(), HttpStatus.BAD_REQUEST);
 
-			this.verificationCodeService.create(code);
-			this.verificationCodeService.sendCode(existUser, code);
-			System.out.println("existUser create = " + existUser);
-
-		} catch (Exception e) {
-			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<>(userMapper.toDto(existUser), HttpStatus.CREATED);
-	}
 
 	// U slucaju isteka vazenja JWT tokena, endpoint koji se poziva da se token
 	// osvezi

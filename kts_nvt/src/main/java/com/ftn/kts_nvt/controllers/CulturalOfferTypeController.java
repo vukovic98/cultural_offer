@@ -3,6 +3,8 @@ package com.ftn.kts_nvt.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -77,7 +79,7 @@ public class CulturalOfferTypeController {
 	 * { "id":"1", "name":"Exit", "categoryId":"1", "categroyName":"Manifestation" }
 	 */
 	@PostMapping(consumes = "application/json")
-	public ResponseEntity<HttpStatus> create(@RequestBody CulturalOfferTypeDTO dto) {
+	public ResponseEntity<HttpStatus> create(@Valid @RequestBody CulturalOfferTypeDTO dto) {
 		CulturalOfferType type = this.mapper.toEntity(dto);
 		CulturalOfferType saved = this.culturalOfferTypeService.save(type);
 		if (saved != null)
@@ -131,7 +133,7 @@ public class CulturalOfferTypeController {
 	 * }
 	 */
 	@PutMapping(path = "/{id}", consumes = "application/json")
-	public ResponseEntity<HttpStatus> update(@PathVariable("id") long id, @RequestBody CulturalOfferTypeDTO dto) {
+	public ResponseEntity<HttpStatus> update(@Valid @PathVariable("id") long id, @RequestBody CulturalOfferTypeDTO dto) {
 		CulturalOfferType type = this.mapper.toEntity(dto);
 		CulturalOfferType changedType = this.culturalOfferTypeService.update(type, type.getId());
 
