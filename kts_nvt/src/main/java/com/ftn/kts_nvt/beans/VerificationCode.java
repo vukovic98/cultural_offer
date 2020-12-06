@@ -1,5 +1,7 @@
 package com.ftn.kts_nvt.beans;
 
+import java.util.Random;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,11 +33,10 @@ public class VerificationCode {
 		super();
 	}
 
-	public VerificationCode(long id, String code, RegisteredUser user) {
+	public VerificationCode(RegisteredUser user) {
 		super();
-		this.id = id;
-		this.code = code;
 		this.user = user;
+		this.code = generateCode();
 	}
 
 	public long getId() {
@@ -60,6 +61,21 @@ public class VerificationCode {
 
 	public void setUser(RegisteredUser user) {
 		this.user = user;
+	}
+	
+	private String generateCode() {
+		int leftLimit = 48; // numeral '0'
+	    int rightLimit = 122; // letter 'z'
+	    int targetStringLength = 10;
+	    Random random = new Random();
+
+	    String generatedString = random.ints(leftLimit, rightLimit + 1)
+	      .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+	      .limit(targetStringLength)
+	      .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+	      .toString();
+	    
+	    return generatedString;
 	}
 
 }

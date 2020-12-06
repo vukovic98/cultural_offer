@@ -30,15 +30,19 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser> {
 	public RegisteredUser findOne(Long id) {
 		return registeredUserRepository.findById(id).orElse(null);
 	}
+	
+	public RegisteredUser findOneByEmail(String email) {
+		return this.registeredUserRepository.findByEmail(email);
+	}
 
 	@Override
 	public RegisteredUser create(RegisteredUser entity) throws Exception {
-
 		return registeredUserRepository.save(entity);
-
 	}
 
-	
+	public RegisteredUser save(RegisteredUser e) {
+		return this.registeredUserRepository.save(e);
+	}
 	
 	@Override
 	public RegisteredUser update(RegisteredUser entity, Long id) throws Exception {

@@ -26,16 +26,20 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.Errors;
 
+import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.beans.User;
+import com.ftn.kts_nvt.beans.VerificationCode;
 import com.ftn.kts_nvt.dto.UserDTO;
 import com.ftn.kts_nvt.dto.UserLoginDTO;
 import com.ftn.kts_nvt.dto.UserTokenStateDTO;
+import com.ftn.kts_nvt.dto.VerificationCodeDTO;
 import com.ftn.kts_nvt.helper.RegisteredUserMapper;
 import com.ftn.kts_nvt.helper.UserMapper;
 import com.ftn.kts_nvt.security.TokenUtils;
 import com.ftn.kts_nvt.services.CustomUserDetailsService;
 import com.ftn.kts_nvt.services.RegisteredUserService;
 import com.ftn.kts_nvt.services.UserService;
+import com.ftn.kts_nvt.services.VerificationCodeService;
 
 //Kontroler zaduzen za autentifikaciju korisnika
 @RestController
@@ -50,6 +54,9 @@ public class AuthenticationController {
 
 	@Autowired
 	private RegisteredUserService registeredUserService;
+
+	@Autowired
+	private VerificationCodeService verificationCodeService;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -85,6 +92,27 @@ public class AuthenticationController {
 		return ResponseEntity.ok(new UserTokenStateDTO(jwt, expiresIn));
 	}
 
+	@PostMapping("/verify")
+	public ResponseEntity<HttpStatus> verifyUser(@RequestBody VerificationCodeDTO dto) {
+		RegisteredUser user = this.registeredUserService.findOneByEmail(dto.getUserEmail());
+
+		if (user != null) {
+			VerificationCode code = this.verificationCodeService.findCodeByUser(user.getId());
+
+			if (dto.getCode().equalsIgnoreCase(code.getCode())) {
+				this.verificationCodeService.deleteCodeForUser(user.getId());
+
+				user.setVerified(true);
+				this.registeredUserService.save(user);
+
+				return new ResponseEntity<>(HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		} else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
 	// Endpoint za registraciju novog korisnika
 	
 	@PostMapping("/sign-up")
@@ -104,6 +132,10 @@ public class AuthenticationController {
 			userRequest.setPassword(enc.encode(userRequest.getPassword()));
 			try {
 				existUser = registeredUserService.create(regUserMapper.toEntity(userRequest));
+        VerificationCode code = new VerificationCode((RegisteredUser) existUser);
+
+        this.verificationCodeService.create(code);
+        this.verificationCodeService.sendCode(existUser, code);
 				System.out.println("existUser create = " + existUser);
 
 			} catch (Exception e) {
@@ -115,9 +147,7 @@ public class AuthenticationController {
 		}
 		else {
 			return new ResponseEntity<>(er.getAllErrors(), HttpStatus.BAD_REQUEST);
-		}
-		
-	}
+
 
 	// U slucaju isteka vazenja JWT tokena, endpoint koji se poziva da se token
 	// osvezi

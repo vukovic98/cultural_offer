@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "registered_user")
 public class RegisteredUser extends User {
-	
+
 	/**
 	 * 
 	 */
@@ -21,33 +21,47 @@ public class RegisteredUser extends User {
 	@ElementCollection
 	@CollectionTable(name = "registeredUser_comments", joinColumns = @JoinColumn(name = "user_id"))
 	private List<Comment> comments;
-	
+
 	@ElementCollection
 	@CollectionTable(name = "registeredUser_culturalOffers", joinColumns = @JoinColumn(name = "user_id"))
 	private List<CulturalOffer> culturalOffers;
-	
-	@Column(name="verified", nullable=false)
+
+	@Column(name = "verified", nullable = false)
 	private boolean verified = false;
-	
+
 	public RegisteredUser() {
-		
+
 	}
+
 	public RegisteredUser(List<Comment> comments, List<CulturalOffer> culturalOffers) {
 		super();
 		this.comments = comments;
 		this.culturalOffers = culturalOffers;
 		this.verified = false;
 	}
+
 	public List<Comment> getComments() {
 		return comments;
 	}
+
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
+
 	public List<CulturalOffer> getCulturalOffers() {
 		return culturalOffers;
 	}
+
 	public void setCulturalOffers(List<CulturalOffer> culturalOffers) {
 		this.culturalOffers = culturalOffers;
 	}
+
+	public boolean isVerified() {
+		return verified;
+	}
+
+	public void setVerified(boolean verified) {
+		this.verified = verified;
+	}
+
 }
