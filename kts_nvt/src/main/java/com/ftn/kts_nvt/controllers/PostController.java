@@ -3,6 +3,8 @@ package com.ftn.kts_nvt.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -64,7 +66,7 @@ public class PostController {
     }
     
     @RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO){
+    public ResponseEntity<PostDTO> createPost(@Valid @RequestBody PostDTO postDTO){
         Post post;
         try {
         	post = postService.create(postMapper.toEntity(postDTO));
@@ -76,7 +78,7 @@ public class PostController {
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PostDTO> updatePost(@RequestBody PostDTO postDTO, @PathVariable Long id){
+    public ResponseEntity<PostDTO> updatePost(@Valid @RequestBody PostDTO postDTO, @PathVariable Long id){
         Post post;
         try {
         	post = postService.update(postMapper.toEntity(postDTO), id);

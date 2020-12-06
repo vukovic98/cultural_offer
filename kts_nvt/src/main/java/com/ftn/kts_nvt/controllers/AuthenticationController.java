@@ -1,10 +1,12 @@
 package com.ftn.kts_nvt.controllers;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.Errors;
 
 import com.ftn.kts_nvt.beans.User;
 import com.ftn.kts_nvt.dto.UserDTO;
@@ -44,7 +47,7 @@ public class AuthenticationController {
 
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
-	
+
 	@Autowired
 	private RegisteredUserService registeredUserService;
 
@@ -56,7 +59,7 @@ public class AuthenticationController {
 
 	@Autowired
 	private UserMapper userMapper;
-	
+
 	@Autowired
 	private RegisteredUserMapper regUserMapper;
 
@@ -65,7 +68,7 @@ public class AuthenticationController {
 	@PostMapping("/log-in")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody UserLoginDTO authenticationRequest,
 			HttpServletResponse response) {
-		
+
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 				authenticationRequest.getEmail(), authenticationRequest.getPassword()));
 
@@ -74,7 +77,7 @@ public class AuthenticationController {
 
 		// Kreiraj token za tog korisnika
 		User user = (User) authentication.getPrincipal();
-		
+
 		String jwt = tokenUtils.generateToken(user.getEmail()); // prijavljujemo se na sistem sa email adresom
 		int expiresIn = tokenUtils.getExpiredIn();
 
@@ -83,27 +86,37 @@ public class AuthenticationController {
 	}
 
 	// Endpoint za registraciju novog korisnika
+	
 	@PostMapping("/sign-up")
-	public ResponseEntity<?> addUser(@RequestBody UserDTO userRequest) throws Exception {
-		System.out.println("signUp userDTO = " + userRequest);
+	public ResponseEntity<?> addUser(@Valid @RequestBody UserDTO userRequest, Errors er) throws Exception {
 		
-		User existUser = this.userService.findByEmail(userRequest.getEmail());
-		if (existUser != null) {
-			//throw new Exception("Username already exists");
-			return new ResponseEntity<>("Username already exists", HttpStatus.BAD_REQUEST);
+		if(!er.hasErrors()) {
+			System.out.println("signUp userDTO = " + userRequest);
 
-		}
-		System.out.println("existUser = " + existUser);
-		BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
-		userRequest.setPassword(enc.encode(userRequest.getPassword()));
-		try {
-			existUser = registeredUserService.create(regUserMapper.toEntity(userRequest));
-			System.out.println("existUser create = " + existUser);
+			User existUser = this.userService.findByEmail(userRequest.getEmail());
+			if (existUser != null) {
+				// throw new Exception("Username already exists");
+				return new ResponseEntity<>("Username already exists", HttpStatus.BAD_REQUEST);
 
-		} catch (Exception e) {
-			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+			}
+			System.out.println("existUser = " + existUser);
+			BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
+			userRequest.setPassword(enc.encode(userRequest.getPassword()));
+			try {
+				existUser = registeredUserService.create(regUserMapper.toEntity(userRequest));
+				System.out.println("existUser create = " + existUser);
+
+			} catch (Exception e) {
+				
+				return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+			}
+			return new ResponseEntity<>(userMapper.toDto(existUser), HttpStatus.CREATED);
+			
 		}
-		return new ResponseEntity<>(userMapper.toDto(existUser), HttpStatus.CREATED);
+		else {
+			return new ResponseEntity<>(er.getAllErrors(), HttpStatus.BAD_REQUEST);
+		}
+		
 	}
 
 	// U slucaju isteka vazenja JWT tokena, endpoint koji se poziva da se token
@@ -112,8 +125,8 @@ public class AuthenticationController {
 	public ResponseEntity<UserTokenStateDTO> refreshAuthenticationToken(HttpServletRequest request) {
 
 		String token = tokenUtils.getToken(request);
-		//String username = this.tokenUtils.getUsernameFromToken(token);
-		//User user = (User) this.userDetailsService.loadUserByUsername(username);
+		// String username = this.tokenUtils.getUsernameFromToken(token);
+		// User user = (User) this.userDetailsService.loadUserByUsername(username);
 		String refreshedToken = tokenUtils.refreshToken(token);
 		int expiresIn = tokenUtils.getExpiredIn();
 

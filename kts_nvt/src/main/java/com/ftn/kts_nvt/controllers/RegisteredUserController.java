@@ -2,6 +2,8 @@ package com.ftn.kts_nvt.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -65,12 +67,12 @@ public class RegisteredUserController {
     }
     
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO){
         RegisteredUser user;
         try {
              user = registeredUserService.create((RegisteredUser)userMapper.toEntity(userDTO));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(e,HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(userMapper.toDto(user), HttpStatus.CREATED);

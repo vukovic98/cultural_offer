@@ -3,6 +3,8 @@ package com.ftn.kts_nvt.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,7 +72,7 @@ public class CommentController {
 
 	// POST: http://localhost:8080/comments -> RequestBody (DTO)
 	@PostMapping(consumes = "application/json")
-	public ResponseEntity<HttpStatus> create(@RequestBody CommentDTO commentDto) {
+	public ResponseEntity<HttpStatus> create(@Valid @RequestBody CommentDTO commentDto) {
 		CommentMapper mapper = new CommentMapper();
 
 		Comment newComment = mapper.toEntity(commentDto);

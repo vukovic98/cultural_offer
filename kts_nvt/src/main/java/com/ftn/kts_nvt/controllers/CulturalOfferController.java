@@ -3,6 +3,8 @@ package com.ftn.kts_nvt.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -74,7 +76,7 @@ public class CulturalOfferController {
 	}
 	
 	@PostMapping(consumes = "application/json")
-	public ResponseEntity<HttpStatus> create(@RequestBody CulturalOfferDTO offerDto) {
+	public ResponseEntity<HttpStatus> create(@Valid @RequestBody CulturalOfferDTO offerDto) {
 		
 		CulturalOffer offer = this.mapper.toEntity(offerDto);
 		
@@ -111,7 +113,7 @@ public class CulturalOfferController {
 	}
 	
 	@PutMapping(path="/{id}", consumes = "application/json")
-	public ResponseEntity<HttpStatus> update(@PathVariable("id") long id, @RequestBody CulturalOfferDTO dto) {
+	public ResponseEntity<HttpStatus> update(@Valid @PathVariable("id") long id, @RequestBody CulturalOfferDTO dto) {
 		
 		
 		CulturalOffer offer = this.mapper.toEntity(dto);

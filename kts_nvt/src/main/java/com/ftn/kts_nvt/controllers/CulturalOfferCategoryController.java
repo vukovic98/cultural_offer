@@ -3,6 +3,8 @@ package com.ftn.kts_nvt.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -97,7 +99,7 @@ public class CulturalOfferCategoryController {
     	"name": "categoryname" 
 	   }*/
     @RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CulturalOfferCategoryDTO> create(@RequestBody CulturalOfferCategoryDTO categoryDTO){
+    public ResponseEntity<CulturalOfferCategoryDTO> create(@Valid @RequestBody CulturalOfferCategoryDTO categoryDTO){
         CulturalOfferCategory category;
         try {
         	category = service.create(mapper.toEntity(categoryDTO));
@@ -115,7 +117,7 @@ public class CulturalOfferCategoryController {
 	     "name": "newcategoryname" 
 	   }*/
     @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CulturalOfferCategoryDTO> update(@RequestBody CulturalOfferCategoryDTO categoryDTO,
+    public ResponseEntity<CulturalOfferCategoryDTO> update(@Valid @RequestBody CulturalOfferCategoryDTO categoryDTO,
     															@PathVariable Long id){
         CulturalOfferCategory category;
         try {

@@ -2,6 +2,8 @@ package com.ftn.kts_nvt.controllers;
 
 import java.util.ArrayList;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +46,7 @@ public class ImageController {
 	}
 
 	@PostMapping(consumes = "application/json")
-	public ResponseEntity<HttpStatus> create(@RequestBody Image image) {
+	public ResponseEntity<HttpStatus> create(@Valid @RequestBody Image image) {
 		//TODO provera poslate slike
 		Image created = this.imageService.save(image);
 		if (created != null)
