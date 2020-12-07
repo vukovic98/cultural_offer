@@ -42,13 +42,7 @@ public class ImageService {
 	}
 
 	public Image findById(Long id) {
-		Optional<Image> found = this.imageRepository.findById(id);
-
-		if (found.isPresent()) {
-			Image image = found.get();
-			return image;
-		} else
-			return null;
+		return imageRepository.findById(id).orElse(null);		
 	}
 
 	public Image update(Image changedImage, long id) {
@@ -57,7 +51,7 @@ public class ImageService {
 
 		if (found.isPresent()) {
 			Image oldImage = found.get();
-			oldImage.setUrl(changedImage.getUrl());
+			oldImage.setPicByte(changedImage.getPicByte());
 			return this.imageRepository.save(oldImage);
 		} else
 			return null;
