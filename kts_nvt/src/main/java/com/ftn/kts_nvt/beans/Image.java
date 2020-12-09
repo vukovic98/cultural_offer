@@ -19,18 +19,27 @@ public class Image {
 	@Column(name = "image_ID")
 	private Long id;
 
-	@Column(name = "url", nullable = false)
-	@NotBlank(message = "Image url cannot be empty.")
-	private String url;
+	//@Column(name = "url", nullable = false)
+	//@NotBlank(message = "Image url cannot be empty.")
+	//private String url;
+
+	@Column(name = "picByte", length = 5000)
+	private byte[] picByte;
+
 
 	public Image() {
 		super();
 	}
 
-	public Image(Long id, @NotBlank(message = "Image url cannot be empty.") String url) {
+	public Image(Long id, byte[] picByte) {
 		super();
 		this.id = id;
-		this.url = url;
+		this.picByte = picByte;
+	}
+
+	public Image(byte[] picByte) {
+		super();
+		this.picByte = picByte;
 	}
 
 	public Long getId() {
@@ -41,12 +50,11 @@ public class Image {
 		this.id = id;
 	}
 
-	public String getUrl() {
-		return url;
+	public byte[] getPicByte() {
+		return picByte;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setPicByte(byte[] picByte) {
+		this.picByte = picByte;
 	}
-
 }
