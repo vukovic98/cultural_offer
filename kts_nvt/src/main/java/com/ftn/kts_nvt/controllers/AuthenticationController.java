@@ -87,6 +87,7 @@ public class AuthenticationController {
 
 		String jwt = tokenUtils.generateToken(user.getEmail()); // prijavljujemo se na sistem sa email adresom
 		int expiresIn = tokenUtils.getExpiredIn();
+		
 
 		// Vrati token kao odgovor na uspesnu autentifikaciju
 		return ResponseEntity.ok(new UserTokenStateDTO(jwt, expiresIn));

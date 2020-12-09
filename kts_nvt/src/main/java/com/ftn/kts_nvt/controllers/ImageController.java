@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.ftn.kts_nvt.beans.Image;
 import com.ftn.kts_nvt.services.ImageService;
@@ -119,6 +120,7 @@ public class ImageController {
 	}
 
 	@PostMapping(consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> create(@Valid @RequestBody Image image) {
 		//TODO provera poslate slike
 		Image created = this.imageService.save(image);
@@ -130,6 +132,7 @@ public class ImageController {
 	}
 
 	@DeleteMapping(consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> delete(@RequestBody Image image) {
 
 		boolean deleted = this.imageService.delete(image);
@@ -142,6 +145,7 @@ public class ImageController {
 	}
 
 	@DeleteMapping(path = "/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") long id) {
 
 		boolean deleted = this.imageService.deleteById(id);
@@ -154,6 +158,7 @@ public class ImageController {
 	}
 
 	@PutMapping(path = "/{id}", consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> update(@RequestBody Image image, @PathVariable("id") long id) {
 		//TODO provera unete slike
 		Image updatedImage = this.imageService.update(image, id);

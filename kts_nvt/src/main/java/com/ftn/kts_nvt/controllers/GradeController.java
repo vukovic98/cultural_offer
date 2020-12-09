@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -99,6 +100,7 @@ public class GradeController {
 	 * "culturalOffer" : { "id" : 1 } }
 	 */
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<GradeDTO> createGrade(@Valid @RequestBody GradeDTO gradeDTO) {
 		System.out.println("gradeDTO = " + gradeDTO);
 		Grade grade;
@@ -124,6 +126,7 @@ public class GradeController {
 	 * }
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<GradeDTO> updateGrade(@RequestBody GradeDTO gradeDTO, @PathVariable Long id) {
 		Grade grade;
 		try {
@@ -139,6 +142,7 @@ public class GradeController {
 	 * DELETE http://localhost:8080/grades/1
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<Void> deleteGrade(@PathVariable Long id) {
 		try {
 			gradeService.delete(id);

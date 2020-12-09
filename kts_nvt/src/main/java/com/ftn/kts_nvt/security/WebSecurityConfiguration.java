@@ -1,10 +1,13 @@
 package com.ftn.kts_nvt.security;
 
+import java.util.Collections;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +20,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import com.ftn.kts_nvt.security.auth.RestAuthenticationEntryPoint;
 import com.ftn.kts_nvt.security.auth.TokenAuthenticationFilter;
+import com.ftn.kts_nvt.security.auth.TokenAuthenticationProvider;
 import com.ftn.kts_nvt.services.CustomUserDetailsService;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -42,13 +46,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	// lozinkom pokusa da pristupi resursu
 	@Autowired
 	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+	
+	@Autowired
+	TokenAuthenticationProvider authenticationProvider;
 
 	// Registrujemo authentication manager koji ce da uradi autentifikaciju
 	// korisnika za nas
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
+		return new ProviderManager(Collections.singletonList(authenticationProvider));
 	}
 
 	// Definisemo uputstvo za authentication managera koji servis da koristi da
