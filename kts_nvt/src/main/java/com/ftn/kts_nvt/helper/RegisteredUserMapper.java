@@ -24,11 +24,6 @@ public class RegisteredUserMapper implements MapperInterface<RegisteredUser, Use
 		
 		r.setEmail(dto.getEmail());
 		r.setPassword(dto.getPassword());
-//		Authority a = new Authority();
-//		a.setName("USER");
-//		ArrayList<Authority> aL = new ArrayList<>();
-//		aL.add(a);
-//		r.setAuthorities(aL);
 		Authority auth = authRepository.findByName("ROLE_USER");
 		ArrayList<Authority> aL = new ArrayList<>();
 		aL.add(auth);
