@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -99,6 +100,7 @@ public class CulturalOfferCategoryController {
     	"name": "categoryname" 
 	   }*/
     @RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<CulturalOfferCategoryDTO> create(@Valid @RequestBody CulturalOfferCategoryDTO categoryDTO){
         CulturalOfferCategory category;
         try {
@@ -117,6 +119,7 @@ public class CulturalOfferCategoryController {
 	     "name": "newcategoryname" 
 	   }*/
     @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<CulturalOfferCategoryDTO> update(@Valid @RequestBody CulturalOfferCategoryDTO categoryDTO,
     															@PathVariable Long id){
         CulturalOfferCategory category;
@@ -134,6 +137,7 @@ public class CulturalOfferCategoryController {
      * http://localhost:8080/cultural-offer-categories/2
      * */
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> deleteCategory(@PathVariable Long id){
         try {
             service.delete(id);

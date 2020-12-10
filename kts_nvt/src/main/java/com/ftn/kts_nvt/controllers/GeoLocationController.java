@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,6 +66,7 @@ public class GeoLocationController {
 	}
 
 	@PostMapping(consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> create(@Valid @RequestBody GeoLocation geoLocation) {
 		//TODO provera poslate lokacije
 		GeoLocation created = this.geoLocationService.save(geoLocation);
@@ -76,6 +78,7 @@ public class GeoLocationController {
 	}
 
 	@DeleteMapping(consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> delete(@RequestBody GeoLocation geoLocation) {
 		boolean deleted = this.geoLocationService.delete(geoLocation);
 
@@ -86,6 +89,7 @@ public class GeoLocationController {
 	}
 
 	@DeleteMapping(path = "/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") long id) {
 		boolean deleted = this.geoLocationService.deleteById(id);
 
@@ -96,6 +100,7 @@ public class GeoLocationController {
 	}
 
 	@PutMapping(path = "/{id}", consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> update(@PathVariable("id") long id, @RequestBody GeoLocation geoLocation) {
 		//TODO provera unete lokacije
 		GeoLocation updatedGeoLocation = this.geoLocationService.update(geoLocation, id);

@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -79,6 +80,7 @@ public class CulturalOfferTypeController {
 	 * { "id":"1", "name":"Exit", "categoryId":"1", "categroyName":"Manifestation" }
 	 */
 	@PostMapping(consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> create(@Valid @RequestBody CulturalOfferTypeDTO dto) {
 		CulturalOfferType type = this.mapper.toEntity(dto);
 		CulturalOfferType saved = this.culturalOfferTypeService.save(type);
@@ -91,6 +93,7 @@ public class CulturalOfferTypeController {
 
 	// DELETE http://localhost:8080/culturalOfferType/1
 	@DeleteMapping(path = "/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") long id) {
 		boolean deleted;
 		try {
@@ -112,6 +115,7 @@ public class CulturalOfferTypeController {
 	 */
 
 	@DeleteMapping(consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> deleteEntity(@RequestBody CulturalOfferTypeDTO dto) {
 		CulturalOfferType type = this.mapper.toEntity(dto);
 		boolean deleted;
@@ -133,6 +137,7 @@ public class CulturalOfferTypeController {
 	 * }
 	 */
 	@PutMapping(path = "/{id}", consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> update(@Valid @PathVariable("id") long id, @RequestBody CulturalOfferTypeDTO dto) {
 		CulturalOfferType type = this.mapper.toEntity(dto);
 		CulturalOfferType changedType = this.culturalOfferTypeService.update(type, type.getId());

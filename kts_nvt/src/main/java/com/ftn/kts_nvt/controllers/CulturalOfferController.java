@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -76,6 +77,7 @@ public class CulturalOfferController {
 	}
 	
 	@PostMapping(consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> create(@Valid @RequestBody CulturalOfferDTO offerDto) {
 		
 		CulturalOffer offer = this.mapper.toEntity(offerDto);
@@ -89,6 +91,7 @@ public class CulturalOfferController {
 	}
 	
 	@DeleteMapping(consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> deleteEntity(@RequestBody CulturalOfferDTO dto) {
 		
 		CulturalOffer offer = this.culturalOfferService.findById(dto.getId());
@@ -103,6 +106,7 @@ public class CulturalOfferController {
 	}
 	
 	@DeleteMapping(path="/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") long id) {
 		boolean ok = this.culturalOfferService.deleteById(id);
 		
@@ -113,6 +117,7 @@ public class CulturalOfferController {
 	}
 	
 	@PutMapping(path="/{id}", consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> update(@Valid @PathVariable("id") long id, @RequestBody CulturalOfferDTO dto) {
 		
 		

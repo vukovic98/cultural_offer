@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -72,6 +73,7 @@ public class CommentController {
 
 	// POST: http://localhost:8080/comments -> RequestBody (DTO)
 	@PostMapping(consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<HttpStatus> create(@Valid @RequestBody CommentDTO commentDto) {
 		CommentMapper mapper = new CommentMapper();
 
@@ -93,6 +95,7 @@ public class CommentController {
 
 	// DELETE http://localhost:8080/comments -> RequestBody (DTO)
 	@DeleteMapping(consumes = "application/json")
+	@PreAuthorize("hasAnyRole('ROLE_USER,ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> deleteEntity(@RequestBody CommentDTO commentDto) {
 
 		Comment comment = this.commentService.findById(commentDto.getId());
@@ -110,6 +113,7 @@ public class CommentController {
 
 	// DELETE http://localhost:8080/comments/{id}
 	@DeleteMapping(path = "/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_USER,ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") long id) {
 		boolean ok = this.commentService.deleteById(id);
 
@@ -121,6 +125,7 @@ public class CommentController {
 
 	// PUT: http://localhost:8080/comments/{id} -> RequestBody (DTO)
 	@PutMapping(path = "/id", consumes = "application/json")
+	@PreAuthorize("hasAnyRole('ROLE_USER,ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> update(@PathVariable("id") long id, @RequestBody CommentDTO commentDto) {
 
 		CommentMapper mapper = new CommentMapper();
