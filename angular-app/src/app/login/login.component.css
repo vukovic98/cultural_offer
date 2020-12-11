@@ -1,0 +1,13 @@
+.btnColor {
+  background-color: crimson;
+  border-color: crimson;
+  color: white;
+}
+
+.inputError {
+  color: crimson;
+}
+
+.signUpLink {
+  text-decoration: none;
+}
