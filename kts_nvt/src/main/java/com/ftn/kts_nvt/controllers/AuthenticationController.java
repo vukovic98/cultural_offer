@@ -76,21 +76,25 @@ public class AuthenticationController {
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody UserLoginDTO authenticationRequest,
 			HttpServletResponse response) {
 
-		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-				authenticationRequest.getEmail(), authenticationRequest.getPassword()));
-
-		// Ubaci korisnika u trenutni security kontekst
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-
-		// Kreiraj token za tog korisnika
-		User user = (User) authentication.getPrincipal();
-
-		String jwt = tokenUtils.generateToken(user.getEmail()); // prijavljujemo se na sistem sa email adresom
-		int expiresIn = tokenUtils.getExpiredIn();
-		
-
-		// Vrati token kao odgovor na uspesnu autentifikaciju
-		return ResponseEntity.ok(new UserTokenStateDTO(jwt, expiresIn));
+		try {
+			Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+					authenticationRequest.getEmail(), authenticationRequest.getPassword()));
+	
+			// Ubaci korisnika u trenutni security kontekst
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+	
+			// Kreiraj token za tog korisnika
+			User user = (User) authentication.getPrincipal();
+	
+			String jwt = tokenUtils.generateToken(user.getEmail()); // prijavljujemo se na sistem sa email adresom
+			int expiresIn = tokenUtils.getExpiredIn();
+			
+	
+			// Vrati token kao odgovor na uspesnu autentifikaciju
+			return ResponseEntity.ok(new UserTokenStateDTO(jwt, expiresIn));
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@PostMapping("/verify")
