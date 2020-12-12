@@ -11,6 +11,7 @@ import {AuthService} from './services/auth.service';
 import {AngularBootstrapToastsModule} from 'angular-bootstrap-toasts';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
+import { UserVerificationComponent } from './components/user-verification/user-verification.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
     HomeComponent,
     LoginComponent,
     SignUpComponent,
-    NavigationBarComponent
+    NavigationBarComponent,
+    UserVerificationComponent
   ],
   imports: [
     BrowserModule,
