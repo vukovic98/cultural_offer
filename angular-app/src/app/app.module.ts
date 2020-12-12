@@ -10,13 +10,15 @@ import {HttpClientModule} from '@angular/common/http';
 import {AuthService} from './services/auth.service';
 import {AngularBootstrapToastsModule} from 'angular-bootstrap-toasts';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
+    NavigationBarComponent
   ],
   imports: [
     BrowserModule,
