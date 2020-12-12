@@ -17,13 +17,13 @@ public class PostMapper implements MapperInterface<Post, PostDTO>{
 	
 	@Override
 	public Post toEntity(PostDTO dto) {		
-		return new Post(dto.getTitle(), dto.getContent(), dto.getPostTime(), dto.getOffer());
+		return new Post(dto.getTitle(), dto.getContent(), dto.getPostTime());
 	}
 
 	@Override
 	public PostDTO toDto(Post entity) {
 		return new PostDTO(entity.getPostId(), entity.getTitle(),
-						entity.getContent(), entity.getPostTime(), entity.getOffer());
+						entity.getContent(), entity.getPostTime());
 	}
 	
 	public ArrayList<PostDTO> listToDto(List<Post> list) {
