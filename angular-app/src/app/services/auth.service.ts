@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 @Injectable()
 export class AuthService {
   private readonly loginPath = "auth/log-in";
+  private  readonly signupPath = "auth/sign-up";
 
   constructor(private http: HttpClient) {
   }
@@ -32,6 +33,14 @@ export class AuthService {
           confirmButtonText: 'OK'
         })
       })
+  }
+
+  signup(signupDto: string):any {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+
   }
 
 }
