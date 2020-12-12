@@ -35,12 +35,26 @@ export class AuthService {
       })
   }
 
-  signup(signupDto: string):any {
+  signUp(signupDto: string):any {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
 
-
+    let response = this.http.post<signupResponse>(environment.apiUrl + this.signupPath, signupDto, {headers: headers})
+      .pipe(map(response => response))
+      .subscribe(response => {
+        //redirect to page for verification code
+        return true;
+      }, error => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'User with this email already exists!',
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        });
+        return false;
+      })
   }
 
 }
@@ -49,4 +63,11 @@ interface loginResponse {
   authenticationToken: string;
   expiresAt: number;
   email: string;
+}
+interface signupResponse {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
 }
