@@ -6,8 +6,6 @@ import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.ftn.kts_nvt.beans.CulturalOffer;
-
 public class PostDTO {
 
 	private Long id;
@@ -22,14 +20,14 @@ public class PostDTO {
 	private Instant postTime;
     
     @NotNull(message = "CulturalOffer cannot be null.")    
-    private CulturalOffer offer;
+    private CulturalOfferDTO offer;
 
     public PostDTO() {}
     
 	public PostDTO(Long id, @NotBlank(message = "Title cannot be empty.") String title,
 			@NotBlank(message = "Content cannot be empty.") String content,
 			@NotNull(message = "PostTime cannot be null.") Instant postTime,
-			@NotNull(message = "CulturalOffer cannot be null.") CulturalOffer offer) {
+			@NotNull(message = "CulturalOffer cannot be null.") CulturalOfferDTO offer) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -38,6 +36,16 @@ public class PostDTO {
 		this.offer = offer;
 	}
 
+	public PostDTO(Long id, @NotBlank(message = "Title cannot be empty.") String title,
+			@NotBlank(message = "Content cannot be empty.") String content,
+			@NotNull(message = "PostTime cannot be null.") Instant postTime) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.postTime = postTime;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -70,11 +78,11 @@ public class PostDTO {
 		this.postTime = postTime;
 	}
 
-	public CulturalOffer getOffer() {
+	public CulturalOfferDTO getOffer() {
 		return offer;
 	}
 
-	public void setOffer(CulturalOffer offer) {
+	public void setOffer(CulturalOfferDTO offer) {
 		this.offer = offer;
 	}
 

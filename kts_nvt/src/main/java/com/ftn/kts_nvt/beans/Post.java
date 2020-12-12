@@ -45,7 +45,12 @@ public class Post {
 		this.postTime = postTime;
 		this.offer = offer;
 	}
-
+	public Post(String title, String content, Instant postTime) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.postTime = postTime;
+	}
 	public Long getPostId() {
 		return postId;
 	}
