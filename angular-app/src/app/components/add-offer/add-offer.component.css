@@ -1,0 +1,14 @@
+.img_wrp {
+    display: inline-block;
+    position: relative;
+  }
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: white;
+}
+#mapid { 
+  width: 400px;
+  height: 400px;
+}

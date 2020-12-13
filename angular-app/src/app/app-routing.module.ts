@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import {LoginComponent} from './components/login/login.component';
 import {HomeComponent} from './components/home/home.component';
 import {SignUpComponent} from "./components/sign-up/sign-up.component";
+
+import { AddOfferComponent } from './components/add-offer/add-offer.component';
 import {UserVerificationComponent} from "./components/user-verification/user-verification.component";
 import {SubscribedItemsComponent} from './components/subscribed-items/subscribed-items.component';
 
@@ -12,8 +14,8 @@ const routes: Routes = [
   {path: 'home-page', component: HomeComponent},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'verify', component: UserVerificationComponent},
-  {path: 'subscribed-items', component: SubscribedItemsComponent}
-];
+  {path: 'add-offer', component: AddOfferComponent},
+  {path: 'subscribed-items', component: SubscribedItemsComponent}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

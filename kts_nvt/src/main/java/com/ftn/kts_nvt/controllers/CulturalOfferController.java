@@ -20,15 +20,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.kts_nvt.beans.CulturalOffer;
+import com.ftn.kts_nvt.dto.CulturalOfferAddDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferDTO;
 import com.ftn.kts_nvt.helper.CulturalOfferMapper;
 import com.ftn.kts_nvt.services.CulturalOfferService;
 
 @RestController
-@RequestMapping("/culturalOffers")
+@RequestMapping("/cultural-offers")
 public class CulturalOfferController {
 
 	@Autowired
@@ -76,13 +78,29 @@ public class CulturalOfferController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
-	@PostMapping(consumes = "application/json")
+	/*@PostMapping(consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> create(@Valid @RequestBody CulturalOfferDTO offerDto) {
 		
 		CulturalOffer offer = this.mapper.toEntity(offerDto);
 		
 		CulturalOffer ok = this.culturalOfferService.save(offer);
+		
+		if(ok != null)
+			return new ResponseEntity<>(HttpStatus.CREATED);
+		else
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}*/
+	
+	@PostMapping(consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<HttpStatus> createOffer(@RequestBody CulturalOfferAddDTO dto) {
+		System.out.println("dto = " + dto);
+
+		//CulturalOffer offer = this.mapper.toEntity(offerDto);
+		
+		CulturalOffer ok = this.culturalOfferService.save(dto);
+		System.out.println("ok = " + ok);
 		
 		if(ok != null)
 			return new ResponseEntity<>(HttpStatus.CREATED);
@@ -132,4 +150,17 @@ public class CulturalOfferController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	
+	//GET: http://localhost:8080/culturalOffers/filter/{pageNum}?expression
+		@GetMapping(path="filter/{pageNum}")
+		public ResponseEntity<Page<CulturalOfferDTO>> filter(@PathVariable int pageNum, @RequestParam("expression") String expression) {
+		
+			Pageable pageRequest = PageRequest.of(pageNum-1, 10);
+			String exp = expression.toLowerCase();
+			Page<CulturalOffer> page = this.culturalOfferService.filter(pageRequest,exp);
+			
+			List<CulturalOfferDTO> offersDTOS = this.mapper.listToDTO(page.toList());
+			Page<CulturalOfferDTO> pageOffersDTOS = new PageImpl<>(offersDTOS, page.getPageable(), page.getTotalElements());
+
+			return new ResponseEntity<>(pageOffersDTOS, HttpStatus.OK);
+		}
 }
