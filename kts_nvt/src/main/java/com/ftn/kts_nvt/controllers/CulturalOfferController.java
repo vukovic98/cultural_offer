@@ -56,7 +56,7 @@ public class CulturalOfferController {
 	
 	public ResponseEntity<Page<CulturalOfferDTO>> findAll(@PathVariable int pageNum) {
 	
-		Pageable pageRequest = PageRequest.of(pageNum-1, 10);
+		Pageable pageRequest = PageRequest.of(pageNum-1, 8);
 	
 		Page<CulturalOffer> page = this.culturalOfferService.findAll(pageRequest);
 		

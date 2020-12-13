@@ -1,0 +1,19 @@
+.userImg {
+  background-image: url("src/assets/img/user.png");
+  background-size: cover;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.logoImg {
+  height: 80px;
+}
+
+.items:hover {
+  display: block;
+}
+
+.dropdownDiv {
+  width: 11%;
+}

@@ -11,6 +11,9 @@ import {AuthService} from './services/auth.service';
 import {AngularBootstrapToastsModule} from 'angular-bootstrap-toasts';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
+import { CulturalOffersComponent } from './components/cultural-offers/cultural-offers.component';
+import { CulturalOfferItemComponent } from './components/cultural-offer-item/cultural-offer-item.component';
+import {CulturalOfferService} from './services/culturalOffer.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,9 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
     HomeComponent,
     LoginComponent,
     SignUpComponent,
-    NavigationBarComponent
+    NavigationBarComponent,
+    CulturalOffersComponent,
+    CulturalOfferItemComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +32,8 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
     HttpClientModule
   ],
   providers: [
-    AuthService
+    AuthService,
+    CulturalOfferService
   ],
   bootstrap: [AppComponent]
 })
