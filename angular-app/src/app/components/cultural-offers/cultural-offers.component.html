@@ -1,0 +1,11 @@
+<div class="row">
+  <app-cultural-offer-item class="col-md-3" *ngFor="let offer of getAllOffers()"
+    [offer]="offer"
+  >
+  </app-cultural-offer-item>
+  <div class="text-center col-md-2 m-auto">
+    <button class="btn btn-outline-info float-left" [disabled]="pageNum===1" (click)="previousPage()"><<</button>
+    <p class=" float-left text-center ml-4 pt-2">{{pageNum}}</p>
+    <button class="btn btn-outline-info" (click)="nextPage()" [disabled]="nextBtn">>></button>
+  </div>
+</div>

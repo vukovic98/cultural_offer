@@ -16,6 +16,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select'; 
+import { CulturalOffersComponent } from './components/cultural-offers/cultural-offers.component';
+import { CulturalOfferItemComponent } from './components/cultural-offer-item/cultural-offer-item.component';
+import {CulturalOfferService} from './services/culturalOffer.service';
+import { UserVerificationComponent } from './components/user-verification/user-verification.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +29,9 @@ import { MatSelectModule } from '@angular/material/select';
     SignUpComponent,
     NavigationBarComponent,
     AddOfferComponent
+    CulturalOffersComponent,
+    CulturalOfferItemComponent,
+    UserVerificationComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +44,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatSelectModule
   ],
   providers: [
-    AuthService
+    AuthService,
+    CulturalOfferService
   ],
   bootstrap: [AppComponent]
 })

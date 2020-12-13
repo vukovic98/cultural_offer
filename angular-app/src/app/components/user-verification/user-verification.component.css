@@ -1,0 +1,19 @@
+.btnColor {
+  background-color: crimson;
+  border-color: crimson;
+  color: white;
+}
+
+.backgroundImg {
+  height: 100vh;
+  display: flow-root;
+  background-image: url("src/assets/img/ns.jpg");
+  background-size: cover;
+}
+
+.inputError {
+  color: crimson;
+}
+.w-35{
+  width: 35%;
+}
