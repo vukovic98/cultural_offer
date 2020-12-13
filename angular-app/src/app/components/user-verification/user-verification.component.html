@@ -1,0 +1,22 @@
+<div class="backgroundImg">
+  <div class="container ml-auto mr-auto mt-5 w-35 border pt-5 pl-5 pr-5 pb-0 bg-white shadow-lg rounded">
+    <form #verifyForm="ngForm" name="verify_form">
+      <h4 class="text-center">We just sent a verification code over to</h4>
+      <h4 class="text-center">{{email}}</h4>
+      <div class="form-group mt-5">
+        <input type="text" class="form-control" #codeV="ngModel" name="code" [(ngModel)]="code" id="code" placeholder="Enter validation code" required>
+        <div *ngIf="codeV.touched && codeV.errors?.required" class="mt-1 pl-1 inputError">
+          Code is required.
+        </div>
+
+      </div>
+      <div class="pt-3">
+        <button class="btn btn-block mt-3 btn-success" [disabled]="!verifyForm.form.valid" (click)="verifyUser()">Verify</button>
+      </div>
+    </form>
+    <div class="text-center pt-3">
+      <p>Didn't get a code? <a routerLink="/sign-up" class="signUpLink">Send again.</a></p>
+    </div>
+  </div>
+</div>
+

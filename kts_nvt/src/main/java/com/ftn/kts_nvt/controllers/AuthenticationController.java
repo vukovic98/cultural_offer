@@ -100,7 +100,7 @@ public class AuthenticationController {
 	@PostMapping("/verify")
 	public ResponseEntity<HttpStatus> verifyUser(@RequestBody VerificationCodeDTO dto) {
 		RegisteredUser user = this.registeredUserService.findOneByEmail(dto.getUserEmail());
-
+		
 		if (user != null) {
 			VerificationCode code = this.verificationCodeService.findCodeByUser(user.getId());
 
@@ -109,7 +109,6 @@ public class AuthenticationController {
 
 				user.setVerified(true);
 				this.registeredUserService.save(user);
-
 				return new ResponseEntity<>(HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
