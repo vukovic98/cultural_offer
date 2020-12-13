@@ -1,24 +1,20 @@
-<div>
+<div class="col-md-12">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Kultura Na Dlanu</a>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">New page</a>
-          </li>
-        </ul>
-      </div>
       <span class="float-right" *ngIf="!getUser()">
           <a routerLink="/login"><button class="btn btn-primary">Login</button></a>
           <a routerLink="/sign-up"><button class="btn btn-primary">Sign Up</button></a>
       </span>
+      <div class="dropdown float-right dropdownDiv" *ngIf="getUser()">
+        <div class="userImg float-right" id="dropdownMenuButton"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        </div>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Profile</a>
+          <a class="dropdown-item" href="#">Logout</a>
+        </div>
+      </div>
     </div>
   </nav>
 </div>
