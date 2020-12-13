@@ -11,8 +11,7 @@ export class SignUpComponent implements OnInit {
   lastName: string = '';
   email: string = '';
   password: string = '';
-  passwordConfirm: string = '';
-
+  passwordConfirm: string = ''
 
   constructor(private service: AuthService) { }
 

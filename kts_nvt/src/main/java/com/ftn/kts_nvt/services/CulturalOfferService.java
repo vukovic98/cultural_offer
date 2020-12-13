@@ -9,6 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ftn.kts_nvt.beans.CulturalOffer;
+import com.ftn.kts_nvt.beans.CulturalOfferType;
+import com.ftn.kts_nvt.dto.CulturalOfferAddDTO;
+import com.ftn.kts_nvt.repositories.CulturalOfferCategoryRepository;
 import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
 
 @Service
@@ -16,11 +19,30 @@ public class CulturalOfferService {
 
 	@Autowired
 	private CulturalOfferRepository culturalOfferRepository;
-
+	
+	@Autowired
+	private CulturalOfferTypeService type;
+	
+	@Autowired
+	private GeoLocationService location;
+	
 	public CulturalOffer save(CulturalOffer c) {
 		return this.culturalOfferRepository.save(c);
 	}
-
+	
+	public CulturalOffer save(CulturalOfferAddDTO dto) {
+		CulturalOffer c = new CulturalOffer();
+		c.setName(dto.getName());
+		c.setDescription(dto.getDescription());
+		c.setComments(new ArrayList<>());
+		c.setGrades(new ArrayList<>());
+		c.setPosts(new ArrayList<>());
+		c.setSubscribedUsers(new ArrayList<>());
+		c.setLocation(location.save(dto.getLocation()));		
+		c.setType(type.findById(dto.getType()));
+		return this.culturalOfferRepository.save(c);
+	}
+	
 	public ArrayList<CulturalOffer> findAll() {
 		return (ArrayList<CulturalOffer>) this.culturalOfferRepository.findAll();
 	}
