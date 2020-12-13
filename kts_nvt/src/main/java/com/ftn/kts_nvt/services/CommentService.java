@@ -72,4 +72,11 @@ public class CommentService {
 			return null;
 		}
 	}
+
+	public Page<Comment> findAllPendingComments(Pageable pagable) {
+	
+		return this.commentRepository.findAllPendingComments(pagable);
+	}
+
+	
 }
