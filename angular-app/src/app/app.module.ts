@@ -11,6 +11,11 @@ import {AuthService} from './services/auth.service';
 import {AngularBootstrapToastsModule} from 'angular-bootstrap-toasts';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
+import { AddOfferComponent } from './components/add-offer/add-offer.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select'; 
 
 @NgModule({
   declarations: [
@@ -18,13 +23,18 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
     HomeComponent,
     LoginComponent,
     SignUpComponent,
-    NavigationBarComponent
+    NavigationBarComponent,
+    AddOfferComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatSelectModule
   ],
   providers: [
     AuthService

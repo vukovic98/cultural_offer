@@ -68,4 +68,8 @@ public class CulturalOfferCategory {
 		this.types = types;
 	}
 
+	@Override
+	public String toString() {
+		return "CulturalOfferCategory [id=" + id + ", name=" + name + ", types=" + types + "]";
+	}
 }

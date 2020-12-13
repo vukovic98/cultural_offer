@@ -17,15 +17,12 @@ public class GeoLocation {
 	@Column(name = "location_id")
 	private Long locationId;
 
-	@NotBlank(message = "Latitude should exist!")
 	@Column(name = "latitude", nullable = false)
 	private double latitude;
 
-	@NotBlank(message = "Longitude should exist!")
 	@Column(name = "longitude", nullable = false)
 	private double longitude;
 
-	@NotBlank(message = "Place should exist!")
 	@Column(name = "place")
 	private String place;
 
@@ -70,6 +67,12 @@ public class GeoLocation {
 
 	public void setPlace(String place) {
 		this.place = place;
+	}
+
+	@Override
+	public String toString() {
+		return "GeoLocation [locationId=" + locationId + ", latitude=" + latitude + ", longitude=" + longitude
+				+ ", place=" + place + "]";
 	}
 
 }
