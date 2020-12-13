@@ -14,6 +14,7 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
 import { CulturalOffersComponent } from './components/cultural-offers/cultural-offers.component';
 import { CulturalOfferItemComponent } from './components/cultural-offer-item/cultural-offer-item.component';
 import {CulturalOfferService} from './services/culturalOffer.service';
+import { UserVerificationComponent } from './components/user-verification/user-verification.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {CulturalOfferService} from './services/culturalOffer.service';
     SignUpComponent,
     NavigationBarComponent,
     CulturalOffersComponent,
-    CulturalOfferItemComponent
+    CulturalOfferItemComponent,
+    UserVerificationComponent
   ],
   imports: [
     BrowserModule,

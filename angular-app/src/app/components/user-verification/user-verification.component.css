@@ -10,10 +10,10 @@
   background-image: url("src/assets/img/ns.jpg");
   background-size: cover;
 }
+
 .inputError {
   color: crimson;
 }
-
-.loginLink {
-  text-decoration: none;
+.w-35{
+  width: 35%;
 }
