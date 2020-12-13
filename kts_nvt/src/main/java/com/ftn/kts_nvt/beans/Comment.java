@@ -1,6 +1,5 @@
 package com.ftn.kts_nvt.beans;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,6 +29,9 @@ public class Comment {
 	@JoinColumn(name = "commenter_id", nullable = false)
 	private RegisteredUser commenter;
 
+	@Column(name = "approved", nullable = false)
+	private boolean approved;
+
 	public Comment() {
 		super();
 	}
@@ -39,6 +41,7 @@ public class Comment {
 		this.content = content;
 		this.image = image;
 		this.commenter = commenter;
+		this.approved = false;
 	}
 
 	public Long getCommentId() {
@@ -73,4 +76,12 @@ public class Comment {
 		this.commenter = commenter;
 	}
 
+	public boolean isApproved() {
+		return approved;
+	}
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
+	}
+	
 }
