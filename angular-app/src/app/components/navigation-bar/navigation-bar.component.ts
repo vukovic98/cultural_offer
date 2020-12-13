@@ -22,7 +22,7 @@ export class NavigationBarComponent implements OnInit {
   }
 
   logout(): void {
-
+    this.service.logout();
   }
 
 }

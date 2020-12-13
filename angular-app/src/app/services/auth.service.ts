@@ -91,6 +91,8 @@ export class AuthService {
   }
 
   logout(): void {
+    localStorage.removeItem("accessToken");
+    this.route.navigate(['/']);
   }
 }
 
