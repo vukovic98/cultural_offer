@@ -24,6 +24,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.ftn.kts_nvt.beans.Comment;
 import com.ftn.kts_nvt.dto.CommentDTO;
+import com.ftn.kts_nvt.dto.CommentUserDTO;
 import com.ftn.kts_nvt.helper.CommentMapper;
 import com.ftn.kts_nvt.services.CommentService;
 
@@ -39,23 +40,23 @@ public class CommentController {
 
 	// GET: http://localhost:8080/comments
 	@GetMapping
-	public ResponseEntity<ArrayList<Comment>> findAll() {
+	public ResponseEntity<ArrayList<CommentUserDTO>> findAll() {
 		ArrayList<Comment> comments = this.commentService.findAll();
-
+		ArrayList<CommentUserDTO> dtos = (ArrayList<CommentUserDTO>) this.mapper.listToDto(comments);
 		if (!comments.isEmpty())
-			return new ResponseEntity<ArrayList<Comment>>(comments, HttpStatus.OK);
+			return new ResponseEntity<ArrayList<CommentUserDTO>>(dtos, HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	// GET: http://localhost:8080/comments/by-page
 	@GetMapping(value = "/by-page/{pageNum}")
-	public ResponseEntity<Page<CommentDTO>> getAllCulturalContentCategories(@PathVariable int pageNum) {
-		Pageable pageRequest = PageRequest.of(pageNum-1, 10);
-		
+	public ResponseEntity<Page<CommentUserDTO>> getAllCulturalContentCategories(@PathVariable int pageNum) {
+		Pageable pageRequest = PageRequest.of(pageNum - 1, 10);
+
 		Page<Comment> page = this.commentService.findAll(pageRequest);
-		List<CommentDTO> commentDTOS = mapper.listToDto(page.toList());
-		Page<CommentDTO> pageCommentDTOS = new PageImpl<>(commentDTOS, page.getPageable(), page.getTotalElements());
+		List<CommentUserDTO> commentDTOS = mapper.listToDto(page.toList());
+		Page<CommentUserDTO> pageCommentDTOS = new PageImpl<>(commentDTOS, page.getPageable(), page.getTotalElements());
 
 		return new ResponseEntity<>(pageCommentDTOS, HttpStatus.OK);
 	}
@@ -74,10 +75,9 @@ public class CommentController {
 	// POST: http://localhost:8080/comments -> RequestBody (DTO)
 	@PostMapping(consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<HttpStatus> create(@Valid @RequestBody CommentDTO commentDto) {
-		CommentMapper mapper = new CommentMapper();
+	public ResponseEntity<HttpStatus> create(@Valid @RequestBody CommentUserDTO commentDto) {
 
-		Comment newComment = mapper.toEntity(commentDto);
+		Comment newComment = this.mapper.toEntity(commentDto);
 
 		// String currentUser =
 		// SecurityContextHolder.getContext().getAuthentication().getName();
@@ -96,7 +96,7 @@ public class CommentController {
 	// DELETE http://localhost:8080/comments -> RequestBody (DTO)
 	@DeleteMapping(consumes = "application/json")
 	@PreAuthorize("hasAnyRole('ROLE_USER,ROLE_ADMIN')")
-	public ResponseEntity<HttpStatus> deleteEntity(@RequestBody CommentDTO commentDto) {
+	public ResponseEntity<HttpStatus> deleteEntity(@RequestBody CommentUserDTO commentDto) {
 
 		Comment comment = this.commentService.findById(commentDto.getId());
 
@@ -126,7 +126,7 @@ public class CommentController {
 	// PUT: http://localhost:8080/comments/{id} -> RequestBody (DTO)
 	@PutMapping(path = "/id", consumes = "application/json")
 	@PreAuthorize("hasAnyRole('ROLE_USER,ROLE_ADMIN')")
-	public ResponseEntity<HttpStatus> update(@PathVariable("id") long id, @RequestBody CommentDTO commentDto) {
+	public ResponseEntity<HttpStatus> update(@PathVariable("id") long id, @RequestBody CommentUserDTO commentDto) {
 
 		CommentMapper mapper = new CommentMapper();
 
@@ -139,6 +139,19 @@ public class CommentController {
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
+	}
+
+	// GET: http://localhost:8080/comments/pendingComments/1
+	@GetMapping(path = "/pendingComments/{pageNum}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<Page<CommentUserDTO>> findAllPendingComments(@PathVariable int pageNum) {
+		Pageable pageRequest = PageRequest.of(pageNum - 1, 10);
+		Page<Comment> page = this.commentService.findAllPendingComments(pageRequest);
+		List<CommentUserDTO> pendingCommentsDto = this.mapper.listToDto(page.toList());
+		Page<CommentUserDTO> pagePendingCommentsDtop = new PageImpl<>(pendingCommentsDto, page.getPageable(),
+				page.getTotalElements());
+
+		return new ResponseEntity<>(pagePendingCommentsDtop, HttpStatus.OK);
 	}
 
 }
