@@ -24,7 +24,7 @@ export class AuthService {
       .pipe(map(response => response.authenticationToken))
       .subscribe(token => {
         localStorage.setItem("accessToken", token);
-
+        this.route.navigate(['/']);
         return true;
       }, error => {
         Swal.fire({

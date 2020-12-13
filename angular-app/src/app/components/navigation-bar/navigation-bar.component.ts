@@ -9,6 +9,8 @@ import {AuthService} from '../../services/auth.service';
 export class NavigationBarComponent implements OnInit {
 
   private userLoggedIn: boolean = false;
+  private username: string = '';
+
   constructor(private service: AuthService) { }
 
   ngOnInit(): void {
@@ -19,6 +21,16 @@ export class NavigationBarComponent implements OnInit {
 
   getUser(): boolean {
     return this.userLoggedIn;
+  }
+
+  getUserName(): any {
+    let token = localStorage.getItem("accessToken");
+    let payload: string = '';
+    if (token) {
+      payload = token.split(".")[1];
+      payload = window.atob(payload);
+      return JSON.parse(payload).user_firstName;
+    }
   }
 
   logout(): void {

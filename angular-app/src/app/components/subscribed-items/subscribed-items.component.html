@@ -1,0 +1,21 @@
+<div class="backgroundImg">
+  <div class="col-md-12 pl-0 pr-0">
+    <app-navigation-bar></app-navigation-bar>
+  </div>
+  <div class="row w-100 mt-3 float-left">
+    <div class="col-md-1"></div>
+    <div class="jumbotron col-md-10 ml-auto mr-auto bg-light shadow mt-2 float-left">
+      <h3>{{getUserName()}}, you are subscribed to: </h3>
+      <hr/>
+      <div>
+        <app-subscribed-items-list [offers]="getSubscribedItems()"></app-subscribed-items-list>
+        <table *ngIf="getSubscribedItems().length === 0">
+          <tr>
+            <td>No items</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>

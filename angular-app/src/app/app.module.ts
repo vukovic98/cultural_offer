@@ -15,6 +15,9 @@ import { CulturalOffersComponent } from './components/cultural-offers/cultural-o
 import { CulturalOfferItemComponent } from './components/cultural-offer-item/cultural-offer-item.component';
 import {CulturalOfferService} from './services/culturalOffer.service';
 import { UserVerificationComponent } from './components/user-verification/user-verification.component';
+import { SubscribedItemsComponent } from './components/subscribed-items/subscribed-items.component';
+import { SubscribedOfferCardComponent } from './components/subscribed-offer-card/subscribed-offer-card.component';
+import { SubscribedItemsListComponent } from './components/subscribed-items-list/subscribed-items-list.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,10 @@ import { UserVerificationComponent } from './components/user-verification/user-v
     NavigationBarComponent,
     CulturalOffersComponent,
     CulturalOfferItemComponent,
-    UserVerificationComponent
+    UserVerificationComponent,
+    SubscribedItemsComponent,
+    SubscribedOfferCardComponent,
+    SubscribedItemsListComponent
   ],
   imports: [
     BrowserModule,

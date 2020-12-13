@@ -4,11 +4,18 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.ftn.kts_nvt.beans.User;
+import com.ftn.kts_nvt.dto.UserDTO;
+import com.ftn.kts_nvt.helper.UserMapper;
+import com.ftn.kts_nvt.repositories.RegisteredUserRepository;
+import com.ftn.kts_nvt.repositories.UserRepository;
+import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -32,6 +39,11 @@ public class TokenUtils {
     // Naziv headera kroz koji ce se prosledjivati JWT u komunikaciji server-klijent
     @Value("Authorization")
     private String AUTH_HEADER;
+    
+    @Autowired
+    private RegisteredUserRepository userRepository;
+    
+    private Gson gson = new Gson();
 
     // Moguce je generisati JWT za razlicite klijente (npr. web i mobilni klijenti nece imati isto trajanje JWT, JWT za mobilne klijente ce trajati duze jer se mozda aplikacija redje koristi na taj nacin)
     private static final String AUDIENCE_UNKNOWN = "unknown";
@@ -41,16 +53,23 @@ public class TokenUtils {
 
     // Algoritam za potpisivanje JWT
     private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
+    
+    @Autowired
+    private UserMapper mapper;
 
     // Funkcija za generisanje JWT token
     public String generateToken(String username) {
+    	UserDTO dto = mapper.toDto(this.userRepository.findByEmail(username));
+    	
         return Jwts.builder()
                 .setIssuer(APP_NAME)
                 .setSubject(username)
                 .setAudience(generateAudience())
                 .setIssuedAt(new Date())
                 .setExpiration(generateExpirationDate())
-                // .claim("key", value) //moguce je postavljanje proizvoljnih podataka u telo JWT tokena
+                .claim("user_firstName", dto.getFirstName()) //moguce je postavljanje proizvoljnih podataka u telo JWT tokena
+                .claim("user_lastName", dto.getLastName())
+                .claim("user_id", dto.getId().toString())
                 .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
     }
 

@@ -1,0 +1,22 @@
+<div>
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr class="text-center">
+        <th>&nbsp;</th>
+        <th>Cover</th>
+        <th>Name</th>
+        <th>Place</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="text-center" *ngFor="let offer of offers">
+        <td>{{offer.id}}</td>
+        <td><img class="offerImg rounded-circle" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg" alt="{{offer.name}}"/></td>
+        <td>{{offer.name}}</td>
+        <td>{{offer.location.place}}</td>
+        <td><button class="btn btn-outline-danger">Unsubscribe</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
