@@ -92,6 +92,7 @@ public class CulturalOfferController {
 	}*/
 	
 	@PostMapping(consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> createOffer(@RequestBody CulturalOfferAddDTO dto) {
 		System.out.println("dto = " + dto);
 

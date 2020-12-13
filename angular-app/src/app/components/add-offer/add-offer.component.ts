@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CategoryService } from './category.service';
-import { CategoryModel } from './category-model';
-import { TypeService } from './type.service';
-import { TypeModel } from './type-model';
-import { HttpClient } from '@angular/common/http';
+import { CategoryService } from '../../services/category.service';
+import { CategoryModel } from '../../model/category-model';
+import { TypeService } from '../../services/type.service';
+import { TypeModel } from '../../model/type-model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-offer',
@@ -60,9 +60,7 @@ export class AddOfferComponent implements OnInit {
   }
 
   onChange(event: any): void {
-    let selected = event.value;
-    console.log(selected);
-    this.typeService.getTypesForCategory(selected).subscribe(data => {
+    this.typeService.getTypesForCategory(event).subscribe(data => {
       this.types = data;
       console.log("got types = ");
       console.log(this.types);
@@ -133,7 +131,8 @@ export class AddOfferComponent implements OnInit {
     }
     console.log(obj);
     console.log("post");
-    this.http.post('http://localhost:8080/cultural-offers/', obj)
+    var headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
+    this.http.post('http://localhost:8080/cultural-offers/', obj, {headers: headers})
     .subscribe((res:any) => { console.log(res); });
   }
 }

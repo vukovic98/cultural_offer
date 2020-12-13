@@ -2,10 +2,12 @@ package com.ftn.kts_nvt;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+//@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 @SpringBootApplication()
 @EnableAsync(proxyTargetClass = true)
 @EnableSwagger2
