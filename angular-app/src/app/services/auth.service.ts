@@ -39,8 +39,10 @@ export class AuthService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
+  }
 
-
+  logout(): void {
+    
   }
 
 }

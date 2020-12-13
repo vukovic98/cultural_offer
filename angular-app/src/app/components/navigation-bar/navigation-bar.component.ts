@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class NavigationBarComponent implements OnInit {
 
   private userLoggedIn: boolean = false;
-  constructor() { }
+  constructor(private service: AuthService) { }
 
   ngOnInit(): void {
     let token: string | null = localStorage.getItem("accessToken");
@@ -18,6 +19,10 @@ export class NavigationBarComponent implements OnInit {
 
   getUser(): boolean {
     return this.userLoggedIn;
+  }
+
+  logout(): void {
+
   }
 
 }
