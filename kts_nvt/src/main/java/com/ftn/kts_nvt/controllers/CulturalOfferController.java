@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.kts_nvt.beans.CulturalOffer;
@@ -131,4 +132,17 @@ public class CulturalOfferController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	
+	//GET: http://localhost:8080/culturalOffers/filter/{pageNum}?expression
+		@GetMapping(path="filter/{pageNum}")
+		public ResponseEntity<Page<CulturalOfferDTO>> filter(@PathVariable int pageNum, @RequestParam("expression") String expression) {
+		
+			Pageable pageRequest = PageRequest.of(pageNum-1, 10);
+			String exp = expression.toLowerCase();
+			Page<CulturalOffer> page = this.culturalOfferService.filter(pageRequest,exp);
+			
+			List<CulturalOfferDTO> offersDTOS = this.mapper.listToDTO(page.toList());
+			Page<CulturalOfferDTO> pageOffersDTOS = new PageImpl<>(offersDTOS, page.getPageable(), page.getTotalElements());
+
+			return new ResponseEntity<>(pageOffersDTOS, HttpStatus.OK);
+		}
 }
