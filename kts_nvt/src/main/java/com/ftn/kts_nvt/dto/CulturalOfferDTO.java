@@ -7,6 +7,12 @@ import javax.validation.constraints.NotBlank;
 import com.ftn.kts_nvt.beans.GeoLocation;
 import com.ftn.kts_nvt.beans.Image;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+
+@NoArgsConstructor
+@AllArgsConstructor
 public class CulturalOfferDTO {
 	private long id;
 	
@@ -21,19 +27,10 @@ public class CulturalOfferDTO {
 	@NotBlank(message = "You should add description!")
 	private String description;
 
-	public CulturalOfferDTO() {
-		super();
-	}
+	private double avgGrade;
 
-	public CulturalOfferDTO(long id, String name, List<Image> images, GeoLocation location, String description) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.images = images;
-		this.location = location;
-		this.description = description;
-	}
-
+	private double subscribersCount;
+	
 	public long getId() {
 		return id;
 	}
@@ -72,6 +69,29 @@ public class CulturalOfferDTO {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public double getAvgGrade() {
+		return avgGrade;
+	}
+
+	public void setAvgGrade(double avgGrade) {
+		this.avgGrade = avgGrade;
+	}
+
+	public double getSubscribersCount() {
+		return subscribersCount;
+	}
+
+	public void setSubscribersCount(double subscribersCount) {
+		this.subscribersCount = subscribersCount;
+	}
+
+	@Override
+	public String toString() {
+		return "CulturalOfferDTO [id=" + id + ", name=" + name + ", images=" + images + ", location=" + location
+				+ ", description=" + description + ", avgGrade=" + avgGrade + ", subscribersCount=" + subscribersCount
+				+ "]";
 	}
 
 }
