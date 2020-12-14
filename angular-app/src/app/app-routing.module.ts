@@ -6,15 +6,23 @@ import {SignUpComponent} from "./components/sign-up/sign-up.component";
 
 import { AddOfferComponent } from './components/add-offer/add-offer.component';
 import {UserVerificationComponent} from "./components/user-verification/user-verification.component";
+import {SubscribedItemsComponent} from './components/subscribed-items/subscribed-items.component';
+import {RoleGuard} from './guards/role.guard';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home-page', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'home-page', component: HomeComponent},
   {path: 'sign-up', component: SignUpComponent},
-  {path: 'add-offer', component: AddOfferComponent}
-  {path: 'verify', component: UserVerificationComponent}
-];
+  {path: 'verify', component: UserVerificationComponent},
+  {path: 'add-offer', component: AddOfferComponent},
+  {
+    path: 'subscribed-items',
+    component: SubscribedItemsComponent,
+    canActivate: [RoleGuard],
+    data: {acceptRoles: 'ROLE_USER'}
+  }
+  ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

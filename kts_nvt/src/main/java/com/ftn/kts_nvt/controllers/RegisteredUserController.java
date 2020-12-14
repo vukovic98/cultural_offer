@@ -1,5 +1,6 @@
 package com.ftn.kts_nvt.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -12,6 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +24,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.RegisteredUser;
+import com.ftn.kts_nvt.dto.CulturalOfferDTO;
 import com.ftn.kts_nvt.dto.UserDTO;
+import com.ftn.kts_nvt.helper.CulturalOfferMapper;
 import com.ftn.kts_nvt.helper.UserMapper;
 import com.ftn.kts_nvt.services.RegisteredUserService;
 
@@ -34,6 +41,9 @@ public class RegisteredUserController {
 
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private CulturalOfferMapper offerMapper;
 
 	@GetMapping()
 	public ResponseEntity<List<UserDTO>> getAllRegisteredUsers() {
@@ -53,6 +63,22 @@ public class RegisteredUserController {
 
  		return new ResponseEntity<>(pageUserDTOS, HttpStatus.OK);
  	}
+
+    @GetMapping(value = "/subscribedItems")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<ArrayList<CulturalOfferDTO>> getSubscribedItems() {
+		Authentication data = SecurityContextHolder.getContext().getAuthentication();
+		String email = data.getName();
+		
+		RegisteredUser user = this.registeredUserService.findOneByEmail(email);
+		
+		if(user != null) {
+			ArrayList<CulturalOfferDTO> dtos = (ArrayList<CulturalOfferDTO>) this.offerMapper.listToDTO(user.getCulturalOffers());
+
+	 		return new ResponseEntity<>(dtos, HttpStatus.OK);
+		} else 
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 	
     @GetMapping(value="/{id}")
     public ResponseEntity<UserDTO> getUser(@PathVariable Long id){

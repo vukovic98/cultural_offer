@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import {Router} from "@angular/router";
+import {Role, TokenModel} from '../model/token.model';
 
 @Injectable()
 export class AuthService {
@@ -24,7 +25,7 @@ export class AuthService {
       .pipe(map(response => response.authenticationToken))
       .subscribe(token => {
         localStorage.setItem("accessToken", token);
-
+        this.route.navigate(['/']);
         return true;
       }, error => {
         Swal.fire({
@@ -93,6 +94,28 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem("accessToken");
     this.route.navigate(['/']);
+  }
+
+  getToken(): string | null{
+    return localStorage.getItem("accessToken");
+  }
+
+  private decodeToken(token: string): TokenModel | null {
+    if (token) {
+      let payload = token.split(".")[1];
+      payload = window.atob(payload);
+      return JSON.parse(payload);
+    } else return null;
+  }
+
+  getUserAuthorities(): Array<Role> {
+    let token = this.getToken();
+    if(token) {
+      let model = this.decodeToken(token);
+      return model?.authority ? model.authority : [];
+    } else {
+      return [];
+    }
   }
 }
 
