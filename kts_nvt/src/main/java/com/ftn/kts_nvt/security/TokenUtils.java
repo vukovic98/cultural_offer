@@ -59,7 +59,8 @@ public class TokenUtils {
 
     // Funkcija za generisanje JWT token
     public String generateToken(String username) {
-    	UserDTO dto = mapper.toDto(this.userRepository.findByEmail(username));
+    	User u = this.userRepository.findByEmail(username);
+    	UserDTO dto = mapper.toDto(u);
     	
         return Jwts.builder()
                 .setIssuer(APP_NAME)
@@ -70,6 +71,7 @@ public class TokenUtils {
                 .claim("user_firstName", dto.getFirstName()) //moguce je postavljanje proizvoljnih podataka u telo JWT tokena
                 .claim("user_lastName", dto.getLastName())
                 .claim("user_id", dto.getId().toString())
+                .claim("authority", u.getAuthorities())
                 .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
     }
 
