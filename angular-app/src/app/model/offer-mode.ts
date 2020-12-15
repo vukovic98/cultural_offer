@@ -7,7 +7,9 @@ export interface CulturalOffer{
   "name": string,
   "images": Array<object>,
   "location": Location,
-  "description": string
+  "description": string,
+  "avgGrade": number,
+  "subscribersCount": number
 }
 
 export interface Location{

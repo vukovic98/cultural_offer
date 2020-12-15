@@ -22,6 +22,8 @@ export class CulturalOffersComponent implements OnInit {
   }
 
   getAllOffers() {
+
+    console.log(this.offers);
     return this.offers || [];
   }
 

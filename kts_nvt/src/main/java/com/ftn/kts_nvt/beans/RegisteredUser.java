@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,8 +23,7 @@ public class RegisteredUser extends User {
 	@CollectionTable(name = "registeredUser_comments", joinColumns = @JoinColumn(name = "user_id"))
 	private List<Comment> comments;
 
-	@ElementCollection
-	@CollectionTable(name = "registeredUser_culturalOffers", joinColumns = @JoinColumn(name = "user_id"))
+	@ManyToMany(mappedBy = "subscribedUsers")
 	private List<CulturalOffer> culturalOffers;
 
 	@Column(name = "verified", nullable = false)

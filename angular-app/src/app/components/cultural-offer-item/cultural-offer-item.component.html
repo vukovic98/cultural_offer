@@ -2,7 +2,10 @@
   <div class="card shadow h-100">
     <img class="card-img-top" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg">
     <div class="card-body">
-      <h3>{{offer.name}} </h3>
+      <div style="height: 50px;">
+        <h3 class="float-left">{{offer.name}}</h3>
+        <i class="fa fa-eye float-right" aria-hidden="true"><small class="ml-2">{{offer.subscribersCount}}</small></i>
+      </div>
       <p class="card-text">{{offer.description}}</p>
     </div>
     <button class="btn btn-sm bellBtn btn-outline-info mb-2 mr-2"><i class="fa fa-bell-o col-md-3 float-right" title="Subscribe" aria-hidden="true"></i></button>
