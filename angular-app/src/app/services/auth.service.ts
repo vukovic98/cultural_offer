@@ -15,7 +15,6 @@ export class AuthService {
   constructor(private http: HttpClient, private route: Router) {
   }
 
-
   login(loginDto: string):any {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -100,7 +99,12 @@ export class AuthService {
     return <string> localStorage.getItem("accessToken");
   }
 
-  private decodeToken(token: string): TokenModel | null {
+  isLoggedIn(): boolean {
+    let token = this.getToken();
+    return !!token;
+  }
+
+  decodeToken(token: string): TokenModel | null {
     if (token) {
       let payload = token.split(".")[1];
       payload = window.atob(payload);

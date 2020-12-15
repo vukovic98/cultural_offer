@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-cultural-offer-item',
@@ -8,10 +9,13 @@ import {Component, Input, OnInit} from '@angular/core';
 export class CulturalOfferItemComponent implements OnInit {
 
   @Input() public offer: any;
+  @Input() public isSubscribed: boolean;
 
-  constructor() { }
+  constructor(private auth: AuthService) { }
 
   ngOnInit(): void {
+    console.log(this.isSubscribed);
   }
+
 
 }

@@ -15,7 +15,12 @@ const routes: Routes = [
   {path: 'home-page', component: HomeComponent},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'verify', component: UserVerificationComponent},
-  {path: 'add-offer', component: AddOfferComponent},
+  {
+    path: 'add-offer',
+    component: AddOfferComponent,
+    canActivate: [RoleGuard],
+    data: {acceptRoles: 'ROLE_ADMIN'}
+  },
   {
     path: 'subscribed-items',
     component: SubscribedItemsComponent,
