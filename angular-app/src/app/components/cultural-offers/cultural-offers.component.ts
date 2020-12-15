@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CulturalOfferService} from '../../services/culturalOffer.service';
 import {AuthService} from '../../services/auth.service';
 import {CulturalOffer} from '../../model/offer-mode';
 import {TokenModel} from '../../model/token.model';
+import {of} from 'rxjs';
 
 @Component({
   selector: 'app-cultural-offers',
@@ -25,9 +26,11 @@ export class CulturalOffersComponent implements OnInit {
       this.nextBtn = JSON.parse(data).last;
     });
 
-    this.service.getSubscribedItems().subscribe((data: string) => {
-      this.subscribedItems = JSON.parse(data);
-    })
+    if(this.auth.isUser()) {
+      this.service.getSubscribedItems().subscribe((data: string) => {
+        this.subscribedItems = JSON.parse(data);
+      })
+    }
 
     if(this.auth.isLoggedIn()) {
       let token = this.auth.getToken();
@@ -36,8 +39,12 @@ export class CulturalOffersComponent implements OnInit {
     }
   }
 
+  removeOffer(id: number) {
+    this.service.deleteOffer(id);
+    this.offers = this.offers.filter(item => item.id != id);
+  }
+
   getAllOffers() {
-    console.log(this.offers);
     return this.offers || [];
   }
 

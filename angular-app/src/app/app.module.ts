@@ -9,6 +9,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthService} from './services/auth.service';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatButtonModule} from '@angular/material/button';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import { AddOfferComponent } from './components/add-offer/add-offer.component';
@@ -50,7 +51,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     BrowserAnimationsModule,
     MatIconModule,
     MatSelectModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatButtonModule
   ],
   providers: [
     AuthService,

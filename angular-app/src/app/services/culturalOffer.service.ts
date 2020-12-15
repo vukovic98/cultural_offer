@@ -9,6 +9,7 @@ export class CulturalOfferService {
   private readonly offesrsPageEndPoint = "culturalOffers/by-page/";
   private readonly subscribedItemsEndPoint = "registeredUser/subscribedItems";
   private readonly unsubscribeEndPoint = "registeredUser/unsubscribe";
+  private readonly  manageOffersEndPoint = "culturalOffers/";
 
   constructor(private http: HttpClient) {
   }
@@ -22,6 +23,33 @@ export class CulturalOfferService {
 
     return this.http.get(environment.apiUrl + this.offesrsPageEndPoint + page, {headers: headers})
       .pipe(map((response) => JSON.stringify(response)));
+  }
+
+  deleteOffer(offer_id: number): void {
+    const headers = new HttpHeaders({
+      'Authorization' : 'Bearer ' + localStorage.getItem("accessToken")
+    });
+
+    this.http.delete(environment.apiUrl + this.manageOffersEndPoint + offer_id, {headers: headers})
+      .pipe(map(response => response))
+      .subscribe(response => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Cultural offer successfully deleted!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+        return true;
+      }, error => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Something went wrong!',
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        });
+        return false;
+      })
   }
 
   unsubscribeUser(offer_id: number): void {
