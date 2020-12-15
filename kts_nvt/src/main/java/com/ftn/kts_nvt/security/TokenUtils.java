@@ -44,8 +44,6 @@ public class TokenUtils {
     @Autowired
     private UserRepository userRepository;
     
-    @Autowired
-    private AdminRepository adminRepository;
     
     private Gson gson = new Gson();
 
@@ -63,12 +61,9 @@ public class TokenUtils {
 
     // Funkcija za generisanje JWT token
 
-    public String generateToken(String username, boolean isAdmin) {
+    public String generateToken(String username) {
     	User u;
-    	if(!isAdmin)
-    		u = this.userRepository.findByEmail(username);
-    	else
-    		u = this.adminRepository.findByEmail(username);
+    	u = this.userRepository.findByEmail(username);
 
     	UserDTO dto = mapper.toDto(u);
     	

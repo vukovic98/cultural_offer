@@ -86,7 +86,7 @@ public class AuthenticationController {
 			// Kreiraj token za tog korisnika
 			User user = (User) authentication.getPrincipal();
 	
-			String jwt = tokenUtils.generateToken(user.getEmail(), false); // prijavljujemo se na sistem sa email adresom
+			String jwt = tokenUtils.generateToken(user.getEmail()); // prijavljujemo se na sistem sa email adresom
 			int expiresIn = tokenUtils.getExpiredIn();
 			
 	
@@ -96,7 +96,7 @@ public class AuthenticationController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
+	/*
 	// Adminski log-in endpoint
 	@PostMapping("/log-in-admin")
 	public ResponseEntity<?> createAuthenticationTokenAdmin(@RequestBody UserLoginDTO authenticationRequest,
@@ -123,7 +123,7 @@ public class AuthenticationController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-
+*/
 	@PostMapping("/verify")
 	public ResponseEntity<HttpStatus> verifyUser(@RequestBody VerificationCodeDTO dto) {
 		RegisteredUser user = this.registeredUserService.findOneByEmail(dto.getUserEmail());
