@@ -30,7 +30,7 @@ import com.ftn.kts_nvt.helper.CulturalOfferMapper;
 import com.ftn.kts_nvt.services.CulturalOfferService;
 
 @RestController
-@RequestMapping("/cultural-offers")
+@RequestMapping("/culturalOffers")
 public class CulturalOfferController {
 
 	@Autowired
@@ -100,7 +100,6 @@ public class CulturalOfferController {
 		//CulturalOffer offer = this.mapper.toEntity(offerDto);
 		
 		CulturalOffer ok = this.culturalOfferService.save(dto);
-		System.out.println("ok = " + ok);
 		
 		if(ok != null)
 			return new ResponseEntity<>(HttpStatus.CREATED);

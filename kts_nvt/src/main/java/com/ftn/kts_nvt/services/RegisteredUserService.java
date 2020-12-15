@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.repositories.RegisteredUserRepository;
 
@@ -29,6 +30,18 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser> {
 	@Override
 	public RegisteredUser findOne(Long id) {
 		return registeredUserRepository.findById(id).orElse(null);
+	}
+	
+	public boolean unsubscribe(RegisteredUser u, Long offer_id) {
+		for(CulturalOffer c : u.getCulturalOffers()) {
+			if(c.getId() == offer_id) {
+				System.out.println("Udje"+ c.getName());
+				u.getCulturalOffers().remove(c);
+				this.registeredUserRepository.save(u);
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public RegisteredUser findOneByEmail(String email) {

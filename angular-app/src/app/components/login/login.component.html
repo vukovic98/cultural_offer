@@ -1,24 +1,25 @@
 <div class="backgroundImg">
   <button class="btn btn-light ml-2 mt-2 btn-sm" routerLink="/"><< Go back</button>
   <div class="container ml-auto mr-auto mt-5 w-25 border pt-5 pl-5 pr-5 pb-0 bg-white shadow-lg rounded">
-    <form #loginForm="ngForm" name="login_form">
+    <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
 
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="text" class="form-control" #name="ngModel" name="email" [(ngModel)]="email" id="email" placeholder="Enter email" required>
-        <div *ngIf="name.touched && name.errors?.required" class="mt-1 pl-1 inputError">
-          Email is required.
+        <input type="text" class="form-control" name="email" formControlName="email" id="email" placeholder="Enter email">
+        <div *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched" class="ml-1 mt-0 mb-0">
+          <small *ngIf="loginForm.controls['email'].errors?.required" class="text-danger">Please enter email</small>
+          <small *ngIf="loginForm.controls['email'].errors?.email" class="text-danger">Email form is not valid</small>
         </div>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" #pass="ngModel" name="password" [(ngModel)]="password" id="password" placeholder="Enter password" required>
-        <div *ngIf="pass.touched && pass.errors?.required" class="mt-1 pl-1 inputError">
-          Password is required.
+        <input type="password" class="form-control" formControlName="password" id="password" placeholder="Enter password">
+        <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched" class="ml-1 mt-0 mb-0">
+          <small *ngIf="loginForm.controls['password'].errors?.required" class="text-danger">Please enter password</small>
         </div>
       </div>
       <div class="pt-3">
-        <button class="btn btn-block mt-3 btn-success" [disabled]="!loginForm.form.valid" (click)="loginUser()">Login</button>
+        <button class="btn btn-block mt-3 btn-success" [disabled]="!loginForm.valid" (click)="loginUser()">Login</button>
       </div>
     </form>
     <div class="text-center pt-3">

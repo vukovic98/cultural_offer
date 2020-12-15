@@ -1,12 +1,14 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {map} from 'rxjs/operators';
+import Swal from "sweetalert2";
 
 @Injectable()
 export class CulturalOfferService {
   private readonly offesrsPageEndPoint = "culturalOffers/by-page/";
   private readonly subscribedItemsEndPoint = "registeredUser/subscribedItems";
+  private readonly unsubscribeEndPoint = "registeredUser/unsubscribe";
 
   constructor(private http: HttpClient) {
   }
@@ -15,11 +17,35 @@ export class CulturalOfferService {
   getByPage(page: number):any {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Accept'       : 'application/json',
+      'Accept'       : 'application/json'
     });
 
     return this.http.get(environment.apiUrl + this.offesrsPageEndPoint + page, {headers: headers})
       .pipe(map((response) => JSON.stringify(response)));
+  }
+
+  unsubscribeUser(offer_id: number): void {
+    const headers = new HttpHeaders({
+      'Authorization' : 'Bearer ' + localStorage.getItem("accessToken")
+    });
+
+    let params = new HttpParams().set('offer_id', offer_id.toString())
+
+    this.http.delete(environment.apiUrl + this.unsubscribeEndPoint, {params: params, headers:headers})
+      .pipe(map(response => response))
+      .subscribe(response => {
+        console.log(response);
+      }, error => {
+        console.log(error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'Something went wrong!',
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        });
+        return false;
+      })
   }
 
   getSubscribedItems(): any {

@@ -15,7 +15,7 @@
         <td><img class="offerImg rounded-circle" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg" alt="{{offer.name}}"/></td>
         <td>{{offer.name}}</td>
         <td>{{offer.location.place}}</td>
-        <td><button class="btn btn-outline-danger">Unsubscribe</button></td>
+        <td><button class="btn btn-outline-danger" (click)="unsubscribe(offer.id)">Unsubscribe</button></td>
       </tr>
     </tbody>
   </table>

@@ -96,8 +96,8 @@ export class AuthService {
     this.route.navigate(['/']);
   }
 
-  getToken(): string | null{
-    return localStorage.getItem("accessToken");
+  getToken(): string{
+    return <string> localStorage.getItem("accessToken");
   }
 
   private decodeToken(token: string): TokenModel | null {
