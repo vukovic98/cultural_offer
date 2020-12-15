@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.RegisteredUser;
+import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
 import com.ftn.kts_nvt.repositories.RegisteredUserRepository;
 
 @Service
@@ -17,6 +18,9 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser> {
 
 	@Autowired
 	private RegisteredUserRepository registeredUserRepository;
+	
+	@Autowired
+	private CulturalOfferRepository offerRepository;
 
 	@Override
 	public List<RegisteredUser> findAll() {
@@ -30,6 +34,26 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser> {
 	@Override
 	public RegisteredUser findOne(Long id) {
 		return registeredUserRepository.findById(id).orElse(null);
+	}
+	
+	public boolean subscribe(RegisteredUser u, Long offer_id) {
+		try {
+			CulturalOffer offer = offerRepository.getOne(offer_id);
+			
+			u.getCulturalOffers().add(offer);
+			
+			offer.getSubscribedUsers().add(u);
+			
+			registeredUserRepository.save(u);
+			offerRepository.save(offer);
+			
+			return true;
+			
+		}catch(Exception e) {
+			return false;
+		}
+		
+		
 	}
 	
 	public boolean unsubscribe(RegisteredUser u, Long offer_id) {
