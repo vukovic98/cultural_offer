@@ -4,6 +4,8 @@ import {AuthService} from '../../services/auth.service';
 import {CulturalOffer} from '../../model/offer-mode';
 import {TokenModel} from '../../model/token.model';
 import {of} from 'rxjs';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {EditOfferComponent} from '../edit-offer/edit-offer.component';
 
 @Component({
   selector: 'app-cultural-offers',
@@ -18,7 +20,9 @@ export class CulturalOffersComponent implements OnInit {
   public pageNum: number = 1;
   public nextBtn: boolean = false;
 
-  constructor(private service: CulturalOfferService, private auth: AuthService) { }
+  constructor(private service: CulturalOfferService,
+              private auth: AuthService,
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.service.getByPage(this.pageNum).subscribe((data: string) => {
@@ -42,6 +46,19 @@ export class CulturalOffersComponent implements OnInit {
   removeOffer(id: number) {
     this.service.deleteOffer(id);
     this.offers = this.offers.filter(item => item.id != id);
+  }
+
+  editOffer(offer: CulturalOffer){
+    const dialogRef = this.dialog.open(EditOfferComponent, {
+      width: '500px',
+      data: offer
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result != undefined){
+        offer = result.data;
+        this.service.updateOffer(offer);
+      }
+    });
   }
 
   getAllOffers() {

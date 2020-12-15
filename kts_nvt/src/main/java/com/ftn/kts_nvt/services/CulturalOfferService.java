@@ -109,8 +109,7 @@ public class CulturalOfferService {
 			found.setName(changedOffer.getName());
 			found.setDescription(changedOffer.getDescription());
 			found.setImages(changedOffer.getImages());
-			found.setLocation(changedOffer.getLocation());
-
+			found.setLocation(location.update(changedOffer.getLocation(), changedOffer.getId()));
 			return this.culturalOfferRepository.save(found);
 		} else
 			return null;

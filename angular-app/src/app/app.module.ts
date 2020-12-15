@@ -19,12 +19,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { CulturalOffersComponent } from './components/cultural-offers/cultural-offers.component';
 import { CulturalOfferItemComponent } from './components/cultural-offer-item/cultural-offer-item.component';
-import {CulturalOfferService} from './services/culturalOffer.service';
+import { CulturalOfferService } from './services/culturalOffer.service';
 import { UserVerificationComponent } from './components/user-verification/user-verification.component';
 import { SubscribedItemsComponent } from './components/subscribed-items/subscribed-items.component';
 import { SubscribedOfferCardComponent } from './components/subscribed-offer-card/subscribed-offer-card.component';
 import { SubscribedItemsListComponent } from './components/subscribed-items-list/subscribed-items-list.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     SubscribedItemsComponent,
     SubscribedOfferCardComponent,
     SubscribedItemsListComponent,
-    ProfileComponent
+    ProfileComponent,
+    EditOfferComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     MatIconModule,
     MatSelectModule,
     MatSlideToggleModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
   ],
   providers: [
     AuthService,

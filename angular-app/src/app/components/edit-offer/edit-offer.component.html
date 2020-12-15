@@ -1,0 +1,37 @@
+
+<h2 mat-dialog-title>Edit cultural offer</h2>
+
+<mat-dialog-content>
+  
+    <form [formGroup]="myForm">
+        <div class="form-group">
+            <label for="name">Cultural offer name:</label>
+            <input formControlName="name" id="name" type="text" class="form-control">
+            <div *ngIf="f.name.touched && f.name.invalid" class="alert alert-danger">
+                <div *ngIf="f.name.errors!.required">Name is required.</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <input formControlName="description" id="description" type="text" class="form-control">
+            <div *ngIf="f.description.touched && f.description.invalid" class="alert alert-danger">
+                <div *ngIf="f.description.errors!.required">Description is required.</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="place">Place:</label>
+            <input formControlName="place" id="place" type="text" class="form-control">
+            <div *ngIf="f.place.touched && f.place.invalid" class="alert alert-danger">
+                <div *ngIf="f.place.errors!.required">Place name is required.</div>
+            </div>
+        </div>
+        <div id="mapid"></div>
+    </form>      
+ 
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button class="mat-raised-button"(click)="close()">Close</button>
+    <button class="mat-raised-button mat-primary"(click)="save()">Save</button>
+</mat-dialog-actions>
+
