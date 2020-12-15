@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {ActivatedRoute} from "@angular/router";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-user-verification',
@@ -8,15 +9,17 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./user-verification.component.css']
 })
 export class UserVerificationComponent implements OnInit {
-  code: string = '';
   email: string = '';
 
+  verifyForm = new FormGroup({
+    "code": new FormControl('',Validators.required)
+  });
 
   constructor(private service: AuthService, private route: ActivatedRoute) { }
 
   verifyUser(){
     let verifyDto = {
-      "code": this.code,
+      "code": this.verifyForm.value.code,
       "userEmail": this.email,
 
     };

@@ -22,6 +22,7 @@ import { UserVerificationComponent } from './components/user-verification/user-v
 import { SubscribedItemsComponent } from './components/subscribed-items/subscribed-items.component';
 import { SubscribedOfferCardComponent } from './components/subscribed-offer-card/subscribed-offer-card.component';
 import { SubscribedItemsListComponent } from './components/subscribed-items-list/subscribed-items-list.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { SubscribedItemsListComponent } from './components/subscribed-items-list
     UserVerificationComponent,
     SubscribedItemsComponent,
     SubscribedOfferCardComponent,
-    SubscribedItemsListComponent
+    SubscribedItemsListComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
