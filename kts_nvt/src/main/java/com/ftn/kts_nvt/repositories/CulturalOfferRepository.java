@@ -2,9 +2,12 @@ package com.ftn.kts_nvt.repositories;
 
 import java.util.ArrayList;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -20,5 +23,12 @@ public interface CulturalOfferRepository extends JpaRepository<CulturalOffer, Lo
 	 		"inner join geo_location gl " + 
 	 		"on co.geo_location_id = gl.location_id " + 
 	 		"where lower(co.name) like %:exp% or lower(gl.place) like %:exp%", nativeQuery = true)
-	public Page<CulturalOffer> filter(Pageable pageRequest, @Param("exp") String exp);
+	 public Page<CulturalOffer> filter(Pageable pageRequest, @Param("exp") String exp);
+	 
+	 @Modifying
+	 @Transactional
+	 @Query(
+			 value="DELETE FROM post WHERE offer_id = ?1",
+			 nativeQuery = true)
+	 public void deletePostsForOffer(Long offer_id);
 }

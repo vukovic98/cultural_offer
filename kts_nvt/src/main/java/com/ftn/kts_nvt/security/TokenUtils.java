@@ -59,11 +59,11 @@ public class TokenUtils {
 
     // Funkcija za generisanje JWT token
     public String generateToken(String username) {
-    	System.out.println("UDJE" + username);
+    	
     	User u = this.userRepository.findByEmail(username);
-    	System.out.println("1 " + u.getEmail());
+    	
     	UserDTO dto = mapper.toDto(u);
-    	System.out.println("2 " + dto.getEmail());
+    	
         return Jwts.builder()
                 .setIssuer(APP_NAME)
                 .setSubject(username)
