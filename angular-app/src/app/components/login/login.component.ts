@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
-import Swal from 'sweetalert2';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -9,19 +9,20 @@ import Swal from 'sweetalert2';
 })
 export class LoginComponent implements OnInit {
 
-  email: string = '';
-  password: string = '';
+  loginForm = new FormGroup({
+    "email": new FormControl('', [Validators.required, Validators.email]),
+    "password": new FormControl('', Validators.required)
+  });
 
   constructor(private service: AuthService) {
   }
   loginUser(): void {
     let loginDto = {
-      "email": this.email,
-      "password": this.password
+      "email": this.loginForm.value.email,
+      "password": this.loginForm.value.password
     };
 
     this.service.login(JSON.stringify(loginDto));
-
   }
 
   ngOnInit(): void {

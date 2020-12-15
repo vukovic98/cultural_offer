@@ -8,8 +8,4 @@ import {Component, HostListener} from '@angular/core';
 export class AppComponent {
   title = 'angular-app';
 
-  @HostListener("window:onbeforeunload",["$event"])
-  clearLocalStorage(event: any){
-    localStorage.clear();
-  }
 }

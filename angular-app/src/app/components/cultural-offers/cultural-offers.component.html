@@ -1,6 +1,6 @@
 <div class="row col-md-12 pl-5 pr-0">
   <div class="row col-md-12 w-100 pt-1 pl-auto pr-auto">
-    <app-cultural-offer-item class="col-md-3" *ngFor="let offer of getAllOffers()"
+    <app-cultural-offer-item class="col-md-3" (removeOffer)="removeOffer($event)" [isSubscribed]="isSubscribed(offer)" *ngFor="let offer of getAllOffers()"
       [offer]="offer"
     >
     </app-cultural-offer-item>

@@ -15,7 +15,6 @@ export class AuthService {
   constructor(private http: HttpClient, private route: Router) {
   }
 
-
   login(loginDto: string):any {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -96,11 +95,40 @@ export class AuthService {
     this.route.navigate(['/']);
   }
 
-  getToken(): string | null{
-    return localStorage.getItem("accessToken");
+  getToken(): string{
+    return <string> localStorage.getItem("accessToken");
   }
 
-  private decodeToken(token: string): TokenModel | null {
+  isAdmin(): boolean {
+    let authorities = this.getUserAuthorities();
+    let admin_role = "ROLE_ADMIN";
+
+    for(let a of authorities) {
+      if(admin_role === a.name)
+        return true;
+    }
+
+    return false;
+  }
+
+  isUser(): boolean {
+    let authorities = this.getUserAuthorities();
+    let admin_role = "ROLE_USER";
+
+    for(let a of authorities) {
+      if(admin_role === a.name)
+        return true;
+    }
+
+    return false;
+  }
+
+  isLoggedIn(): boolean {
+    let token = this.getToken();
+    return !!token;
+  }
+
+  decodeToken(token: string): TokenModel | null {
     if (token) {
       let payload = token.split(".")[1];
       payload = window.atob(payload);

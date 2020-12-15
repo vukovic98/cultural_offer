@@ -8,6 +8,7 @@ import { AddOfferComponent } from './components/add-offer/add-offer.component';
 import {UserVerificationComponent} from "./components/user-verification/user-verification.component";
 import {SubscribedItemsComponent} from './components/subscribed-items/subscribed-items.component';
 import {RoleGuard} from './guards/role.guard';
+import {ProfileComponent} from "./components/profile/profile.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home-page', pathMatch: 'full'},
@@ -15,12 +16,23 @@ const routes: Routes = [
   {path: 'home-page', component: HomeComponent},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'verify', component: UserVerificationComponent},
-  {path: 'add-offer', component: AddOfferComponent},
+  {
+    path: 'add-offer',
+    component: AddOfferComponent,
+    canActivate: [RoleGuard],
+    data: {acceptRoles: 'ROLE_ADMIN'}
+  },
   {
     path: 'subscribed-items',
     component: SubscribedItemsComponent,
     canActivate: [RoleGuard],
     data: {acceptRoles: 'ROLE_USER'}
+  },
+  {
+    path: "profile",
+    component:ProfileComponent,
+    canActivate: [RoleGuard],
+    data: {acceptRoles: 'ROLE_USER|ROLE_ADMIN'}
   }
   ];
 

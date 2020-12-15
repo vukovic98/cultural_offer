@@ -42,7 +42,7 @@ public class TokenUtils {
     private String AUTH_HEADER;
     
     @Autowired
-    private RegisteredUserRepository userRepository;
+    private UserRepository userRepository;
     
     @Autowired
     private AdminRepository adminRepository;
@@ -62,12 +62,14 @@ public class TokenUtils {
     private UserMapper mapper;
 
     // Funkcija za generisanje JWT token
+
     public String generateToken(String username, boolean isAdmin) {
     	User u;
     	if(!isAdmin)
     		u = this.userRepository.findByEmail(username);
     	else
     		u = this.adminRepository.findByEmail(username);
+
     	UserDTO dto = mapper.toDto(u);
     	
         return Jwts.builder()

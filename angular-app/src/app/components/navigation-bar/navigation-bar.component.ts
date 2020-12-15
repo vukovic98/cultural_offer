@@ -23,6 +23,14 @@ export class NavigationBarComponent implements OnInit {
     return this.userLoggedIn;
   }
 
+  isUser() {
+    return this.service.isUser();
+  }
+
+  isUserAdmin(): boolean {
+    return this.service.isAdmin();
+  }
+
   getUserName(): any {
     let token = localStorage.getItem("accessToken");
     let payload: string = '';

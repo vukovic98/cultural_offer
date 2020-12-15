@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CulturalOfferService} from '../../services/culturalOffer.service';
+import {CulturalOffer} from '../../model/offer-mode';
 
 @Component({
   selector: 'app-subscribed-items',
@@ -8,14 +9,18 @@ import {CulturalOfferService} from '../../services/culturalOffer.service';
 })
 export class SubscribedItemsComponent implements OnInit {
 
-  private offers: Array<object> = [];
+  private offers: Array<CulturalOffer> = [];
   constructor(private service: CulturalOfferService) { }
 
   ngOnInit(): void {
     this.service.getSubscribedItems().subscribe((data: string) => {
-      console.log(data);
       this.offers = JSON.parse(data);
     });
+  }
+
+  removeOffer(id: number) {
+   this.service.unsubscribeUser(id);
+   this.offers = this.offers.filter(item => item.id != id);
   }
 
   getSubscribedItems(): any {

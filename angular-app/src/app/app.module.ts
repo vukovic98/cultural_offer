@@ -8,6 +8,8 @@ import { LoginComponent } from './components/login/login.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthService} from './services/auth.service';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatButtonModule} from '@angular/material/button';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import { AddOfferComponent } from './components/add-offer/add-offer.component';
@@ -22,6 +24,7 @@ import { UserVerificationComponent } from './components/user-verification/user-v
 import { SubscribedItemsComponent } from './components/subscribed-items/subscribed-items.component';
 import { SubscribedOfferCardComponent } from './components/subscribed-offer-card/subscribed-offer-card.component';
 import { SubscribedItemsListComponent } from './components/subscribed-items-list/subscribed-items-list.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,8 @@ import { SubscribedItemsListComponent } from './components/subscribed-items-list
     UserVerificationComponent,
     SubscribedItemsComponent,
     SubscribedOfferCardComponent,
-    SubscribedItemsListComponent
+    SubscribedItemsListComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +50,9 @@ import { SubscribedItemsListComponent } from './components/subscribed-items-list
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatButtonModule
   ],
   providers: [
     AuthService,

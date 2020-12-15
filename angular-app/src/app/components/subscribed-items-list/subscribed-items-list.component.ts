@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-subscribed-items-list',
@@ -8,10 +8,15 @@ import {Component, Input, OnInit} from '@angular/core';
 export class SubscribedItemsListComponent implements OnInit {
 
   @Input() public offers: any;
+  @Output() removeOffer = new EventEmitter<number>();
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  unsubscribe(offerId: number) {
+    this.removeOffer.emit(offerId);
   }
 
 }

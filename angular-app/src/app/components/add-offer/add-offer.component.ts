@@ -34,7 +34,9 @@ export class AddOfferComponent implements OnInit {
   }
 
   ngOnInit() {
+    // @ts-ignore
     let mymap = L.map('mapid').setView([51.505, -0.09], 13);
+    // @ts-ignore
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18,
@@ -52,6 +54,7 @@ export class AddOfferComponent implements OnInit {
       this.myForm.patchValue({
         location: e.latlng
       });
+      // @ts-ignore
       marker = new L.Marker(e.latlng);
       mymap.addLayer(marker);
     });
@@ -87,7 +90,7 @@ export class AddOfferComponent implements OnInit {
   remove(url: any) {
     //console.log(this.images)
     console.log("remove = ");
-    //console.log(url); 
+    //console.log(url);
     this.images = this.images.filter((obj: any) => obj !== url);
   }
 

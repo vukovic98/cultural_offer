@@ -2,8 +2,23 @@
   <div class="card shadow h-100">
     <img class="card-img-top" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg">
     <div class="card-body">
-      <h3>{{offer.name}}</h3>
-      <p class="card-text">{{offer.description}}</p>
+      <div style="height: 50px;">
+        <h3 class="float-left" title="Title">{{offer.name}}</h3>
+        <i class="fa fa-eye float-right" aria-hidden="true" title="Subscribed users"><small class="ml-2">{{offer.subscribersCount}}</small></i>
+      </div>
+      <p class="card-text" title="Description"><small>{{offer.description}}</small></p>
+    </div>
+    <div class="pl-2">
+      <h3 class="float-left"><span class="badge badge-light float-left" title="Average grade"><i class="fa fa-star-o mr-2" aria-hidden="true"></i>{{offer.avgGrade}}</span></h3>
+      <div class="float-right" *ngIf="isUser()">
+        <small class="float-left mr-2">Subscribe</small>
+        <mat-slide-toggle class="float-right mr-2" color="primary" [checked]="isSubscribed" title="(Un)Subscribe"></mat-slide-toggle>
+      </div>
+      <div class="float-right" *ngIf="isAdmin()">
+        <button mat-mini-fab color="warn" class="mr-2 mb-2" (click)=deleteOffer(offer.id) style="outline: none">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
 </div>

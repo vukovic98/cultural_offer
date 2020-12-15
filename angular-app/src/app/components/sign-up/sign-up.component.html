@@ -1,58 +1,57 @@
 <div class="backgroundImg">
   <div class="container ml-auto mr-auto mt-5 w-25 border pt-4 pl-5 pr-5 pb-0 bg-white shadow-lg rounded">
-    <form #signupForm="ngForm" name="signup_form">
+    <form [formGroup]="signupForm" (ngSubmit)="signUp()">
       <div class="form-group">
         <label for="firstName">First Name</label>
-        <input type="text" class="form-control" #fName="ngModel" name="firstName" [(ngModel)]="firstName" id="firstName" placeholder="Enter first name" required  pattern="[A-Z][a-z]+">
-        <div *ngIf="fName.touched && fName.errors?.required" class="mt-1 pl-1 inputError">
+        <input type="text" class="form-control" formControlName="firstName" name="firstName"  id="firstName" placeholder="Enter first name" required  pattern="[A-Z][a-z]+">
+        <div *ngIf="signupForm.controls['firstName'].touched && signupForm.controls['firstName'].errors?.required" class="mt-1 pl-1 inputError">
           <small>First Name is required.</small>
         </div>
-        <div *ngIf="fName.errors?.pattern" class="mt-1 pl-1 inputError">
+        <div *ngIf="signupForm.controls['firstName'].errors?.pattern" class="mt-1 pl-1 inputError">
           <small>First Name must start with capital letter.</small>
         </div>
       </div>
       <div class="form-group">
         <label for="lastName">Last Name</label>
-        <input type="text" class="form-control" #lName="ngModel" name="lastName" [(ngModel)]="lastName" id="lastName" placeholder="Enter last name" required  pattern="[A-Z][a-z]+">
-        <div *ngIf="lName.touched && lName.errors?.required" class="mt-1 pl-1 inputError">
+        <input type="text" class="form-control" formControlName="lastName" name="lastName"  id="lastName" placeholder="Enter last name" required  pattern="[A-Z][a-z]+">
+        <div *ngIf="signupForm.controls['lastName'].touched && signupForm.controls['lastName'].errors?.required" class="mt-1 pl-1 inputError">
           <small>Last Name is required.</small>
         </div>
-        <div *ngIf="lName.errors?.pattern" class="mt-1 pl-1 inputError">
+        <div *ngIf="signupForm.controls['lastName'].errors?.pattern" class="mt-1 pl-1 inputError">
           <small>Last Name must start with capital letter.</small>
         </div>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" class="form-control" #mail="ngModel" name="email" [(ngModel)]="email" id="email" placeholder="Enter email" required pattern="^[a-z0-9._%+-]+@maildrop.cc">
-        <div *ngIf="mail.touched && mail.errors?.required" class="mt-1 pl-1 inputError">
+        <input type="email" class="form-control" formControlName="email" name="email"  id="email" placeholder="Enter email" required pattern="^[a-z0-9._%+-]+@maildrop.cc">
+        <div *ngIf="signupForm.controls['email'].touched && signupForm.controls['email'].errors?.required" class="mt-1 pl-1 inputError">
           <small>Email is required.</small>
         </div>
-        <div *ngIf=" mail.errors?.pattern " class="mt-1 pl-1 inputError">
+        <div *ngIf=" signupForm.controls['email'].errors?.pattern " class="mt-1 pl-1 inputError">
           <small>Wrong email format. Example: "john123@maildrop.cc".</small>
         </div>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" #pass="ngModel" name="password" [(ngModel)]="password" id="password" placeholder="Enter password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
-        <div *ngIf="pass.errors?.pattern" class="mt-1 pl-1 inputError">
-          <small>Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters.</small>
+        <input type="password" class="form-control" formControlName="password" name="password"  minlength="8" id="password" placeholder="Enter password" required pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$">
+        <div *ngIf="signupForm.controls['password'].errors?.pattern" class="mt-1 pl-1 inputError">
+          <small>Password must contain minimum 8 characters, at least one letter and one number.</small>
         </div>
-        <div *ngIf="pass.touched && pass.errors?.required" class="mt-1 pl-1 inputError">
+        <div *ngIf="signupForm.controls['password'].touched && signupForm.controls['password'].errors?.required" class="mt-1 pl-1 inputError">
           <small>Password is required.</small>
         </div>
       </div>
       <div class="form-group">
         <label for="passwordConfirm">Confirm Password</label>
-        <input type="password" class="form-control" #passConfirm="ngModel" name="passwordConfirm" [(ngModel)]="passwordConfirm" id="passwordConfirm" placeholder="Confirm password" required pattern="{{ password }}">
-        <div *ngIf="passConfirm.touched && passConfirm.errors?.required" class="mt-1 pl-1 inputError">
-          <small>Confirm password.</small>
+        <input type="password" class="form-control" formControlName="passConfirm" name="passwordConfirm"  id="passwordConfirm" placeholder="Confirm password" required>
+        <div *ngIf="signupForm.controls['passConfirm'].touched && signupForm.controls['passConfirm'].errors?.required" class="mt-1 pl-1 inputError">
         </div>
-        <div *ngIf="passConfirm.errors?.pattern" class="mt-1 pl-1 inputError">
+        <div *ngIf="signupForm.controls['passConfirm'].errors?.mustMatch" class="mt-1 pl-1 inputError">
          <small>Please make sure your passwords match.</small>
         </div>
       </div>
       <div class="pt-3">
-        <button class="btn btn-block mt-3 btn-success" [disabled]="!signupForm.form.valid" (click)="signUp()">Sign Up</button>
+        <button class="btn btn-block mt-3 btn-success" [disabled]="!signupForm.valid" >Sign Up</button>
       </div>
     </form>
     <div class="text-center pt-3">

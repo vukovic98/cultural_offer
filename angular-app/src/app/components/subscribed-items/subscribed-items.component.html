@@ -8,7 +8,7 @@
       <h3>{{getUserName()}}, you are subscribed to: </h3>
       <hr/>
       <div>
-        <app-subscribed-items-list [offers]="getSubscribedItems()"></app-subscribed-items-list>
+        <app-subscribed-items-list (removeOffer)="removeOffer($event)" [offers]="getSubscribedItems()"></app-subscribed-items-list>
         <table *ngIf="getSubscribedItems().length === 0">
           <tr>
             <td>No items</td>

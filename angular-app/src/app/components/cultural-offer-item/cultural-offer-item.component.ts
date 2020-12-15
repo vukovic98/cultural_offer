@@ -1,4 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-cultural-offer-item',
@@ -8,10 +9,25 @@ import {Component, Input, OnInit} from '@angular/core';
 export class CulturalOfferItemComponent implements OnInit {
 
   @Input() public offer: any;
+  @Input() public isSubscribed: boolean = false;
+  @Output() removeOffer = new EventEmitter<number>();
 
-  constructor() { }
+  constructor(private auth: AuthService) { }
 
   ngOnInit(): void {
   }
+
+  deleteOffer(offer_id: number) {
+    this.removeOffer.emit(offer_id);
+  }
+
+  isUser(): boolean {
+    return this.auth.isUser();
+  }
+
+  isAdmin(): boolean {
+    return this.auth.isAdmin();
+  }
+
 
 }

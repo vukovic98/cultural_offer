@@ -30,7 +30,7 @@ import com.ftn.kts_nvt.helper.CulturalOfferMapper;
 import com.ftn.kts_nvt.services.CulturalOfferService;
 
 @RestController
-@RequestMapping("/cultural-offers")
+@RequestMapping("/culturalOffers")
 public class CulturalOfferController {
 
 	@Autowired
@@ -61,6 +61,7 @@ public class CulturalOfferController {
 		Pageable pageRequest = PageRequest.of(pageNum-1, 8);
 	
 		Page<CulturalOffer> page = this.culturalOfferService.findAll(pageRequest);
+		
 		
 		List<CulturalOfferDTO> offersDTOS = this.mapper.listToDTO(page.toList());
 		Page<CulturalOfferDTO> pageOffersDTOS = new PageImpl<>(offersDTOS, page.getPageable(), page.getTotalElements());
@@ -100,7 +101,6 @@ public class CulturalOfferController {
 		//CulturalOffer offer = this.mapper.toEntity(offerDto);
 		
 		CulturalOffer ok = this.culturalOfferService.save(dto);
-		System.out.println("ok = " + ok);
 		
 		if(ok != null)
 			return new ResponseEntity<>(HttpStatus.CREATED);
