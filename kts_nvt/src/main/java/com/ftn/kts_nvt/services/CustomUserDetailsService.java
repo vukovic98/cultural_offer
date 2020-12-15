@@ -33,6 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		// ako se ne radi nasledjivanje, paziti gde sve treba da se proveri email
 		User user = userRepository.findByEmail(email);
+		
 		if (user == null) {
 			throw new UsernameNotFoundException(String.format("No user found with username '%s'.", email)); 
 		} else {

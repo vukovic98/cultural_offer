@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -33,8 +35,12 @@ public class CulturalOffer {
 	@CollectionTable(name = "culturalOffer_images", joinColumns = @JoinColumn(name = "culturalOffer_ID"))
 	private List<Image> images;
 
-	@ElementCollection
-	@CollectionTable(name = "culturalOffer_user", joinColumns = @JoinColumn(name = "culturalOffer_ID"))
+	
+	@ManyToMany
+	@JoinTable(
+	  name = "users_culturalOffers", 
+	  joinColumns = @JoinColumn(name = "culturalOffer_ID"), 
+	  inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<RegisteredUser> subscribedUsers;
 
 	@ElementCollection

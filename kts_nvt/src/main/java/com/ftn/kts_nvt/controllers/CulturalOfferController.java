@@ -61,6 +61,7 @@ public class CulturalOfferController {
 		Pageable pageRequest = PageRequest.of(pageNum-1, 8);
 	
 		Page<CulturalOffer> page = this.culturalOfferService.findAll(pageRequest);
+		System.out.println(page.toList());
 		
 		List<CulturalOfferDTO> offersDTOS = this.mapper.listToDTO(page.toList());
 		Page<CulturalOfferDTO> pageOffersDTOS = new PageImpl<>(offersDTOS, page.getPageable(), page.getTotalElements());

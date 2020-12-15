@@ -34,9 +34,14 @@ export class CulturalOfferService {
     this.http.delete(environment.apiUrl + this.unsubscribeEndPoint, {params: params, headers:headers})
       .pipe(map(response => response))
       .subscribe(response => {
-        console.log(response);
+        Swal.fire({
+          title: 'Success!',
+          text: 'Successfully unsubscribed from offer!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+        return true;
       }, error => {
-        console.log(error);
         Swal.fire({
           title: 'Error!',
           text: 'Something went wrong!',
