@@ -3,6 +3,7 @@ import {environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import Swal from "sweetalert2";
+import { CulturalOffer } from '../model/offer-mode';
 
 @Injectable()
 export class CulturalOfferService {
@@ -23,6 +24,33 @@ export class CulturalOfferService {
 
     return this.http.get(environment.apiUrl + this.offesrsPageEndPoint + page, {headers: headers})
       .pipe(map((response) => JSON.stringify(response)));
+  }
+
+  updateOffer(offer: CulturalOffer){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization' : 'Bearer ' + localStorage.getItem("accessToken")
+    });
+    this.http.put(environment.apiUrl + this.manageOffersEndPoint + offer.id, offer, {headers: headers})
+      .pipe(map(response => response))
+      .subscribe(response => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Cultural offer successfully updated!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+        return true;
+      }, error => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Something went wrong!',
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        });
+        return false;
+      })
   }
 
   deleteOffer(offer_id: number): void {

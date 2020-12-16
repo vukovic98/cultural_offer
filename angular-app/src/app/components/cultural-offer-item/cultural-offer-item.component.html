@@ -19,6 +19,11 @@
           <mat-icon>delete</mat-icon>
         </button>
       </div>
+      <div class="float-right" *ngIf="isAdmin()">
+        <button mat-mini-fab color="primary" class="mr-2 mb-2" (click)=edit(offer) style="outline: none">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
 </div>
