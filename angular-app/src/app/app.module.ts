@@ -24,6 +24,9 @@ import { SubscribedItemsComponent } from './components/subscribed-items/subscrib
 import { SubscribedOfferCardComponent } from './components/subscribed-offer-card/subscribed-offer-card.component';
 import { SubscribedItemsListComponent } from './components/subscribed-items-list/subscribed-items-list.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import {EditProfileService} from "./services/edit-profile.service";
+import {ChangePasswordService} from "./services/change-password.service";
 
 @NgModule({
   declarations: [
@@ -39,7 +42,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     SubscribedItemsComponent,
     SubscribedOfferCardComponent,
     SubscribedItemsListComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +58,9 @@ import { ProfileComponent } from './components/profile/profile.component';
   ],
   providers: [
     AuthService,
-    CulturalOfferService
+    CulturalOfferService,
+    EditProfileService,
+    ChangePasswordService
   ],
   bootstrap: [AppComponent]
 })

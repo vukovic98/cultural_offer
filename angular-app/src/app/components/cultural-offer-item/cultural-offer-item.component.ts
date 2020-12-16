@@ -9,7 +9,7 @@ import {AuthService} from '../../services/auth.service';
 export class CulturalOfferItemComponent implements OnInit {
 
   @Input() public offer: any;
-  @Input() public isSubscribed: boolean;
+  @Input() public isSubscribed: boolean | undefined;
 
   constructor(private auth: AuthService) { }
 

@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,8 +28,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.kts_nvt.beans.RegisteredUser;
+import com.ftn.kts_nvt.beans.User;
+import com.ftn.kts_nvt.dto.ChangePasswordDto;
 import com.ftn.kts_nvt.dto.CulturalOfferDTO;
 import com.ftn.kts_nvt.dto.UserDTO;
+import com.ftn.kts_nvt.dto.UserNameDto;
 import com.ftn.kts_nvt.helper.CulturalOfferMapper;
 import com.ftn.kts_nvt.helper.UserMapper;
 import com.ftn.kts_nvt.services.RegisteredUserService;
@@ -80,7 +84,7 @@ public class RegisteredUserController {
 		} else 
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    
+
     @DeleteMapping(value = "/unsubscribe")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<HttpStatus> unsubscribe(@RequestParam("offer_id") Long id) {
@@ -113,6 +117,17 @@ public class RegisteredUserController {
         return new ResponseEntity<>(userMapper.toDto(user), HttpStatus.OK);
     }
     
+    @RequestMapping(value="byEmail/{email}", method=RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email){
+        User user = registeredUserService.findOneByEmail(email);
+        if(user == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(userMapper.toDto(user), HttpStatus.OK);
+    }
+    
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO){
         RegisteredUser user;
@@ -137,6 +152,7 @@ public class RegisteredUserController {
         return new ResponseEntity<>(userMapper.toDto(user), HttpStatus.OK);
     }
     
+
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         try {
