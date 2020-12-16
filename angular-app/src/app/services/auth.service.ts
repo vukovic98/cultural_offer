@@ -10,7 +10,7 @@ import {Role, TokenModel} from '../model/token.model';
 export class AuthService {
   private readonly loginPath = "auth/log-in";
   private  readonly signupPath = "auth/sign-up";
-  private  readonly verificationCodePath = "auth/verify"
+  private  readonly verificationCodePath = "auth/verify";
 
   constructor(private http: HttpClient, private route: Router) {
   }

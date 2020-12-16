@@ -27,6 +27,31 @@ export class CulturalOfferService {
       .pipe(map((response) => JSON.stringify(response)));
   }
 
+  createOffer(offer: any){
+    var headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
+    this.http.post(environment.apiUrl + this.manageOffersEndPoint, offer, {headers: headers})
+    .pipe(map(response => response))
+      .subscribe(response => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Cultural offer successfully created!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+        return true;
+      }, error => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Something went wrong!',
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        });
+        return false;
+      })
+
+  }
+
   updateOffer(offer: CulturalOffer){
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

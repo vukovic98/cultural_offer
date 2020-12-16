@@ -43,8 +43,7 @@ import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
     SubscribedOfferCardComponent,
     SubscribedItemsListComponent,
     ProfileComponent,
-    EditOfferComponent
-  ],
+	EditOfferComponent,	ChangePasswordComponent  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -60,7 +59,9 @@ import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
   ],
   providers: [
     AuthService,
-    CulturalOfferService
+    CulturalOfferService,
+    EditProfileService,
+    ChangePasswordService
   ],
   bootstrap: [AppComponent]
 })

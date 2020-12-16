@@ -110,3 +110,4 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser> {
 
 	}
 }
+

@@ -12,6 +12,7 @@ import {CulturalOfferService} from '../../services/culturalOffer.service';
 export class CulturalOfferItemComponent implements OnInit {
 
   @Input() public offer: any;
+
   @Input() public isSubscribed: boolean = false;
   @Output() removeOffer = new EventEmitter<number>();
   @Output() editOffer = new EventEmitter<CulturalOffer>();
