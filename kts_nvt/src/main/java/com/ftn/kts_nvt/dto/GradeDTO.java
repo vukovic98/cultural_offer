@@ -14,13 +14,13 @@ public class GradeDTO {
 	@NotNull(message = "User cannot be null.")
 	private RegisteredUser user;
 	@NotNull(message = "CulturalOFfer cannot be null.")
-	private CulturalOffer culturalOffer;
+	private CulturalOfferDTO culturalOffer;
 	
 	public GradeDTO() {}
 
 	public GradeDTO(Long id, @NotNull(message = "Value cannot be null.") int value,
 			@NotNull(message = "User cannot be null.") RegisteredUser user,
-			@NotNull(message = "CulturalOFfer cannot be null.") CulturalOffer culturalOffer) {
+			@NotNull(message = "CulturalOFfer cannot be null.") CulturalOfferDTO culturalOffer) {
 		super();
 		this.id = id;
 		this.value = value;
@@ -30,7 +30,7 @@ public class GradeDTO {
 
 	public GradeDTO(@NotNull(message = "Value cannot be null.") int value,
 			@NotNull(message = "User cannot be null.") RegisteredUser user,
-			@NotNull(message = "CulturalOFfer cannot be null.") CulturalOffer culturalOffer) {
+			@NotNull(message = "CulturalOFfer cannot be null.") CulturalOfferDTO culturalOffer) {
 		super();
 		this.value = value;
 		this.user = user;
@@ -49,11 +49,11 @@ public class GradeDTO {
 		this.user = user;
 	}
 
-	public CulturalOffer getCulturalOffer() {
+	public CulturalOfferDTO getCulturalOffer() {
 		return culturalOffer;
 	}
 
-	public void setCulturalOffer(CulturalOffer culturalOffer) {
+	public void setCulturalOffer(CulturalOfferDTO culturalOffer) {
 		this.culturalOffer = culturalOffer;
 	}
 
@@ -68,4 +68,10 @@ public class GradeDTO {
 	public void setValue(int value) {
 		this.value = value;
 	}
+
+	@Override
+	public String toString() {
+		return "GradeDTO [id=" + id + ", value=" + value + ", user=" + user + ", culturalOffer=" + culturalOffer + "]";
+	}
+	
 }

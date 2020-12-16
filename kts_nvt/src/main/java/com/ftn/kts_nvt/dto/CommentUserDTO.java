@@ -1,7 +1,6 @@
 package com.ftn.kts_nvt.dto;
 
 import com.ftn.kts_nvt.beans.Image;
-
 public class CommentUserDTO {
 	private Long id;
 	private String commenterEmail;
@@ -70,6 +69,12 @@ public class CommentUserDTO {
 
 	public void setApproved(boolean approved) {
 		this.approved = approved;
+	}
+
+	@Override
+	public String toString() {
+		return "CommentUserDTO [id=" + id + ", commenterEmail=" + commenterEmail + ", commenterName=" + commenterName
+				+ ", content=" + content + ", image=" + image + ", approved=" + approved + "]";
 	}
 	
 	

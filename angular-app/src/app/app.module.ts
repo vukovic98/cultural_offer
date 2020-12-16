@@ -27,6 +27,7 @@ import { SubscribedItemsListComponent } from './components/subscribed-items-list
 import { ProfileComponent } from './components/profile/profile.component';
 import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { OfferDetailsComponent } from './components/offer-details/offer-details.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     SubscribedOfferCardComponent,
     SubscribedItemsListComponent,
     ProfileComponent,
-    EditOfferComponent
+    EditOfferComponent,
+    OfferDetailsComponent
   ],
   imports: [
     BrowserModule,

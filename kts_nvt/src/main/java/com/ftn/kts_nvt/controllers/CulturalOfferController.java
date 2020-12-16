@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.dto.CulturalOfferAddDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferDTO;
+import com.ftn.kts_nvt.dto.CulturalOfferDetailsDTO;
 import com.ftn.kts_nvt.helper.CulturalOfferMapper;
 import com.ftn.kts_nvt.services.CulturalOfferService;
 
@@ -75,6 +76,17 @@ public class CulturalOfferController {
 		
 		if(found != null)
 			return new ResponseEntity<>(this.mapper.toDto(found), HttpStatus.OK);
+		else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+	
+	@GetMapping(path="/detail/{id}")
+	public ResponseEntity<CulturalOfferDetailsDTO> detailFindById(@PathVariable("id") long id) {
+		System.out.println("get by id = " + id);
+		CulturalOffer found = this.culturalOfferService.findById(id);
+		System.out.println("offer = " + found);
+		if(found != null)
+			return new ResponseEntity<>(this.mapper.toDetailsDTO(found), HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}

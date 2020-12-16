@@ -61,4 +61,10 @@ public class CulturalOfferTypeDTO {
 		this.categoryName = categoryName;
 	}
 
+	@Override
+	public String toString() {
+		return "CulturalOfferTypeDTO [id=" + id + ", name=" + name + ", categoryId=" + categoryId + ", categoryName="
+				+ categoryName + "]";
+	}
+
 }

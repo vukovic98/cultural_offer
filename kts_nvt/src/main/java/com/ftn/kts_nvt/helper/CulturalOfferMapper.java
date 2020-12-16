@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.Grade;
 import com.ftn.kts_nvt.dto.CulturalOfferDTO;
+import com.ftn.kts_nvt.dto.CulturalOfferDetailsDTO;
 
 @Component
 public class CulturalOfferMapper implements MapperInterface<CulturalOffer, CulturalOfferDTO> {
@@ -29,6 +30,24 @@ public class CulturalOfferMapper implements MapperInterface<CulturalOffer, Cultu
 		return offer;
 	}
 
+	public CulturalOfferDetailsDTO toDetailsDTO(CulturalOffer entity) {
+		PostMapper postMapper = new PostMapper();
+		CommentMapper commentMapper = new CommentMapper();
+		GradeMapper gradeMapper = new GradeMapper();
+		CulturalOfferTypeMapper typeMapper = new CulturalOfferTypeMapper();
+		CulturalOfferDetailsDTO dto = new CulturalOfferDetailsDTO();
+		dto.setId(entity.getId());
+		dto.setName(entity.getName());
+		dto.setDescription(entity.getDescription());
+		dto.setLocation(entity.getLocation());
+		dto.setImages(entity.getImages());
+		dto.setPosts(postMapper.listToDto(entity.getPosts()));
+		dto.setComments(commentMapper.listToDto(entity.getComments()));
+		dto.setGrades(gradeMapper.toGradeDTOList(entity.getGrades()));
+		dto.setType(typeMapper.toDto(entity.getType()));
+		return dto;
+	}
+	
 	@Override
 	public CulturalOfferDTO toDto(CulturalOffer entity) {
 		CulturalOfferDTO offer = new CulturalOfferDTO();
