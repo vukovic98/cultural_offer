@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,9 +24,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import com.ftn.kts_nvt.beans.Comment;
-import com.ftn.kts_nvt.dto.CommentDTO;
+import com.ftn.kts_nvt.beans.CulturalOffer;
+import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.dto.CommentUserDTO;
+import com.ftn.kts_nvt.dto.NewCommentDTO;
 import com.ftn.kts_nvt.helper.CommentMapper;
+import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
 import com.ftn.kts_nvt.services.CommentService;
 
 @RestController
@@ -34,6 +38,9 @@ public class CommentController {
 
 	@Autowired
 	private CommentService commentService;
+	
+	@Autowired
+	private CulturalOfferRepository offerRepository;
 
 	@Autowired
 	private CommentMapper mapper;
@@ -75,21 +82,33 @@ public class CommentController {
 	// POST: http://localhost:8080/comments -> RequestBody (DTO)
 	@PostMapping(consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<HttpStatus> create(@Valid @RequestBody CommentUserDTO commentDto) {
+	public ResponseEntity<HttpStatus> create(@Valid @RequestBody NewCommentDTO commentDto) {
 
-		Comment newComment = this.mapper.toEntity(commentDto);
+		//Comment newComment = this.mapper.toEntity(commentDto);
 
-		// String currentUser =
-		// SecurityContextHolder.getContext().getAuthentication().getName();
+		RegisteredUser user = (RegisteredUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		// TODO Add logged user to comment
 
+		Comment newComment = new Comment(commentDto.getContent(), commentDto.getImage(), user);
+		CulturalOffer offer = offerRepository.getOne(commentDto.getOfferId());
+		
+
+		
+		
 		Comment ok = this.commentService.save(newComment);
 
+		if(offer != null) {
+			offer.getComments().add(newComment);
+			offerRepository.save(offer);
+		}else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
 		if (ok != null) {
 			return new ResponseEntity<>(HttpStatus.CREATED);
 		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -120,7 +139,7 @@ public class CommentController {
 		if (ok)
 			return new ResponseEntity<>(HttpStatus.OK);
 		else
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	// PUT: http://localhost:8080/comments/{id} -> RequestBody (DTO)

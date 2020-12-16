@@ -1,6 +1,7 @@
 package com.ftn.kts_nvt.dto;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class CulturalOfferTypeDTO {
 	private long id;
@@ -8,7 +9,7 @@ public class CulturalOfferTypeDTO {
 	@NotBlank(message = "Name cannot be empty.")
 	private String name;
 
-	@NotBlank(message = "Category Id cannot be empty.")
+	@NotNull(message = "Category Id cannot be empty.")
 	private long categoryId;
 
 	@NotBlank(message = "Category name cannot be empty.")

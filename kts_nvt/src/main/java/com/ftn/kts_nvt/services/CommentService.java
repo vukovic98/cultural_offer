@@ -9,13 +9,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.ftn.kts_nvt.beans.Comment;
+import com.ftn.kts_nvt.beans.Image;
 import com.ftn.kts_nvt.repositories.CommentRepository;
+import com.ftn.kts_nvt.repositories.ImageRepository;
 
 @Service
 public class CommentService {
 
 	@Autowired
 	private CommentRepository commentRepository;
+	
+	@Autowired
+	private ImageRepository imageRepository;
 	
 	public Comment save(Comment c) {
 		return this.commentRepository.save(c);
@@ -50,12 +55,24 @@ public class CommentService {
 	}
 	
 	public boolean deleteById(long id) {
-		boolean exists = this.commentRepository.existsById(id);
+		try {
+			Comment exists = this.commentRepository.getOne(id);
+			
+			Image image = exists.getImage();
+			
+			if(image != null) {
+				
+				exists.setImage(null);
+				imageRepository.delete(image);
+				
+			}
+			
+			this.commentRepository.delete(exists);
+			return true;
+		}catch(Exception e){
+			return false;
+		}
 		
-		if(exists)
-			this.commentRepository.deleteById(id);
-		
-		return exists;
 	}
 	
 	public Comment update(Comment changedComment, long id) {
