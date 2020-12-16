@@ -88,8 +88,8 @@ public class RegisteredUserController {
     @PostMapping(value = "/subscribe")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<HttpStatus> subscribe(@RequestParam("offer_id") Long id) {
-    	
-		RegisteredUser user = (RegisteredUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String email =  SecurityContextHolder.getContext().getAuthentication().getName();
+		RegisteredUser user = this.registeredUserService.findOneByEmail(email);
 		
 		if(user != null) {
 			boolean ok = this.registeredUserService.subscribe(user, id);

@@ -25,6 +25,8 @@ import { SubscribedItemsComponent } from './components/subscribed-items/subscrib
 import { SubscribedOfferCardComponent } from './components/subscribed-offer-card/subscribed-offer-card.component';
 import { SubscribedItemsListComponent } from './components/subscribed-items-list/subscribed-items-list.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
