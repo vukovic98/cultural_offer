@@ -1,11 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { CulturalOffer } from '../../model/offer-mode';
-import { FormGroup, FormControl, Validators, MinLengthValidator } from '@angular/forms';
-import { CategoryModel } from '../../model/category-model';
-import { CategoryService } from '../../services/category.service';
-import { TypeModel } from '../../model/type-model';
-import { TypeService } from '../../services/type.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-offer',
@@ -13,23 +9,23 @@ import { TypeService } from '../../services/type.service';
   styleUrls: ['./edit-offer.component.css']
 })
 export class EditOfferComponent implements OnInit {
-  
+
   constructor(
     public dialogRef: MatDialogRef<EditOfferComponent>,
     @Inject(MAT_DIALOG_DATA) public data: CulturalOffer) {
   }
-  
+
   myForm = new FormGroup({
     name: new FormControl(this.data.name, Validators.required),
     description: new FormControl(this.data.description, Validators.required),
     place: new FormControl(this.data.location.place, Validators.required),
     location: new FormControl('', [Validators.required]),
   });
-  
+
   ngOnInit(): void {
     this.initMap();
   }
-  
+
   save(){
     this.data.name = this.myForm.value.name;
     this.data.description = this.myForm.value.description;

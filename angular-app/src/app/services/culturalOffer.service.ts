@@ -7,11 +7,12 @@ import { CulturalOffer } from '../model/offer-mode';
 
 @Injectable()
 export class CulturalOfferService {
-  private readonly offesrsPageEndPoint = "culturalOffers/by-page/";
+  private readonly offersPageEndPoint = "culturalOffers/by-page/";
   private readonly subscribedItemsEndPoint = "registeredUser/subscribedItems";
   private readonly unsubscribeEndPoint = "registeredUser/unsubscribe";
   private readonly manageOffersEndPoint = "culturalOffers/";
   private readonly offerDetailsById = "culturalOffers/detail/";
+  private readonly subscribeUserEndPoint = "registeredUser/subscribe";
 
   constructor(private http: HttpClient) {
   }
@@ -23,7 +24,8 @@ export class CulturalOfferService {
       'Accept': 'application/json'
     });
 
-    return this.http.get(environment.apiUrl + this.offesrsPageEndPoint + page, { headers: headers })
+
+    return this.http.get(environment.apiUrl + this.offersPageEndPoint + page, {headers: headers})
       .pipe(map((response) => JSON.stringify(response)));
   }
 
@@ -106,6 +108,32 @@ export class CulturalOfferService {
       })
   }
 
+  subscribeUser(offer_id: number): void {
+    const headers = new HttpHeaders({
+      'Authorization' : 'Bearer ' + localStorage.getItem("accessToken")
+    });
+    let params = new HttpParams().set('offer_id', offer_id.toString())
+
+    this.http.post(environment.apiUrl + this.subscribeUserEndPoint, null , {params: params, headers: headers})
+      .pipe(map(response => response))
+      .subscribe(response => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Successfully subscribed to offer! Now you will get all the latest updates!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+      }, error => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Something went wrong!',
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        });
+      })
+  }
+
   unsubscribeUser(offer_id: number): void {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
@@ -122,7 +150,6 @@ export class CulturalOfferService {
           icon: 'success',
           confirmButtonText: 'OK'
         });
-        return true;
       }, error => {
         Swal.fire({
           title: 'Error!',
@@ -131,7 +158,6 @@ export class CulturalOfferService {
           confirmButtonColor: '#DC143C',
           confirmButtonText: 'OK'
         });
-        return false;
       })
   }
 

@@ -10,6 +10,8 @@ import {UserVerificationComponent} from "./components/user-verification/user-ver
 import {SubscribedItemsComponent} from './components/subscribed-items/subscribed-items.component';
 import {RoleGuard} from './guards/role.guard';
 import {ProfileComponent} from "./components/profile/profile.component";
+import {EditOfferComponent} from './components/edit-offer/edit-offer.component';
+import {ChangePasswordComponent} from "./components/change-password/change-password.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home-page', pathMatch: 'full'},
@@ -34,6 +36,18 @@ const routes: Routes = [
     path: "profile",
     component:ProfileComponent,
     canActivate: [RoleGuard],
+    data: {acceptRoles: 'ROLE_USER|ROLE_ADMIN'}
+  },
+  {
+    path: 'edit-offer',
+    component: EditOfferComponent,
+    canActivate: [RoleGuard],
+    data: {acceptRoles: 'ROLE_ADMIN'}
+  },
+  {
+    path: "change-password",
+    component:ChangePasswordComponent,
+    canActivate:[RoleGuard],
     data: {acceptRoles: 'ROLE_USER|ROLE_ADMIN'}
   }
   ];

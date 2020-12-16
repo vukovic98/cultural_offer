@@ -26,8 +26,8 @@ import { SubscribedOfferCardComponent } from './components/subscribed-offer-card
 import { SubscribedItemsListComponent } from './components/subscribed-items-list/subscribed-items-list.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
-import { MatDialogModule } from '@angular/material/dialog';
 import { OfferDetailsComponent } from './components/offer-details/offer-details.component';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -45,8 +45,8 @@ import { OfferDetailsComponent } from './components/offer-details/offer-details.
     SubscribedItemsListComponent,
     ProfileComponent,
     EditOfferComponent,
-    OfferDetailsComponent
-  ],
+    OfferDetailsComponent,
+    ChangePasswordComponent  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -62,7 +62,9 @@ import { OfferDetailsComponent } from './components/offer-details/offer-details.
   ],
   providers: [
     AuthService,
-    CulturalOfferService
+    CulturalOfferService,
+    EditProfileService,
+    ChangePasswordService
   ],
   bootstrap: [AppComponent]
 })

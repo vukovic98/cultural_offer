@@ -38,10 +38,10 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser> {
 	
 	public boolean subscribe(RegisteredUser u, Long offer_id) {
 		try {
+			System.out.println(u.toString());
 			CulturalOffer offer = offerRepository.getOne(offer_id);
 			
 			u.getCulturalOffers().add(offer);
-			
 			offer.getSubscribedUsers().add(u);
 			
 			registeredUserRepository.save(u);
@@ -59,9 +59,11 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser> {
 	public boolean unsubscribe(RegisteredUser u, Long offer_id) {
 		for(CulturalOffer c : u.getCulturalOffers()) {
 			if(c.getId() == offer_id) {
-				System.out.println("Udje"+ c.getName());
 				u.getCulturalOffers().remove(c);
 				this.registeredUserRepository.save(u);
+				
+				c.getSubscribedUsers().remove(u);
+				this.offerRepository.save(c);
 				return true;
 			}
 		}
@@ -108,3 +110,4 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser> {
 
 	}
 }
+
