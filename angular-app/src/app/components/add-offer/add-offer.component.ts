@@ -4,6 +4,7 @@ import { CategoryService } from '../../services/category.service';
 import { CategoryModel } from '../../model/category-model';
 import { TypeService } from '../../services/type.service';
 import { TypeModel } from '../../model/type-model';
+import { CulturalOfferService } from '../../services/culturalOffer.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
@@ -29,8 +30,9 @@ export class AddOfferComponent implements OnInit {
   });
 
   constructor(private categoryService: CategoryService,
-    private typeService: TypeService,
-    private http: HttpClient) {
+              private offerService: CulturalOfferService,
+              private typeService: TypeService,
+              private http: HttpClient) {
   }
 
   ngOnInit() {
@@ -133,9 +135,7 @@ export class AddOfferComponent implements OnInit {
       'location': locationObj
     }
     console.log(obj);
-    console.log("post");
-    var headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
-    this.http.post('http://localhost:8080/cultural-offers/', obj, {headers: headers})
-    .subscribe((res:any) => { console.log(res); });
+    //console.log("post");
+    this.offerService.createOffer(obj);
   }
 }

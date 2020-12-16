@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
-import com.ftn.kts_nvt.beans.CulturalOfferType;
 
 public class CulturalOfferCategoryDTO {
 
@@ -13,7 +12,7 @@ public class CulturalOfferCategoryDTO {
 	@NotBlank(message = "Name cannot be empty.")
 	private String name;
 	
-	private List<CulturalOfferType> types;
+	private List<CulturalOfferTypeDTO> types;
 
 	public CulturalOfferCategoryDTO() {}
 
@@ -29,7 +28,7 @@ public class CulturalOfferCategoryDTO {
 	}
 	public CulturalOfferCategoryDTO(Long id, 
 							@NotBlank(message = "Name cannot be empty.") String name, 
-							List<CulturalOfferType> types) {
+							List<CulturalOfferTypeDTO> types) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -52,11 +51,11 @@ public class CulturalOfferCategoryDTO {
 		this.name = name;
 	}
 
-	public List<CulturalOfferType> getTypes() {
+	public List<CulturalOfferTypeDTO> getTypes() {
 		return types;
 	}
 
-	public void setTypes(List<CulturalOfferType> types) {
+	public void setTypes(List<CulturalOfferTypeDTO> types) {
 		this.types = types;
 	}
 
