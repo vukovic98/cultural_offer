@@ -9,6 +9,7 @@ import {UserVerificationComponent} from "./components/user-verification/user-ver
 import {SubscribedItemsComponent} from './components/subscribed-items/subscribed-items.component';
 import {RoleGuard} from './guards/role.guard';
 import {ProfileComponent} from "./components/profile/profile.component";
+import {EditOfferComponent} from './components/edit-offer/edit-offer.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home-page', pathMatch: 'full'},
@@ -33,6 +34,12 @@ const routes: Routes = [
     component:ProfileComponent,
     canActivate: [RoleGuard],
     data: {acceptRoles: 'ROLE_USER|ROLE_ADMIN'}
+  },
+  {
+    path: 'edit-offer',
+    component: EditOfferComponent,
+    canActivate: [RoleGuard],
+    data: {acceptRoles: 'ROLE_ADMIN'}
   }
   ];
 

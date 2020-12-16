@@ -96,34 +96,7 @@ public class AuthenticationController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	/*
-	// Adminski log-in endpoint
-	@PostMapping("/log-in-admin")
-	public ResponseEntity<?> createAuthenticationTokenAdmin(@RequestBody UserLoginDTO authenticationRequest,
-			HttpServletResponse response) {
-
-		try {
-			Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-					authenticationRequest.getEmail(), authenticationRequest.getPassword()));
 	
-			// Ubaci korisnika u trenutni security kontekst
-			SecurityContextHolder.getContext().setAuthentication(authentication);
-	
-			// Kreiraj token za tog korisnika
-			User user = (User) authentication.getPrincipal();
-	
-			String jwt = tokenUtils.generateToken(user.getEmail(), true); // prijavljujemo se na sistem sa email adresom
-
-			int expiresIn = tokenUtils.getExpiredIn();
-			System.out.println("PRODJE 3");
-	
-			// Vrati token kao odgovor na uspesnu autentifikaciju
-			return ResponseEntity.ok(new UserTokenStateDTO(jwt, expiresIn));
-		}catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-*/
 	@PostMapping("/verify")
 	public ResponseEntity<HttpStatus> verifyUser(@RequestBody VerificationCodeDTO dto) {
 		RegisteredUser user = this.registeredUserService.findOneByEmail(dto.getUserEmail());
