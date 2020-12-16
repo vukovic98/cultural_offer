@@ -85,6 +85,25 @@ public class RegisteredUserController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @PostMapping(value = "/subscribe")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<HttpStatus> subscribe(@RequestParam("offer_id") Long id) {
+    	
+		RegisteredUser user = (RegisteredUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		if(user != null) {
+			boolean ok = this.registeredUserService.subscribe(user, id);
+			
+			if(ok)
+				return new ResponseEntity<>(HttpStatus.OK);
+			else
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    
+    
+    
     @DeleteMapping(value = "/unsubscribe")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<HttpStatus> unsubscribe(@RequestParam("offer_id") Long id) {

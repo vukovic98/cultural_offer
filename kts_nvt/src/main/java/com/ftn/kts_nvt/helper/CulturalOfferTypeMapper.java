@@ -44,4 +44,12 @@ public class CulturalOfferTypeMapper implements MapperInterface<CulturalOfferTyp
 		}
 		return dtos;
 	}
+	
+	public List<CulturalOfferType> dtoToList(List<CulturalOfferTypeDTO> types) {
+		List<CulturalOfferType> e = new ArrayList<>();
+		for (CulturalOfferTypeDTO t : types) {
+			e.add(toEntity(t));
+		}
+		return e;
+	}
 }

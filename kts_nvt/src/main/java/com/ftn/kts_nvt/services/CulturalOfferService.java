@@ -1,7 +1,10 @@
 package com.ftn.kts_nvt.services;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,9 +13,11 @@ import org.springframework.stereotype.Service;
 
 import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.CulturalOfferType;
+import com.ftn.kts_nvt.beans.Post;
 import com.ftn.kts_nvt.dto.CulturalOfferAddDTO;
 import com.ftn.kts_nvt.repositories.CulturalOfferCategoryRepository;
 import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
+import com.ftn.kts_nvt.repositories.PostRepository;
 
 @Service
 public class CulturalOfferService {
@@ -22,6 +27,9 @@ public class CulturalOfferService {
 	
 	@Autowired
 	private CulturalOfferTypeService type;
+	
+	@Autowired
+	private PostRepository postRepository;
 	
 	@Autowired
 	private GeoLocationService location;
@@ -69,12 +77,27 @@ public class CulturalOfferService {
 		return exists;
 	}
 
+	@Transactional
 	public boolean deleteById(long id) {
 		boolean exists = this.culturalOfferRepository.existsById(id);
-
-		if (exists)
-			this.culturalOfferRepository.deleteById(id);
-
+		CulturalOffer c = null;
+		if (exists) {
+			c = this.culturalOfferRepository.findById(id).orElse(null);
+			if(c != null) {
+				List<Post> newPosts = c.getPosts();
+				c.setPosts(new ArrayList<>());
+				this.culturalOfferRepository.save(c);
+				System.out.println(newPosts);
+				for(Post p : newPosts) {
+					p.setOffer(null);
+					this.postRepository.save(p);
+					this.postRepository.delete(p);
+					
+				}
+				
+				this.culturalOfferRepository.deleteById(id);
+			}
+		}
 		return exists;
 	}
 
@@ -86,8 +109,7 @@ public class CulturalOfferService {
 			found.setName(changedOffer.getName());
 			found.setDescription(changedOffer.getDescription());
 			found.setImages(changedOffer.getImages());
-			found.setLocation(changedOffer.getLocation());
-
+			found.setLocation(location.update(changedOffer.getLocation(), changedOffer.getId()));
 			return this.culturalOfferRepository.save(found);
 		} else
 			return null;

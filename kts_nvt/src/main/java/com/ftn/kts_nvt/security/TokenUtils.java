@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.ftn.kts_nvt.beans.User;
 import com.ftn.kts_nvt.dto.UserDTO;
 import com.ftn.kts_nvt.helper.UserMapper;
+import com.ftn.kts_nvt.repositories.AdminRepository;
 import com.ftn.kts_nvt.repositories.RegisteredUserRepository;
 import com.ftn.kts_nvt.repositories.UserRepository;
 import com.google.gson.Gson;
@@ -43,6 +44,7 @@ public class TokenUtils {
     @Autowired
     private UserRepository userRepository;
     
+    
     private Gson gson = new Gson();
 
     // Moguce je generisati JWT za razlicite klijente (npr. web i mobilni klijenti nece imati isto trajanje JWT, JWT za mobilne klijente ce trajati duze jer se mozda aplikacija redje koristi na taj nacin)
@@ -58,12 +60,13 @@ public class TokenUtils {
     private UserMapper mapper;
 
     // Funkcija za generisanje JWT token
+
     public String generateToken(String username) {
-    	System.out.println("UDJE" + username);
-    	User u = this.userRepository.findByEmail(username);
-    	System.out.println("1 " + u.getEmail());
+    	User u;
+    	u = this.userRepository.findByEmail(username);
+
     	UserDTO dto = mapper.toDto(u);
-    	System.out.println("2 " + dto.getEmail());
+    	
         return Jwts.builder()
                 .setIssuer(APP_NAME)
                 .setSubject(username)
@@ -76,6 +79,7 @@ public class TokenUtils {
                 .claim("authority", u.getAuthorities())
                 .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
     }
+    
 
     private String generateAudience() {
 //		Moze se iskoristiti org.springframework.mobile.device.Device objekat za odredjivanje tipa uredjaja sa kojeg je zahtev stigao.

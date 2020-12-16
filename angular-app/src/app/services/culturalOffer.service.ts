@@ -3,12 +3,14 @@ import {environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import Swal from "sweetalert2";
+import { CulturalOffer } from '../model/offer-mode';
 
 @Injectable()
 export class CulturalOfferService {
   private readonly offesrsPageEndPoint = "culturalOffers/by-page/";
   private readonly subscribedItemsEndPoint = "registeredUser/subscribedItems";
   private readonly unsubscribeEndPoint = "registeredUser/unsubscribe";
+  private readonly  manageOffersEndPoint = "culturalOffers/";
 
   constructor(private http: HttpClient) {
   }
@@ -22,6 +24,85 @@ export class CulturalOfferService {
 
     return this.http.get(environment.apiUrl + this.offesrsPageEndPoint + page, {headers: headers})
       .pipe(map((response) => JSON.stringify(response)));
+  }
+
+  createOffer(offer: any){
+    var headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
+    this.http.post(environment.apiUrl + this.manageOffersEndPoint, offer, {headers: headers})
+    .pipe(map(response => response))
+      .subscribe(response => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Cultural offer successfully created!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+        return true;
+      }, error => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Something went wrong!',
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        });
+        return false;
+      })
+
+  }
+
+  updateOffer(offer: CulturalOffer){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization' : 'Bearer ' + localStorage.getItem("accessToken")
+    });
+    this.http.put(environment.apiUrl + this.manageOffersEndPoint + offer.id, offer, {headers: headers})
+      .pipe(map(response => response))
+      .subscribe(response => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Cultural offer successfully updated!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+        return true;
+      }, error => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Something went wrong!',
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        });
+        return false;
+      })
+  }
+
+  deleteOffer(offer_id: number): void {
+    const headers = new HttpHeaders({
+      'Authorization' : 'Bearer ' + localStorage.getItem("accessToken")
+    });
+
+    this.http.delete(environment.apiUrl + this.manageOffersEndPoint + offer_id, {headers: headers})
+      .pipe(map(response => response))
+      .subscribe(response => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Cultural offer successfully deleted!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+        return true;
+      }, error => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Something went wrong!',
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        });
+        return false;
+      })
   }
 
   unsubscribeUser(offer_id: number): void {

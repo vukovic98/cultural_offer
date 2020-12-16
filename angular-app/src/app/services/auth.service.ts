@@ -99,6 +99,30 @@ export class AuthService {
     return <string> localStorage.getItem("accessToken");
   }
 
+  isAdmin(): boolean {
+    let authorities = this.getUserAuthorities();
+    let admin_role = "ROLE_ADMIN";
+
+    for(let a of authorities) {
+      if(admin_role === a.name)
+        return true;
+    }
+
+    return false;
+  }
+
+  isUser(): boolean {
+    let authorities = this.getUserAuthorities();
+    let admin_role = "ROLE_USER";
+
+    for(let a of authorities) {
+      if(admin_role === a.name)
+        return true;
+    }
+
+    return false;
+  }
+
   isLoggedIn(): boolean {
     let token = this.getToken();
     return !!token;

@@ -6,13 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.RegisteredUser;
-import com.ftn.kts_nvt.dto.ChangePasswordDto;
-import com.ftn.kts_nvt.dto.UserNameDto;
+import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
 import com.ftn.kts_nvt.repositories.RegisteredUserRepository;
 
 @Service
@@ -20,6 +18,9 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser> {
 
 	@Autowired
 	private RegisteredUserRepository registeredUserRepository;
+	
+	@Autowired
+	private CulturalOfferRepository offerRepository;
 
 	@Override
 	public List<RegisteredUser> findAll() {
@@ -33,6 +34,26 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser> {
 	@Override
 	public RegisteredUser findOne(Long id) {
 		return registeredUserRepository.findById(id).orElse(null);
+	}
+	
+	public boolean subscribe(RegisteredUser u, Long offer_id) {
+		try {
+			CulturalOffer offer = offerRepository.getOne(offer_id);
+			
+			u.getCulturalOffers().add(offer);
+			
+			offer.getSubscribedUsers().add(u);
+			
+			registeredUserRepository.save(u);
+			offerRepository.save(offer);
+			
+			return true;
+			
+		}catch(Exception e) {
+			return false;
+		}
+		
+		
 	}
 	
 	public boolean unsubscribe(RegisteredUser u, Long offer_id) {
@@ -60,7 +81,20 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser> {
 		return this.registeredUserRepository.save(e);
 	}
 	
-	
+	@Override
+	public RegisteredUser update(RegisteredUser entity, Long id) throws Exception {
+		RegisteredUser user = registeredUserRepository.findById(id).orElse(null);
+
+		if (user != null) {
+			user.setFirstName(entity.getFirstName());
+			user.setLastName(entity.getLastName());
+
+		} else {
+			throw new Exception("User with given id doesn't exist.");
+		}
+
+		return registeredUserRepository.save(user);
+	}
 
 	@Override
 	public void delete(Long id) throws Exception {
@@ -73,12 +107,5 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser> {
 		}
 
 	}
-
-	@Override
-	public RegisteredUser update(RegisteredUser entity, Long id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 }
+

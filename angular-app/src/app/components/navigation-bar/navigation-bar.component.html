@@ -4,8 +4,11 @@
       <a class="navbar-brand" href="#">Kultura Na Dlanu</a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/subscribed-items" *ngIf="getUser()">Subscribed items</a>
+          <li class="nav-item" *ngIf="isUser()">
+            <a class="nav-link" routerLink="/subscribed-items">Subscribed items</a>
+          </li>
+          <li class="nav-item" *ngIf="isUserAdmin()">
+            <a class="nav-link" routerLink="/subscribed-items">Add/Edit offer</a>
           </li>
         </ul>
       </div>
@@ -14,9 +17,13 @@
           <a routerLink="/sign-up"><button class="btn btn-info">Sign Up</button></a>
       </span>
       <div class="dropdown float-right dropdownDiv row pt-2 pl-5" *ngIf="getUser()">
-        <p class="float-left text-muted mr-2">{{getUserName()}}</p>
-        <div class="userImg float-right" id="dropdownMenuButton"
+        <p class="float-left text-muted mr-3 mt-3 col-md-4"></p>
+        <div class="float-right col-md-2" id="dropdownMenuButton"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button mat-mini-fab color="primary" style="outline: none">
+<!--            <mat-icon>menu</mat-icon>-->
+                {{getUserName()[0]}}
+          </button>
         </div>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" routerLink="/profile">Profile</a>
