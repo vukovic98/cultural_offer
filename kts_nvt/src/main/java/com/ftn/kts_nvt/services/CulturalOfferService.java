@@ -60,10 +60,10 @@ public class CulturalOfferService {
 	}
 
 	public CulturalOffer findById(long id) {
-		Optional<CulturalOffer> found = this.culturalOfferRepository.findById(id);
-
-		if (found.isPresent()) {
-			return found.get();
+		CulturalOffer found = this.culturalOfferRepository.findById(id).orElse(null);
+		
+		if (found != null) {
+			return found;
 		} else
 			return null;
 	}

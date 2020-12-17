@@ -160,11 +160,4 @@ public class CulturalOffer {
 		this.grades = grades;
 	}
 
-	@Override
-	public String toString() {
-		return "CulturalOffer [id=" + id + ", name=" + name + ", images=" + images + ", subscribedUsers="
-				+ subscribedUsers + ", posts=" + posts + ", location=" + location + ", comments=" + comments
-				+ ", description=" + description + ", type=" + type + ", grades=" + grades + "]";
-	}
-
 }

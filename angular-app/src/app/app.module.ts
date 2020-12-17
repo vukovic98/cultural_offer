@@ -26,6 +26,7 @@ import { SubscribedOfferCardComponent } from './components/subscribed-offer-card
 import { SubscribedItemsListComponent } from './components/subscribed-items-list/subscribed-items-list.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
+import { OfferDetailsComponent } from './components/offer-details/offer-details.component';
 import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {ChangePasswordComponent} from './components/change-password/change-password.component';
 import {EditProfileService} from './services/edit-profile.service';
@@ -46,9 +47,9 @@ import {ChangePasswordService} from './services/change-password.service';
     SubscribedOfferCardComponent,
     SubscribedItemsListComponent,
     ProfileComponent,
-	  EditOfferComponent,
-    ChangePasswordComponent
-  ],
+    EditOfferComponent,
+    OfferDetailsComponent,
+    ChangePasswordComponent  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

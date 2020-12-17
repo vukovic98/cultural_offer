@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.ftn.kts_nvt.beans.GeoLocation;
 import com.ftn.kts_nvt.beans.Image;
+import com.voodoodyne.jackson.jsog.JSOGGenerator;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -13,6 +15,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class CulturalOfferDTO {
 	private long id;
 	

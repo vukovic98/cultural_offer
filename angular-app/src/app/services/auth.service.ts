@@ -145,6 +145,16 @@ export class AuthService {
       return [];
     }
   }
+
+  getUserId(): string{
+    let token = this.getToken();
+    if(token) {
+      let model = this.decodeToken(token);
+      return model?.user_id ? model.user_id : "-1";
+    } else {
+      return "-1";
+    }
+  }
 }
 
 

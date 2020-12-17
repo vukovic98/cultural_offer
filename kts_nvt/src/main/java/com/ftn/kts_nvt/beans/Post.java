@@ -91,4 +91,10 @@ public class Post {
 		this.offer = offer;
 	}
 
+	@Override
+	public String toString() {
+		return "Post [postId=" + postId + ", title=" + title + ", content=" + content + ", postTime=" + postTime
+				+ ", offer=" + offer + "]";
+	}
+
 }

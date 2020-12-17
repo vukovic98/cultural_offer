@@ -1,0 +1,54 @@
+<div class="row col-md-12">
+  <div class="col-md-1"></div>
+  <div class="jumbotron col-md-10 ml-auto mr-auto bg-light shadow mt-2 float-left pt-3">
+    <div *ngIf="offer">
+      <div>{{offer.name}}</div>
+      <div>{{offer.description}}</div>
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="list-inline rating-list" *ngFor="let star of stars" style="display: inline-block">
+            <li (click)="countStar(star)" [ngClass]="{'selected': (star <= selectedValue)}">
+              <i class="fa fa-star"></i>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Type</h2>
+          <p class="card-text">{{offer.type.name}}</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Category</h2>
+          <p class="card-text">{{offer.type.categoryName}}</p>
+        </div>
+      </div>
+      <div *ngIf="offer.posts.length == 0; else displayPosts">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">No posts</h2>
+          </div>
+        </div>
+      </div>
+      <ng-template #displayPosts>
+        <div *ngFor='let post of offer.posts' style="margin: 10px;">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="card-title">{{post.title}}</h2>
+              <p class="card-text">{{post.content}}</p>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <div *ngIf="offer.comments.length == 0">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">No comments</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
