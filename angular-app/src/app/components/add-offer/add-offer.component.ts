@@ -52,7 +52,6 @@ export class AddOfferComponent implements OnInit {
       if (marker !== undefined) {
         mymap.removeLayer(marker)
       }
-      console.log(e.latlng);
       this.myForm.patchValue({
         location: e.latlng
       });
@@ -67,8 +66,6 @@ export class AddOfferComponent implements OnInit {
   onChange(event: any): void {
     this.typeService.getTypesForCategory(event).subscribe(data => {
       this.types = data;
-      console.log("got types = ");
-      console.log(this.types);
     }, error => {
       this.types = []
       console.log(error);
@@ -78,8 +75,6 @@ export class AddOfferComponent implements OnInit {
   getCategories() {
     this.categoryService.getCategories().subscribe(data => {
       this.categories = data;
-      console.log("got categories = ");
-      console.log(this.categories);
     }, error => {
       console.log(error);
     });
@@ -90,9 +85,6 @@ export class AddOfferComponent implements OnInit {
   }
 
   remove(url: any) {
-    //console.log(this.images)
-    console.log("remove = ");
-    //console.log(url);
     this.images = this.images.filter((obj: any) => obj !== url);
   }
 
@@ -120,7 +112,6 @@ export class AddOfferComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.myForm.value);
 
     let locationObj = {
       'place': this.myForm.value.place,
@@ -134,8 +125,6 @@ export class AddOfferComponent implements OnInit {
       'type': this.myForm.value.type,
       'location': locationObj
     }
-    console.log(obj);
-    //console.log("post");
     this.offerService.createOffer(obj);
   }
 }
