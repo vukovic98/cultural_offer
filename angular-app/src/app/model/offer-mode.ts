@@ -11,7 +11,12 @@ export interface OfferDetailsModel{
   "comments": Array<object>,
   "grades": Array<object>,
   "type": OfferType
+  "avgGrade": number,
+  "subscribersCount": number,
+  "postsCount": number,
+  "commentsCount": number
 }
+
 export interface Post{
   "title": string,
   "content": string

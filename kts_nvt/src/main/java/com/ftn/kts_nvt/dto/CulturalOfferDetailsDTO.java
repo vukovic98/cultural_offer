@@ -44,6 +44,14 @@ public class CulturalOfferDetailsDTO {
 
 	private List<GradeDTO> grades;
 
+	private double avgGrade;
+
+	private double subscribersCount;
+	
+	private double postsCount;
+	
+	private double commentsCount;
+	  
 	public long getId() {
 		return id;
 	}
@@ -133,10 +141,52 @@ public class CulturalOfferDetailsDTO {
 		this.grades = grades;
 	}
 	
+	public double getAvgGrade() {
+		return avgGrade;
+	}
+
+
+	public void setAvgGrade(double avgGrade) {
+		this.avgGrade = avgGrade;
+	}
+
+
+	public double getSubscribersCount() {
+		return subscribersCount;
+	}
+
+
+	public void setSubscribersCount(double subscribersCount) {
+		this.subscribersCount = subscribersCount;
+	}
+
+
+	public double getPostsCount() {
+		return postsCount;
+	}
+
+
+	public void setPostsCount(double postsCount) {
+		this.postsCount = postsCount;
+	}
+
+
+	public double getCommentsCount() {
+		return commentsCount;
+	}
+
+
+	public void setCommentsCount(double commentsCount) {
+		this.commentsCount = commentsCount;
+	}
+
+
 	@Override
 	public String toString() {
 		return "CulturalOfferDetailsDTO [id=" + id + ", name=" + name + ", images=" + images + ", location=" + location
 				+ ", description=" + description + ", posts=" + posts + ", comments=" + comments + ", type=" + type
-				+ ", grades=" + grades + "]";
+				+ ", grades=" + grades + ", avgGrade=" + avgGrade + ", subscribersCount=" + subscribersCount
+				+ ", postsCount=" + postsCount + ", commentsCount=" + commentsCount + "]";
 	}
+	
 }

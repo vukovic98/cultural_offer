@@ -45,6 +45,34 @@ public class CulturalOfferMapper implements MapperInterface<CulturalOffer, Cultu
 		dto.setComments(commentMapper.listToDto(entity.getComments()));
 		dto.setGrades(gradeMapper.toGradeDTOList(entity.getGrades()));
 		dto.setType(typeMapper.toDto(entity.getType()));
+		
+		if(entity.getGrades() != null && entity.getGrades().size() != 0) {
+			double sum = 0;
+			for(Grade g : entity.getGrades()) {
+				sum += g.getValue();
+			}
+			dto.setAvgGrade(sum/entity.getGrades().size());
+		}else {
+			dto.setAvgGrade(0);
+		}
+		
+		if(entity.getSubscribedUsers() == null) {
+			dto.setSubscribersCount(0);
+		}else {
+			dto.setSubscribersCount(entity.getSubscribedUsers().size());
+		}
+		
+		if(entity.getPosts() == null) {
+			dto.setPostsCount(0);
+		}else {
+			dto.setPostsCount(entity.getPosts().size());
+		}
+		
+		if(entity.getComments() == null) {
+			dto.setCommentsCount(0);
+		}else {
+			dto.setCommentsCount(entity.getComments().size());
+		}
 		return dto;
 	}
 	
