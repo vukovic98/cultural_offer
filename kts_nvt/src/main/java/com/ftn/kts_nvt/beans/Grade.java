@@ -77,5 +77,9 @@ public class Grade {
 	public void setCulturalOffer(CulturalOffer culturalOffer) {
 		this.culturalOffer = culturalOffer;
 	}
+	@Override
+	public String toString() {
+		return "Grade [id=" + id + ", value=" + value + ", user=" + user + ", culturalOffer=" + culturalOffer + "]";
+	}
 
 }

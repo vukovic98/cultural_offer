@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.ftn.kts_nvt.beans.GeoLocation;
 import com.ftn.kts_nvt.beans.Image;
 

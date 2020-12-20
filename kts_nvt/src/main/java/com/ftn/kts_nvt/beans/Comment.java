@@ -83,5 +83,11 @@ public class Comment {
 	public void setApproved(boolean approved) {
 		this.approved = approved;
 	}
+
+	@Override
+	public String toString() {
+		return "Comment [commentId=" + commentId + ", content=" + content + ", image=" + image + ", commenter="
+				+ commenter + ", approved=" + approved + "]";
+	}
 	
 }

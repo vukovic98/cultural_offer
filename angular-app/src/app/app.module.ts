@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
+
 import {FormsModule, NgSelectOption} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthService} from './services/auth.service';
@@ -26,6 +27,7 @@ import { SubscribedOfferCardComponent } from './components/subscribed-offer-card
 import { SubscribedItemsListComponent } from './components/subscribed-items-list/subscribed-items-list.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
+import { OfferDetailsComponent } from './components/offer-details/offer-details.component';
 import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {ChangePasswordComponent} from "./components/change-password/change-password.component";
 import {EditProfileService} from "./services/edit-profile.service";
@@ -34,7 +36,6 @@ import { FilterOffersComponent } from './components/filter-offers/filter-offers.
 import {FilterOffersService} from "./services/filter-offers.service";
 import {CommonModule} from "@angular/common";
 import {NgSelectModule} from "@ng-select/ng-select";
-
 
 @NgModule({
   declarations: [
@@ -51,10 +52,10 @@ import {NgSelectModule} from "@ng-select/ng-select";
     SubscribedOfferCardComponent,
     SubscribedItemsListComponent,
     ProfileComponent,
-	  EditOfferComponent,
-    ChangePasswordComponent,
-    FilterOffersComponent
-  ],
+	EditOfferComponent,	
+	ChangePasswordComponent,
+	FilterOffersComponent
+ ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -66,6 +67,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
     MatSelectModule,
     MatSlideToggleModule,
     MatButtonModule,
+   
     MatDialogModule,
     CommonModule,
     NgSelectModule
@@ -75,6 +77,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
     AuthService,
     CulturalOfferService,
     EditProfileService,
+
     ChangePasswordService,
     FilterOffersService
   ],
