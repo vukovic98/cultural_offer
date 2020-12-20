@@ -12,6 +12,7 @@ export class CulturalOfferService {
   private readonly unsubscribeEndPoint = "registeredUser/unsubscribe";
   private readonly manageOffersEndPoint = "culturalOffers/";
   private readonly subscribeUserEndPoint = "registeredUser/subscribe";
+  private readonly offersPageEndPointFilter = "culturalOffers/filter/";
 
   constructor(private http: HttpClient) {
   }
@@ -110,7 +111,7 @@ export class CulturalOfferService {
     const headers = new HttpHeaders({
       'Authorization' : 'Bearer ' + localStorage.getItem("accessToken")
     });
-    let params = new HttpParams().set('offer_id', offer_id.toString())
+    let params = new HttpParams().set('offer_id', offer_id.toString());
 
     this.http.post(environment.apiUrl + this.subscribeUserEndPoint, null , {params: params, headers: headers})
       .pipe(map(response => response))
@@ -170,4 +171,16 @@ export class CulturalOfferService {
       .pipe(map((response) => JSON.stringify(response)));
   }
 
+  getByPageFilter(page: number, exp: string, types: string[]):any {
+    console.log(exp,types)
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept'       : 'application/json'
+    });
+
+    // @ts-ignore
+    let params = new HttpParams().set('expression', exp).set('types', types);
+    return this.http.get(environment.apiUrl + this.offersPageEndPointFilter + page, {params: params,headers: headers})
+      .pipe(map((response) => JSON.stringify(response)));
+  }
 }

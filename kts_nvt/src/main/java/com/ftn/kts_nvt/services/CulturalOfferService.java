@@ -115,7 +115,14 @@ public class CulturalOfferService {
 			return null;
 	}
 
-	public Page<CulturalOffer> filter(Pageable pageRequest, String exp) {
-		return this.culturalOfferRepository.filter(pageRequest, exp);
+	public Page<CulturalOffer> filter(Pageable pageRequest, String exp, ArrayList<String> types) {
+		if(!exp.equals("") & types.size() == 0)
+			return this.culturalOfferRepository.filter(pageRequest, exp);
+		else if (!exp.equals("") & types.size() > 0)
+			return this.culturalOfferRepository.filter(pageRequest, exp, types);
+		else if (exp.equals("") & types.size() > 0)
+			return this.culturalOfferRepository.filter(pageRequest, types);
+		else
+			return null;
 	}
 }

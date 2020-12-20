@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CulturalOfferService} from '../../services/culturalOffer.service';
 import {AuthService} from '../../services/auth.service';
 import {CulturalOffer} from '../../model/offer-mode';
@@ -6,6 +6,7 @@ import {TokenModel} from '../../model/token.model';
 import {of} from 'rxjs';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {EditOfferComponent} from '../edit-offer/edit-offer.component';
+import {FilterObject} from "../../model/filter-model";
 
 @Component({
   selector: 'app-cultural-offers',
@@ -19,6 +20,8 @@ export class CulturalOffersComponent implements OnInit {
   private userId: number = -1;
   public pageNum: number = 1;
   public nextBtn: boolean = false;
+
+
 
   constructor(private service: CulturalOfferService,
               private auth: AuthService,
@@ -41,6 +44,7 @@ export class CulturalOffersComponent implements OnInit {
       let userData: TokenModel | null = this.auth.decodeToken(token);
       this.userId = Number(userData?.user_id);
     }
+
   }
 
   removeOffer(id: number) {
@@ -89,5 +93,24 @@ export class CulturalOffersComponent implements OnInit {
       }
     }
     return false;
+  }
+
+  filterOffers(data: FilterObject){
+    this.pageNum = 1;
+    if(data.exp==="" && data.types.length === 0){
+      this.service.getByPage(this.pageNum).subscribe((data: string) => {
+        this.offers = JSON.parse(data).content;
+        this.nextBtn = JSON.parse(data).last;
+      });
+    }
+    else{
+      this.service.getByPageFilter(this.pageNum,data.exp,data.types).subscribe(
+        (offers: string)=>{
+          this.offers = JSON.parse(offers).content;
+          this.nextBtn = JSON.parse(offers).last;
+        }
+      )
+    }
+
   }
 }

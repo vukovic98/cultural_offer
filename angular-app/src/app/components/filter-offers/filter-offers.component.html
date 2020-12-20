@@ -1,0 +1,30 @@
+ <div>
+    <form class="row" ngForm="filterForm" (ngSubmit)="filterOffers()">
+      <div class="form-group col-md-5">
+        <div>
+          <ng-select
+            (add)="addType($event)"
+            (remove)="removeType($event)"
+            placeholder="Select offer type(s)"
+            [multiple]="true"
+            [(ngModel)]="selectedTypes"
+            >
+            <ng-option *ngFor="let t of types" [value]="t" >{{t}}</ng-option>
+          </ng-select>
+
+        </div>
+      </div>
+      <div class="form-group col-md-5">
+        <div>
+          <input class="form-control" type="text"  [(ngModel)]="expression" [ngModelOptions]="{standalone: true}"  name="expression" id="expression" placeholder="Search offers by name or location" >
+        </div>
+      </div>
+      <div class="form-group col-md-2">
+        <div>
+          <button mat-raised-button color="primary" class="btn-block" (click)="onApplyFilter()">Apply filter</button>
+        </div>
+      </div>
+    </form>
+
+ </div>
+

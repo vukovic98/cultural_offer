@@ -86,4 +86,9 @@ public class CulturalOfferTypeService {
 			return null;
 	}
 
+	public ArrayList<CulturalOfferType> findAll() {
+		// TODO Auto-generated method stub
+		return (ArrayList<CulturalOfferType>) this.culturalOfferTypeRepository.findAll();
+	}
+
 }
