@@ -29,6 +29,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
 import { OfferDetailsComponent } from './components/offer-details/offer-details.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
 import {ChangePasswordComponent} from "./components/change-password/change-password.component";
 import {EditProfileService} from "./services/edit-profile.service";
 import {ChangePasswordService} from "./services/change-password.service";
@@ -70,8 +71,8 @@ import {NgSelectModule} from "@ng-select/ng-select";
     MatButtonModule,
     MatDialogModule,
     CommonModule,
-    NgSelectModule
-
+    NgSelectModule,
+    MatMenuModule
   ],
   providers: [
     AuthService,

@@ -14,6 +14,12 @@
   display: block;
 }
 
-.dropdownDiv {
-  width: 11%;
+.dropdown {
+  border: none;
+  outline: none;
+}
+
+.dropdown:hover {
+  border: none;
+  outline: none;
 }
