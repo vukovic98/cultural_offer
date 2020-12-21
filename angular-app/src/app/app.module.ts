@@ -54,7 +54,9 @@ import {NgSelectModule} from "@ng-select/ng-select";
     SubscribedItemsListComponent,
     ProfileComponent,
 	FilterOffersComponent,
-OfferDetailsComponent ],
+OfferDetailsComponent,
+    EditOfferComponent,
+  ChangePasswordComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -90,7 +90,7 @@ public class CommentController {
 
 		// TODO Add logged user to comment
 
-		Comment newComment = new Comment(commentDto.getContent(), commentDto.getImage(), user);
+		Comment newComment = new Comment(commentDto.getContent(), user);
 		CulturalOffer offer = offerRepository.getOne(commentDto.getOfferId());
 		
 

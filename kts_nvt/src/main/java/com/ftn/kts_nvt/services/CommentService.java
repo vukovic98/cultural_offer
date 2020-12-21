@@ -19,8 +19,7 @@ public class CommentService {
 	@Autowired
 	private CommentRepository commentRepository;
 	
-	@Autowired
-	private ImageRepository imageRepository;
+
 	
 	public Comment save(Comment c) {
 		return this.commentRepository.save(c);
@@ -58,15 +57,7 @@ public class CommentService {
 		try {
 			Comment exists = this.commentRepository.getOne(id);
 			
-			Image image = exists.getImage();
-			
-			if(image != null) {
-				
-				exists.setImage(null);
-				imageRepository.delete(image);
-				
-			}
-			
+		
 			this.commentRepository.delete(exists);
 			return true;
 		}catch(Exception e){
@@ -82,7 +73,7 @@ public class CommentService {
 			Comment found = oldComment.get();
 			
 			found.setContent(changedComment.getContent());
-			found.setImage(changedComment.getImage());
+			
 			
 			return this.commentRepository.save(found);
 		} else {

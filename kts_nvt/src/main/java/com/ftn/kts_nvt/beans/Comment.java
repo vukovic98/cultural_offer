@@ -21,9 +21,6 @@ public class Comment {
 	@Column(name = "content", nullable = false)
 	private String content;
 
-	@ManyToOne
-	@JoinColumn(name = "image_id", nullable = true)
-	private Image image;
 
 	@ManyToOne
 	@JoinColumn(name = "commenter_id", nullable = false)
@@ -36,10 +33,9 @@ public class Comment {
 		super();
 	}
 
-	public Comment(String content, Image image, RegisteredUser commenter) {
+	public Comment(String content, RegisteredUser commenter) {
 		super();
 		this.content = content;
-		this.image = image;
 		this.commenter = commenter;
 		this.approved = false;
 	}
@@ -60,14 +56,6 @@ public class Comment {
 		this.content = content;
 	}
 
-	public Image getImage() {
-		return image;
-	}
-
-	public void setImage(Image image) {
-		this.image = image;
-	}
-
 	public RegisteredUser getCommenter() {
 		return commenter;
 	}
@@ -86,7 +74,7 @@ public class Comment {
 
 	@Override
 	public String toString() {
-		return "Comment [commentId=" + commentId + ", content=" + content + ", image=" + image + ", commenter="
+		return "Comment [commentId=" + commentId + ", content=" + content +", commenter="
 				+ commenter + ", approved=" + approved + "]";
 	}
 	

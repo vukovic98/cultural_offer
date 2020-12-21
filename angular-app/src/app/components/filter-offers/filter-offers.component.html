@@ -9,6 +9,7 @@
             [multiple]="true"
             [(ngModel)]="selectedTypes"
             [clearable]="false"
+            name="sTypes"
             >
             <ng-option *ngFor="let t of types" [value]="t" >{{t}}</ng-option>
           </ng-select>
