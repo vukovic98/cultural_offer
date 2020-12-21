@@ -6,11 +6,11 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 
-import {FormsModule, NgSelectOption} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
-import {AuthService} from './services/auth.service';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatButtonModule} from '@angular/material/button';
+import { FormsModule, NgSelectOption } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from './services/auth.service';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import { AddOfferComponent } from './components/add-offer/add-offer.component';
@@ -30,13 +30,14 @@ import { EditOfferComponent } from './components/edit-offer/edit-offer.component
 import { OfferDetailsComponent } from './components/offer-details/offer-details.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
-import {ChangePasswordComponent} from "./components/change-password/change-password.component";
-import {EditProfileService} from "./services/edit-profile.service";
-import {ChangePasswordService} from "./services/change-password.service";
+import { ChangePasswordComponent } from "./components/change-password/change-password.component";
+import { EditProfileService } from "./services/edit-profile.service";
+import { ChangePasswordService } from "./services/change-password.service";
 import { FilterOffersComponent } from './components/filter-offers/filter-offers.component';
-import {FilterOffersService} from "./services/filter-offers.service";
-import {CommonModule} from "@angular/common";
-import {NgSelectModule} from "@ng-select/ng-select";
+import { FilterOffersService } from "./services/filter-offers.service";
+import { CommonModule } from "@angular/common";
+import { NgSelectModule } from "@ng-select/ng-select";
+import { AddCategoryComponent } from './components/add-category/add-category.component';
 
 @NgModule({
   declarations: [
@@ -53,10 +54,11 @@ import {NgSelectModule} from "@ng-select/ng-select";
     SubscribedOfferCardComponent,
     SubscribedItemsListComponent,
     ProfileComponent,
-	FilterOffersComponent,
-OfferDetailsComponent,
+    FilterOffersComponent,
+    OfferDetailsComponent,
     EditOfferComponent,
-  ChangePasswordComponent],
+    ChangePasswordComponent,
+    AddCategoryComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

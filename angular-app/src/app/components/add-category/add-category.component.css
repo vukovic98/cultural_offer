@@ -1,0 +1,8 @@
+.img_wrp {
+    display: inline-block;
+    position: relative;
+  }
+
+.backgroundImg {
+  background-image: url("src/assets/img/paper.png");
+}

@@ -4,7 +4,7 @@ import {LoginComponent} from './components/login/login.component';
 import {HomeComponent} from './components/home/home.component';
 import {SignUpComponent} from "./components/sign-up/sign-up.component";
 import {OfferDetailsComponent} from "./components/offer-details/offer-details.component";
-
+import {AddCategoryComponent} from "./components/add-category/add-category.component";
 import { AddOfferComponent } from './components/add-offer/add-offer.component';
 import {UserVerificationComponent} from "./components/user-verification/user-verification.component";
 import {SubscribedItemsComponent} from './components/subscribed-items/subscribed-items.component';
@@ -23,6 +23,12 @@ const routes: Routes = [
   {
     path: 'add-offer',
     component: AddOfferComponent,
+    canActivate: [RoleGuard],
+    data: {acceptRoles: 'ROLE_ADMIN'}
+  },
+  {
+    path: 'category',
+    component: AddCategoryComponent,
     canActivate: [RoleGuard],
     data: {acceptRoles: 'ROLE_ADMIN'}
   },

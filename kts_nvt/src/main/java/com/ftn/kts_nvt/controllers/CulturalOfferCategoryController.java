@@ -103,8 +103,12 @@ public class CulturalOfferCategoryController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<CulturalOfferCategoryDTO> create(@Valid @RequestBody CulturalOfferCategoryDTO categoryDTO){
         CulturalOfferCategory category;
+        System.out.println("categoryDTO = " + categoryDTO);
+        
         try {
         	category = service.create(mapper.toEntity(categoryDTO));
+            System.out.println("category = " + category);
+
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
