@@ -42,6 +42,7 @@ export class NavigationBarComponent implements OnInit {
   }
 
   logout(): void {
+    this.userLoggedIn = false;
     this.service.logout();
   }
 

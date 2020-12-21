@@ -1,6 +1,8 @@
 <div class="backgroundImg">
-  <app-navigation-bar></app-navigation-bar>
-<div class="ml-auto mr-auto mt-5 w-55 border pt-5 pl-5 pr-5 pb-0 bg-white shadow-lg rounded ">
+  <div class="col-md-12 pl-0 pr-0">
+    <app-navigation-bar></app-navigation-bar>
+  </div>
+  <div class="ml-auto mr-auto mt-5 w-55 border pt-5 pl-5 pr-5 pb-0 bg-white shadow-lg rounded ">
   <h1 class="ml-3 font-weight-bold mb-3">Profile</h1>
   <div class="row mb-5 ">
 
@@ -21,7 +23,7 @@
       <form class=" form-horizontal " [formGroup]="editProfileForm" (ngSubmit)="editProfile()">
         <div class="form-group">
           <label class="col-lg-3 control-label">First name</label>
-          <div class="col-lg-6">
+          <div class="col-md-12">
             <input class="form-control" type="text"  formControlName="firstName" required pattern="[A-Z][a-z]+">
             <div *ngIf="editProfileForm.controls['firstName'].touched && editProfileForm.controls['firstName'].errors?.required" class="mt-1 pl-1 inputError">
               <small>First Name is required.</small>
@@ -33,7 +35,7 @@
         </div>
         <div class="form-group">
           <label class="col-lg-3 control-label">Last name</label>
-          <div class="col-lg-6">
+          <div class="col-md-12">
             <input class="form-control" type="text"  formControlName="lastName" required pattern="[A-Z][a-z]+">
             <div *ngIf="editProfileForm.controls['lastName'].touched && editProfileForm.controls['lastName'].errors?.required" class="mt-1 pl-1 inputError">
               <small>Last Name is required.</small>
@@ -45,7 +47,7 @@
         </div>
         <div class="form-group">
           <label class="col-lg-3 control-label">Email</label>
-          <div class="col-lg-6">
+          <div class="col-md-12">
             <input class="form-control" type="text"  formControlName="email" >
           </div>
         </div>

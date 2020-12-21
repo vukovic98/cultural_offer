@@ -13,24 +13,15 @@
         </ul>
       </div>
       <span class="float-right" *ngIf="!getUser()">
-          <a routerLink="/login"><button class="btn btn-info mr-2">Login</button></a>
-          <a routerLink="/sign-up"><button class="btn btn-info">Sign Up</button></a>
+          <a routerLink="/login"><button mat-raised-button color="primary" class="mr-2">Login</button></a>
+          <a routerLink="/sign-up"><button mat-raised-button color="primary">Sign Up</button></a>
       </span>
-      <div class="dropdown float-right dropdownDiv row pt-2 pl-5" *ngIf="getUser()">
-        <p class="float-left text-muted mr-3 mt-3 col-md-4"></p>
-        <div class="float-right col-md-2" id="dropdownMenuButton"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <button mat-mini-fab color="primary" style="outline: none">
-<!--            <mat-icon>menu</mat-icon>-->
-                {{getUserName()[0]}}
-          </button>
-        </div>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" routerLink="/profile">Profile</a>
-          <a class="dropdown-item" routerLink="/change-password">Change password</a>
-          <a class="dropdown-item" href="#" (click)="logout()">Logout</a>
-        </div>
-      </div>
+      <button mat-mini-fab color="primary" class="dropdown" [matMenuTriggerFor]="beforeMenu" *ngIf="getUser()">{{getUserName()[0]}}</button>
+      <mat-menu #beforeMenu="matMenu" xPosition="before">
+        <button class="dropdown" mat-menu-item routerLink="/profile">Profile</button>
+        <button class="dropdown" mat-menu-item routerLink="/change-password">Change password</button>
+        <button class="dropdown" mat-menu-item (click)="logout()">Logout</button>
+      </mat-menu>
     </div>
   </nav>
 </div>
