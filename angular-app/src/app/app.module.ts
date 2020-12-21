@@ -53,11 +53,10 @@ import {NgSelectModule} from "@ng-select/ng-select";
     SubscribedOfferCardComponent,
     SubscribedItemsListComponent,
     ProfileComponent,
+	FilterOffersComponent,
+OfferDetailsComponent,
     EditOfferComponent,
-    ChangePasswordComponent,
-    FilterOffersComponent,
-    OfferDetailsComponent
- ],
+  ChangePasswordComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

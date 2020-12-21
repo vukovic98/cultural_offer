@@ -121,7 +121,7 @@ public class UserController {
 		return new ResponseEntity<>(userMapper.toDto(user), HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	@RequestMapping(value = "/editProfile/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserDTO> updateUserName(@RequestBody UserNameDto userDTO, @PathVariable Long id) {
 		User user;
@@ -135,7 +135,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/changePassword", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@PreAuthorize("hasAnyRole('ROLE_USER,ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	public ResponseEntity<UserDTO> changePassword(@RequestBody ChangePasswordDto passDTO) {
 		User user;
 		Long id;
