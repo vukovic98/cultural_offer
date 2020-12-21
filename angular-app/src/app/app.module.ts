@@ -52,7 +52,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
     SubscribedOfferCardComponent,
     SubscribedItemsListComponent,
     ProfileComponent,
-	EditOfferComponent,	
+	EditOfferComponent,
 	ChangePasswordComponent,
 	FilterOffersComponent
  ],
@@ -67,7 +67,6 @@ import {NgSelectModule} from "@ng-select/ng-select";
     MatSelectModule,
     MatSlideToggleModule,
     MatButtonModule,
-   
     MatDialogModule,
     CommonModule,
     NgSelectModule
@@ -77,7 +76,6 @@ import {NgSelectModule} from "@ng-select/ng-select";
     AuthService,
     CulturalOfferService,
     EditProfileService,
-
     ChangePasswordService,
     FilterOffersService
   ],

@@ -13,6 +13,7 @@ export class CulturalOfferService {
   private readonly manageOffersEndPoint = "culturalOffers/";
   private readonly offerDetailsById = "culturalOffers/detail/";
   private readonly subscribeUserEndPoint = "registeredUser/subscribe";
+  private readonly offersPageEndPointFilter = "culturalOffers/filter/";
 
   constructor(private http: HttpClient) {
   }
@@ -197,7 +198,7 @@ export class CulturalOfferService {
 
   gradeOffer(userId: number, offerId: number, value: number) {
     let gradeObj = {
-      "value": value, 
+      "value": value,
       "user": { "id": userId },
       "culturalOffer": { "id": offerId }
     }

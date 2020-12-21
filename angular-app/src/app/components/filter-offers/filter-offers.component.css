@@ -1,1 +1,4 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
+.ng-select.disable-clear-all .ng-clear-wrapper {
+  display: none;
+}

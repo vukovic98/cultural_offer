@@ -8,6 +8,7 @@
             placeholder="Select offer type(s)"
             [multiple]="true"
             [(ngModel)]="selectedTypes"
+            [clearable]="false"
             >
             <ng-option *ngFor="let t of types" [value]="t" >{{t}}</ng-option>
           </ng-select>
