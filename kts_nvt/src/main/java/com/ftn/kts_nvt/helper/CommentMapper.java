@@ -17,7 +17,7 @@ public class CommentMapper implements MapperInterface<Comment, CommentUserDTO> {
 		
 		comment.setCommentId(dto.getId());
 		comment.setContent(dto.getContent());
-	
+		comment.setImage(dto.getImage());
 		
 		
 		return comment;
@@ -32,7 +32,7 @@ public class CommentMapper implements MapperInterface<Comment, CommentUserDTO> {
 		dto.setCommenterName(entity.getCommenter().getFirstName()+" "+entity.getCommenter().getLastName());
 		dto.setContent(entity.getContent());
 		dto.setId(entity.getCommentId());
-		
+		dto.setImage(entity.getImage());
 		
 		return dto;
 	}
