@@ -91,26 +91,10 @@ public class CulturalOfferController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
-	/*@PostMapping(consumes = "application/json")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<HttpStatus> create(@Valid @RequestBody CulturalOfferDTO offerDto) {
-		
-		CulturalOffer offer = this.mapper.toEntity(offerDto);
-		
-		CulturalOffer ok = this.culturalOfferService.save(offer);
-		
-		if(ok != null)
-			return new ResponseEntity<>(HttpStatus.CREATED);
-		else
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-	}*/
-	
 	@PostMapping(consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> createOffer(@RequestBody CulturalOfferAddDTO dto) {
 		System.out.println("dto = " + dto);
-
-		//CulturalOffer offer = this.mapper.toEntity(offerDto);
 		
 		CulturalOffer ok = this.culturalOfferService.save(dto);
 		
