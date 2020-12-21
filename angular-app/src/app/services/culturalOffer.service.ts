@@ -182,6 +182,19 @@ export class CulturalOfferService {
       .pipe(map((response) => response));
   }
 
+  getByPageFilter(page: number, exp: string, types: string[]):any {
+    console.log(exp,types)
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept'       : 'application/json'
+    });
+
+    // @ts-ignore
+    let params = new HttpParams().set('expression', exp).set('types', types);
+    return this.http.get(environment.apiUrl + this.offersPageEndPointFilter + page, {params: params,headers: headers})
+      .pipe(map((response) => JSON.stringify(response)));
+  }
+
   gradeOffer(userId: number, offerId: number, value: number) {
     let gradeObj = {
       "value": value, 

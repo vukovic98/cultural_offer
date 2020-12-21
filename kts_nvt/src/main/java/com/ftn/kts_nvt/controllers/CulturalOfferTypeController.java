@@ -1,6 +1,7 @@
 package com.ftn.kts_nvt.controllers;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -148,5 +149,22 @@ public class CulturalOfferTypeController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
 	}
+	
+	// GET http://localhost:8080/cultural-offer-types/getAll
+		@GetMapping(path = "/getAll")
+		public ResponseEntity<String[]> findAll() {
 
+
+			ArrayList<CulturalOfferType> typesObj = this.culturalOfferTypeService.findAll();
+			ArrayList<String> types = new ArrayList<>();
+			String[] stringArray;
+			for (CulturalOfferType t: typesObj) {
+				types.add(t.getName());
+			}
+			if(!types.isEmpty()) {
+				stringArray	= types.toArray(new String[0]);
+				return new ResponseEntity<>(stringArray, HttpStatus.OK);}
+			else
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 }

@@ -162,13 +162,15 @@ public class CulturalOfferController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	
-	//GET: http://localhost:8080/culturalOffers/filter/{pageNum}?expression
-		@GetMapping(path="filter/{pageNum}")
-		public ResponseEntity<Page<CulturalOfferDTO>> filter(@PathVariable int pageNum, @RequestParam("expression") String expression) {
-		
+	//GET: http://localhost:8080/culturalOffers/filter/{pageNum}?expression=a&selectedTypes=a,a,a
+		@GetMapping(path="/filter/{pageNum}")
+		public ResponseEntity<Page<CulturalOfferDTO>> filter(@PathVariable int pageNum, @RequestParam("expression") String expression, @RequestParam("types") ArrayList<String> types) {
+			System.out.println(types);
+			
 			Pageable pageRequest = PageRequest.of(pageNum-1, 10);
 			String exp = expression.toLowerCase();
-			Page<CulturalOffer> page = this.culturalOfferService.filter(pageRequest,exp);
+		
+			Page<CulturalOffer> page = this.culturalOfferService.filter(pageRequest,exp,types);
 			
 			List<CulturalOfferDTO> offersDTOS = this.mapper.listToDTO(page.toList());
 			Page<CulturalOfferDTO> pageOffersDTOS = new PageImpl<>(offersDTOS, page.getPageable(), page.getTotalElements());

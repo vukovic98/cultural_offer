@@ -17,18 +17,19 @@ import com.ftn.kts_nvt.beans.CulturalOffer;
 @Repository
 public interface CulturalOfferRepository extends JpaRepository<CulturalOffer, Long> {
 
-	 public ArrayList<CulturalOffer> findByTypeId(Long typeId);
+	public ArrayList<CulturalOffer> findByTypeId(Long typeId);
 
-	 @Query(value="select * from cultural_offer co " + 
-	 		"inner join geo_location gl " + 
-	 		"on co.geo_location_id = gl.location_id " + 
-	 		"where lower(co.name) like %:exp% or lower(gl.place) like %:exp%", nativeQuery = true)
-	 public Page<CulturalOffer> filter(Pageable pageRequest, @Param("exp") String exp);
-	 
-	 @Modifying
-	 @Transactional
-	 @Query(
-			 value="DELETE FROM post WHERE offer_id = ?1",
-			 nativeQuery = true)
-	 public void deletePostsForOffer(Long offer_id);
+	@Query(value = "select * from cultural_offer co inner join geo_location gl on co.geo_location_id = gl.location_id where lower(co.name) like %:exp% or lower(gl.place) like %:exp%", nativeQuery = true)
+	public Page<CulturalOffer> filter(Pageable pageRequest, @Param("exp") String exp);
+
+	@Modifying
+	@Transactional
+	@Query(value = "DELETE FROM post WHERE offer_id = ?1", nativeQuery = true)
+	public void deletePostsForOffer(Long offer_id);
+
+	@Query(value = "select * from cultural_offer co inner join geo_location gl on co.geo_location_id = gl.location_id inner join cultural_offer_type cot on co.cultural_offer_type_id = cot.cultural_offer_type_id where (lower(co.name) like %:exp% or lower(gl.place) like %:exp%) and (cot.name in :types)", nativeQuery = true)
+	public Page<CulturalOffer> filter(Pageable pageRequest, @Param("exp") String exp, @Param("types") ArrayList<String> types);
+
+	@Query(value = "select * from cultural_offer co inner join cultural_offer_type cot on co.cultural_offer_type_id = cot.cultural_offer_type_id where cot.name in :types", nativeQuery = true)
+	public Page<CulturalOffer> filter(Pageable pageRequest, @Param("types") ArrayList<String> types);
 }

@@ -5,7 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
-import {FormsModule} from '@angular/forms';
+
+import {FormsModule, NgSelectOption} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthService} from './services/auth.service';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
@@ -28,9 +29,13 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
 import { OfferDetailsComponent } from './components/offer-details/offer-details.component';
 import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
-import {ChangePasswordComponent} from './components/change-password/change-password.component';
-import {EditProfileService} from './services/edit-profile.service';
-import {ChangePasswordService} from './services/change-password.service';
+import {ChangePasswordComponent} from "./components/change-password/change-password.component";
+import {EditProfileService} from "./services/edit-profile.service";
+import {ChangePasswordService} from "./services/change-password.service";
+import { FilterOffersComponent } from './components/filter-offers/filter-offers.component';
+import {FilterOffersService} from "./services/filter-offers.service";
+import {CommonModule} from "@angular/common";
+import {NgSelectModule} from "@ng-select/ng-select";
 
 @NgModule({
   declarations: [
@@ -47,9 +52,10 @@ import {ChangePasswordService} from './services/change-password.service';
     SubscribedOfferCardComponent,
     SubscribedItemsListComponent,
     ProfileComponent,
-    EditOfferComponent,
-    OfferDetailsComponent,
-    ChangePasswordComponent  ],
+	EditOfferComponent,	
+	ChangePasswordComponent,
+	FilterOffersComponent
+ ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -61,13 +67,19 @@ import {ChangePasswordService} from './services/change-password.service';
     MatSelectModule,
     MatSlideToggleModule,
     MatButtonModule,
-    MatDialogModule
+   
+    MatDialogModule,
+    CommonModule,
+    NgSelectModule
+
   ],
   providers: [
     AuthService,
     CulturalOfferService,
     EditProfileService,
-    ChangePasswordService
+
+    ChangePasswordService,
+    FilterOffersService
   ],
   bootstrap: [AppComponent]
 })
