@@ -68,15 +68,6 @@ public class CulturalOfferService {
 			return null;
 	}
 
-	public boolean delete(CulturalOffer c) {
-		boolean exists = this.culturalOfferRepository.existsById(c.getId());
-
-		if (exists)
-			this.culturalOfferRepository.delete(c);
-
-		return exists;
-	}
-
 	@Transactional
 	public boolean deleteById(long id) {
 		boolean exists = this.culturalOfferRepository.existsById(id);
