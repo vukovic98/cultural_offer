@@ -3,6 +3,7 @@ package com.ftn.kts_nvt.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Base64;
 
 import javax.transaction.Transactional;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.CulturalOfferType;
+import com.ftn.kts_nvt.beans.Image;
 import com.ftn.kts_nvt.beans.Post;
 import com.ftn.kts_nvt.dto.CulturalOfferAddDTO;
 import com.ftn.kts_nvt.repositories.CulturalOfferCategoryRepository;
@@ -34,11 +36,23 @@ public class CulturalOfferService {
 	@Autowired
 	private GeoLocationService location;
 	
+	@Autowired
+	private ImageService imageService;
+	
 	public CulturalOffer save(CulturalOffer c) {
 		return this.culturalOfferRepository.save(c);
 	}
 	
+	@Transactional
 	public CulturalOffer save(CulturalOfferAddDTO dto) {
+		ArrayList<Image> images = new ArrayList<>();
+		for(byte[] a : dto.getImages()) {
+			System.out.println(a);
+			Image i = new Image(a);
+			this.imageService.save(i);
+			images.add(i);
+		}
+		
 		CulturalOffer c = new CulturalOffer();
 		c.setName(dto.getName());
 		c.setDescription(dto.getDescription());
@@ -48,6 +62,8 @@ public class CulturalOfferService {
 		c.setSubscribedUsers(new ArrayList<>());
 		c.setLocation(location.save(dto.getLocation()));		
 		c.setType(type.findById(dto.getType()));
+		c.setImages(images);
+		
 		return this.culturalOfferRepository.save(c);
 	}
 	

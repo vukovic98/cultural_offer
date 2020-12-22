@@ -19,7 +19,6 @@ public class CulturalOfferTypeMapper implements MapperInterface<CulturalOfferTyp
 	@Override
 	public CulturalOfferType toEntity(CulturalOfferTypeDTO dto) {
 		CulturalOfferType culturalOfferType = new CulturalOfferType();
-
 		culturalOfferType.setId(dto.getId());
 		culturalOfferType.setCategory(this.culturalOfferCategoryRepository.findById(dto.getCategoryId()).orElse(null));
 		culturalOfferType.setName(dto.getName());

@@ -48,6 +48,10 @@ public class CulturalOfferCategoryService implements ServiceInterface<CulturalOf
 		}
 		return repository.save(entity);
 	}
+	
+	public CulturalOfferCategory save(CulturalOfferCategory c) {
+		return this.repository.save(c);
+	}
 
 	@Override
 	public CulturalOfferCategory update(CulturalOfferCategory entity, Long id) throws Exception {

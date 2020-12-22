@@ -3,6 +3,7 @@ package com.ftn.kts_nvt.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,134 +23,147 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.kts_nvt.beans.CulturalOfferCategory;
+import com.ftn.kts_nvt.beans.CulturalOfferType;
 import com.ftn.kts_nvt.beans.Grade;
 import com.ftn.kts_nvt.dto.CulturalOfferCategoryDTO;
+import com.ftn.kts_nvt.dto.CulturalOfferTypeDTO;
 import com.ftn.kts_nvt.dto.GradeDTO;
 import com.ftn.kts_nvt.helper.CulturalOfferCategoryMapper;
+import com.ftn.kts_nvt.helper.CulturalOfferTypeMapper;
 import com.ftn.kts_nvt.services.CulturalOfferCategoryService;
+import com.ftn.kts_nvt.services.CulturalOfferTypeService;
 
 @RestController
 @RequestMapping("/cultural-offer-categories")
 public class CulturalOfferCategoryController {
-	
+
 	@Autowired
 	private CulturalOfferCategoryService service;
-	
+
+	@Autowired
+	private CulturalOfferTypeService typeService;
+
 	@Autowired
 	private CulturalOfferCategoryMapper mapper;
 
+	@Autowired
+	private CulturalOfferTypeMapper typeMapper;
 
-    /*
-     * GET
-     * http://localhost:8080/cultural-offer-categories
-     * */
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<CulturalOfferCategoryDTO>> getAll() {
-        List<CulturalOfferCategory> list = service.findAll();
-        return new ResponseEntity<>(mapper.toDTOList(list), HttpStatus.OK);
-    }
-    
-    /*
-     * GET
-     * http://localhost:8080/cultural-offer-categories/by-page
-     * */
- 	@GetMapping(value = "/by-page/{pageNum}")
- 	public ResponseEntity<Page<CulturalOfferCategoryDTO>> getAll(@PathVariable int pageNum) {
- 		Pageable pageable = PageRequest.of(pageNum-1, 10);
- 		Page<CulturalOfferCategory> page = service.findAll(pageable);
- 		List<CulturalOfferCategoryDTO> offerDTOS = mapper.toDTOList(page.toList());
- 		Page<CulturalOfferCategoryDTO> pageOfferDTOS = new PageImpl<>(offerDTOS ,
-										 				page.getPageable(), 
-										 				page.getTotalElements());
+	/*
+	 * GET http://localhost:8080/cultural-offer-categories
+	 */
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<CulturalOfferCategoryDTO>> getAll() {
+		List<CulturalOfferCategory> list = service.findAll();
+		return new ResponseEntity<>(mapper.toDTOList(list), HttpStatus.OK);
+	}
 
- 		return new ResponseEntity<>(pageOfferDTOS, HttpStatus.OK);
- 	}
- 	
-    /*
-     * GET
-     * http://localhost:8080/cultural-offer-categories/2
-     * */
-    @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    public ResponseEntity<CulturalOfferCategoryDTO> getCategory(@PathVariable Long id){
-        CulturalOfferCategory category = service.findOne(id);
-        if(category == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+	/*
+	 * GET http://localhost:8080/cultural-offer-categories/by-page
+	 */
+	@GetMapping(value = "/by-page/{pageNum}")
+	public ResponseEntity<Page<CulturalOfferCategoryDTO>> getAll(@PathVariable int pageNum) {
+		Pageable pageable = PageRequest.of(pageNum - 1, 10);
+		Page<CulturalOfferCategory> page = service.findAll(pageable);
+		List<CulturalOfferCategoryDTO> offerDTOS = mapper.toDTOList(page.toList());
+		Page<CulturalOfferCategoryDTO> pageOfferDTOS = new PageImpl<>(offerDTOS, page.getPageable(),
+				page.getTotalElements());
 
-        return new ResponseEntity<>(mapper.toDto(category), HttpStatus.OK);
-    }
-    
-    /*
-     * GET
-     * http://localhost:8080/cultural-offer-categories/name/categoryname
-     * */
-    @RequestMapping(value="/name/{name}", method=RequestMethod.GET)
-    public ResponseEntity<CulturalOfferCategoryDTO> getCategoryByName(@PathVariable String name){
-        CulturalOfferCategory category = service.findByName(name);
-        if(category == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+		return new ResponseEntity<>(pageOfferDTOS, HttpStatus.OK);
+	}
 
-        return new ResponseEntity<>(mapper.toDto(category), HttpStatus.OK);
-    }
-    
-    /*
-     * POST
-     * http://localhost:8080/cultural-offer-categories
-     * {
-    	"name": "categoryname" 
-	   }*/
-    @RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<CulturalOfferCategoryDTO> create(@Valid @RequestBody CulturalOfferCategoryDTO categoryDTO){
-        CulturalOfferCategory category;
-        System.out.println("categoryDTO = " + categoryDTO);
-        
-        try {
-        	category = service.create(mapper.toEntity(categoryDTO));
-            System.out.println("category = " + category);
+	/*
+	 * GET http://localhost:8080/cultural-offer-categories/2
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<CulturalOfferCategoryDTO> getCategory(@PathVariable Long id) {
+		CulturalOfferCategory category = service.findOne(id);
+		if (category == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+		return new ResponseEntity<>(mapper.toDto(category), HttpStatus.OK);
+	}
 
-        return new ResponseEntity<>(mapper.toDto(category), HttpStatus.CREATED);
-    }
+	/*
+	 * GET http://localhost:8080/cultural-offer-categories/name/categoryname
+	 */
+	@RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
+	public ResponseEntity<CulturalOfferCategoryDTO> getCategoryByName(@PathVariable String name) {
+		CulturalOfferCategory category = service.findByName(name);
+		if (category == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 
-    /*
-     * PUT
-     * http://localhost:8080/cultural-offer-categories/2
-     * {
-	     "name": "newcategoryname" 
-	   }*/
-    @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<CulturalOfferCategoryDTO> update(@Valid @RequestBody CulturalOfferCategoryDTO categoryDTO,
-    															@PathVariable Long id){
-        CulturalOfferCategory category;
-        try {
-        	category = service.update(mapper.toEntity(categoryDTO), id);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+		return new ResponseEntity<>(mapper.toDto(category), HttpStatus.OK);
+	}
 
-        return new ResponseEntity<>(mapper.toDto(category), HttpStatus.OK);
-    }
+	/*
+	 * POST http://localhost:8080/cultural-offer-categories { "name": "categoryname"
+	 * }
+	 */
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<CulturalOfferCategoryDTO> create(@Valid @RequestBody CulturalOfferCategoryDTO categoryDTO)
+			throws Exception {
+		CulturalOfferCategory category, saved;
+		try {
+			category = mapper.toEntityNoTypes(categoryDTO);
+			saved = this.service.create(category);
+			
+			System.out.println(saved.getId());
+			
+			for (CulturalOfferTypeDTO t : categoryDTO.getTypes()) {
+				t.setCategoryId(saved.getId());
+			}
 
-    /*
-     * DELETE
-     * http://localhost:8080/cultural-offer-categories/2
-     * */
-    @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<String> deleteCategory(@PathVariable Long id){
-        try {
-            service.delete(id);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
+			List<CulturalOfferType> types = this.typeMapper.dtoToList(categoryDTO.getTypes());
+			
+			ArrayList<CulturalOfferType> savedTypes = new ArrayList<>();
+			for (CulturalOfferType t : types) {
+				savedTypes.add(this.typeService.save(t));
+			}
+			saved.setTypes(savedTypes);
+			this.service.save(saved);
 
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-    
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity<>(mapper.toDto(saved) ,HttpStatus.CREATED);
+	}
+
+	/*
+	 * PUT http://localhost:8080/cultural-offer-categories/2 { "name":
+	 * "newcategoryname" }
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<CulturalOfferCategoryDTO> update(@Valid @RequestBody CulturalOfferCategoryDTO categoryDTO,
+			@PathVariable Long id) {
+		CulturalOfferCategory category;
+		try {
+			category = service.update(mapper.toEntity(categoryDTO), id);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity<>(mapper.toDto(category), HttpStatus.OK);
+	}
+
+	/*
+	 * DELETE http://localhost:8080/cultural-offer-categories/2
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<String> deleteCategory(@PathVariable Long id) {
+		try {
+			service.delete(id);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
 }

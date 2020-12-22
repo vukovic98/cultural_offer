@@ -22,7 +22,7 @@ export class AddCategoryComponent implements OnInit {
     this.categoryForm = this.fb.group({
       name: new FormControl('', Validators.required),
       types: this.fb.array([]),
-    }); 
+    });
   }
 
   types() : FormArray {
@@ -45,15 +45,16 @@ export class AddCategoryComponent implements OnInit {
 
   onSubmit() {
     console.log(this.categoryForm.value);
+    this.categoryService.addCategory(this.categoryForm.value);
   }
   get f() {
     return this.categoryForm.controls;
   }
 
   ngOnInit(): void {
-  
+
   }
-  
+
   submit() {
     let obj = {
       'name': this.categoryForm.value.name,
