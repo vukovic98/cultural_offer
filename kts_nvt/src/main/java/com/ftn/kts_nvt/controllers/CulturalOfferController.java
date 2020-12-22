@@ -111,7 +111,7 @@ public class CulturalOfferController {
 		CulturalOffer offer = this.culturalOfferService.findById(dto.getId());
 		
 		if(offer != null) {
-			boolean ok = this.culturalOfferService.delete(offer);
+			boolean ok = this.culturalOfferService.deleteById(offer.getId());
 			if(ok)
 				return new ResponseEntity<>(HttpStatus.OK);
 			else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
