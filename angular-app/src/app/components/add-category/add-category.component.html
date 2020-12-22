@@ -1,0 +1,38 @@
+<div class="backgroundImg">
+    <div class="col-md-12 pl-0 pr-0">
+        <app-navigation-bar></app-navigation-bar>
+    </div>
+    <div class="jumbotron bg-light col-md-10 ml-auto mr-auto mt-3 pt-5">
+        <div class="col-md-8 ml-auto mr-auto pt-1 mt-0">
+            <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="name">Category name:</label>
+                    <input formControlName="name" id="name" type="text" class="form-control">
+                    <div *ngIf="f.name.touched && f.name.invalid" class="text-danger">
+                        <div *ngIf="f.name.errors!.required">Name is required.</div>
+                    </div>
+                </div>
+                <table class="table table-bordered" formArrayName="types">
+                    <tr>
+                        <th colspan="2">Add types:</th>
+                        <th width="150px"><button type="button" (click)="addType()" class="btn btn-primary">Add
+                                More</button></th>
+                    </tr>
+                    <tr *ngFor="let type of types().controls; let i=index" [formGroupName]="i">
+                        <td>
+                            Type name: 
+                            <input type="text" formControlName="name" class="form-control">
+                        </td>
+                        <td>
+                            <button (click)="removeType(i)" class="btn btn-danger">Remove</button>
+                        </td>
+                    </tr>
+                </table>
+                <div class="form-group float-right mt-3">
+                    <button mat-raised-button color="primary" [disabled]="!categoryForm.valid" type="submit"
+                        class="btn-block">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -20,6 +20,7 @@ export class CulturalOfferItemComponent implements OnInit {
   constructor(private auth: AuthService, private service: CulturalOfferService) { }
 
   ngOnInit(): void {
+    console.log(this.offer);
   }
 
   deleteOffer(offer_id: number) {

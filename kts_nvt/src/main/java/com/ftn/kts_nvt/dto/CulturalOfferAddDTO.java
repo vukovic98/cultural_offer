@@ -2,14 +2,7 @@ package com.ftn.kts_nvt.dto;
 
 import java.util.ArrayList;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.ftn.kts_nvt.beans.GeoLocation;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 public class CulturalOfferAddDTO {
 
@@ -17,6 +10,21 @@ public class CulturalOfferAddDTO {
 	String description;
 	Long type;
 	GeoLocation location;
+	ArrayList<byte[]> images;
+
+	public CulturalOfferAddDTO() {
+		super();
+	}
+
+	public CulturalOfferAddDTO(String name, String description, Long type, GeoLocation location,
+			ArrayList<byte[]> images) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.type = type;
+		this.location = location;
+		this.images = images;
+	}
 
 	public String getName() {
 		return name;
@@ -24,6 +32,14 @@ public class CulturalOfferAddDTO {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public ArrayList<byte[]> getImages() {
+		return images;
+	}
+
+	public void setImages(ArrayList<byte[]> images) {
+		this.images = images;
 	}
 
 	public String getDescription() {
@@ -53,6 +69,6 @@ public class CulturalOfferAddDTO {
 	@Override
 	public String toString() {
 		return "CulturalOfferAddDTO [name=" + name + ", description=" + description + ", typeId=" + type + ", location="
-				+ location + "]";
+				+ location + ", images: " + images + "]";
 	}
 }

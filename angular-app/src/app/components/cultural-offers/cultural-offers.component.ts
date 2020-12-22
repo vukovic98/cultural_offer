@@ -20,8 +20,8 @@ export class CulturalOffersComponent implements OnInit {
   private userId: number = -1;
   public pageNum: number = 1;
   public nextBtn: boolean = false;
-
-
+  private isFilter: boolean = false;
+  private filterObj: FilterObject = {exp: '', types: []};
 
   constructor(private service: CulturalOfferService,
               private auth: AuthService,
@@ -69,20 +69,30 @@ export class CulturalOffersComponent implements OnInit {
     return this.offers || [];
   }
 
+  retrieveOffers() {
+    if(!this.isFilter) {
+      this.service.getByPage(this.pageNum).subscribe((data: string) => {
+        this.offers = JSON.parse(data).content;
+        this.nextBtn = JSON.parse(data).last;
+      });
+    } else {
+      this.service.getByPageFilter(this.pageNum,this.filterObj.exp,this.filterObj.types).subscribe(
+        (offers: string)=>{
+          this.offers = JSON.parse(offers).content;
+          this.nextBtn = JSON.parse(offers).last;
+        }
+      )
+    }
+  }
+
   nextPage() {
     this.pageNum += 1;
-    this.service.getByPage(this.pageNum).subscribe((data: string) => {
-      this.offers = JSON.parse(data).content;
-      this.nextBtn = JSON.parse(data).last;
-    });
+    this.retrieveOffers();
   }
 
   previousPage() {
     this.pageNum -= 1;
-    this.service.getByPage(this.pageNum).subscribe((data: string) => {
-      this.offers = JSON.parse(data).content;
-      this.nextBtn = JSON.parse(data).last;
-    });
+    this.retrieveOffers();
   }
 
   isSubscribed(offer: CulturalOffer): boolean {
@@ -96,8 +106,12 @@ export class CulturalOffersComponent implements OnInit {
   }
 
   filterOffers(data: FilterObject){
+    this.isFilter = true;
     this.pageNum = 1;
+    this.filterObj = data;
+
     if(data.exp==="" && data.types.length === 0){
+      this.isFilter = false;
       this.service.getByPage(this.pageNum).subscribe((data: string) => {
         this.offers = JSON.parse(data).content;
         this.nextBtn = JSON.parse(data).last;

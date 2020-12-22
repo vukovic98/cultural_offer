@@ -16,6 +16,10 @@ public class CulturalOfferCategoryMapper implements MapperInterface<CulturalOffe
 		CulturalOfferTypeMapper m = new CulturalOfferTypeMapper();
 		return new CulturalOfferCategory(dto.getId(), dto.getName(), m.dtoToList(dto.getTypes()));
 	}
+	
+	public CulturalOfferCategory toEntityNoTypes(CulturalOfferCategoryDTO dto) {
+		return new CulturalOfferCategory(dto.getName());
+	}
 
 	@Override
 	public CulturalOfferCategoryDTO toDto(CulturalOfferCategory entity) {

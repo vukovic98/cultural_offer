@@ -32,6 +32,18 @@ public class RegisteredUser extends User {
 	public RegisteredUser() {
 
 	}
+	
+	
+
+	public RegisteredUser(String firstName, String lastName, String email, String password, List<Comment> comments,
+			List<CulturalOffer> culturalOffers, boolean verified) {
+		super(firstName, lastName, email, password);
+		this.comments = comments;
+		this.culturalOffers = culturalOffers;
+		this.verified = verified;
+	}
+
+
 
 	public RegisteredUser(List<Comment> comments, List<CulturalOffer> culturalOffers) {
 		super();

@@ -2,6 +2,7 @@ package com.ftn.kts_nvt.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +22,7 @@ public class CulturalOfferType {
 	@Column(name = "name", nullable = false)
 	private String name;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "cultural_offer_category_id", nullable = false)
 	private CulturalOfferCategory category;
 

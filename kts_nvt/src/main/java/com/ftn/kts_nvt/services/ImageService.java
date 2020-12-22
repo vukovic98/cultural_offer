@@ -21,7 +21,7 @@ public class ImageService {
 
 	public boolean deleteById(Long id) {
 		boolean exists = this.imageRepository.existsById(id);
-
+		System.out.println("exist = " + exists);
 		if (exists) {
 			this.imageRepository.deleteById(id);
 		}

@@ -1,6 +1,7 @@
 package com.ftn.kts_nvt.repositories;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -18,6 +19,8 @@ import com.ftn.kts_nvt.beans.CulturalOffer;
 public interface CulturalOfferRepository extends JpaRepository<CulturalOffer, Long> {
 
 	public ArrayList<CulturalOffer> findByTypeId(Long typeId);
+	
+	public List<CulturalOffer> findByName(String name);
 
 	@Query(value = "select * from cultural_offer co inner join geo_location gl on co.geo_location_id = gl.location_id where lower(co.name) like %:exp% or lower(gl.place) like %:exp%", nativeQuery = true)
 	public Page<CulturalOffer> filter(Pageable pageRequest, @Param("exp") String exp);

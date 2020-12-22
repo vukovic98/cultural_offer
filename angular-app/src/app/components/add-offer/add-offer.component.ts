@@ -90,14 +90,14 @@ export class AddOfferComponent implements OnInit {
 
   onFileChange(event: any) {
     console.log("form changed")
-    for (var i = 0; i < event.target.files.length; i++) {
+    for (let i = 0; i < event.target.files.length; i++) {
       this.files.push(event.target.files[i]);
     }
 
     if (event.target.files && event.target.files[0]) {
-      var filesAmount = event.target.files.length;
+      const filesAmount = event.target.files.length;
       for (let i = 0; i < filesAmount; i++) {
-        var reader = new FileReader();
+        let reader = new FileReader();
         reader.onload = (event: any) => {
           if (!this.images.includes(event.target.result)) {
             this.images.push(event.target.result);
@@ -118,11 +118,17 @@ export class AddOfferComponent implements OnInit {
       'latitude': this.myForm.value.location.lat,
       'longitude': this.myForm.value.location.lng
     }
+    let images_copy: any = [];
+
+    for(let p of this.images) {
+      images_copy.push(p.split(',')[1]);
+    }
 
     let obj = {
       'name': this.myForm.value.name,
       'description': this.myForm.value.description,
       'type': this.myForm.value.type,
+      'images': images_copy,
       'location': locationObj
     }
     this.offerService.createOffer(obj);
