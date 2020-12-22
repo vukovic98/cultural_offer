@@ -4,12 +4,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.springframework.test.context.TestPropertySource;
-
-import com.ftn.kts_nvt.repository.CulturalOfferRepositoryUnitTest;
 import com.ftn.kts_nvt.service.CulturalOfferServiceUnitTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({CulturalOfferServiceUnitTest.class, CulturalOfferRepositoryUnitTest.class})
+@SuiteClasses({CulturalOfferServiceUnitTest.class})
 @TestPropertySource("classpath:test.properties")
 public class SuiteAll {
 
