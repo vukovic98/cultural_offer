@@ -1,67 +1,70 @@
 <div class="backgroundImg">
-  <div class="col-md-12 pl-0 pr-0">
-    <app-navigation-bar></app-navigation-bar>
-  </div>
-  <div class="jumbotron bg-light col-md-10 ml-auto mr-auto mt-3 pt-5">
-    <div class="col-md-8 ml-auto mr-auto pt-1 mt-0">
-      <form [formGroup]="myForm" (ngSubmit)="submit()">
-
-          <div class="form-group">
-              <label for="name">Cultural offer name:</label>
-              <input formControlName="name" id="name" type="text" class="form-control">
-              <div *ngIf="f.name.touched && f.name.invalid" class="text-danger">
-                  <div *ngIf="f.name.errors!.required">Name is required.</div>
-              </div>
-          </div>
-          <div class="form-group">
-              <label for="description">Description:</label>
-              <input formControlName="description" id="description" type="text" class="form-control">
-              <div *ngIf="f.description.touched && f.description.invalid" class="text-danger">
-                  <div *ngIf="f.description.errors!.required">Description is required.</div>
-              </div>
-          </div>
-        <div class="form-row">
-          <div class="form-group col-md-6">
-              <select #mySelect class="browser-default custom-select" formControlName="category" (change)="onChange(mySelect.value)">
-                  <option value="" disabled selected>Choose category</option>
-                  <option *ngFor='let c of categories' [value]="c.id">{{c.name}}</option>
-              </select>
-          </div>
-          <div class="form-group col-md-6">
-              <select class="browser-default custom-select" formControlName="type">
-                  <option value="" disabled selected>Choose type</option>
-                  <option *ngFor='let c of types' [value]="c.id">{{c.name}}</option>
-              </select>
-          </div>
-        </div>
-          <div class="form-group">
-              <label for="place">Place:</label>
-              <input formControlName="place" id="place" type="text" class="form-control">
-              <div *ngIf="f.place.touched && f.place.invalid" class="text-danger">
-                  <div *ngIf="f.place.errors!.required">Place name is required.</div>
-              </div>
-          </div>
-          <div id="mapid" class="col-md-12"></div>
-
-          <div class="form-group mt-3 custom-file">
-              <label for="file" class="custom-file-label">Select images</label>
-              <input formControlName="file" id="file" type="file" accept="image/*" class="form-control custom-file-input" multiple=""
-                  (change)="onFileChange($event)">
-              <div *ngIf="f.file.touched && f.file.invalid" class="text-danger">
-                  <div *ngIf="f.file.errors!.required">File is required.</div>
-              </div>
-          </div>
-
-          <div class="form-group">
-              <div *ngFor='let url of images' class="img_wrp">
-                  <img [src]="url" class="imgResponsiveMax" height="50px" width="80px" style="margin: 3px;"> <br />
-                  <mat-icon class="close" aria-hidden="false" (click)="remove(url)">close</mat-icon>
-              </div>
-          </div>
-          <div class="form-group float-right mt-3">
-            <button mat-raised-button color="primary" [disabled]="!myForm.valid" type="submit" class="btn-block">Submit</button>
-          </div>
-      </form>
+    <div class="col-md-12 pl-0 pr-0">
+        <app-navigation-bar></app-navigation-bar>
     </div>
-  </div>
+    <div class="jumbotron bg-light col-md-10 ml-auto mr-auto mt-3 pt-5">
+        <div class="col-md-8 ml-auto mr-auto pt-1 mt-0">
+            <form [formGroup]="myForm" (ngSubmit)="submit()">
+
+                <div class="form-group">
+                    <label for="name">Cultural offer name:</label>
+                    <input formControlName="name" id="name" type="text" class="form-control">
+                    <div *ngIf="f.name.touched && f.name.invalid" class="text-danger">
+                        <div *ngIf="f.name.errors!.required">Name is required.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <input formControlName="description" id="description" type="text" class="form-control">
+                    <div *ngIf="f.description.touched && f.description.invalid" class="text-danger">
+                        <div *ngIf="f.description.errors!.required">Description is required.</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <select #mySelect class="browser-default custom-select" formControlName="category"
+                            (change)="onChange(mySelect.value)">
+                            <option value="" disabled selected>Choose category</option>
+                            <option *ngFor='let c of categories' [value]="c.id">{{c.name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <select class="browser-default custom-select" formControlName="type">
+                            <option value="" disabled selected>Choose type</option>
+                            <option *ngFor='let c of types' [value]="c.id">{{c.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="place">Place:</label>
+                    <input formControlName="place" id="place" type="text" class="form-control">
+                    <div *ngIf="f.place.touched && f.place.invalid" class="text-danger">
+                        <div *ngIf="f.place.errors!.required">Place name is required.</div>
+                    </div>
+                </div>
+                <div id="mapid" class="col-md-12"></div>
+
+                <div class="form-group mt-3 custom-file">
+                    <label for="file" class="custom-file-label">Select images</label>
+                    <input formControlName="file" id="file" type="file" accept="image/*"
+                        class="form-control custom-file-input" multiple="" (change)="onFileChange($event)">
+                    <div *ngIf="f.file.touched && f.file.invalid" class="text-danger">
+                        <div *ngIf="f.file.errors!.required">File is required.</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div *ngFor='let url of images' class="img_wrp">
+                        <img [src]="url" class="imgResponsiveMax" height="50px" width="80px" style="margin: 3px;">
+                        <br />
+                        <mat-icon class="close" aria-hidden="false" (click)="remove(url)">close</mat-icon>
+                    </div>
+                </div>
+                <div class="form-group float-right mt-3">
+                    <button mat-raised-button color="primary" [disabled]="!myForm.valid" type="submit"
+                        class="btn-block">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

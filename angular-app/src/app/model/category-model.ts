@@ -1,5 +1,9 @@
-export class CategoryModel {
-    id: number = -1;
-    name: string = '';
-	types = [];
+export interface CategoryModel {
+    id: number;
+    name: string;
+    types: Array<TypeModel>;
+}
+export interface TypeModel {
+    id: number;
+    name: string;
 }
