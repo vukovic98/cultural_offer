@@ -1,27 +1,43 @@
 package com.ftn.kts_nvt.dto;
 
-import com.ftn.kts_nvt.beans.Image;
 public class CommentUserDTO {
 	private Long id;
 	private String commenterEmail;
 	private String commenterName;
 	private String content;
-	private Image image;
-	private boolean approved;
+	private String image;
+	private String offer;
 	
-	public CommentUserDTO() {
-	}
 
-	public CommentUserDTO(Long id, String commenterEmail, String commenterName, String content, Image image,
-			boolean approved) {
+	public CommentUserDTO(Long id, String commenterEmail, String commenterName, String content, String image,
+			String offer) {
 		super();
 		this.id = id;
 		this.commenterEmail = commenterEmail;
 		this.commenterName = commenterName;
 		this.content = content;
 		this.image = image;
-		this.approved = approved;
+		this.offer = offer;
 	}
+
+
+
+	public CommentUserDTO() {
+	}
+
+	
+
+	public String getOffer() {
+		return offer;
+	}
+
+
+
+	public void setOffer(String offer) {
+		this.offer = offer;
+	}
+
+
 
 	public Long getId() {
 		return id;
@@ -55,27 +71,18 @@ public class CommentUserDTO {
 		this.content = content;
 	}
 
-	public Image getImage() {
+
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(Image image) {
+
+
+	public void setImage(String image) {
 		this.image = image;
 	}
 
-	public boolean isApproved() {
-		return approved;
-	}
-
-	public void setApproved(boolean approved) {
-		this.approved = approved;
-	}
-
-	@Override
-	public String toString() {
-		return "CommentUserDTO [id=" + id + ", commenterEmail=" + commenterEmail + ", commenterName=" + commenterName
-				+ ", content=" + content + ", image=" + image + ", approved=" + approved + "]";
-	}
+	
 	
 	
 

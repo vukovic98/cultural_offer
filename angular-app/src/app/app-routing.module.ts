@@ -12,6 +12,7 @@ import {RoleGuard} from './guards/role.guard';
 import {ProfileComponent} from "./components/profile/profile.component";
 import {EditOfferComponent} from './components/edit-offer/edit-offer.component';
 import {ChangePasswordComponent} from "./components/change-password/change-password.component";
+import {CommentsToBeApprovedListComponent} from "./components/comments-to-be-approved-list/comments-to-be-approved-list.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home-page', pathMatch: 'full'},
@@ -49,6 +50,12 @@ const routes: Routes = [
     component:ChangePasswordComponent,
     canActivate:[RoleGuard],
     data: {acceptRoles: 'ROLE_USER|ROLE_ADMIN'}
+  },
+  {
+    path: "approving-comments",
+    component:CommentsToBeApprovedListComponent,
+    canActivate:[RoleGuard],
+    data: {acceptRoles: 'ROLE_ADMIN'}
   }
   ];
 

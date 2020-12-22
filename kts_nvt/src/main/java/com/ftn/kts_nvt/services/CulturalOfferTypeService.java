@@ -69,7 +69,7 @@ public class CulturalOfferTypeService {
 	}
 
 	public CulturalOfferType save(CulturalOfferType culturalOfferType) {
-
+//pitaj dal je ime tipa jedinstveno
 		return this.culturalOfferTypeRepository.save(culturalOfferType);
 
 	}
