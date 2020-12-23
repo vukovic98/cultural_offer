@@ -1,0 +1,39 @@
+<div class="col-md-12 mb-2">
+  <mat-expansion-panel (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="col-md-12" >
+        <div class="row col-md-12">
+          <div class="col-md-6 mt-2">
+            <b>{{commentToBeApproved.offer}}</b>
+          </div>
+          <div class="col-md-6 mt-2">
+           {{commentToBeApproved.commenterName}}
+          </div>
+        </div>
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row mb-5">
+      <div class="col-md-4 border-right pl-5 pt-3">
+        <img class="w-50 h-100 rounded align-items-center" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg">
+      </div>
+      <div class="col-md-6 pl-5 pt-3">
+        {{commentToBeApproved.content}}
+      </div>
+      <div class="col-md-1">
+        <button mat-raised-button color="primary"  (click)="authoriseComment(commentToBeApproved.id)">
+          <mat-icon>check_circle</mat-icon>
+        </button>
+      </div>
+      <div class="col-md-1">
+        <button mat-raised-button color="warn" (click)="rejectComment(commentToBeApproved.id)">
+          <mat-icon>remove_circle</mat-icon>
+        </button>
+      </div>
+    </div>
+
+  </mat-expansion-panel>
+</div>
+
