@@ -2,6 +2,7 @@ package com.ftn.kts_nvt.beans;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -11,15 +12,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "cultural_offer")
@@ -38,12 +35,8 @@ public class CulturalOffer {
 	@CollectionTable(name = "culturalOffer_images", joinColumns = @JoinColumn(name = "culturalOffer_ID"))
 	private List<Image> images;
 
-	
 	@ManyToMany
-	@JoinTable(
-	  name = "users_culturalOffers", 
-	  joinColumns = @JoinColumn(name = "culturalOffer_ID"), 
-	  inverseJoinColumns = @JoinColumn(name = "user_id"))
+	@JoinTable(name = "users_culturalOffers", joinColumns = @JoinColumn(name = "culturalOffer_ID"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<RegisteredUser> subscribedUsers;
 
 	@ElementCollection
@@ -159,5 +152,22 @@ public class CulturalOffer {
 	public void setGrades(List<Grade> grades) {
 		this.grades = grades;
 	}
-
+	
+	@Override
+	public boolean equals(Object o) {
+		if(this == o)
+			return true;
+		
+		if(o == null || getClass() != o.getClass())
+			return false;
+		
+	    CulturalOffer category = (CulturalOffer) o;
+	    if (category.getId() == null || id == null) {
+	        if(category.getName().equals(getName())){
+	            return true;
+	        }
+	        return false;
+	    }
+	    return Objects.equals(id, category.getId());
+	}
 }

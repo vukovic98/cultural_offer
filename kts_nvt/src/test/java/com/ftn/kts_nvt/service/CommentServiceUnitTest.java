@@ -112,15 +112,15 @@ public class CommentServiceUnitTest {
 		assertEquals(3L, list.getContent().get(0).getCommentId());
 	}
 	
-//	@Test
-//	public void testCreate() {
-//		RegisteredUser user = new RegisteredUser("Vladimir", "Vukovic", "vladimirvukovic98@hotmail.rs", "vukovic", new ArrayList<>(), new ArrayList<>(), true);
-//		Comment c = new Comment("Ovo je komentar", null, user);
-//		c.setCommentId(1L);
-//		user.getComments().add(c);
-//		
-//		Comment saved = this.commentService.save(c);
-//		System.out.println(saved);
-//		assertEquals(1L, saved.getCommentId());
-//	}
+	@Test
+	public void testCreate() {
+		RegisteredUser user = new RegisteredUser("Vladimir", "Vukovic", "vladimirvukovic98@hotmail.rs", "vukovic", new ArrayList<>(), new ArrayList<>(), true);
+		Comment c = new Comment("Ovo je komentar", null, user);
+		c.setCommentId(1L);
+		user.getComments().add(c);
+		
+		Comment saved = this.commentService.save(c);
+		System.out.println(saved);
+		assertEquals(1L, saved.getCommentId());
+	}
 }

@@ -9,7 +9,7 @@ import com.ftn.kts_nvt.service.CommentServiceUnitTest;
 import com.ftn.kts_nvt.service.CulturalOfferServiceUnitTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({CulturalOfferServiceUnitTest.class, CommentServiceUnitTest.class})
+@SuiteClasses({CommentServiceUnitTest.class})
 @TestPropertySource("classpath:test.properties")
 public class SuiteAll {
 

@@ -1,5 +1,7 @@
 package com.ftn.kts_nvt.beans;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -88,6 +90,24 @@ public class Comment {
 	public String toString() {
 		return "Comment [commentId=" + commentId + ", content=" + content + ", image=" + image + ", commenter="
 				+ commenter + ", approved=" + approved + "]";
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(this == o)
+			return true;
+		
+		if(o == null || getClass() != o.getClass())
+			return false;
+		
+	    Comment category = (Comment) o;
+	    if (category.getCommentId() == null || commentId == null) {
+	        if(category.getCommenter().getId().equals(getCommenter().getId())){
+	            return true;
+	        }
+	        return false;
+	    }
+	    return Objects.equals(commentId, category.getCommentId());
 	}
 	
 }
