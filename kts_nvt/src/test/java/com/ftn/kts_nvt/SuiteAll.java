@@ -9,13 +9,15 @@ import com.ftn.kts_nvt.service.CulturalOfferServiceIntegrationTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({
+	CulturalOfferServiceUnitTest.class,
+	CommentServiceUnitTest.class,
 	//CulturalOfferServiceUnitTest.class,
 	//CommentServiceUnitTest.class,
 	//ImageServiceIntegrationTest.class,
+	CulturalOfferTypeServiceIntegrationTest.class
 	//CulturalOfferTypeServiceIntegrationTest.class,
 	//CulturalOfferRepositoryIntegrationTest.class,
-	CulturalOfferServiceIntegrationTest.class
-})@TestPropertySource("classpath:test.properties")
+	CulturalOfferServiceIntegrationTest.class})@TestPropertySource("classpath:test.properties")
 public class SuiteAll {
 
 
