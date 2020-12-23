@@ -18,10 +18,10 @@ export class ProfileComponent implements OnInit {
   circleColor: string = '';
 
   private colors = [
-    '#EB7181', // red
-    '#468547', // green
-    '#FFD558', // yellow
-    '#3670B2', // blue
+    '#B00020',
+    '#018786',
+    '#03DAC6',
+    '#6200EE',
   ];
 
   editProfileForm = new FormGroup({

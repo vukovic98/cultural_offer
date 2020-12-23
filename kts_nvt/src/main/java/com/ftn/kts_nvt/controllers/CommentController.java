@@ -58,7 +58,7 @@ public class CommentController {
 
 	// GET: http://localhost:8080/comments/by-page
 	@GetMapping(value = "/by-page/{pageNum}")
-	public ResponseEntity<Page<CommentUserDTO>> getAllCulturalContentCategories(@PathVariable int pageNum) {
+	public ResponseEntity<Page<CommentUserDTO>> getAllComments(@PathVariable int pageNum) {
 		Pageable pageRequest = PageRequest.of(pageNum - 1, 10);
 
 		Page<Comment> page = this.commentService.findAll(pageRequest);

@@ -26,7 +26,7 @@ public class CommentMapper implements MapperInterface<Comment, CommentUserDTO> {
 		dto.setCommenterName(entity.getCommenter().getFirstName()+" "+entity.getCommenter().getLastName());
 		dto.setContent(entity.getContent());
 		dto.setId(entity.getCommentId());
-		dto.setImage("slika");
+		dto.setImage(entity.getImage());
 		
 		CulturalOffer offer = this.offerRepository.getOfferByComment(entity.getCommentId());
 		dto.setOffer(offer.getName());

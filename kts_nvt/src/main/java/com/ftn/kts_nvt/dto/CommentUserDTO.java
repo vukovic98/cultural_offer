@@ -1,15 +1,17 @@
 package com.ftn.kts_nvt.dto;
 
+import com.ftn.kts_nvt.beans.Image;
+
 public class CommentUserDTO {
 	private Long id;
 	private String commenterEmail;
 	private String commenterName;
 	private String content;
-	private String image;
+	private Image image;
 	private String offer;
 	
 
-	public CommentUserDTO(Long id, String commenterEmail, String commenterName, String content, String image,
+	public CommentUserDTO(Long id, String commenterEmail, String commenterName, String content, Image image,
 			String offer) {
 		super();
 		this.id = id;
@@ -72,13 +74,13 @@ public class CommentUserDTO {
 	}
 
 
-	public String getImage() {
+	public Image getImage() {
 		return image;
 	}
 
 
 
-	public void setImage(String image) {
+	public void setImage(Image image) {
 		this.image = image;
 	}
 
