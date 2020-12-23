@@ -69,9 +69,12 @@ public class CulturalOfferTypeService {
 	}
 
 	public CulturalOfferType save(CulturalOfferType culturalOfferType) {
-//pitaj dal je ime tipa jedinstveno
-		return this.culturalOfferTypeRepository.save(culturalOfferType);
-
+		CulturalOfferType exist = culturalOfferTypeRepository.findByName(culturalOfferType.getName());
+		if(exist == null) {
+			return this.culturalOfferTypeRepository.save(culturalOfferType);			
+		}else {
+			return null;
+		}
 	}
 
 	public CulturalOfferType update(CulturalOfferType changedCulturalOfferType, long id) {
@@ -79,9 +82,13 @@ public class CulturalOfferTypeService {
 		CulturalOfferType found = this.culturalOfferTypeRepository.findById(id).orElse(null);
 
 		if (found != null) {
-			found.setCategory(changedCulturalOfferType.getCategory());
-			found.setName(changedCulturalOfferType.getName());
-			return this.culturalOfferTypeRepository.save(found);
+			CulturalOfferType nameExist = culturalOfferTypeRepository.findByName(changedCulturalOfferType.getName());
+			if(nameExist == null) {
+				found.setCategory(changedCulturalOfferType.getCategory());
+				found.setName(changedCulturalOfferType.getName());
+				return this.culturalOfferTypeRepository.save(found);				
+			}
+			return null;
 		} else
 			return null;
 	}
