@@ -3,7 +3,6 @@ package com.ftn.kts_nvt.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Base64;
 
 import javax.transaction.Transactional;
 
@@ -13,11 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ftn.kts_nvt.beans.CulturalOffer;
-import com.ftn.kts_nvt.beans.CulturalOfferType;
 import com.ftn.kts_nvt.beans.Image;
 import com.ftn.kts_nvt.beans.Post;
 import com.ftn.kts_nvt.dto.CulturalOfferAddDTO;
-import com.ftn.kts_nvt.repositories.CulturalOfferCategoryRepository;
 import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
 import com.ftn.kts_nvt.repositories.PostRepository;
 
@@ -46,11 +43,14 @@ public class CulturalOfferService {
 	@Transactional
 	public CulturalOffer save(CulturalOfferAddDTO dto) {
 		ArrayList<Image> images = new ArrayList<>();
-		for(byte[] a : dto.getImages()) {
-			System.out.println(a);
-			Image i = new Image(a);
-			this.imageService.save(i);
-			images.add(i);
+		
+		if(dto.getImages() != null) {
+			for(byte[] a : dto.getImages()) {
+				System.out.println(a);
+				Image i = new Image(a);
+				this.imageService.save(i);
+				images.add(i);
+			}
 		}
 		
 		CulturalOffer c = new CulturalOffer();
@@ -116,18 +116,17 @@ public class CulturalOfferService {
 			found.setName(changedOffer.getName());
 			found.setDescription(changedOffer.getDescription());
 			found.setImages(changedOffer.getImages());
-			found.setLocation(location.update(changedOffer.getLocation(), changedOffer.getId()));
 			return this.culturalOfferRepository.save(found);
 		} else
 			return null;
 	}
 
 	public Page<CulturalOffer> filter(Pageable pageRequest, String exp, ArrayList<String> types) {
-		if(!exp.equals("") & types.size() == 0)
+		if(!exp.equals("") && types.size() == 0)
 			return this.culturalOfferRepository.filter(pageRequest, exp);
-		else if (!exp.equals("") & types.size() > 0)
+		else if (!exp.equals("") && types.size() > 0)
 			return this.culturalOfferRepository.filter(pageRequest, exp, types);
-		else if (exp.equals("") & types.size() > 0)
+		else if (exp.equals("") && types.size() > 0)
 			return this.culturalOfferRepository.filter(pageRequest, types);
 		else
 			return null;

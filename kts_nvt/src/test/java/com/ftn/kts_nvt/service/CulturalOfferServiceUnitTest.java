@@ -1,5 +1,13 @@
 package com.ftn.kts_nvt.service;
 
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,19 +27,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.CulturalOfferType;
 import com.ftn.kts_nvt.beans.GeoLocation;
-import com.ftn.kts_nvt.dto.CulturalOfferAddDTO;
 import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
 import com.ftn.kts_nvt.repositories.CulturalOfferTypeRepository;
 import com.ftn.kts_nvt.repositories.GeoLocationRepository;
 import com.ftn.kts_nvt.services.CulturalOfferService;
-
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -147,17 +146,10 @@ public class CulturalOfferServiceUnitTest {
 		CulturalOffer offer = new CulturalOffer("Exit", null, "Novi Sad - Festival");
 		GeoLocation g = this.geoRepository.findById(1L).orElse(null);
 		CulturalOfferType t = this.typeRepo.findById(1L).orElse(null);
-		System.out.println(g.getLatitude() + " - " + t.getName());
 		offer.setLocation(g);
 		offer.setType(t);
-		
-		CulturalOfferAddDTO cA = new CulturalOfferAddDTO();
-		cA.setDescription(offer.getDescription());
-		cA.setLocation(g);
-		cA.setName(offer.getName());
-		cA.setType(1L);
 
-		CulturalOffer created = this.culturalOfferservice.save(cA);
+		CulturalOffer created = this.culturalOfferservice.save(offer);
 		
 		assertTrue(("Exit").equalsIgnoreCase(created.getName()));
 	}

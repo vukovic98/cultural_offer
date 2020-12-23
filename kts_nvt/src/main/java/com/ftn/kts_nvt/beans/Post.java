@@ -30,7 +30,7 @@ public class Post {
 	@Column(name = "post_time", nullable = false)
 	private Instant postTime;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "offer_id")
 	private CulturalOffer offer;
 
