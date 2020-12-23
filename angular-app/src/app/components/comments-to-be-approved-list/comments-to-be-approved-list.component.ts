@@ -18,6 +18,7 @@ export class CommentsToBeApprovedListComponent implements OnInit {
   constructor(private service: CommentsToBeApprovedService) { }
 
   getAllComments(){
+    console.log(this.commentsToBeApproved);
     return this.commentsToBeApproved || [];
   }
 
@@ -61,6 +62,7 @@ export class CommentsToBeApprovedListComponent implements OnInit {
       this.commentsToBeApproved = JSON.parse(data).content;
       this.nextBtn = JSON.parse(data).last;
     });
+
 
   }
 

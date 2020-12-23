@@ -4,13 +4,13 @@
     <mat-expansion-panel-header>
       <mat-panel-title class="col-md-12" >
         <div class="row col-md-12">
-          <div class="col-md-6 mt-4">
+          <div class="col-md-6 mt-3">
             <h2>{{commentToBeApproved.offer}}</h2>
           </div>
           <div class="col-md-6 mt-4">
             <h2>
               <mat-icon>account_circle</mat-icon>
-                {{commentToBeApproved.commenterName}} ({{commentToBeApproved.commenterEmail}})
+              <p class="float-right small">{{commentToBeApproved.commenterName}} ({{commentToBeApproved.commenterEmail}})</p>
             </h2>
           </div>
         </div>
@@ -25,7 +25,7 @@
         </div>
         <div class="col-md-6 pl-5 pt-3">
           <h2>Comment image</h2>
-          <img class="card-img-top w-50 h-75" [src]="'data:image/png;base64,'+ commentToBeApproved.image.picByte">
+          <img class="card-img-top w-50 h-75" *ngIf="commentToBeApproved.image !== null" [src]="'data:image/png;base64,'+ commentToBeApproved.image.picByte">
         </div>
     </div>
     <div class="row mb-5">
