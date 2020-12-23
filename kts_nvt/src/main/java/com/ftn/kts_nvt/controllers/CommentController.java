@@ -58,7 +58,7 @@ public class CommentController {
 
 	// GET: http://localhost:8080/comments/by-page
 	@GetMapping(value = "/by-page/{pageNum}")
-	public ResponseEntity<Page<CommentUserDTO>> getAllCulturalContentCategories(@PathVariable int pageNum) {
+	public ResponseEntity<Page<CommentUserDTO>> getAllComments(@PathVariable int pageNum) {
 		Pageable pageRequest = PageRequest.of(pageNum - 1, 10);
 
 		Page<Comment> page = this.commentService.findAll(pageRequest);
@@ -132,7 +132,7 @@ public class CommentController {
 
 	// DELETE http://localhost:8080/comments/{id}
 	@DeleteMapping(path = "/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_USER,ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN,ROLE_USER')")
 	public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") long id) {
 		boolean ok = this.commentService.deleteById(id);
 
@@ -143,8 +143,8 @@ public class CommentController {
 	}
 
 	// PUT: http://localhost:8080/comments/{id} -> RequestBody (DTO)
-	@PutMapping(path = "/id", consumes = "application/json")
-	@PreAuthorize("hasAnyRole('ROLE_USER,ROLE_ADMIN')")
+	@PutMapping(path = "/{id}", consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> update(@PathVariable("id") long id, @RequestBody CommentUserDTO commentDto) {
 
 		CommentMapper mapper = new CommentMapper();
@@ -164,13 +164,25 @@ public class CommentController {
 	@GetMapping(path = "/pendingComments/{pageNum}")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<Page<CommentUserDTO>> findAllPendingComments(@PathVariable int pageNum) {
-		Pageable pageRequest = PageRequest.of(pageNum - 1, 10);
+		Pageable pageRequest = PageRequest.of(pageNum - 1, 5);
 		Page<Comment> page = this.commentService.findAllPendingComments(pageRequest);
 		List<CommentUserDTO> pendingCommentsDto = this.mapper.listToDto(page.toList());
 		Page<CommentUserDTO> pagePendingCommentsDtop = new PageImpl<>(pendingCommentsDto, page.getPageable(),
 				page.getTotalElements());
 
 		return new ResponseEntity<>(pagePendingCommentsDtop, HttpStatus.OK);
+	}
+	
+	// PUT: http://localhost:8080/comments/approve/{id} 
+	@PutMapping(path = "/approve/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<HttpStatus> approve(@PathVariable("id") long id) {
+		Comment newComment = this.commentService.approve(id);
+		if (newComment != null)
+			return new ResponseEntity<>(HttpStatus.OK);
+		else
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
 	}
 
 }

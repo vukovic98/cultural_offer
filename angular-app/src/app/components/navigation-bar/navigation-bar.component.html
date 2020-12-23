@@ -10,10 +10,11 @@
           <li class="nav-item" *ngIf="isUserAdmin()">
             <a class="nav-link" routerLink="/add-offer">Add offer</a>
           </li>
-          <li class="nav-item" *ngIf="isUserAdmin()">
+		<li class="nav-item" *ngIf="isUserAdmin()">
             <a class="nav-link" routerLink="/category">Category</a>
-          </li>
-        </ul>
+          </li> 		<li class="nav-item" *ngIf="isUserAdmin()">
+            <a class="nav-link" routerLink="/approving-comments">Approving comments</a>
+          </li>        </ul>
       </div>
       <span class="float-right" *ngIf="!getUser()">
           <a routerLink="/login"><button mat-raised-button color="primary" class="mr-2">Login</button></a>

@@ -38,6 +38,11 @@ import { FilterOffersService } from "./services/filter-offers.service";
 import { CommonModule } from "@angular/common";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { AddCategoryComponent } from './components/add-category/add-category.component';
+import { CommentToBeApprovedComponent } from './components/comment-to-be-approved/comment-to-be-approved.component';
+import { CommentsToBeApprovedListComponent } from './components/comments-to-be-approved-list/comments-to-be-approved-list.component';
+import {CommentsToBeApprovedService} from "./services/comments-to-be-approved.service";
+import {MatListModule} from "@angular/material/list";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -57,8 +62,11 @@ import { AddCategoryComponent } from './components/add-category/add-category.com
     FilterOffersComponent,
     OfferDetailsComponent,
     EditOfferComponent,
-    ChangePasswordComponent,
-    AddCategoryComponent],
+  ChangePasswordComponent,
+AddCategoryComponent,
+ CommentToBeApprovedComponent,
+  CommentsToBeApprovedListComponent
+],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -73,14 +81,18 @@ import { AddCategoryComponent } from './components/add-category/add-category.com
     MatDialogModule,
     CommonModule,
     NgSelectModule,
-    MatMenuModule
+    
+    MatMenuModule,
+    MatListModule,
+    MatExpansionModule
   ],
   providers: [
     AuthService,
     CulturalOfferService,
     EditProfileService,
     ChangePasswordService,
-    FilterOffersService
+    FilterOffersService,
+    CommentsToBeApprovedService
   ],
   bootstrap: [AppComponent]
 })

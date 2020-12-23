@@ -1,0 +1,50 @@
+<div class="col-md-12 mb-2">
+  <mat-expansion-panel (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="col-md-12" >
+        <div class="row col-md-12">
+          <div class="col-md-6 mt-4">
+            <h2>{{commentToBeApproved.offer}}</h2>
+          </div>
+          <div class="col-md-6 mt-4">
+            <h2>
+              <mat-icon>account_circle</mat-icon>
+                {{commentToBeApproved.commenterName}} ({{commentToBeApproved.commenterEmail}})
+            </h2>
+          </div>
+        </div>
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row mb-5">
+        <div class="col-md-6  border-right pl-5 pt-3">
+          <h2>Comment content</h2>
+          <i>"{{commentToBeApproved.content}}"</i>
+        </div>
+        <div class="col-md-6 pl-5 pt-3">
+          <h2>Comment image</h2>
+          <img class="card-img-top w-50 h-75" [src]="'data:image/png;base64,'+ commentToBeApproved.image.picByte">
+        </div>
+    </div>
+    <div class="row mb-5">
+      <div class="col-md-10">
+
+      </div>
+      <div class="col-md-2">
+        <button mat-raised-button color="primary" class="mr-2" (click)="authoriseComment(commentToBeApproved.id)">
+          <mat-icon>check_circle</mat-icon>
+        </button>
+        <button mat-raised-button color="warn" (click)="rejectComment(commentToBeApproved.id)">
+          <mat-icon>remove_circle</mat-icon>
+        </button>
+      </div>
+    </div>
+
+
+
+
+  </mat-expansion-panel>
+</div>
+

@@ -1,0 +1,31 @@
+<div class="backgroundImg row h-auto">
+  <div class="col-md-12 pl-0 pr-0">
+  <app-navigation-bar></app-navigation-bar>
+  </div>
+  <div class="jumbotron col-md-10 ml-auto mr-auto bg-light shadow mt-5 float-left pt-3">
+    <div class="row col-md-12 pl-5 pr-0">
+      <div class="row col-md-12 w-100 pt-1 pl-auto pr-auto">
+        <mat-list role="list" class="col-md-12">
+          <app-comment-to-be-approved
+            mat-list-item
+            *ngFor="let comment of getAllComments()"
+            [commentToBeApproved] = "comment"
+            (denyComment)="denyComment($event)"
+            (approveComment)="approveComment($event)"  >
+
+            </app-comment-to-be-approved>
+
+        </mat-list>
+        <div *ngIf=" getAllComments().length === 0">
+          <h4>There are no comments to be approved.</h4>
+        </div>
+      </div>
+      <div class="text-center col-md-2 ml-auto mr-auto mt-5" *ngIf="getAllComments().length !== 0">
+        <button class="btn btn-outline-info float-left" [disabled]="pageNum===1" (click)="previousPage()"><<</button>
+        <p class=" float-left text-center ml-3 pt-2">{{pageNum}}</p>
+        <button class="btn btn-outline-info" (click)="nextPage()" [disabled]="nextBtn">>></button>
+      </div>
+    </div>
+  </div>
+
+</div>
