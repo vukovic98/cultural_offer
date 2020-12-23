@@ -23,7 +23,7 @@ import com.ftn.kts_nvt.repositories.GradeRepository;
 public class GradeRepositoryIntegrationTest {
 
 	@Autowired
-	public GradeRepository repository;
+	private GradeRepository repository;
 	
 	@Test
 	public void findByUserId() {

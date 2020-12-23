@@ -27,7 +27,7 @@ import com.ftn.kts_nvt.repositories.CulturalOfferTypeRepository;
 public class CulturalOfferTypeRepositoryIntegrationTest {
 
 	@Autowired
-	public CulturalOfferTypeRepository repository;
+	private CulturalOfferTypeRepository repository;
 	
 	@Test
 	public void testFindByCategoryId() {
