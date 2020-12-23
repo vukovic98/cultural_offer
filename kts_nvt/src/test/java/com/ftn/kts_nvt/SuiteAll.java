@@ -5,6 +5,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.springframework.test.context.TestPropertySource;
 
+import com.ftn.kts_nvt.repository.CulturalOfferTypeRepositoryIntegrationTest;
+import com.ftn.kts_nvt.repository.GradeRepositoryIntegrationTest;
 import com.ftn.kts_nvt.service.CulturalOfferServiceIntegrationTest;
 import com.ftn.kts_nvt.service.CulturalOfferTypeServiceIntegrationTest;
 import com.ftn.kts_nvt.service.GradeServiceIntegrationTest;
@@ -16,7 +18,9 @@ import com.ftn.kts_nvt.service.ImageServiceIntegrationTest;
 	//CommentServiceUnitTest.class,
 	//CulturalOfferServiceUnitTest.class,
 	//CommentServiceUnitTest.class,
-	GradeServiceIntegrationTest.class,
+	//GradeServiceIntegrationTest.class,
+	CulturalOfferTypeRepositoryIntegrationTest.class,
+	GradeRepositoryIntegrationTest.class,
 	//CulturalOfferTypeServiceIntegrationTest.class
 	//CulturalOfferTypeServiceIntegrationTest.class,
 	//CulturalOfferRepositoryIntegrationTest.class,
