@@ -40,6 +40,10 @@ public class CulturalOfferService {
 		return this.culturalOfferRepository.save(c);
 	}
 	
+	public List<CulturalOffer> findByName(String name) {
+		return this.culturalOfferRepository.findByName(name);
+	}
+	
 	@Transactional
 	public CulturalOffer save(CulturalOfferAddDTO dto) {
 		ArrayList<Image> images = new ArrayList<>();

@@ -56,7 +56,6 @@ public class CulturalOfferController {
 
 	//GET: http://localhost:8080/culturalOffers/by-page/{pageNum}
 	@GetMapping(path="/by-page/{pageNum}")
-	
 	public ResponseEntity<Page<CulturalOfferDTO>> findAll(@PathVariable int pageNum) {
 	
 		Pageable pageRequest = PageRequest.of(pageNum-1, 8);
@@ -94,7 +93,6 @@ public class CulturalOfferController {
 	@PostMapping(consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> createOffer(@RequestBody CulturalOfferAddDTO dto) {
-		System.out.println("dto = " + dto);
 		
 		CulturalOffer ok = this.culturalOfferService.save(dto);
 		

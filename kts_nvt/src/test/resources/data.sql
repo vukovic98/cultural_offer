@@ -1,6 +1,12 @@
 insert into kts_nvt_test.geo_location 
 values(1, 23.23, 23.23, "Novi Sad");
 
+insert into kts_nvt_test.comment values(1, true, 'This is comment', 1, null);
+INSERT INTO kts_nvt_test.comment VALUES (2, false, 'Unapproved comment', null);
+
+insert into kts_nvt_test.post values(1,'Post content',2020-12-23 14:02:03.972330,'This is post',1);
+insert into kts_nvt_test.post values(2,'Post2 content',2020-12-23 14:02:03.972330,'This is post2',1);
+
 
 INSERT INTO kts_nvt_test.cultural_offer_category VALUES (1,'Manifestation');
 INSERT INTO kts_nvt_test.cultural_offer_category VALUES (2,'Institution');
