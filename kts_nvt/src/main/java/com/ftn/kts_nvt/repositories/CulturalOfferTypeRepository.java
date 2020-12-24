@@ -12,6 +12,6 @@ import com.ftn.kts_nvt.beans.CulturalOfferType;
 public interface CulturalOfferTypeRepository extends JpaRepository<CulturalOfferType, Long> {
 
    public ArrayList<CulturalOfferType> findByCategoryId(Long categoryId);
-	
+   public CulturalOfferType findByName(String name);
 	
 }

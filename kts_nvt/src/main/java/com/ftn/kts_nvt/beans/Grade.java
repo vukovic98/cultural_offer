@@ -81,5 +81,43 @@ public class Grade {
 	public String toString() {
 		return "Grade [id=" + id + ", value=" + value + ", user=" + user + ", culturalOffer=" + culturalOffer + "]";
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((culturalOffer == null) ? 0 : culturalOffer.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + value;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Grade other = (Grade) obj;
+		if (culturalOffer == null) {
+			if (other.culturalOffer != null)
+				return false;
+		} else if (!culturalOffer.getId().equals(other.culturalOffer.getId()))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.getId().equals(other.user.getId()))
+			return false;
+		if (value != other.value)
+			return false;
+		return true;
+	}
 
 }
