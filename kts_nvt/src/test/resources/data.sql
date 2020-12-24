@@ -27,3 +27,5 @@ insert into kts_nvt_test.cultural_offer values(1, "Desc1", "Name1", 1, 1);
 insert into kts_nvt_test.cultural_offer values(2, "Desc2", "Name2", 1, 1);
 insert into kts_nvt_test.cultural_offer values(3, "Desc3", "Name3", 1, 2);
 insert into kts_nvt_test.cultural_offer values(4, "Desc4", "Name4", 1, 2);
+
+insert into kts_nvt_test.post values(5, "This is post.", 2020-12-24 19:14:37.517150, 'Post1', 1);
