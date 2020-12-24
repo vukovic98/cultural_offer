@@ -31,6 +31,10 @@ public class CommentService {
 	public Comment save(Comment c) {
 		return this.commentRepository.save(c);
 	}
+	
+	public ArrayList<Comment> findCommentsForOffer(long offer_id) {
+		return this.commentRepository.findCommentsForOffer(offer_id);
+	}
 
 	public ArrayList<Comment> findAll() {
 		return (ArrayList<Comment>) this.commentRepository.findAll();
@@ -61,8 +65,8 @@ public class CommentService {
 
 	public boolean deleteById(long id) {
 		try {
-			Comment exists = this.commentRepository.getOne(id);
-
+			Comment exists = this.commentRepository.findById(id).orElse(null);
+			System.out.println("prodje1");
 			Image image = exists.getImage();
 
 			if (image != null) {
@@ -71,14 +75,18 @@ public class CommentService {
 				imageRepository.delete(image);
 
 			}
-			
+			System.out.println("prodje2");
 			CulturalOffer offer = this.culturalOfferRepository.getOfferByComment(exists.getCommentId());
-			List<Comment> comments = offer.getComments();
+			System.out.println("prodje3" + offer);
+			
+			List<Comment> comments = this.commentRepository.findCommentsForOffer(offer.getId());
 			comments.remove(exists);
 			offer.setComments(comments);
 			this.culturalOfferRepository.save(offer);
+			System.out.println("prodje4");
 
 			this.commentRepository.delete(exists);
+			System.out.println("prodje5");
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -107,7 +115,7 @@ public class CommentService {
 	}
 
 	public Comment approve(long id) {
-		Comment c = this.commentRepository.getOne(id);
+		Comment c = this.commentRepository.findById(id).orElse(null);
 		if (c != null) {
 			c.setApproved(true);
 			return this.commentRepository.save(c);
