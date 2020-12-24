@@ -1,6 +1,9 @@
 package com.ftn.kts_nvt.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -24,8 +27,9 @@ public class ImageServiceIntegrationTest {
 	 
 	 @Test
 	 public void testFindAll() {
-		 List<Image> found = imageService.findAll();
-	     assertEquals(2, found.size());
+		 List<Image> images = imageService.findAll();
+		 assertNotNull(images);
+	     assertEquals(2, images.size());
 	 }
 	 
 	 @Test
@@ -41,19 +45,16 @@ public class ImageServiceIntegrationTest {
 	 }
 	 
 	 @Test
-	 public void testCreate() throws Exception {
-		 Image image = new Image(4L, "4".getBytes());
-		 Image created = imageService.save(image);
+	 public void testCreateAndDelete() throws Exception {
+		 Image image = new Image("4".getBytes());
+		 Image saved = imageService.save(image);
 
-	     assertEquals(image, created);
-	 }
-	 
-	 @Test
-	 public void testDelete() throws Exception {
-		 imageService.deleteById(1L);
-
-	     assertEquals(2, imageService.findAll().size());
-	     assertEquals(null, imageService.findById(1L));
-	 }
-	 
+	     assertEquals(image.getId(), saved.getId());
+	     
+	     boolean ok = this.imageService.deleteById(saved.getId());
+	     Image found = this.imageService.findById(saved.getId());
+			
+	     assertTrue(ok);
+	     assertEquals(null, found);
+	 }	
 }
