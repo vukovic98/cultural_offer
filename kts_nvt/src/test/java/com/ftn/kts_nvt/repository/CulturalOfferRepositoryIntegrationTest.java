@@ -119,7 +119,7 @@ public class CulturalOfferRepositoryIntegrationTest {
 	@Test
 	public void testGetOfferByComment() {
 		long comment_id = 1; //from database
-		long comment_id_fail = 2;
+		long comment_id_fail = 999;
 		
 		CulturalOffer c = this.culturalOfferRepository.getOfferByComment(comment_id);
 		

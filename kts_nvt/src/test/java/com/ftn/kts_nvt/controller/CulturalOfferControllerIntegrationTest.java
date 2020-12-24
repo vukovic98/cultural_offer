@@ -7,8 +7,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -28,6 +25,7 @@ import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.GeoLocation;
 import com.ftn.kts_nvt.dto.CulturalOfferAddDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferDTO;
+import com.ftn.kts_nvt.dto.CulturalOfferDetailsDTO;
 import com.ftn.kts_nvt.dto.UserLoginDTO;
 import com.ftn.kts_nvt.dto.UserTokenStateDTO;
 import com.ftn.kts_nvt.repositories.GeoLocationRepository;
@@ -67,8 +65,7 @@ public class CulturalOfferControllerIntegrationTest {
 		ArrayList<CulturalOfferDTO> offers = responseEntity.getBody();
 		
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(1, offers.size());
-        assertTrue(offers.get(0).getName().equalsIgnoreCase("Exit"));
+        assertEquals(4, offers.size());
 	}
 	
 	@Test
@@ -85,14 +82,13 @@ public class CulturalOfferControllerIntegrationTest {
 	@Test
 	public void testFindByIdFail() {
 		 ResponseEntity<CulturalOfferDTO> responseEntity =
-	                restTemplate.getForEntity("/culturalOffers/2",
+	                restTemplate.getForEntity("/culturalOffers/999",
 	                        CulturalOfferDTO.class);
 		 
 		 assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
 	}
 	
 	@Test
-	@Transactional
 	public void testCreateAndDelete() {
 		login("vlado@gmail.com", "vukovic");
 		
@@ -105,34 +101,71 @@ public class CulturalOfferControllerIntegrationTest {
         
         HttpEntity<CulturalOfferAddDTO> httpEntity = new HttpEntity<>(dto, headers);
         
-        
-		int size = this.culturalOfferService.findAll().size();
 		
-		ResponseEntity<?> responseEntity =
-                restTemplate.postForEntity("/culturalOffers", httpEntity, Object.class);
+		ResponseEntity<CulturalOffer> responseEntity =
+                restTemplate.postForEntity("/culturalOffers", httpEntity, CulturalOffer.class);
 		
-		HttpStatus s = responseEntity.getStatusCode();
+		CulturalOffer created = responseEntity.getBody();
 		
-		assertEquals(HttpStatus.CREATED, s);
-		assertEquals(size + 1, this.culturalOfferService.findAll().size());
-		
-		List<CulturalOffer> created = this.culturalOfferService.findByName("C_O");
-		
+		assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
 		assertNotNull(created);
-		assertEquals(1, created.size());
 		
 		HttpEntity<Object> httpEntityDelete = new HttpEntity<Object>(headers);
 		
-		responseEntity =
-                restTemplate.exchange("/culturalOffers/"+created.get(0).getId(), HttpMethod.DELETE,
+		ResponseEntity<?> responseEntityDelete =
+                restTemplate.exchange("/culturalOffers/"+created.getId(), HttpMethod.DELETE,
                 		httpEntityDelete, Object.class);
 		
-		s = responseEntity.getStatusCode();
-		assertEquals(HttpStatus.OK, s);
-		assertEquals(size, this.culturalOfferService.findAll().size());
+		assertEquals(HttpStatus.OK, responseEntityDelete.getStatusCode());
 		
-		created = this.culturalOfferService.findByName("C_O");
-		assertEquals(0, created.size());
+		List<CulturalOffer> c = this.culturalOfferService.findByName("C_O");
+		assertEquals(0, c.size());
+	}
+	
+	@Test
+	public void testFindDetails() {
+		ResponseEntity<CulturalOfferDetailsDTO> responseEntity =
+                restTemplate.getForEntity("/culturalOffers/detail/2",
+                		CulturalOfferDetailsDTO.class);
 		
+		CulturalOfferDetailsDTO dto = responseEntity.getBody();
+		
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertEquals(2, dto.getId());
+		assertTrue("Name2".equalsIgnoreCase(dto.getName()));
+	}
+	
+	@Test
+	public void testUpdate() {
+		login("vlado@gmail.com", "vukovic");
+		GeoLocation g = this.geoRepository.findById(1L).orElse(null);
+		CulturalOfferDTO dto = new CulturalOfferDTO(0, "Offer", null, g, "Desc", 3, 0);
+		
+		HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", this.accessToken);
+        
+        HttpEntity<CulturalOfferDTO> httpEntity = new HttpEntity<>(dto, headers);
+        
+		ResponseEntity<CulturalOfferDTO> responseEntity =
+                restTemplate.exchange("/culturalOffers/1", HttpMethod.PUT,
+                        httpEntity,
+                        CulturalOfferDTO.class);
+		
+		CulturalOfferDTO changed = responseEntity.getBody();
+		
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		
+		assertTrue("Offer".equalsIgnoreCase(changed.getName()));
+		
+		dto = new CulturalOfferDTO(0, "Name1", null, g, "Description", 3, 0);
+        
+        httpEntity = new HttpEntity<>(dto, headers);
+        
+		responseEntity =
+                restTemplate.exchange("/culturalOffers/1", HttpMethod.PUT,
+                        httpEntity,
+                        CulturalOfferDTO.class);
+		
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 }

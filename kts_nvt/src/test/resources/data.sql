@@ -12,7 +12,7 @@ INSERT INTO kts_nvt_test.cultural_offer_category VALUES (1,'Manifestation');
 INSERT INTO kts_nvt_test.cultural_offer_category VALUES (2,'Institution');
 
 INSERT INTO kts_nvt_test.cultural_offer_type VALUES (1,'Festival',1);
-INSERT INTO kts_nvt_test.cultural_offer_type VALUES (2,'Type2',1);
+INSERT INTO kts_nvt_test.cultural_offer_type VALUES (5,'Type2',1);
 INSERT INTO kts_nvt_test.cultural_offer_type VALUES (3,'Type3',2);
 INSERT INTO kts_nvt_test.cultural_offer_type VALUES (4,'Type4',2);
 

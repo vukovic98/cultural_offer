@@ -8,15 +8,14 @@ import org.springframework.stereotype.Component;
 
 import com.ftn.kts_nvt.beans.Comment;
 import com.ftn.kts_nvt.beans.CulturalOffer;
+import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.dto.CommentUserDTO;
-import com.ftn.kts_nvt.repositories.CommentRepository;
 import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
+import com.ftn.kts_nvt.repositories.RegisteredUserRepository;
+import com.ftn.kts_nvt.services.RegisteredUserService;
 
 @Component
 public class CommentMapper implements MapperInterface<Comment, CommentUserDTO> {
-
-	@Autowired
-	private CulturalOfferRepository offerRepository;
 
 	@Override
 	public CommentUserDTO toDto(Comment entity) {
@@ -27,9 +26,7 @@ public class CommentMapper implements MapperInterface<Comment, CommentUserDTO> {
 		dto.setContent(entity.getContent());
 		dto.setId(entity.getCommentId());
 		dto.setImage(entity.getImage());
-		
-		CulturalOffer offer = this.offerRepository.getOfferByComment(entity.getCommentId());
-		dto.setOffer(offer.getName());
+
 		return dto;
 	}
 	
@@ -44,8 +41,14 @@ public class CommentMapper implements MapperInterface<Comment, CommentUserDTO> {
 
 	@Override
 	public Comment toEntity(CommentUserDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+		Comment c = new Comment();
+		
+		c.setContent(dto.getContent());
+		c.setImage(dto.getImage());
+		c.setApproved(true);
+		c.setCommentId(dto.getId());
+
+		return c;
 	}
 	
 }

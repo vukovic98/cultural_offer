@@ -102,7 +102,7 @@ public class Comment {
 		
 	    Comment category = (Comment) o;
 	    if (category.getCommentId() == null || commentId == null) {
-	        if(category.getCommenter().getId().equals(getCommenter().getId())){
+	        if(category.getCommenter().getId() == getCommenter().getId()){
 	            return true;
 	        }
 	        return false;

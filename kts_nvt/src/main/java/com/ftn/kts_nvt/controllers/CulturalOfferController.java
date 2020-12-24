@@ -81,9 +81,7 @@ public class CulturalOfferController {
 	
 	@GetMapping(path="/detail/{id}")
 	public ResponseEntity<CulturalOfferDetailsDTO> detailFindById(@PathVariable("id") long id) {
-		System.out.println("get by id = " + id);
 		CulturalOffer found = this.culturalOfferService.findById(id);
-		System.out.println("offer = " + found);
 		if(found != null)
 			return new ResponseEntity<>(this.mapper.toDetailsDTO(found), HttpStatus.OK);
 		else
@@ -92,12 +90,12 @@ public class CulturalOfferController {
 	
 	@PostMapping(consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<HttpStatus> createOffer(@RequestBody CulturalOfferAddDTO dto) {
+	public ResponseEntity<CulturalOffer> createOffer(@RequestBody CulturalOfferAddDTO dto) {
 		
 		CulturalOffer ok = this.culturalOfferService.save(dto);
 		
 		if(ok != null)
-			return new ResponseEntity<>(HttpStatus.CREATED);
+			return new ResponseEntity<>(ok, HttpStatus.CREATED);
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
@@ -131,7 +129,7 @@ public class CulturalOfferController {
 	
 	@PutMapping(path="/{id}", consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<HttpStatus> update(@Valid @PathVariable("id") long id, @RequestBody CulturalOfferDTO dto) {
+	public ResponseEntity<CulturalOfferDTO> update(@Valid @PathVariable("id") long id, @RequestBody CulturalOfferDTO dto) {
 		
 		
 		CulturalOffer offer = this.mapper.toEntity(dto);
@@ -139,7 +137,7 @@ public class CulturalOfferController {
 		CulturalOffer changed = this.culturalOfferService.update(offer, id);
 		
 		if(changed != null) 
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(this.mapper.toDto(changed), HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}

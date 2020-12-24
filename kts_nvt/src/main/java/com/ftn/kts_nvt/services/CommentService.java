@@ -45,13 +45,7 @@ public class CommentService {
 	}
 
 	public Comment findById(long id) {
-		Optional<Comment> foundOptional = this.commentRepository.findById(id);
-
-		if (foundOptional.isPresent()) {
-			Comment found = foundOptional.get();
-			return found;
-		} else
-			return null;
+		return this.commentRepository.findById(id).orElse(null);
 	}
 
 	public boolean delete(Comment c) {
@@ -99,7 +93,7 @@ public class CommentService {
 
 		if (oldComment.isPresent()) {
 			Comment found = oldComment.get();
-
+			
 			found.setContent(changedComment.getContent());
 			found.setImage(changedComment.getImage());
 

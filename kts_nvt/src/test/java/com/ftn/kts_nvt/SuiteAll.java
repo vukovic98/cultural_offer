@@ -5,6 +5,10 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.springframework.test.context.TestPropertySource;
 
+import com.ftn.kts_nvt.controller.CommentControllerIntegrationTest;
+import com.ftn.kts_nvt.controller.CulturalOfferControllerIntegrationTest;
+import com.ftn.kts_nvt.repository.CulturalOfferRepositoryIntegrationTest;
+
 
 @RunWith(Suite.class)
 @SuiteClasses({
@@ -16,10 +20,12 @@ import org.springframework.test.context.TestPropertySource;
 		// GradeRepositoryIntegrationTest.class,
 		// CulturalOfferTypeServiceIntegrationTest.class
 		// CulturalOfferTypeServiceIntegrationTest.class,
-		// CulturalOfferRepositoryIntegrationTest.class,
+		//CulturalOfferRepositoryIntegrationTest.class,
 		// CulturalOfferServiceIntegrationTest.class,
 		//CommentRepositoryIntegrationTest.class, 
-		//CommentServiceIntegrationTest.class
+		//CommentServiceIntegrationTest.class,
+	//CulturalOfferControllerIntegrationTest.class,
+	CommentControllerIntegrationTest.class
 })
 @TestPropertySource("classpath:test.properties")
 public class SuiteAll {
