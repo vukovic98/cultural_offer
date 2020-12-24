@@ -11,27 +11,42 @@ import com.ftn.kts_nvt.beans.Image;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-
-@NoArgsConstructor
-@AllArgsConstructor
 public class CulturalOfferDTO {
 	private long id;
-	
+
 	@NotBlank(message = "Name should not be blank!")
 	private String name;
-	
+
 	private List<Image> images;
-	
+
 	@NotBlank(message = "Location should exist!")
 	private GeoLocation location;
-	
+
 	@NotBlank(message = "You should add description!")
 	private String description;
 
 	private double avgGrade;
 
 	private double subscribersCount;
-	
+
+	public CulturalOfferDTO() {
+		super();
+	}
+
+	public CulturalOfferDTO(long id, @NotBlank(message = "Name should not be blank!") String name, List<Image> images,
+			@NotBlank(message = "Location should exist!") GeoLocation location,
+			@NotBlank(message = "You should add description!") String description, double avgGrade,
+			double subscribersCount) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.images = images;
+		this.location = location;
+		this.description = description;
+		this.avgGrade = avgGrade;
+		this.subscribersCount = subscribersCount;
+	}
+
 	public long getId() {
 		return id;
 	}

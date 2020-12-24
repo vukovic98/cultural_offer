@@ -35,13 +35,14 @@ public class CulturalOfferRepositoryIntegrationTest {
 		long typeId = 1;
 		ArrayList<CulturalOffer> offers = this.culturalOfferRepository.findByTypeId(typeId);
 		
-		assertEquals(1, offers.size());
+		assertEquals(2, offers.size());
 		assertEquals(1L, offers.get(0).getType().getId());
+		assertEquals(1L, offers.get(1).getType().getId());
 	}
 	
 	@Test
 	public void testFindByName() {
-		String name = "Exit";
+		String name = "Name1";
 		String name_fail = "Miletic";
 		
 		List<CulturalOffer> offers = this.culturalOfferRepository.findByName(name);
@@ -55,18 +56,18 @@ public class CulturalOfferRepositoryIntegrationTest {
 	
 	@Test
 	public void testFindAllPageable() {
-		Pageable pageable = PageRequest.of(0,2);
+		Pageable pageable = PageRequest.of(0,10);
         Page<CulturalOffer> offersPage = this.culturalOfferRepository.findAll(pageable);
         
-        assertEquals(1, offersPage.getNumberOfElements());
+        assertEquals(4, offersPage.getNumberOfElements());
     }
 	
 	@Test
 	public void testFiler() {
 		Page<CulturalOffer> offerPage;
-		Pageable pageable = PageRequest.of(0, 2);
+		Pageable pageable = PageRequest.of(0, 10);
 		
-		String name = "Exit";
+		String name = "Name1";
 		String name_fail = "Miletic";
 		
 		String city = "Novi Sad";
@@ -85,14 +86,14 @@ public class CulturalOfferRepositoryIntegrationTest {
 		assertEquals(0, offerPage.getNumberOfElements());
 		
 		offerPage = this.culturalOfferRepository.filter(pageable, city);
-		assertEquals(1, offerPage.getNumberOfElements());
+		assertEquals(4, offerPage.getNumberOfElements());
 		assertTrue(city.equalsIgnoreCase(offerPage.getContent().get(0).getLocation().getPlace()));
 		
 		offerPage = this.culturalOfferRepository.filter(pageable, city_fail);
 		assertEquals(0, offerPage.getNumberOfElements());
 		
 		offerPage = this.culturalOfferRepository.filter(pageable, types);
-		assertEquals(1, offerPage.getNumberOfElements());
+		assertEquals(2, offerPage.getNumberOfElements());
 		assertTrue(types.get(0).equalsIgnoreCase(offerPage.getContent().get(0).getType().getName()));
 		
 		offerPage = this.culturalOfferRepository.filter(pageable, types_fail);
@@ -104,7 +105,7 @@ public class CulturalOfferRepositoryIntegrationTest {
 		assertTrue(types.get(0).equalsIgnoreCase(offerPage.getContent().get(0).getType().getName()));
 		
 		offerPage = this.culturalOfferRepository.filter(pageable, city, types);
-		assertEquals(1, offerPage.getNumberOfElements());
+		assertEquals(2, offerPage.getNumberOfElements());
 		assertTrue(city.equalsIgnoreCase(offerPage.getContent().get(0).getLocation().getPlace()));
 		assertTrue(types.get(0).equalsIgnoreCase(offerPage.getContent().get(0).getType().getName()));
 		
@@ -118,7 +119,7 @@ public class CulturalOfferRepositoryIntegrationTest {
 	@Test
 	public void testGetOfferByComment() {
 		long comment_id = 1; //from database
-		long comment_id_fail = 2;
+		long comment_id_fail = 999;
 		
 		CulturalOffer c = this.culturalOfferRepository.getOfferByComment(comment_id);
 		

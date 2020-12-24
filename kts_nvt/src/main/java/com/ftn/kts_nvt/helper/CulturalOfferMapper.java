@@ -36,6 +36,7 @@ public class CulturalOfferMapper implements MapperInterface<CulturalOffer, Cultu
 		GradeMapper gradeMapper = new GradeMapper();
 		CulturalOfferTypeMapper typeMapper = new CulturalOfferTypeMapper();
 		CulturalOfferDetailsDTO dto = new CulturalOfferDetailsDTO();
+		
 		dto.setId(entity.getId());
 		dto.setName(entity.getName());
 		dto.setDescription(entity.getDescription());

@@ -48,7 +48,7 @@ public class CulturalOffer {
 	@JoinColumn(name = "geoLocation_id", nullable = false)
 	private GeoLocation location;
 
-	@ElementCollection
+	@ElementCollection()
 	@CollectionTable(name = "culturalOffer_comment", joinColumns = @JoinColumn(name = "culturalOffer_ID"))
 	private List<Comment> comments;
 

@@ -29,6 +29,7 @@ public interface CulturalOfferRepository extends JpaRepository<CulturalOffer, Lo
 	@Query(value = "select * from cultural_offer co inner join cultural_offer_type cot on co.cultural_offer_type_id = cot.cultural_offer_type_id where cot.name in :types", nativeQuery = true)
 	public Page<CulturalOffer> filter(Pageable pageRequest, @Param("types") ArrayList<String> types);
 	
-	@Query(value="select * from cultural_offer co inner join cultural_offer_comment coc on co.cultural_offer_id = coc.cultural_offer_id where coc.comments_comment_id = :commentId", nativeQuery = true)
+	@Query(value="select * from cultural_offer co inner join cultural_offer_comment coc on co.cultural_offer_id = coc.cultural_offer_id where coc.comments_comment_id = :commentId",
+			nativeQuery = true)
 	public CulturalOffer getOfferByComment(@Param("commentId") Long commentId);
 }
