@@ -31,7 +31,7 @@ public class PostService implements ServiceInterface<Post>{
 	}
 
 	@Override
-	public Post create(Post entity) throws Exception {
+	public Post create(Post entity){
         return postRepository.save(entity);
 	}
 

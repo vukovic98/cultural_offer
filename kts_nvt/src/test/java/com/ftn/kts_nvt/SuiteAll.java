@@ -5,11 +5,6 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.springframework.test.context.TestPropertySource;
 
-import com.ftn.kts_nvt.controller.CommentControllerIntegrationTest;
-import com.ftn.kts_nvt.controller.CulturalOfferControllerIntegrationTest;
-import com.ftn.kts_nvt.repository.CulturalOfferRepositoryIntegrationTest;
-
-
 @RunWith(Suite.class)
 @SuiteClasses({
 		// CulturalOfferServiceUnitTest.class,
@@ -24,8 +19,8 @@ import com.ftn.kts_nvt.repository.CulturalOfferRepositoryIntegrationTest;
 		// CulturalOfferServiceIntegrationTest.class,
 		//CommentRepositoryIntegrationTest.class, 
 		//CommentServiceIntegrationTest.class,
-	//CulturalOfferControllerIntegrationTest.class,
-	CommentControllerIntegrationTest.class
+	  //CulturalOfferControllerIntegrationTest.class,
+	  //CommentControllerIntegrationTest.class
 })
 @TestPropertySource("classpath:test.properties")
 public class SuiteAll {
