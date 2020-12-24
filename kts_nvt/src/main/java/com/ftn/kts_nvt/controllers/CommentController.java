@@ -26,11 +26,13 @@ import org.springframework.data.domain.Pageable;
 import com.ftn.kts_nvt.beans.Comment;
 import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.RegisteredUser;
+import com.ftn.kts_nvt.dto.CommentDTO;
 import com.ftn.kts_nvt.dto.CommentUserDTO;
 import com.ftn.kts_nvt.dto.NewCommentDTO;
 import com.ftn.kts_nvt.helper.CommentMapper;
 import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
 import com.ftn.kts_nvt.services.CommentService;
+import com.ftn.kts_nvt.services.RegisteredUserService;
 
 @RestController
 @RequestMapping("/comments")
@@ -41,6 +43,9 @@ public class CommentController {
 	
 	@Autowired
 	private CulturalOfferRepository offerRepository;
+	
+	@Autowired
+	private RegisteredUserService registeredUserService;
 
 	@Autowired
 	private CommentMapper mapper;
@@ -70,11 +75,12 @@ public class CommentController {
 
 	// GET: http://localhost:8080/comments/{id}
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<Comment> findById(@PathVariable("id") long id) {
+	public ResponseEntity<CommentDTO> findById(@PathVariable("id") long id) {
 		Comment found = this.commentService.findById(id);
-
-		if (found != null)
-			return new ResponseEntity<Comment>(found, HttpStatus.OK);
+		if (found != null) {
+			CommentDTO dto = new CommentDTO(found.getCommentId(), found.getContent(), found.getImage());
+			return new ResponseEntity<>(dto, HttpStatus.OK);
+		}
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
@@ -82,7 +88,7 @@ public class CommentController {
 	// POST: http://localhost:8080/comments -> RequestBody (DTO)
 	@PostMapping(consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<HttpStatus> create(@Valid @RequestBody NewCommentDTO commentDto) {
+	public ResponseEntity<CommentDTO> create(@Valid @RequestBody NewCommentDTO commentDto) {
 
 		//Comment newComment = this.mapper.toEntity(commentDto);
 
@@ -92,9 +98,6 @@ public class CommentController {
 
 		Comment newComment = new Comment(commentDto.getContent(), commentDto.getImage(), user);
 		CulturalOffer offer = offerRepository.getOne(commentDto.getOfferId());
-		
-
-		
 		
 		Comment ok = this.commentService.save(newComment);
 
@@ -106,7 +109,8 @@ public class CommentController {
 		}
 		
 		if (ok != null) {
-			return new ResponseEntity<>(HttpStatus.CREATED);
+			CommentDTO ret = new CommentDTO(ok.getCommentId(), ok.getContent(), ok.getImage());
+			return new ResponseEntity<>(ret, HttpStatus.CREATED);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -145,16 +149,19 @@ public class CommentController {
 	// PUT: http://localhost:8080/comments/{id} -> RequestBody (DTO)
 	@PutMapping(path = "/{id}", consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<HttpStatus> update(@PathVariable("id") long id, @RequestBody CommentUserDTO commentDto) {
+	public ResponseEntity<CommentDTO> update(@PathVariable("id") long id, @RequestBody CommentUserDTO commentDto) {
 
 		CommentMapper mapper = new CommentMapper();
 
 		Comment changedComment = mapper.toEntity(commentDto);
+		changedComment.setCommenter(this.registeredUserService.findOneByEmail(commentDto.getCommenterEmail()));
 
 		Comment newComment = this.commentService.update(changedComment, id);
 
-		if (newComment != null)
-			return new ResponseEntity<>(HttpStatus.OK);
+		if (newComment != null) {
+			CommentDTO dto = new CommentDTO(newComment.getCommentId(), newComment.getContent(), newComment.getImage());
+			return new ResponseEntity<>(dto, HttpStatus.OK);
+		}
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
@@ -176,10 +183,12 @@ public class CommentController {
 	// PUT: http://localhost:8080/comments/approve/{id} 
 	@PutMapping(path = "/approve/{id}")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<HttpStatus> approve(@PathVariable("id") long id) {
+	public ResponseEntity<CommentDTO> approve(@PathVariable("id") long id) {
 		Comment newComment = this.commentService.approve(id);
-		if (newComment != null)
-			return new ResponseEntity<>(HttpStatus.OK);
+		if (newComment != null) {
+			CommentDTO dto = new CommentDTO(newComment.getCommentId(), newComment.getContent(), newComment.getImage());
+			return new ResponseEntity<>(dto, HttpStatus.OK);
+		}
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 

@@ -112,7 +112,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 		// TokenAuthenticationFilter ce ignorisati sve ispod navedene putanje
 		web.ignoring().antMatchers(HttpMethod.POST, "/auth/login","/admin");
-		web.ignoring().antMatchers(HttpMethod.GET, "/culturalOffers/**");
+		web.ignoring().antMatchers(HttpMethod.GET, "/culturalOffers/**", "/culturalOffers/detail/**", "/comments/**");
 		web.ignoring().antMatchers(HttpMethod.GET, "/cultural-offer-types/getAll");
 		web.ignoring().antMatchers(HttpMethod.GET, "/culturalOffers/filter/**");
 		web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html",
