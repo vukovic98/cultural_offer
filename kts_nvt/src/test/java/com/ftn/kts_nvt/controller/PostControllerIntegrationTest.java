@@ -161,10 +161,10 @@ public class PostControllerIntegrationTest {
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertNotNull(updated);
-		assertTrue("Updated post".equalsIgnoreCase(updated.getTitle()));
+		assertTrue("Updated title".equalsIgnoreCase(updated.getTitle()));
 
 		//vrati na staro
-		updated.setTitle("Post1");
+		updated.setTitle("This is post5");
 		HttpEntity<PostDTO> httpEntity2 = new HttpEntity<PostDTO>(updated, headers);
 
 		ResponseEntity<PostDTO> responseEntity2 = restTemplate.exchange("/posts/"+post.getId(), HttpMethod.PUT, httpEntity2,

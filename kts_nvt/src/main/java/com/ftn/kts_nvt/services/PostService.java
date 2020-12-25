@@ -41,8 +41,8 @@ public class PostService implements ServiceInterface<Post>{
         if(existingPost == null){
             throw new Exception("Post with given id doesn't exist");
         }
+        
         existingPost.setContent(entity.getContent());
-        existingPost.setOffer(entity.getOffer());
         existingPost.setPostTime(entity.getPostTime());
         existingPost.setTitle(entity.getTitle());
         

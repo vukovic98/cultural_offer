@@ -81,14 +81,14 @@ public class PostController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<PostDTO> updatePost(@Valid @RequestBody PostDTO postDTO, @PathVariable Long id) {
-		Post post;
+		Post post = new Post(postDTO.getTitle(), postDTO.getContent(), postDTO.getPostTime());
 		try {
-			post = postService.update(postMapper.toEntity(postDTO), id);
+			post = postService.update(post, id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return new ResponseEntity<>( HttpStatus.OK);
+		return new ResponseEntity<>(this.postMapper.toDto(post), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

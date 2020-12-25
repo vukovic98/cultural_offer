@@ -19,13 +19,16 @@ import com.ftn.kts_nvt.service.ImageServiceIntegrationTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	//CulturalOfferCategoryControllerIntegrationTest.class
-	PostControllerIntegrationTest.class
-	//GeoLocationControllerIntegrationTest.class
+		CulturalOfferCategoryControllerIntegrationTest.class,
+		//PostControllerIntegrationTest.class,
+		//GeoLocationControllerIntegrationTest.class,
+	
 		// CulturalOfferServiceUnitTest.class,
 		// CommentServiceUnitTest.class,
-		//CulturalOfferTypeRepositoryIntegrationTest.class,
+	
+		// CulturalOfferTypeRepositoryIntegrationTest.class,
 		// GradeRepositoryIntegrationTest.class,
+	
 		// CulturalOfferRepositoryIntegrationTest.class,
 		// CulturalOfferServiceIntegrationTest.class,
 		// CommentRepositoryIntegrationTest.class, 
