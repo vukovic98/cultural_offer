@@ -110,11 +110,18 @@ public class CulturalOfferTypeServiceIntegrationTest {
 		CulturalOfferType type = service.findById(1L);
 		type.setName("Type1");
 		type.setCategory(categoryService.findOne(2L));
-		
 		CulturalOfferType changed = service.update(type, 1L);
-		
 		assertNotNull(changed); 
 	    assertEquals("Type1", changed.getName());
 	    assertEquals(Long.valueOf(2), changed.getCategory().getId());
+	    
+	    //rollback
+	    type.setName("Festival");
+		type.setCategory(categoryService.findOne(1L));
+		changed = service.update(type, 1L);
+		assertNotNull(changed); 
+	    assertEquals("Festival", changed.getName());
+	    assertEquals(Long.valueOf(1), changed.getCategory().getId());
+	    
 	}
 }
