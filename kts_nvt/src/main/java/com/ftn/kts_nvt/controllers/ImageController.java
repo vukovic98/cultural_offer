@@ -121,11 +121,10 @@ public class ImageController {
 
 	@PostMapping(consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<HttpStatus> create(@Valid @RequestBody Image image) {
-		//TODO provera poslate slike
+	public ResponseEntity<Image> create(@Valid @RequestBody Image image) {
 		Image created = this.imageService.save(image);
 		if (created != null)
-			return new ResponseEntity<>(HttpStatus.CREATED);
+			return new ResponseEntity<>(created, HttpStatus.CREATED);
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
@@ -160,7 +159,6 @@ public class ImageController {
 	@PutMapping(path = "/{id}", consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> update(@RequestBody Image image, @PathVariable("id") long id) {
-		//TODO provera unete slike
 		Image updatedImage = this.imageService.update(image, id);
 		if (updatedImage != null)
 			return new ResponseEntity<>(HttpStatus.OK);

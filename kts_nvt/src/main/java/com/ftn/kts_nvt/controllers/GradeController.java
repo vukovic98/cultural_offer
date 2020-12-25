@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.kts_nvt.beans.Grade;
+import com.ftn.kts_nvt.dto.CulturalOfferTypeDTO;
 import com.ftn.kts_nvt.dto.GradeDTO;
 import com.ftn.kts_nvt.helper.GradeMapper;
 import com.ftn.kts_nvt.services.GradeService;
@@ -42,7 +43,11 @@ public class GradeController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<GradeDTO>> getAll() {
 		List<Grade> grades = gradeService.findAll();
-		return new ResponseEntity<>(gradeMapper.toGradeDTOList(grades), HttpStatus.OK);
+		
+		if (!grades.isEmpty())
+			return new ResponseEntity<>(gradeMapper.toGradeDTOList(grades), HttpStatus.OK);
+		else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	/*
@@ -77,7 +82,7 @@ public class GradeController {
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
 	public ResponseEntity<List<GradeDTO>> getGradeForUser(@PathVariable Long id) {
 		List<Grade> grades = gradeService.findByUser(id);
-		if (grades == null) {
+		if (grades.size() == 0) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(gradeMapper.toGradeDTOList(grades), HttpStatus.OK);
@@ -89,7 +94,7 @@ public class GradeController {
 	@RequestMapping(value = "/offer/{id}", method = RequestMethod.GET)
 	public ResponseEntity<List<GradeDTO>> getGradeForOffer(@PathVariable Long id) {
 		List<Grade> grades = gradeService.findByOffer(id);
-		if (grades == null) {
+		if (grades.size() == 0) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(gradeMapper.toGradeDTOList(grades), HttpStatus.OK);

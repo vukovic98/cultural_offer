@@ -67,6 +67,11 @@ public class CulturalOffer {
 		super();
 	}
 
+	public CulturalOffer(Long id) {
+		super();
+		this.id = id;
+	}
+	
 	public CulturalOffer(String name, ArrayList<Image> images, String description) {
 		super();
 		this.name = name;
