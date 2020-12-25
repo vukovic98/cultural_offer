@@ -82,11 +82,10 @@ public class CulturalOfferTypeController {
 	 */
 	@PostMapping(consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<HttpStatus> create(@Valid @RequestBody CulturalOfferTypeDTO dto) {
-		CulturalOfferType type = this.mapper.toEntity(dto);
-		CulturalOfferType saved = this.culturalOfferTypeService.save(type);
+	public ResponseEntity<CulturalOfferType> create(@Valid @RequestBody CulturalOfferTypeDTO dto) {
+		CulturalOfferType saved = this.culturalOfferTypeService.save(this.mapper.toEntity(dto));
 		if (saved != null)
-			return new ResponseEntity<>(HttpStatus.CREATED);
+			return new ResponseEntity<>(saved, HttpStatus.CREATED);
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
@@ -139,12 +138,13 @@ public class CulturalOfferTypeController {
 	 */
 	@PutMapping(path = "/{id}", consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<HttpStatus> update(@Valid @PathVariable("id") long id, @RequestBody CulturalOfferTypeDTO dto) {
+	public ResponseEntity<CulturalOfferType> update(@Valid @PathVariable("id") long id, @RequestBody CulturalOfferTypeDTO dto) {
 		CulturalOfferType type = this.mapper.toEntity(dto);
 		CulturalOfferType changedType = this.culturalOfferTypeService.update(type, type.getId());
-
+		System.out.println("changed type in controller = " + changedType.getName());
+		
 		if (changedType != null)
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(changedType, HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 

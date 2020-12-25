@@ -59,7 +59,7 @@ public class GradeServiceIntegrationTest {
 	    assertEquals(Long.valueOf(1), found.getId());
 	    assertEquals(Long.valueOf(1L), found.getCulturalOffer().getId());
 	    assertEquals(Long.valueOf(1L), found.getUser().getId());
-	    assertEquals(1, found.getValue());
+	    assertEquals(5, found.getValue());
 	}
 	@Test
 	public void testFindByIdFail() {
@@ -125,8 +125,15 @@ public class GradeServiceIntegrationTest {
 	@Test 
 	public void testUpdate() throws Exception {
 		Grade grade = service.findOne(1L);
-		grade.setValue(5);
+		grade.setValue(1);
 		Grade changedGrade = service.update(grade, grade.getId());
+		assertNotNull(changedGrade);
+		assertEquals(1, changedGrade.getValue());
+		assertEquals(Long.valueOf(1), changedGrade.getId());
+		
+		//rollback
+		grade.setValue(5);
+		changedGrade = service.update(grade, grade.getId());
 		assertNotNull(changedGrade);
 		assertEquals(5, changedGrade.getValue());
 		assertEquals(Long.valueOf(1), changedGrade.getId());
