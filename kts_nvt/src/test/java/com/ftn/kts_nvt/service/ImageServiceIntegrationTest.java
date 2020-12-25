@@ -46,15 +46,27 @@ public class ImageServiceIntegrationTest {
 	 
 	 @Test
 	 public void testCreateAndDelete() throws Exception {
+		 int sizeBefore = imageService.findAll().size();
 		 Image image = new Image("4".getBytes());
 		 Image saved = imageService.save(image);
-
+		 int sizeAfter = imageService.findAll().size();
+		 assertNotNull(saved);
+		 assertEquals(sizeBefore+1, sizeAfter);
 	     assertEquals(image.getId(), saved.getId());
 	     
 	     boolean ok = this.imageService.deleteById(saved.getId());
-	     Image found = this.imageService.findById(saved.getId());
-			
 	     assertTrue(ok);
+	     int sizeAfterDelete = imageService.findAll().size();
+	     assertEquals(sizeBefore, sizeAfterDelete);
+	     Image found = this.imageService.findById(saved.getId());
 	     assertEquals(null, found);
-	 }	
+	 }
+	 
+	 @Test
+	 public void testUpdate() {
+		 Image img = imageService.findById(1L);
+		 img.setPicByte("5".getBytes());
+		 Image changedImage = imageService.update(img, img.getId());
+		 assertEquals(img.getId(), changedImage.getId());
+	 }
 }
