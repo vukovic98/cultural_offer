@@ -147,7 +147,7 @@ public class CulturalOfferController {
 		public ResponseEntity<Page<CulturalOfferDTO>> filter(@PathVariable int pageNum, @RequestParam("expression") String expression, @RequestParam("types") ArrayList<String> types) {
 			System.out.println(types);
 			
-			Pageable pageRequest = PageRequest.of(pageNum-1, 10);
+			Pageable pageRequest = PageRequest.of(pageNum-1, 8);
 			String exp = expression.toLowerCase();
 		
 			Page<CulturalOffer> page = this.culturalOfferService.filter(pageRequest,exp,types);

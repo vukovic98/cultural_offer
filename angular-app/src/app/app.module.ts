@@ -43,6 +43,9 @@ import { CommentsToBeApprovedListComponent } from './components/comments-to-be-a
 import {CommentsToBeApprovedService} from "./services/comments-to-be-approved.service";
 import {MatListModule} from "@angular/material/list";
 import {MatExpansionModule} from "@angular/material/expansion";
+import { PostComponent } from './components/post/post.component';
+import {MatCardModule} from '@angular/material/card';
+import { CommentListComponent } from './components/comment-list/comment-list.component';
 
 @NgModule({
   declarations: [
@@ -65,27 +68,30 @@ import {MatExpansionModule} from "@angular/material/expansion";
   ChangePasswordComponent,
 AddCategoryComponent,
  CommentToBeApprovedComponent,
-  CommentsToBeApprovedListComponent
+  CommentsToBeApprovedListComponent,
+  PostComponent,
+  CommentListComponent
 ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatIconModule,
-    MatSelectModule,
-    MatSlideToggleModule,
-    MatButtonModule,
-    MatDialogModule,
-    CommonModule,
-    NgSelectModule,
-    
-    MatMenuModule,
-    MatListModule,
-    MatExpansionModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatIconModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatButtonModule,
+        MatDialogModule,
+        CommonModule,
+        NgSelectModule,
+
+        MatMenuModule,
+        MatListModule,
+        MatExpansionModule,
+        MatCardModule
+    ],
   providers: [
     AuthService,
     CulturalOfferService,

@@ -27,7 +27,6 @@ export class OfferDetailsComponent implements OnInit {
     console.log(this.id);
     this.service.getOffer(this.id).subscribe((data: OfferDetailsModel) => {
       this.offer = data;
-      this.offer.images = [];
       console.log(this.offer);
     }, (error: any) => {
       console.log(error);

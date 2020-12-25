@@ -1,66 +1,103 @@
-<div class="row col-md-12">
-  <div class="col-md-1"></div>
-  <div class="jumbotron col-md-10 ml-auto mr-auto bg-light shadow mt-2 float-left pt-3">
+<div class="row">
+  <div class="col-md-12 pl-0 pr-0">
+    <app-navigation-bar></app-navigation-bar>
+  </div>
+  <div class="jumbotron col-md-10 ml-auto mr-auto bg-light shadow mt-5 pt-3">
     <div *ngIf="offer">
-      <div>{{offer.name}}</div>
-      <div>{{offer.description}}</div>
+<!--      <div>{{offer.name}}</div>-->
+<!--      <div>{{offer.description}}</div>-->
+<!--      <div class="row">-->
+<!--        <div class="col-sm-12">-->
+<!--          <ul class="list-inline rating-list" *ngFor="let star of stars" style="display: inline-block">-->
+<!--            <li (click)="countStar(star)" [ngClass]="{'selected': (star <= selectedValue)}">-->
+<!--              <i class="fa fa-star"></i>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="row">
-        <div class="col-sm-12">
-          <ul class="list-inline rating-list" *ngFor="let star of stars" style="display: inline-block">
-            <li (click)="countStar(star)" [ngClass]="{'selected': (star <= selectedValue)}">
-              <i class="fa fa-star"></i>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="card">
-        <mat-icon>star</mat-icon>{{offer.avgGrade}}
-      </div>
-      <div class="card">
-        <mat-icon>people</mat-icon>{{offer.subscribersCount}}
-      </div>
-      <div class="card">
-        <mat-icon>pages</mat-icon>{{offer.postsCount}}
-      </div>
-      <div class="card">
-        <mat-icon>comment</mat-icon>{{offer.commentsCount}}
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h2 class="card-title">Type</h2>
-          <p class="card-text">{{offer.type.name}}</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h2 class="card-title">Category</h2>
-          <p class="card-text">{{offer.type.categoryName}}</p>
-        </div>
-      </div>
-      <div *ngIf="offer.posts.length == 0; else displayPosts">
-        <div class="card">
-          <div class="card-body">
-            <h2 class="card-title">No posts</h2>
-          </div>
-        </div>
-      </div>
-      <ng-template #displayPosts>
-        <div *ngFor='let post of offer.posts' style="margin: 10px;">
-          <div class="card">
-            <div class="card-body">
-              <h2 class="card-title">{{post.title}}</h2>
-              <p class="card-text">{{post.content}}</p>
+        <div class="col-md-4">
+
+
+
+
+          <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img *ngIf="offer.images.length > 0" [src]="'data:image/png;base64,'+offer.images[0].picByte" [alt]="offer.name"/>
+                <img *ngIf="offer.images.length === 0" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg" [alt]="offer.name">
+              </div>
+              <div class="carousel-item" *ngFor="let i of offer.images.slice(1, offer.images.length-1)">
+                <img class="d-block w-100" src="..." alt="Second slide">
+              </div>
             </div>
+            <a *ngIf="offer.images.length > 1" class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"><</span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a *ngIf="offer.images.length > 1" class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+              <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
           </div>
+
+
+
+
+
+
+
         </div>
-      </ng-template>
-      <div *ngIf="offer.comments.length == 0">
-        <div class="card">
-          <div class="card-body">
-            <h2 class="card-title">No comments</h2>
+        <div class="col-md-8">
+          <div class="col-md-12 pl-0 mb-0">
+            <h1 class="mb-0"><div class="badge badge-light" title="Average grade">
+              <mat-icon class="float-left mr-3">star</mat-icon> <p class="pt-1">{{offer.avgGrade}}</p>
+            </div></h1>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="col-md-12 pl-0 mb-0">
+            <h1 class="mb-0"><div class="badge badge-light" title="Number of subscribers">
+              <mat-icon class="float-left mr-3">people</mat-icon> <p class="pt-1">{{offer.subscribersCount}}</p>
+            </div></h1>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="col-md-12 pl-0 mb-0">
+            <h1 class="mb-0"><div class="badge badge-light" title="Number of posts">
+              <mat-icon class="float-left mr-3">pages</mat-icon> <p class="pt-1">{{offer.postsCount}}</p>
+            </div></h1>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="col-md-12 pl-0 mb-0">
+            <h1 class="mb-0"><div class="badge badge-light" title="Number of comments">
+              <mat-icon class="float-left mr-3">comment</mat-icon> <p class="pt-1">{{offer.commentsCount}}</p>
+            </div></h1>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="col-md-12 pl-0 mb-0">
+            <h1 class="mb-0"><div class="badge badge-light" title="Cultural Offer Category">
+              <mat-icon class="float-left mr-3">spa</mat-icon><p class="pt-1">{{offer.type.categoryName}}</p>
+            </div></h1>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="col-md-12 pl-0 mb-0">
+            <h1 class="mb-0"><div class="badge badge-light" title="Cultural Offer Type">
+              <mat-icon class="float-left mr-3">location_city</mat-icon><p class="pt-1">{{offer.type.name}}</p>
+            </div></h1>
           </div>
         </div>
       </div>
+
+      <div class="mt-3" *ngIf="offer.posts.length > 0">
+        <app-post
+          *ngFor="let post of offer.posts"
+          [post]="post"
+        ></app-post>
+      </div>
+
+      <app-comment-list
+        [comments]="offer.comments"
+      >
+      </app-comment-list>
     </div>
   </div>
 </div>
