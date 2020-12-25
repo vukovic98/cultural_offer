@@ -66,7 +66,7 @@ public class GradeControllerIntegrationTest {
 	
 	@Test
 	public void testFindAll() {
-		login("a2@a", "123456789");		//ROLE_USER
+		login("a2@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -92,7 +92,7 @@ public class GradeControllerIntegrationTest {
                 						GradeDTO.class);
 		assertEquals(HttpStatus.UNAUTHORIZED, responseEntity.getStatusCode());
 
-		login("a2@a", "123456789");		//ROLE_USER
+		login("a2@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -116,7 +116,7 @@ public class GradeControllerIntegrationTest {
 	
 	@Test
 	public void testGetGradeForUser() {
-		login("a2@a", "123456789");		//ROLE_USER
+		login("a2@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -138,7 +138,7 @@ public class GradeControllerIntegrationTest {
 	
 	@Test
 	public void testGetGradeForOffer() {
-		login("a2@a", "123456789");		//ROLE_USER
+		login("a2@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -161,7 +161,7 @@ public class GradeControllerIntegrationTest {
 	@Test
 	public void testCreateAndDelete() {
 		int sizeBefore = service.findAll().size();
-		login("a2@a", "123456789");		//ROLE_USER
+		login("a2@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		
@@ -204,7 +204,7 @@ public class GradeControllerIntegrationTest {
 	
 	@Test
 	public void testUpdate() {
-		login("a2@a", "123456789");		//ROLE_USER
+		login("a2@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 	    
