@@ -194,7 +194,7 @@ public class CulturalOfferTypeControllerIntegrationTest {
 	 
 	 @Test
 	 public void testDeleteFailRole() {
-		 login("a2@a", "123456789");
+		 login("a2@a", "vukovic");
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", this.accessToken);
 	     
