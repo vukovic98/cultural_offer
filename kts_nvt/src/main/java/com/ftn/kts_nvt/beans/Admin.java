@@ -24,6 +24,12 @@ public class Admin extends User {
 		this.culturalOffers = culturalOffers;
 	}
 
+	
+	
+	public Admin(String firstName, String lastName, String email, String password, List<CulturalOffer> culturalOffers) {
+		super(firstName, lastName, email, password);
+		this.culturalOffers = culturalOffers;
+	}
 	public List<CulturalOffer> getCulturalOffers() {
 		return culturalOffers;
 	}
