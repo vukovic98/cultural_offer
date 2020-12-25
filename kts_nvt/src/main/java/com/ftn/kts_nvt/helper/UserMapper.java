@@ -35,8 +35,9 @@ public class UserMapper implements MapperInterface<User, UserDTO> {
         return userDTOS;
     }
     
-    public List<UserDTO> toUserDTORegUserList(List<RegisteredUser> users){
-        List<UserDTO> userDTOS = new ArrayList<>();
+    public ArrayList<UserDTO> toUserDTORegUserList(List<RegisteredUser> users){
+    	
+    	ArrayList<UserDTO> userDTOS = new ArrayList<>();
         for (RegisteredUser user: users) {
             userDTOS.add(toDto(user));
         }
