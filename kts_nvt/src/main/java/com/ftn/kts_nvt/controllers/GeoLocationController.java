@@ -66,12 +66,10 @@ public class GeoLocationController {
 
 	@PostMapping(consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<HttpStatus> create(@Valid @RequestBody GeoLocation geoLocation) {
-		//TODO provera poslate lokacije
+	public ResponseEntity<GeoLocation> create(@Valid @RequestBody GeoLocation geoLocation) {
 		GeoLocation created = this.geoLocationService.save(geoLocation);
 		if (created != null)
-			// TODO proveriti da li su ispravni podaci poslati
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(created,HttpStatus.CREATED);
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
@@ -100,11 +98,11 @@ public class GeoLocationController {
 
 	@PutMapping(path = "/{id}", consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<HttpStatus> update(@PathVariable("id") long id, @RequestBody GeoLocation geoLocation) {
+	public ResponseEntity<GeoLocation> update(@PathVariable("id") long id, @RequestBody GeoLocation geoLocation) {
 		//TODO provera unete lokacije
 		GeoLocation updatedGeoLocation = this.geoLocationService.update(geoLocation, id);
 		if (updatedGeoLocation != null)
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(updatedGeoLocation, HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}

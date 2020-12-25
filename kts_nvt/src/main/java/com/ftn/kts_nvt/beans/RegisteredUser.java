@@ -33,7 +33,9 @@ public class RegisteredUser extends User {
 
 	}
 	
-	
+	public RegisteredUser(Long id) {
+		this.setId(id);
+	}
 
 	public RegisteredUser(String firstName, String lastName, String email, String password, List<Comment> comments,
 			List<CulturalOffer> culturalOffers, boolean verified) {
