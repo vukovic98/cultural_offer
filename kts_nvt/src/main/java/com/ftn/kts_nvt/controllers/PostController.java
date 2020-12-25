@@ -34,81 +34,80 @@ public class PostController {
 
 	@Autowired
 	private PostService postService;
-	
+
 	@Autowired
 	private PostMapper postMapper;
-	
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<PostDTO>> getAllPosts() {
-        List<Post> posts = postService.findAll();
-        return new ResponseEntity<>(toPostDTOList(posts), HttpStatus.OK);
-    }
-    
-    @GetMapping(path="/by-page/{pageNum}")
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<PostDTO>> getAllPosts() {
+		List<Post> posts = postService.findAll();
+		return new ResponseEntity<>(toPostDTOList(posts), HttpStatus.OK);
+	}
+
+	@GetMapping(path = "/by-page/{pageNum}")
 	public ResponseEntity<Page<PostDTO>> findAll(@PathVariable int pageNum) {
-		Pageable pageRequest = PageRequest.of(pageNum-1, 10);
-	
+		Pageable pageRequest = PageRequest.of(pageNum - 1, 10);
+
 		Page<Post> page = this.postService.findAll(pageRequest);
-		
+
 		List<PostDTO> postDTOS = this.postMapper.listToDto(page.toList());
 		Page<PostDTO> pagePostDTOS = new PageImpl<>(postDTOS, page.getPageable(), page.getTotalElements());
 
 		return new ResponseEntity<>(pagePostDTOS, HttpStatus.OK);
 	}
-    
-    @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    public ResponseEntity<PostDTO> getPost(@PathVariable Long id){
-        Post post = postService.findOne(id);
-        if(post == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(postMapper.toDto(post), HttpStatus.OK);
-    }
-    
-    @RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<PostDTO> createPost(@Valid @RequestBody PostDTO postDTO){
-        Post post;
-        try {
-        	post = postService.create(postMapper.toEntity(postDTO));
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
 
-        return new ResponseEntity<>(postMapper.toDto(post), HttpStatus.CREATED);
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<PostDTO> getPost(@PathVariable Long id) {
+		Post post = postService.findOne(id);
+		if (post == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(postMapper.toDto(post), HttpStatus.OK);
+	}
 
-    @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<PostDTO> updatePost(@Valid @RequestBody PostDTO postDTO, @PathVariable Long id){
-        Post post;
-        try {
-        	post = postService.update(postMapper.toEntity(postDTO), id);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<PostDTO> createPost(@Valid @RequestBody PostDTO postDTO) {
+		Post post;
+		try {
+			post = postService.create(postMapper.toEntity(postDTO));
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 
-        return new ResponseEntity<>(postMapper.toDto(post), HttpStatus.OK);
-    }
+		return new ResponseEntity<>(postMapper.toDto(post), HttpStatus.CREATED);
+	}
 
-    @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Void> deletePost(@PathVariable Long id){
-        try {
-            postService.delete(id);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<PostDTO> updatePost(@Valid @RequestBody PostDTO postDTO, @PathVariable Long id) {
+		Post post;
+		try {
+			post = postService.update(postMapper.toEntity(postDTO), id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-    
-    private List<PostDTO> toPostDTOList(List<Post> posts){
-        List<PostDTO> postDTOS = new ArrayList<>();
-        for (Post post: posts) {
-        	postDTOS .add(postMapper.toDto(post));
-        }
-        return postDTOS ;
-    }
+		return new ResponseEntity<>( HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<Void> deletePost(@PathVariable Long id) {
+		try {
+			postService.delete(id);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	private List<PostDTO> toPostDTOList(List<Post> posts) {
+		List<PostDTO> postDTOS = new ArrayList<>();
+		for (Post post : posts) {
+			postDTOS.add(postMapper.toDto(post));
+		}
+		return postDTOS;
+	}
 }
