@@ -5,47 +5,81 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.springframework.test.context.TestPropertySource;
 
+import com.ftn.kts_nvt.controller.CommentControllerIntegrationTest;
 import com.ftn.kts_nvt.controller.CulturalOfferCategoryControllerIntegrationTest;
+import com.ftn.kts_nvt.controller.CulturalOfferControllerIntegrationTest;
 import com.ftn.kts_nvt.controller.CulturalOfferTypeControllerIntegrationTest;
 import com.ftn.kts_nvt.controller.GeoLocationControllerIntegrationTest;
 import com.ftn.kts_nvt.controller.GradeControllerIntegrationTest;
 import com.ftn.kts_nvt.controller.ImageControllerIntegrationTest;
 import com.ftn.kts_nvt.controller.PostControllerIntegrationTest;
+import com.ftn.kts_nvt.repository.CommentRepositoryIntegrationTest;
+import com.ftn.kts_nvt.repository.CulturalOfferCategoryRepositoryIntegrationTest;
+import com.ftn.kts_nvt.repository.CulturalOfferRepositoryIntegrationTest;
 import com.ftn.kts_nvt.repository.CulturalOfferTypeRepositoryIntegrationTest;
+import com.ftn.kts_nvt.repository.GeoLocationRepositoryIntegrationTest;
 import com.ftn.kts_nvt.repository.GradeRepositoryIntegrationTest;
+import com.ftn.kts_nvt.repository.PostRepositoryIntegrationTest;
+import com.ftn.kts_nvt.service.CommentServiceIntegrationTest;
+import com.ftn.kts_nvt.service.CommentServiceUnitTest;
+import com.ftn.kts_nvt.service.CulturalOfferCategoryServiceIntegrationTest;
+import com.ftn.kts_nvt.service.CulturalOfferCategoryServiceUnitTest;
+import com.ftn.kts_nvt.service.CulturalOfferServiceIntegrationTest;
+import com.ftn.kts_nvt.service.CulturalOfferServiceUnitTest;
 import com.ftn.kts_nvt.service.CulturalOfferTypeServiceIntegrationTest;
+import com.ftn.kts_nvt.service.GeoLocationServiceIntegrationTest;
+import com.ftn.kts_nvt.service.GeoLocationServiceUnitTest;
 import com.ftn.kts_nvt.service.GradeServiceIntegrationTest;
+import com.ftn.kts_nvt.service.GradeServiceUnitTest;
 import com.ftn.kts_nvt.service.ImageServiceIntegrationTest;
+import com.ftn.kts_nvt.service.ImageServiceUnitTest;
+import com.ftn.kts_nvt.service.PostServiceIntegrationTest;
+import com.ftn.kts_nvt.service.PostServiceUnitTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({
+	//controller I
 		CulturalOfferCategoryControllerIntegrationTest.class,
-		//PostControllerIntegrationTest.class,
-		//GeoLocationControllerIntegrationTest.class,
-	
-		// CulturalOfferServiceUnitTest.class,
-		// CommentServiceUnitTest.class,
-	
-		// CulturalOfferTypeRepositoryIntegrationTest.class,
-		// GradeRepositoryIntegrationTest.class,
-	
-		// CulturalOfferRepositoryIntegrationTest.class,
-		// CulturalOfferServiceIntegrationTest.class,
-		// CommentRepositoryIntegrationTest.class, 
-		// CommentServiceIntegrationTest.class,
-	  	// CulturalOfferControllerIntegrationTest.class,
-	  	// CommentControllerIntegrationTest.class,
+		PostControllerIntegrationTest.class,
+		GeoLocationControllerIntegrationTest.class,
+	    CommentControllerIntegrationTest.class,
+	    CulturalOfferControllerIntegrationTest.class,
+	    GradeControllerIntegrationTest.class,
+	    ImageControllerIntegrationTest.class,
+	    CulturalOfferTypeControllerIntegrationTest.class,
+	    
+	    //service U
+	    
+		 CulturalOfferServiceUnitTest.class,
+		 CommentServiceUnitTest.class,
+	     CulturalOfferCategoryServiceUnitTest.class,
+	     GeoLocationServiceUnitTest.class,
+	     ImageServiceUnitTest.class,
+	     PostServiceUnitTest.class,
+	     GradeServiceUnitTest.class,
+	     
+	     //service I
+	     CommentServiceIntegrationTest.class,
+	     CulturalOfferServiceIntegrationTest.class,
+	     CulturalOfferCategoryServiceIntegrationTest.class,
+	     CulturalOfferTypeServiceIntegrationTest.class,
+	     GeoLocationServiceIntegrationTest.class,
+	     GradeServiceIntegrationTest.class,
+	     ImageServiceIntegrationTest.class,
+	     PostServiceIntegrationTest.class,
+	     
+	     //repository I
+	     
+		 
+		 CulturalOfferCategoryRepositoryIntegrationTest.class,
+		 CulturalOfferTypeRepositoryIntegrationTest.class,
+		 GeoLocationRepositoryIntegrationTest.class,
+		 PostRepositoryIntegrationTest.class,
+		 GradeRepositoryIntegrationTest.class,
+		 CulturalOfferRepositoryIntegrationTest.class,
+		 CommentRepositoryIntegrationTest.class, 
+		GradeRepositoryIntegrationTest.class,
 
-		//GradeRepositoryIntegrationTest.class,
-		//CulturalOfferTypeRepositoryIntegrationTest.class,
-
-		//GradeServiceIntegrationTest.class,
-		//CulturalOfferTypeServiceIntegrationTest.class,
-		//ImageServiceIntegrationTest.class,
-	
-		//CulturalOfferTypeControllerIntegrationTest.class,
-		//ImageControllerIntegrationTest.class,
-		//GradeControllerIntegrationTest.class
 })
 @TestPropertySource("classpath:test.properties")
 public class SuiteAll {

@@ -28,7 +28,7 @@ import org.springframework.data.domain.Pageable;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("classpath:test.properties")
-public class CulturalOfferCategoryIntegrationTest {
+public class CulturalOfferCategoryServiceIntegrationTest {
 
 	@Autowired
 	private CulturalOfferCategoryService service;
