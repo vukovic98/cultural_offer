@@ -85,10 +85,8 @@ public class AuthenticationController {
 			
 			// Kreiraj token za tog korisnika
 			User user = (User) authentication.getPrincipal();
-	
 			String jwt = tokenUtils.generateToken(user.getEmail()); // prijavljujemo se na sistem sa email adresom
 			int expiresIn = tokenUtils.getExpiredIn();
-			
 	
 			// Vrati token kao odgovor na uspesnu autentifikaciju
 			return ResponseEntity.ok(new UserTokenStateDTO(jwt, expiresIn));
@@ -181,7 +179,7 @@ public class AuthenticationController {
 		return ResponseEntity.accepted().body(result);
 	}
 
-	static class PasswordChanger {
+	public static class PasswordChanger {
 		public String oldPassword;
 		public String newPassword;
 	}
