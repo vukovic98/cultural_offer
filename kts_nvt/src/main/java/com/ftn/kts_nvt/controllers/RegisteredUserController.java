@@ -34,6 +34,7 @@ import com.ftn.kts_nvt.dto.CulturalOfferDTO;
 import com.ftn.kts_nvt.dto.UserDTO;
 import com.ftn.kts_nvt.dto.UserNameDto;
 import com.ftn.kts_nvt.helper.CulturalOfferMapper;
+import com.ftn.kts_nvt.helper.RegisteredUserMapper;
 import com.ftn.kts_nvt.helper.UserMapper;
 import com.ftn.kts_nvt.services.RegisteredUserService;
 
@@ -48,13 +49,20 @@ public class RegisteredUserController {
 	private UserMapper userMapper;
 	
 	@Autowired
+	private RegisteredUserMapper regUserMapper;
+	
+	@Autowired
 	private CulturalOfferMapper offerMapper;
 
 	@GetMapping()
-	public ResponseEntity<List<UserDTO>> getAllRegisteredUsers() {
+	public ResponseEntity<ArrayList<UserDTO>> getAllRegisteredUsers() {
 		List<RegisteredUser> users = registeredUserService.findAll();
 
-		return new ResponseEntity<>(userMapper.toUserDTORegUserList(users), HttpStatus.OK);
+		ArrayList<UserDTO> dtos = userMapper.toUserDTORegUserList(users);
+		if(!users.isEmpty())
+			return new ResponseEntity<>(dtos, HttpStatus.OK);
+		else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
     @GetMapping(value = "/by-page/{pageNum}")
@@ -136,7 +144,7 @@ public class RegisteredUserController {
         return new ResponseEntity<>(userMapper.toDto(user), HttpStatus.OK);
     }
     
-    @RequestMapping(value="byEmail/{email}", method=RequestMethod.GET)
+    @RequestMapping(value="/byEmail/{email}", method=RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email){
         User user = registeredUserService.findOneByEmail(email);
@@ -151,7 +159,7 @@ public class RegisteredUserController {
     public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO){
         RegisteredUser user;
         try {
-             user = registeredUserService.create((RegisteredUser)userMapper.toEntity(userDTO));
+             user = registeredUserService.create(regUserMapper.toEntity(userDTO));
         } catch (Exception e) {
             return new ResponseEntity(e,HttpStatus.BAD_REQUEST);
         }

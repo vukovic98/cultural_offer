@@ -1,6 +1,7 @@
 package com.ftn.kts_nvt.services;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser> {
 	private CulturalOfferRepository offerRepository;
 
 	@Override
-	public List<RegisteredUser> findAll() {
-		return registeredUserRepository.findAll();
+	public ArrayList<RegisteredUser> findAll() {
+		return (ArrayList<RegisteredUser>) registeredUserRepository.findAll();
 	}
 	
 	public Page<RegisteredUser> findAll(Pageable pageable){

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.kts_nvt.beans.Admin;
+import com.ftn.kts_nvt.beans.User;
 import com.ftn.kts_nvt.dto.UserDTO;
+import com.ftn.kts_nvt.helper.AdminMapper;
 import com.ftn.kts_nvt.helper.UserMapper;
 import com.ftn.kts_nvt.services.AdminService;
 
@@ -34,6 +37,9 @@ public class AdminController {
 	
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private AdminMapper adminMapper;
 	
 	@GetMapping()
 	public ResponseEntity<List<UserDTO>> getAllRegisteredUsers() {
@@ -66,12 +72,24 @@ public class AdminController {
         return new ResponseEntity<>(userMapper.toDto(user), HttpStatus.OK);
     }
     
+    @RequestMapping(value="/byEmail/{email}", method=RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email){
+        User user = adminService.findOneByEmail(email);
+        if(user == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(userMapper.toDto(user), HttpStatus.OK);
+    }
+    
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO){
         Admin user;
         try {
-             user = adminService.create((Admin)userMapper.toEntity(userDTO));
+             user = adminService.create(adminMapper.toEntity(userDTO));
         } catch (Exception e) {
+        	
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

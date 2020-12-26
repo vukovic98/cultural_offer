@@ -36,6 +36,10 @@ public class AdminService implements ServiceInterface<Admin>{
 		return adminRepository.findById(id).orElse(null);
 
 	}
+	
+	public Admin findOneByEmail(String email) {
+		return adminRepository.findByEmail(email);
+	}
 
 	@Override
 	public Admin create(Admin entity) throws Exception {

@@ -1,6 +1,7 @@
 package com.ftn.kts_nvt.beans;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "registered_user")
 public class RegisteredUser extends User {
+
 
 	/**
 	 * 
@@ -30,7 +32,7 @@ public class RegisteredUser extends User {
 	private boolean verified = false;
 
 	public RegisteredUser() {
-
+		super();
 	}
 	
 	public RegisteredUser(Long id) {
@@ -78,4 +80,23 @@ public class RegisteredUser extends User {
 		this.verified = verified;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null || getClass() != obj.getClass())
+			return false;
+
+		RegisteredUser other = (RegisteredUser) obj;
+		
+		if(other.getId() == null || this.getId() == null) {
+			if(other.getEmail().equals(getEmail())) {
+				return true;
+			}
+			return false;
+		}
+		return Objects.equals(this.getId(), other.getId());
+		
+	}
+	
 }

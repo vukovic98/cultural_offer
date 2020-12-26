@@ -23,6 +23,25 @@ insert into  kts_nvt_test.registered_user values (2,'a2@a','FName2','LName2','12
 insert into  kts_nvt_test.registered_user values (3,'a3@a','FName3','LName3','123456789', true);
 insert into  kts_nvt_test.registered_user values (4,'a4@a','FName4','LName4','123456789', true);
 
+insert into  kts_nvt_test.admin values (5,'ad@ad','Dusan','Madzarevic','madzarevic');
+insert into  kts_nvt_test.admin values (6,'ad2@ad','FName2','LName2','123456789');
+insert into  kts_nvt_test.admin values (7,'ad3@ad','FName3','LName3','123456789');
+insert into  kts_nvt_test.admin values (8,'ad4@ad','FName4','LName4','123456789');
+
+insert into kts_nvt_test.authority values (1,'ROLE_USER');
+insert into kts_nvt_test.authority values (2,'ROLE_ADMIN');
+
+INSERT INTO kts_nvt_test.user_authories VALUES (1,1);
+INSERT INTO kts_nvt_test.user_authories VALUES (2,1);
+INSERT INTO kts_nvt_test.user_authories VALUES (3,1);
+INSERT INTO kts_nvt_test.user_authories VALUES (4,1);
+
+INSERT INTO kts_nvt_test.user_authority VALUES (5,2);
+INSERT INTO kts_nvt_test.user_authority VALUES (6,2);
+INSERT INTO kts_nvt_test.user_authority VALUES (7,2);
+INSERT INTO kts_nvt_test.user_authority VALUES (8,2);
+
+
 insert into kts_nvt_test.image values (1, 10);
 insert into kts_nvt_test.image values (2, 10);
 
