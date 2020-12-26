@@ -11,9 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.beans.User;
-import com.ftn.kts_nvt.repositories.RegisteredUserRepository;
 import com.ftn.kts_nvt.repositories.UserRepository;
 
 @Service

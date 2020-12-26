@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.kts_nvt.beans.CulturalOffer;
+import com.ftn.kts_nvt.beans.Image;
 import com.ftn.kts_nvt.dto.CulturalOfferAddDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferDetailsDTO;
@@ -90,12 +91,14 @@ public class CulturalOfferController {
 	
 	@PostMapping(consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<CulturalOffer> createOffer(@RequestBody CulturalOfferAddDTO dto) {
+	public ResponseEntity<CulturalOfferDTO> createOffer(@RequestBody CulturalOfferAddDTO dto) {
 		
 		CulturalOffer ok = this.culturalOfferService.save(dto);
-		
-		if(ok != null)
-			return new ResponseEntity<>(ok, HttpStatus.CREATED);
+
+		if(ok != null) {
+			CulturalOfferDTO created = this.mapper.toDto(ok);
+			return new ResponseEntity<>(created, HttpStatus.CREATED);
+		}
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}

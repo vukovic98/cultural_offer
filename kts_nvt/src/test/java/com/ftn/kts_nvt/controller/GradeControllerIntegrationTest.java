@@ -3,7 +3,6 @@ package com.ftn.kts_nvt.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -18,18 +17,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.ftn.kts_nvt.beans.CulturalOffer;
-import com.ftn.kts_nvt.beans.CulturalOfferType;
 import com.ftn.kts_nvt.beans.Grade;
 import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.dto.CulturalOfferDTO;
-import com.ftn.kts_nvt.dto.CulturalOfferTypeDTO;
 import com.ftn.kts_nvt.dto.GradeDTO;
+import com.ftn.kts_nvt.dto.UserDTO;
 import com.ftn.kts_nvt.dto.UserLoginDTO;
 import com.ftn.kts_nvt.dto.UserTokenStateDTO;
 import com.ftn.kts_nvt.services.CulturalOfferService;
@@ -66,7 +61,7 @@ public class GradeControllerIntegrationTest {
 	
 	@Test
 	public void testFindAll() {
-		login("a2@a", "vukovic");		//ROLE_USER
+		login("a@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -92,7 +87,7 @@ public class GradeControllerIntegrationTest {
                 						GradeDTO.class);
 		assertEquals(HttpStatus.UNAUTHORIZED, responseEntity.getStatusCode());
 
-		login("a2@a", "vukovic");		//ROLE_USER
+		login("a@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -116,7 +111,7 @@ public class GradeControllerIntegrationTest {
 	
 	@Test
 	public void testGetGradeForUser() {
-		login("a2@a", "vukovic");		//ROLE_USER
+		login("a@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -138,7 +133,7 @@ public class GradeControllerIntegrationTest {
 	
 	@Test
 	public void testGetGradeForOffer() {
-		login("a2@a", "vukovic");		//ROLE_USER
+		login("a@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -161,17 +156,18 @@ public class GradeControllerIntegrationTest {
 	@Test
 	public void testCreateAndDelete() {
 		int sizeBefore = service.findAll().size();
-		login("a2@a", "vukovic");		//ROLE_USER
+		login("a@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		
-		RegisteredUser user = new RegisteredUser();
-		user.setId(4L);
+		RegisteredUser user = this.userService.findOne(4L);
+		
 		CulturalOfferDTO offer = new CulturalOfferDTO();
 		offer.setId(1L);
 		GradeDTO grade = new GradeDTO();
 		grade.setValue(5);
-		grade.setUser(user);
+		grade.setUser(new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),
+				user.getPassword()));
 		grade.setCulturalOffer(offer);
 		
 		HttpEntity<GradeDTO> httpEntity = new HttpEntity<>(grade, headers);
@@ -204,18 +200,19 @@ public class GradeControllerIntegrationTest {
 	
 	@Test
 	public void testUpdate() {
-		login("a2@a", "vukovic");		//ROLE_USER
+		login("a@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 	    
-	    RegisteredUser user = new RegisteredUser();
-		user.setId(1L);
+	    RegisteredUser user = this.userService.findOne(1L);
+	
 		CulturalOfferDTO offer = new CulturalOfferDTO();
 		offer.setId(1L);
 		GradeDTO grade = new GradeDTO();
 		grade.setId(1L);
 		grade.setValue(1);
-		grade.setUser(user);
+		grade.setUser(new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),
+				user.getPassword()));
 		grade.setCulturalOffer(offer);
 		
 		HttpEntity<GradeDTO> httpEntity = new HttpEntity<>(grade, headers);

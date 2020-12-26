@@ -6,8 +6,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,10 +42,10 @@ public class CulturalOfferTypeRepositoryIntegrationTest {
 	
 	@Test
 	public void testFindByName() {
-		CulturalOfferType found = repository.findByName("Type2");
+		CulturalOfferType found = repository.findByName("Type1");
 		assertNotNull(found);
-		assertEquals("Type2", found.getName());
-		assertEquals(Long.valueOf(2), found.getId());
+		assertEquals("Type1", found.getName());
+		assertEquals(Long.valueOf(1), found.getId());
 	}
 	
 	@Test

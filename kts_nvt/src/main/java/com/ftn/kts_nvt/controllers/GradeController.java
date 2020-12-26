@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.kts_nvt.beans.Grade;
-import com.ftn.kts_nvt.dto.CulturalOfferTypeDTO;
 import com.ftn.kts_nvt.dto.GradeDTO;
 import com.ftn.kts_nvt.helper.GradeMapper;
 import com.ftn.kts_nvt.services.GradeService;
@@ -43,7 +42,7 @@ public class GradeController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<GradeDTO>> getAll() {
 		List<Grade> grades = gradeService.findAll();
-		
+		System.out.println(grades);
 		if (!grades.isEmpty())
 			return new ResponseEntity<>(gradeMapper.toGradeDTOList(grades), HttpStatus.OK);
 		else
@@ -69,6 +68,7 @@ public class GradeController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<GradeDTO> getGrade(@PathVariable Long id) {
 		Grade grade = gradeService.findOne(id);
+		
 		if (grade == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -107,7 +107,7 @@ public class GradeController {
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<GradeDTO> createGrade(@Valid @RequestBody GradeDTO gradeDTO) {
-		System.out.println("gradeDTO = " + gradeDTO);
+		
 		Grade grade;
 		try {
 			grade = gradeService.create(gradeMapper.toEntity(gradeDTO));

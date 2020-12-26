@@ -19,7 +19,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ftn.kts_nvt.beans.Image;
-import com.ftn.kts_nvt.dto.CulturalOfferTypeDTO;
 import com.ftn.kts_nvt.dto.UserLoginDTO;
 import com.ftn.kts_nvt.dto.UserTokenStateDTO;
 import com.ftn.kts_nvt.services.ImageService;
@@ -61,7 +60,7 @@ public class ImageControllerIntegrationTest {
 	 
 	 @Test
 	 public void testFindById() {
-		 login("a2@a", "vukovic");
+		 login("a@a", "vukovic");
 		 HttpHeaders headers = new HttpHeaders();
 		 headers.add("Authorization", this.accessToken);
 		 HttpEntity<Object> httpEntity = new HttpEntity<>(headers);
@@ -80,7 +79,7 @@ public class ImageControllerIntegrationTest {
 	 public void testCreateAndDelete() {
 		 int sizeBefore = service.findAll().size();
 		 
-		 login("a@a", "vukovic");
+		 login("vlado@gmail.com", "vukovic");
 		 
 		 Image img = new Image("5".getBytes());
 		 
@@ -109,7 +108,7 @@ public class ImageControllerIntegrationTest {
 	 
 	 @Test
 	 public void testUpdate() {
-		 login("a@a", "vukovic");		//ROLE_USER
+		 login("vlado@gmail.com", "vukovic");		
 		 HttpHeaders headers = new HttpHeaders();
 		 headers.add("Authorization", this.accessToken);
 		 Image img = new Image("10".getBytes());
@@ -123,7 +122,7 @@ public class ImageControllerIntegrationTest {
 	 
 	 @Test
 	 public void testDeleteFail() {
-		 login("a2@a", "vukovic");	//ROLE_USER
+		 login("a@a", "vukovic");	//ROLE_USER
 		 HttpHeaders headers = new HttpHeaders();
 		 headers.add("Authorization", this.accessToken);
 		 HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -133,7 +132,7 @@ public class ImageControllerIntegrationTest {
 					Object.class);
 		 assertEquals(HttpStatus.FORBIDDEN, responseEntity.getStatusCode());
 		 
-		 login("a@a", "vukovic");		//ROLE_USER
+		 login("vlado@gmail.com", "vukovic");		//ROLE_USER
 		 headers = new HttpHeaders();
 		 headers.add("Authorization", this.accessToken);
 		 httpEntity = new HttpEntity<Object>(headers);

@@ -3,7 +3,6 @@ package com.ftn.kts_nvt;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-import org.mockito.internal.verification.RegisteredInvocations;
 import org.springframework.test.context.TestPropertySource;
 
 import com.ftn.kts_nvt.controller.AdminControllerIntegrationTest;
@@ -22,7 +21,6 @@ import com.ftn.kts_nvt.repository.CommentRepositoryIntegrationTest;
 import com.ftn.kts_nvt.repository.CulturalOfferCategoryRepositoryIntegrationTest;
 import com.ftn.kts_nvt.repository.CulturalOfferRepositoryIntegrationTest;
 import com.ftn.kts_nvt.repository.CulturalOfferTypeRepositoryIntegrationTest;
-import com.ftn.kts_nvt.repository.GeoLocationRepositoryIntegrationTest;
 import com.ftn.kts_nvt.repository.GradeRepositoryIntegrationTest;
 import com.ftn.kts_nvt.repository.PostRepositoryIntegrationTest;
 import com.ftn.kts_nvt.repository.RegisteredUserRepositoryIntegrationTest;

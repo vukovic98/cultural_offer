@@ -1,9 +1,7 @@
 package com.ftn.kts_nvt.dto;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.RegisteredUser;
 
 public class GradeDTO {
@@ -12,14 +10,14 @@ public class GradeDTO {
 	@NotNull(message = "Value cannot be null.")
 	private int value;
 	@NotNull(message = "User cannot be null.")
-	private RegisteredUser user;
+	private UserDTO user ;
 	@NotNull(message = "CulturalOFfer cannot be null.")
 	private CulturalOfferDTO culturalOffer;
 	
 	public GradeDTO() {}
 
 	public GradeDTO(Long id, @NotNull(message = "Value cannot be null.") int value,
-			@NotNull(message = "User cannot be null.") RegisteredUser user,
+			@NotNull(message = "User cannot be null.") UserDTO user,
 			@NotNull(message = "CulturalOFfer cannot be null.") CulturalOfferDTO culturalOffer) {
 		super();
 		this.id = id;
@@ -29,7 +27,7 @@ public class GradeDTO {
 	}
 
 	public GradeDTO(@NotNull(message = "Value cannot be null.") int value,
-			@NotNull(message = "User cannot be null.") RegisteredUser user,
+			@NotNull(message = "User cannot be null.") UserDTO user,
 			@NotNull(message = "CulturalOFfer cannot be null.") CulturalOfferDTO culturalOffer) {
 		super();
 		this.value = value;
@@ -41,11 +39,11 @@ public class GradeDTO {
 		return id;
 	}
 
-	public RegisteredUser getUser() {
+	public UserDTO getUser() {
 		return user;
 	}
 
-	public void setUser(RegisteredUser user) {
+	public void setUser(UserDTO user) {
 		this.user = user;
 	}
 

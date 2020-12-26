@@ -18,15 +18,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.beans.VerificationCode;
 import com.ftn.kts_nvt.controllers.AuthenticationController.PasswordChanger;
-import com.ftn.kts_nvt.beans.VerificationCode;
 import com.ftn.kts_nvt.dto.UserDTO;
 import com.ftn.kts_nvt.dto.UserLoginDTO;
 import com.ftn.kts_nvt.dto.UserTokenStateDTO;
@@ -151,12 +148,12 @@ public class AuthenticationControllerIntegrationTest {
 	@Test
 	@Transactional
 	public void testChangePassword() {
-		login("a2@a", "123456789");
+		login("a@a", "vukovic");
 		HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", this.accessToken);
         
         PasswordChanger pc = new PasswordChanger();
-        pc.oldPassword = "123456789";
+        pc.oldPassword = "vukovic";
         pc.newPassword = "987654321";
 		
        
@@ -164,7 +161,7 @@ public class AuthenticationControllerIntegrationTest {
         ResponseEntity<?> responseEntity =
         		restTemplate.exchange("/auth/change-password", HttpMethod.POST, new HttpEntity<PasswordChanger>(pc,headers), Object.class);
         
-        RegisteredUser user = registeredUserRepository.findByEmail("a2@a");
+        RegisteredUser user = registeredUserRepository.findByEmail("a@a");
         
         
         BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
@@ -172,12 +169,12 @@ public class AuthenticationControllerIntegrationTest {
         assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
         
         pc.oldPassword = "987654321";
-        pc.newPassword = "123456789";
+        pc.newPassword = "vukovic";
         
         ResponseEntity<?> responseEntity2 =
         		restTemplate.exchange("/auth/change-password", HttpMethod.POST, new HttpEntity<PasswordChanger>(pc,headers), Object.class);
         
-        user = registeredUserRepository.findByEmail("a2@a");
+        user = registeredUserRepository.findByEmail("a@a");
 
         assertEquals(HttpStatus.ACCEPTED, responseEntity2.getStatusCode());
         

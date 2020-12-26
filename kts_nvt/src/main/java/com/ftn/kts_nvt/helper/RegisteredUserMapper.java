@@ -9,7 +9,6 @@ import com.ftn.kts_nvt.beans.Authority;
 import com.ftn.kts_nvt.beans.Comment;
 import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.dto.UserDTO;
-import com.ftn.kts_nvt.dto.UserLoginDTO;
 import com.ftn.kts_nvt.repositories.AuthorityRepository;
 
 @Component

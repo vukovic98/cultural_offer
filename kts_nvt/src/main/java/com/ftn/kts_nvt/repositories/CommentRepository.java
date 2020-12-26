@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ftn.kts_nvt.beans.Comment;
-import com.ftn.kts_nvt.beans.CulturalOffer;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {

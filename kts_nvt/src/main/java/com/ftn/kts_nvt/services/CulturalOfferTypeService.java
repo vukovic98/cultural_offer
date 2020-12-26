@@ -80,7 +80,6 @@ public class CulturalOfferTypeService {
 	public CulturalOfferType update(CulturalOfferType changedCulturalOfferType, long id) {
 
 		CulturalOfferType found = this.culturalOfferTypeRepository.findById(id).orElse(null);
-
 		if (found != null) {
 			CulturalOfferType nameExist = culturalOfferTypeRepository.findByName(changedCulturalOfferType.getName());
 			if(nameExist == null) {

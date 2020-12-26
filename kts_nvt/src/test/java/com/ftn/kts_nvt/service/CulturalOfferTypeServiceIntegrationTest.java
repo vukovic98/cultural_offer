@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ftn.kts_nvt.beans.CulturalOfferType;
-import com.ftn.kts_nvt.beans.Image;
 import com.ftn.kts_nvt.services.CulturalOfferCategoryService;
 import com.ftn.kts_nvt.services.CulturalOfferTypeService;
 
@@ -56,8 +57,8 @@ public class CulturalOfferTypeServiceIntegrationTest {
 	
 	@Test
 	public void testFindById() {
-		CulturalOfferType found = service.findById(1L);
-	    assertEquals(Long.valueOf(1), found.getId());
+		CulturalOfferType found = service.findById(2L);
+	    assertEquals(Long.valueOf(2), found.getId());
 	    assertEquals("Festival", found.getName());
 	}
 	
@@ -95,30 +96,19 @@ public class CulturalOfferTypeServiceIntegrationTest {
 	}
 	
 	@Test
-	public void testUpdateNameExist() {
-		CulturalOfferType type = service.findById(2L);
-		type.setName("Festival");
-		type.setCategory(categoryService.findOne(2L));
-		
-		CulturalOfferType changed = service.update(type, 2L);
-		
-	    assertEquals(null, changed);
-	}
-	
-	@Test
 	public void testUpdate() throws Exception {
-		CulturalOfferType type = service.findById(1L);
-		type.setName("Type1");
-		type.setCategory(categoryService.findOne(2L));
-		CulturalOfferType changed = service.update(type, 1L);
+		CulturalOfferType type = service.findById(2L);
+		type.setName("Type111");
+		type.setCategory(categoryService.findOne(1L));
+		CulturalOfferType changed = service.update(type, 2L);
 		assertNotNull(changed); 
-	    assertEquals("Type1", changed.getName());
-	    assertEquals(Long.valueOf(2), changed.getCategory().getId());
+	    assertEquals("Type111", changed.getName());
+	    assertEquals(Long.valueOf(1), changed.getCategory().getId());
 	    
 	    //rollback
 	    type.setName("Festival");
 		type.setCategory(categoryService.findOne(1L));
-		changed = service.update(type, 1L);
+		changed = service.update(type, 2L);
 		assertNotNull(changed); 
 	    assertEquals("Festival", changed.getName());
 	    assertEquals(Long.valueOf(1), changed.getCategory().getId());

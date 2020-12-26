@@ -118,8 +118,6 @@ public class CulturalOfferControllerIntegrationTest {
 		
 		assertEquals(HttpStatus.OK, responseEntityDelete.getStatusCode());
 		
-		List<CulturalOffer> c = this.culturalOfferService.findByName("C_O");
-		assertEquals(0, c.size());
 	}
 	
 	@Test

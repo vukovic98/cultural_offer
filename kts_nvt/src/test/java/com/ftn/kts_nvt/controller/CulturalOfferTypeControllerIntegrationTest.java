@@ -1,5 +1,12 @@
 package com.ftn.kts_nvt.controller;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +30,6 @@ import com.ftn.kts_nvt.dto.UserLoginDTO;
 import com.ftn.kts_nvt.dto.UserTokenStateDTO;
 import com.ftn.kts_nvt.repositories.CulturalOfferCategoryRepository;
 import com.ftn.kts_nvt.services.CulturalOfferTypeService;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -67,7 +67,7 @@ public class CulturalOfferTypeControllerIntegrationTest {
 			
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	     assertEquals(4, types.size());
-	     assertEquals("Festival", types.get(0));
+	     assertEquals("Festival", types.get(1));
 	 }
 	 
 	 @Test
@@ -79,20 +79,20 @@ public class CulturalOfferTypeControllerIntegrationTest {
 	     CulturalOfferTypeDTO[] types = responseEntity.getBody();
 		 assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	     assertEquals(2, types.length);
-	     assertEquals("Festival", types[0].getName());
-	     assertEquals("Type2", types[1].getName());
+	     assertEquals("Festival", types[1].getName());
+	     assertEquals("Type1", types[0].getName());
 	 }
 	 
 	 @Test
 	 public void testFindById() {
 		 ResponseEntity<CulturalOfferTypeDTO> responseEntity =
-	                restTemplate.exchange("/cultural-offer-types/1",
+	                restTemplate.exchange("/cultural-offer-types/2",
 	                						HttpMethod.GET,
 					                		null,
 					                		CulturalOfferTypeDTO.class);
 		 CulturalOfferTypeDTO dto = responseEntity.getBody();
 		 assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		 assertEquals(1L, dto.getId());
+		 assertEquals(2L, dto.getId());
 		 assertEquals("Festival", dto.getName());		 
 	 }
 	 
@@ -108,7 +108,7 @@ public class CulturalOfferTypeControllerIntegrationTest {
 	 public void testCreateAndDelete() {
 		 int sizeBefore = service.findAll().size();
 		 
-		 login("a@a", "vukovic");
+		 login("vlado@gmail.com", "vukovic");
 		 CulturalOfferCategory category = categoryRepository.findById(2L).orElse(null);
 		 
 		 CulturalOfferTypeDTO typeDTO = new CulturalOfferTypeDTO();
@@ -149,37 +149,35 @@ public class CulturalOfferTypeControllerIntegrationTest {
 	 @Transactional
 	 @Rollback(true)
 	 public void testUpdate() {
-		login("a@a", "vukovic");
-		CulturalOfferCategory category = categoryRepository.findById(2L).orElse(null);
+		login("vlado@gmail.com", "vukovic");
+		CulturalOfferCategory category = categoryRepository.findById(1L).orElse(null);
 		 
 		CulturalOfferTypeDTO typeDTO = new CulturalOfferTypeDTO();
-		typeDTO.setId(1L);
-		typeDTO.setName("Type1");
+		typeDTO.setId(2L);
+		typeDTO.setName("Type111");
 		typeDTO.setCategoryId(category.getId());
 		typeDTO.setCategoryName(category.getName());
 		 
-		//System.out.println("send dto = " + typeDTO);
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", this.accessToken);
 	        
 	    HttpEntity<CulturalOfferTypeDTO> httpEntity = new HttpEntity<>(typeDTO, headers);
 	        
-		ResponseEntity<CulturalOfferType> responseEntity =
+		ResponseEntity<CulturalOfferTypeDTO> responseEntity =
 	                restTemplate.exchange("/cultural-offer-types/"+typeDTO.getId(),
 	                						HttpMethod.PUT,
 	                						httpEntity,
-						                    CulturalOfferType.class);
+	                						CulturalOfferTypeDTO.class);
 		
-		CulturalOfferType changedType = responseEntity.getBody();
-		System.out.println("changed = " + changedType.getName());
+		CulturalOfferTypeDTO changedType = responseEntity.getBody();
 		
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		assertTrue("Type1".equalsIgnoreCase(changedType.getName()));
+		assertTrue("Type111".equalsIgnoreCase(changedType.getName()));
 		
 		//rollback
 		category = categoryRepository.findById(1L).orElse(null);
-		typeDTO.setId(1L);
+		typeDTO.setId(2L);
 		typeDTO.setName("Festival");
 		typeDTO.setCategoryId(category.getId());
 		typeDTO.setCategoryName(category.getName());
@@ -188,13 +186,13 @@ public class CulturalOfferTypeControllerIntegrationTest {
 		responseEntity = restTemplate.exchange("/cultural-offer-types/"+typeDTO.getId(),
 	                						HttpMethod.PUT,
 	                						httpEntity,
-						                    CulturalOfferType.class);
+	                						CulturalOfferTypeDTO.class);
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	 }
 	 
 	 @Test
 	 public void testDeleteFailRole() {
-		 login("a2@a", "vukovic");
+		 login("a@a", "vukovic");
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", this.accessToken);
 	     
@@ -210,7 +208,7 @@ public class CulturalOfferTypeControllerIntegrationTest {
 	 
 	 @Test
 	 public void testDeleteFail() {
-		 login("a@a", "vukovic");
+		 login("vlado@gmail.com", "vukovic");
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", this.accessToken);
 	     

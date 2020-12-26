@@ -1,7 +1,5 @@
 package com.ftn.kts_nvt.dto;
 
-import java.time.Instant;
-
 // DTO koji enkapsulira generisani JWT i njegovo trajanje koji se vracaju klijentu
 public class UserTokenStateDTO {
 

@@ -2,7 +2,6 @@ package com.ftn.kts_nvt.dto;
 
 import java.time.Instant;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 

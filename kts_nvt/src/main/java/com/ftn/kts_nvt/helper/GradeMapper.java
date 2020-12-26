@@ -3,18 +3,24 @@ package com.ftn.kts_nvt.helper;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ftn.kts_nvt.beans.Grade;
 import com.ftn.kts_nvt.dto.GradeDTO;
+import com.ftn.kts_nvt.dto.UserDTO;
+import com.ftn.kts_nvt.services.RegisteredUserService;
 
 @Component
 public class GradeMapper implements MapperInterface<Grade, GradeDTO>{
 
+	@Autowired
+	private RegisteredUserService userService;
+	
 	@Override
 	public Grade toEntity(GradeDTO dto) {
 		CulturalOfferMapper mapper = new CulturalOfferMapper();
-		return new Grade(dto.getId(), dto.getValue(), dto.getUser(), 
+		return new Grade(dto.getId(), dto.getValue(), userService.findOne(dto.getUser().getId()), 
 				mapper.toEntity(dto.getCulturalOffer()));
 	}
 
@@ -22,7 +28,8 @@ public class GradeMapper implements MapperInterface<Grade, GradeDTO>{
 	public GradeDTO toDto(Grade entity) {
 		CulturalOfferMapper mapper = new CulturalOfferMapper();
 		return new GradeDTO(entity.getId(), entity.getValue(), 
-				entity.getUser(), mapper.toDto(entity.getCulturalOffer()));
+				new UserDTO(entity.getUser().getId(), entity.getUser().getFirstName(), entity.getUser().getLastName(),
+						entity.getUser().getEmail(), ""), mapper.toDto(entity.getCulturalOffer()));
 	}
 
 	public List<GradeDTO> toGradeDTOList(List<Grade> grades){

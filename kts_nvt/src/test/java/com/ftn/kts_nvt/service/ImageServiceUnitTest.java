@@ -1,5 +1,11 @@
 package com.ftn.kts_nvt.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -14,12 +20,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.ftn.kts_nvt.beans.Image;
 import com.ftn.kts_nvt.repositories.ImageRepository;
 import com.ftn.kts_nvt.services.ImageService;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)

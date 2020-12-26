@@ -3,7 +3,6 @@ package com.ftn.kts_nvt.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.kts_nvt.beans.CulturalOfferCategory;
 import com.ftn.kts_nvt.beans.CulturalOfferType;
-import com.ftn.kts_nvt.beans.Grade;
 import com.ftn.kts_nvt.dto.CulturalOfferCategoryDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferTypeDTO;
-import com.ftn.kts_nvt.dto.GradeDTO;
 import com.ftn.kts_nvt.helper.CulturalOfferCategoryMapper;
 import com.ftn.kts_nvt.helper.CulturalOfferTypeMapper;
 import com.ftn.kts_nvt.services.CulturalOfferCategoryService;

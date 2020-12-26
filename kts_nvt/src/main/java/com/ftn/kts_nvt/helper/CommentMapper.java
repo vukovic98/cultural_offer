@@ -3,16 +3,10 @@ package com.ftn.kts_nvt.helper;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ftn.kts_nvt.beans.Comment;
-import com.ftn.kts_nvt.beans.CulturalOffer;
-import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.dto.CommentUserDTO;
-import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
-import com.ftn.kts_nvt.repositories.RegisteredUserRepository;
-import com.ftn.kts_nvt.services.RegisteredUserService;
 
 @Component
 public class CommentMapper implements MapperInterface<Comment, CommentUserDTO> {

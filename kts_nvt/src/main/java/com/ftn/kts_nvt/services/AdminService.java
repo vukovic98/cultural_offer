@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ftn.kts_nvt.beans.Admin;
-import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.repositories.AdminRepository;
 
 @Service

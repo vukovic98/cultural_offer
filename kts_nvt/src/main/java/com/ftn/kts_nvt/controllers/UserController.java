@@ -1,6 +1,5 @@
 package com.ftn.kts_nvt.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.beans.User;
-import com.ftn.kts_nvt.services.UserService;
 import com.ftn.kts_nvt.dto.ChangePasswordDto;
-import com.ftn.kts_nvt.dto.CulturalOfferDTO;
 import com.ftn.kts_nvt.dto.UserDTO;
 import com.ftn.kts_nvt.dto.UserNameDto;
 import com.ftn.kts_nvt.helper.UserMapper;
+import com.ftn.kts_nvt.services.UserService;
 
 @RestController
 @RequestMapping("/users")

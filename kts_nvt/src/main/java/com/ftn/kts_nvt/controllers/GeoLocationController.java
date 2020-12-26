@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.ftn.kts_nvt.beans.GeoLocation;
 import com.ftn.kts_nvt.services.GeoLocationService;
 

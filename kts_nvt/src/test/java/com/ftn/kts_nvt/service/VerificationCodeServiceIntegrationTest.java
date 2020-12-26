@@ -15,8 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.beans.VerificationCode;
 import com.ftn.kts_nvt.repositories.RegisteredUserRepository;
-import com.ftn.kts_nvt.repositories.UserRepository;
-import com.ftn.kts_nvt.services.RegisteredUserService;
 import com.ftn.kts_nvt.services.VerificationCodeService;
 
 @RunWith(SpringRunner.class)

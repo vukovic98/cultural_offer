@@ -2,19 +2,10 @@ package com.ftn.kts_nvt.dto;
 
 import java.util.List;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
-import com.ftn.kts_nvt.beans.Comment;
-import com.ftn.kts_nvt.beans.CulturalOfferType;
 import com.ftn.kts_nvt.beans.GeoLocation;
-import com.ftn.kts_nvt.beans.Grade;
 import com.ftn.kts_nvt.beans.Image;
-import com.ftn.kts_nvt.beans.Post;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

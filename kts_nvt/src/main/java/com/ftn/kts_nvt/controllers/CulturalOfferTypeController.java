@@ -1,7 +1,6 @@
 package com.ftn.kts_nvt.controllers;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -82,10 +81,13 @@ public class CulturalOfferTypeController {
 	 */
 	@PostMapping(consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<CulturalOfferType> create(@Valid @RequestBody CulturalOfferTypeDTO dto) {
-		CulturalOfferType saved = this.culturalOfferTypeService.save(this.mapper.toEntity(dto));
-		if (saved != null)
-			return new ResponseEntity<>(saved, HttpStatus.CREATED);
+	public ResponseEntity<CulturalOfferTypeDTO> create(@Valid @RequestBody CulturalOfferTypeDTO dto) {
+		CulturalOfferType changedType = this.culturalOfferTypeService.save(this.mapper.toEntity(dto));
+		if (changedType != null) {
+			CulturalOfferTypeDTO changedDto = new CulturalOfferTypeDTO(changedType.getId(), changedType.getName(),
+					changedType.getCategory().getId(), changedType.getCategory().getName());
+			return new ResponseEntity<>(changedDto, HttpStatus.CREATED);
+		}
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
@@ -138,13 +140,15 @@ public class CulturalOfferTypeController {
 	 */
 	@PutMapping(path = "/{id}", consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<CulturalOfferType> update(@Valid @PathVariable("id") long id, @RequestBody CulturalOfferTypeDTO dto) {
+	public ResponseEntity<CulturalOfferTypeDTO> update(@Valid @PathVariable("id") long id, @RequestBody CulturalOfferTypeDTO dto) {
 		CulturalOfferType type = this.mapper.toEntity(dto);
 		CulturalOfferType changedType = this.culturalOfferTypeService.update(type, type.getId());
-		System.out.println("changed type in controller = " + changedType.getName());
 		
-		if (changedType != null)
-			return new ResponseEntity<>(changedType, HttpStatus.OK);
+		if (changedType != null) {
+			CulturalOfferTypeDTO changedDto = new CulturalOfferTypeDTO(changedType.getId(), changedType.getName(),
+					changedType.getCategory().getId(), changedType.getCategory().getName());
+			return new ResponseEntity<>(changedDto, HttpStatus.OK);
+		}
 		else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 

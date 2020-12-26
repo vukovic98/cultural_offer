@@ -1,12 +1,10 @@
 package com.ftn.kts_nvt.helper;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.Post;
 import com.ftn.kts_nvt.dto.PostDTO;
 

@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.hibernate.Hibernate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.ftn.kts_nvt.beans.Admin;
 import com.ftn.kts_nvt.beans.Comment;
 import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.RegisteredUser;
@@ -47,14 +45,10 @@ public class RegisteredUserServiceIntegrationTest {
 	@Test
 	public void testSaveDeleteEntity() throws Exception {
 		
-		Comment c = this.commentRepository.findById(1L).orElse(null);
-		CulturalOffer co = this.offerRepository.findById(1L).orElse(null);
 		RegisteredUser found;
 		
 		RegisteredUser r = new RegisteredUser("Registered", "User", "test@test.com", "1234", new ArrayList<Comment>(), new ArrayList<CulturalOffer>(), true);
 		
-		r.getComments().add(c);
-		r.getCulturalOffers().add(co);
 		
 		RegisteredUser saved = registeredUserService.save(r);
 		found = this.registeredUserService.findOne(saved.getId());
@@ -112,7 +106,7 @@ public class RegisteredUserServiceIntegrationTest {
 	@Test
 	public void testFindByEmail() {
 		
-		String email = "a2@a";
+		String email = "a@a";
 		
 		RegisteredUser found = this.registeredUserService.findOneByEmail(email);
 		

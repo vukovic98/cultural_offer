@@ -1,6 +1,5 @@
 package com.ftn.kts_nvt.controller;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
@@ -22,12 +21,10 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.util.UriComponentsBuilder;
 
-
 import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.dto.UserDTO;
 import com.ftn.kts_nvt.dto.UserLoginDTO;
 import com.ftn.kts_nvt.dto.UserTokenStateDTO;
-import com.ftn.kts_nvt.dto.Users;
 import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
 import com.ftn.kts_nvt.services.RegisteredUserService;
 
@@ -95,18 +92,18 @@ public class RegisteredUserControllerIntegrationTest {
 	
 	@Test
 	public void testFindByEmail() {
-		login("vlado@gmail.com", "vukovic");
+		login("a@a", "vukovic");
 		HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", this.accessToken);
 		
 		ResponseEntity<UserDTO> responseEntity =
-				restTemplate.exchange("/registeredUser/byEmail/a2@a", HttpMethod.GET, new HttpEntity<>(headers),new ParameterizedTypeReference<UserDTO>() {
+				restTemplate.exchange("/registeredUser/byEmail/a@a", HttpMethod.GET, new HttpEntity<>(headers),new ParameterizedTypeReference<UserDTO>() {
 				});
 		
 		UserDTO found = responseEntity.getBody();
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertEquals(1L, found.getId());
-		assertEquals("a2@a", found.getEmail());
+		assertEquals("a@a", found.getEmail());
 	}
 	
 	@Test
@@ -143,12 +140,12 @@ public class RegisteredUserControllerIntegrationTest {
 	@Test
 	@Transactional
 	public void testSubscribeUnsubscribe() {
-		login("vlado@gmail.com", "vukovic");
+		login("a@a", "vukovic");
 		HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", this.accessToken);
 
 		
-		int userSize = this.userService.findOneByEmail("a2@a").getCulturalOffers().size();
+		int userSize = this.userService.findOneByEmail("a@a").getCulturalOffers().size();
 		int offerSize = this.offerRepository.findById(1L).orElse(null).getSubscribedUsers().size();
 		
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString("/registeredUser/subscribe")
@@ -157,7 +154,7 @@ public class RegisteredUserControllerIntegrationTest {
 		ResponseEntity<?> responseEntity = 
 				restTemplate.exchange(builder.build().encode().toUri(), HttpMethod.POST, new HttpEntity<>(headers), Object.class);
 		
-		RegisteredUser find = this.userService.findOneByEmail("a2@a");
+		RegisteredUser find = this.userService.findOneByEmail("a@a");
 		
 		System.out.println(find.getCulturalOffers());
 		
@@ -172,7 +169,7 @@ public class RegisteredUserControllerIntegrationTest {
 				restTemplate.exchange(builder.build().encode().toUri(), HttpMethod.DELETE, new HttpEntity<>(headers), Object.class);
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		assertEquals(userSize, this.userService.findOneByEmail("a2@a").getCulturalOffers().size());
+		assertEquals(userSize, this.userService.findOneByEmail("a@a").getCulturalOffers().size());
 		assertEquals(offerSize, this.offerRepository.findById(1L).orElse(null).getSubscribedUsers().size());
 
 		

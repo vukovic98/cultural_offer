@@ -1,25 +1,23 @@
 package com.ftn.kts_nvt.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.ftn.kts_nvt.beans.User;
 import com.ftn.kts_nvt.dto.UserDTO;
 import com.ftn.kts_nvt.helper.UserMapper;
-import com.ftn.kts_nvt.repositories.AdminRepository;
-import com.ftn.kts_nvt.repositories.RegisteredUserRepository;
 import com.ftn.kts_nvt.repositories.UserRepository;
 import com.google.gson.Gson;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 // Utility klasa za rad sa JSON Web Tokenima
 @Component
