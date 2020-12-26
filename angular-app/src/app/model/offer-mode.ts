@@ -1,3 +1,6 @@
+import {PostModel} from './post-model';
+import {CommentModel} from './comment-model';
+
 export class OfferModel {
     name: string = '';
 }
@@ -7,8 +10,8 @@ export interface OfferDetailsModel{
   "images": Array<Image>,
   "location": Location,
   "description": string,
-  "posts": Array<Post>,
-  "comments": Array<object>,
+  "posts": Array<PostModel>,
+  "comments": Array<CommentModel>,
   "grades": Array<object>,
   "type": OfferType
   "avgGrade": number,

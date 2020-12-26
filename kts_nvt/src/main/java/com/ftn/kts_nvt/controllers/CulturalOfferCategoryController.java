@@ -141,14 +141,14 @@ public class CulturalOfferCategoryController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<CulturalOfferCategoryDTO> update(@Valid @RequestBody CulturalOfferCategoryDTO categoryDTO,
 			@PathVariable Long id) {
-		CulturalOfferCategory category;
+		CulturalOfferCategory category = new CulturalOfferCategory(id, categoryDTO.getName(), null);
 		try {
-			category = service.update(mapper.toEntity(categoryDTO), id);
+			category = service.update(category, id);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-
-		return new ResponseEntity<>(mapper.toDto(category), HttpStatus.OK);
+		
+		return new ResponseEntity<>(this.mapper.toDto(category), HttpStatus.OK);
 	}
 
 	/*
