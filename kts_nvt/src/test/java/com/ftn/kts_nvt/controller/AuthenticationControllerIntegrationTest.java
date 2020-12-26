@@ -66,14 +66,14 @@ public class AuthenticationControllerIntegrationTest {
 	@Test
 	public void loginUserTest() {
 		
-		UserLoginDTO dto = new UserLoginDTO("a@a", "vukovic");
+		UserLoginDTO dto = new UserLoginDTO("vlado@gmail.com", "vukovic");
         ResponseEntity<UserTokenStateDTO> responseEntity =
         		restTemplate.postForEntity("/auth/log-in",
                 dto, UserTokenStateDTO.class);
         
         assertNotNull(responseEntity.getBody().getAuthenticationToken());
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		assertEquals("a@a", tokenUtils.getUsernameFromToken(responseEntity.getBody().getAuthenticationToken()));
+		assertEquals("vlado@gmail.com", tokenUtils.getUsernameFromToken(responseEntity.getBody().getAuthenticationToken()));
 	}
 	
 	@Test

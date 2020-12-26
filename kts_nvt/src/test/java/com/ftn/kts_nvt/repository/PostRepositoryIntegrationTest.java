@@ -28,6 +28,6 @@ public class PostRepositoryIntegrationTest {
 	public void testFindPostsForOffer() {
 		ArrayList<Post> postsForOffer = this.repository.findPostsForOffer(1L);
 		assertNotNull(postsForOffer);
-		assertEquals(1, postsForOffer.size());
+		assertEquals(4, postsForOffer.size());
 	}
 }

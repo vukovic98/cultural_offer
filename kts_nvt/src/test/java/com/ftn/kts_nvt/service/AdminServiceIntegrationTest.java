@@ -65,7 +65,7 @@ public class AdminServiceIntegrationTest {
 		List<Admin> users = this.adminService.findAll();
 		
 		assertNotNull(users);
-		assertEquals(4, users.size());
+		assertEquals(5, users.size());
 		
 	}
 	
@@ -75,7 +75,7 @@ public class AdminServiceIntegrationTest {
 		
 		Page<Admin> usersPage = this.adminService.findAll(pageable);
 		
-		assertEquals(4, usersPage.getNumberOfElements());
+		assertEquals(5, usersPage.getNumberOfElements());
 	}
 	
 	@Test

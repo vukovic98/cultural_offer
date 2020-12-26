@@ -57,14 +57,14 @@ public class PostServiceIntegrationTest {
 	public void testFindAll() {
 		List<Post> posts = this.postService.findAll();
 		assertNotNull(posts);
-		assertEquals(1, posts.size());
+		assertEquals(4, posts.size());
 	}
 	
 	@Test
 	public void testFindAllPageable() {
-		Pageable pageable = PageRequest.of(0, 3);
+		Pageable pageable = PageRequest.of(0, 7);
 		Page<Post> postsPage = this.postService.findAll(pageable);
-		assertEquals(1, postsPage.getNumberOfElements());
+		assertEquals(4, postsPage.getNumberOfElements());
 		
 	}
 	

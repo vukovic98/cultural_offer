@@ -74,7 +74,7 @@ public class RegisteredUserServiceIntegrationTest {
 		List<RegisteredUser> users = this.registeredUserService.findAll();
 		
 		assertNotNull(users);
-		assertEquals(4, users.size());
+		assertEquals(3, users.size());
 		
 	}
 	
@@ -84,7 +84,7 @@ public class RegisteredUserServiceIntegrationTest {
 		
 		Page<RegisteredUser> usersPage = this.registeredUserService.findAll(pageable);
 		
-		assertEquals(4, usersPage.getNumberOfElements());
+		assertEquals(3, usersPage.getNumberOfElements());
 	}
 	
 	@Test
@@ -112,7 +112,7 @@ public class RegisteredUserServiceIntegrationTest {
 	@Test
 	public void testFindByEmail() {
 		
-		String email = "a@a";
+		String email = "a2@a";
 		
 		RegisteredUser found = this.registeredUserService.findOneByEmail(email);
 		
