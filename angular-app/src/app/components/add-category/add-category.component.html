@@ -20,7 +20,7 @@
                     </tr>
                     <tr *ngFor="let type of types().controls; let i=index" [formGroupName]="i">
                         <td>
-                            Type name: 
+                            Type name:
                             <input type="text" formControlName="name" class="form-control">
                         </td>
                         <td>
@@ -33,6 +33,38 @@
                         class="btn-block">Submit</button>
                 </div>
             </form>
+            <div>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Name</th>
+                            <th>Types</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-center" *ngFor="let c of getAllCategories()">
+                            <td>{{c.name}}</td>
+                            <td>
+                                <select class="browser-default custom-select">
+                                    <option *ngIf="c.types.length == 0">No types</option>
+                                    <option *ngFor='let type of c.types'>{{type.name}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button mat-mini-fab color="warn" class="mr-2 mb-2" (click)="deleteCategory(c.id)"
+                                    style="outline: none">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="getAllCategories().length === 0">
+                    <h4>No categories in the database</h4>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

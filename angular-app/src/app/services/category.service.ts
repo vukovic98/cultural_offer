@@ -25,17 +25,45 @@ export class CategoryService{
                                                 {headers: headers});
   }
 
-  addCategory(category: CategoryModel){
-    console.log("add catgegory");
-    console.log(category);
+  deleteCategory(id: number, updateTable: Function){
+    console.log("delete in service");
+    var headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
+    this.http.delete(environment.apiUrl + this.manageCategoriesEndPoint + id , { headers: headers })
+      .pipe(map(response => response))
+      .subscribe(response => {
+        updateTable();
+        Swal.fire({
+          title: 'Success!',
+          text: 'Category successfully deleted!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+        return true;
+      }, error => {
+        console.log(error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'Something went wrong! ' + error.error,
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        });
+        return false;
+      })
+  }
+
+  addCategory(category: CategoryModel, updateTable: Function){
+    //console.log("add catgegory");
+    //console.log(category);
 
     var headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
     this.http.post(environment.apiUrl + this.manageCategoriesEndPoint, category, { headers: headers })
       .pipe(map(response => response))
       .subscribe(response => {
+        updateTable();
         Swal.fire({
           title: 'Success!',
-          text: 'Cultural offer successfully created!',
+          text: 'Category successfully created!',
           icon: 'success',
           confirmButtonText: 'OK'
         });
