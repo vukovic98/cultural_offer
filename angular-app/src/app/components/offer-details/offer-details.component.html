@@ -4,17 +4,6 @@
   </div>
   <div class="jumbotron col-md-10 ml-auto mr-auto bg-light shadow mt-5 pt-3">
     <div *ngIf="offer">
-<!--      <div>{{offer.name}}</div>-->
-<!--      <div>{{offer.description}}</div>-->
-<!--      <div class="row">-->
-<!--        <div class="col-sm-12">-->
-<!--          <ul class="list-inline rating-list" *ngFor="let star of stars" style="display: inline-block">-->
-<!--            <li (click)="countStar(star)" [ngClass]="{'selected': (star <= selectedValue)}">-->
-<!--              <i class="fa fa-star"></i>-->
-<!--            </li>-->
-<!--          </ul>-->
-<!--        </div>-->
-<!--      </div>-->
       <div class="row">
         <div class="col-md-4">
 
@@ -49,6 +38,10 @@
 
         </div>
         <div class="col-md-8">
+          <div class="float-right" *ngIf="isUser()">
+            <small class="float-left mr-2">Subscribe</small>
+            <mat-slide-toggle class="float-right mr-2" color="primary" (change)="subscribeToggle($event, offer.id)" [checked]="isSubscribed(offer)" title="(Un)Subscribe"></mat-slide-toggle>
+          </div>
           <div class="col-md-12 pl-0 mb-0">
             <h1 class="mb-0"><div class="badge badge-light" title="Average grade">
               <mat-icon class="float-left mr-3">star</mat-icon> <p class="pt-1">{{offer.avgGrade}}</p>
@@ -84,6 +77,18 @@
               <mat-icon class="float-left mr-3">location_city</mat-icon><p class="pt-1">{{offer.type.name}}</p>
             </div></h1>
           </div>
+          <mat-divider></mat-divider>
+            <div class="col-md-12 pl-0 mb-0">
+              <h1 class="mb-0"><div class="badge badge-light" title="Grade offer!">
+                <mat-icon class="float-left mr-3 mt-1">grade</mat-icon>
+                <ul class="list-inline rating-list" *ngFor="let star of stars" style="display: inline-block">
+                  <li (click)="countStar(star)" [ngClass]="{'selected': (star <= selectedValue)}">
+                    <i class="fa fa-star"></i>
+                  </li>
+                </ul>
+              </div>
+              </h1>
+            </div>
         </div>
       </div>
 

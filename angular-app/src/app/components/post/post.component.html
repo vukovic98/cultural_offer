@@ -1,14 +1,14 @@
 <div>
   <mat-card class="col-md-12">
     <div class="row">
-      <mat-card-title class="float-left col-md-11">{{post?.title}}</mat-card-title>
+      <mat-card-title class="float-left col-md-11">{{post.title}}</mat-card-title>
       <span class="col-md-1 pb-3" *ngIf="isAdmin()">
         <mat-icon class="float-right pointer">close</mat-icon>
       </span>
     </div>
     <mat-divider></mat-divider>
     <mat-card-content class="col-md-12 mt-3">
-      <span class="col-md-12 mt-3">{{post?.content}}</span>
+      <span class="col-md-12 mt-3">{{post.content}}</span>
     </mat-card-content>
   </mat-card>
 </div>
