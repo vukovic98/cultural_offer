@@ -64,11 +64,19 @@ export class AddCategoryComponent implements OnInit {
   refreshCategories(){
     this.categoryService.getCategories().subscribe(data => {
       this.categories = data;
+      console.log(this.categories);
     }, error => {
       console.log(error);
     });
   }
   
+  deleteType(id: number){
+    console.log("delete = ");
+    console.log(id)
+    this.typeService.deleteType(id, ()=> {
+      this.refreshCategories();
+    });
+  }
   onSubmit() {
     console.log(this.categoryForm.value);
     this.categoryService.addCategory(this.categoryForm.value, ()=>{

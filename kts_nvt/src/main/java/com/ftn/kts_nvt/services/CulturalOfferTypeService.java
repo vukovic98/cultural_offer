@@ -56,9 +56,9 @@ public class CulturalOfferTypeService {
 
 		if (exists) {
 			ArrayList<CulturalOffer> list = culturalOfferRepository.findByTypeId(id);
-			for(CulturalOffer c : list) {
+			/*for(CulturalOffer c : list) {
 				System.out.println("for = " + c.getName());
-			}
+			}*/
 			if(list.size() != 0) {
 				throw new Exception("CulturalOfferType with given id exist CulturalOffer");
 			}else {

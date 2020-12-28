@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { CulturalOfferService } from '../../services/culturalOffer.service';
 import { OfferDetailsModel } from '../../model/offer-mode';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import {AuthService} from '../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-offer-details',

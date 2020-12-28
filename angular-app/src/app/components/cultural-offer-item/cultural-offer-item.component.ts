@@ -3,6 +3,7 @@ import {AuthService} from '../../services/auth.service';
 import {CulturalOffer} from '../../model/offer-mode';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 import {CulturalOfferService} from '../../services/culturalOffer.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cultural-offer-item',
@@ -17,7 +18,9 @@ export class CulturalOfferItemComponent implements OnInit {
   @Output() removeOffer = new EventEmitter<number>();
   @Output() editOffer = new EventEmitter<CulturalOffer>();
 
-  constructor(private auth: AuthService, private service: CulturalOfferService) { }
+  constructor(private auth: AuthService,
+              private router: Router,
+              private service: CulturalOfferService) { }
 
   ngOnInit(): void {
     console.log(this.offer);
@@ -29,6 +32,10 @@ export class CulturalOfferItemComponent implements OnInit {
 
   edit(offer: CulturalOffer){
     this.editOffer.emit(offer);
+  }
+
+  showDetails(id: number){
+    this.router.navigate(['/offer-details/'+id]); 
   }
 
   subscribeToggle(event: MatSlideToggleChange, offer_id: number) {
