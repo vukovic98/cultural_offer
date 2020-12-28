@@ -12,12 +12,14 @@ import { CategoryModel } from '../../model/category-model';
 })
 export class AddCategoryComponent implements OnInit {
 
+  private categories: Array<CategoryModel> = [];
+
   categoryForm: FormGroup;
 
-  constructor(private fb:FormBuilder,
-              private categoryService: CategoryService,
-              private typeService: TypeService,
-              private http: HttpClient) {
+  constructor(private fb: FormBuilder,
+    private categoryService: CategoryService,
+    private typeService: TypeService,
+    private http: HttpClient) {
 
     this.categoryForm = this.fb.group({
       name: new FormControl('', Validators.required),
@@ -25,7 +27,14 @@ export class AddCategoryComponent implements OnInit {
     });
   }
 
-  types() : FormArray {
+  ngOnInit(): void {
+    this.refreshCategories();
+  }
+  getAllCategories() {
+    return this.categories || [];
+  }
+
+  types(): FormArray {
     return this.categoryForm.get("types") as FormArray
   }
 
@@ -39,23 +48,39 @@ export class AddCategoryComponent implements OnInit {
     this.types().push(this.newType());
   }
 
-  removeType(i:number) {
+  removeType(i: number) {
     this.types().removeAt(i);
   }
 
+  deleteCategory(id: number){
+    //console.log("delete with id = ");
+    console.log(id);
+    this.categoryService.deleteCategory(id, ()=> {
+      this.categories = this.categories.filter(item => item.id != id);
+    });
+    
+  }
+
+  refreshCategories(){
+    this.categoryService.getCategories().subscribe(data => {
+      this.categories = data;
+    }, error => {
+      console.log(error);
+    });
+  }
+  
   onSubmit() {
     console.log(this.categoryForm.value);
-    this.categoryService.addCategory(this.categoryForm.value);
+    this.categoryService.addCategory(this.categoryForm.value, ()=>{
+      this.refreshCategories();
+    });
   }
+
   get f() {
     return this.categoryForm.controls;
   }
 
-  ngOnInit(): void {
-
-  }
-
-  submit() {
+  /*submit() {
     let obj = {
       'name': this.categoryForm.value.name,
       'types': this.categoryForm.value.types
@@ -66,5 +91,5 @@ export class AddCategoryComponent implements OnInit {
 
     console.log(category);
     this.categoryService.addCategory(category);
-  }
+  }*/
 }
