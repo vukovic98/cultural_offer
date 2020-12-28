@@ -6,3 +6,11 @@
   width: 13%;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover {
+  transform: scale(1.02);
+  transition: transform .5s ease;
+}

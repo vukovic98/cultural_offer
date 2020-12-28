@@ -1,13 +1,15 @@
 <div class="cardHeight mt-4">
-  <div class="card shadow h-100" (click)=showDetails(offer.id)>
-    <img class="card-img-top" *ngIf="offer.images.length === 0" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg">
-    <img class="card-img-top" *ngIf="offer.images.length !== 0" [src]="'data:image/png;base64,'+offer.images[0].picByte">
-    <div class="card-body">
-      <div style="height: 50px;">
-        <h3 class="float-left" title="Title">{{offer.name}}</h3>
-        <i class="fa fa-eye float-right" aria-hidden="true" title="Subscribed users"><small class="ml-2">{{offer.subscribersCount}}</small></i>
+  <div class="card shadow h-100 clickable">
+    <div (click)="showDetails()">
+      <img class="card-img-top" [alt]="offer.name" *ngIf="offer.images.length === 0" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg">
+      <img class="card-img-top" [alt]="offer.name" *ngIf="offer.images.length !== 0" [src]="'data:image/png;base64,'+offer.images[0].picByte">
+      <div class="card-body">
+        <div style="height: 50px;">
+          <h3 class="float-left" title="Title">{{offer.name}}</h3>
+          <i class="fa fa-eye float-right" aria-hidden="true" title="Subscribed users"><small class="ml-2">{{offer.subscribersCount}}</small></i>
+        </div>
+        <p class="card-text" title="Description"><small>{{offer.description}}</small></p>
       </div>
-      <p class="card-text" title="Description"><small>{{offer.description}}</small></p>
     </div>
     <div class="pl-2">
       <h3 class="float-left"><span class="badge badge-light float-left" title="Average grade"><i class="fa fa-star-o mr-2" aria-hidden="true"></i>{{offer.avgGrade}}</span></h3>

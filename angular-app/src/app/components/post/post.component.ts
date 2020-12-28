@@ -9,7 +9,7 @@ import {AuthService} from '../../services/auth.service';
 })
 export class PostComponent implements OnInit {
 
-  @Input() post: PostModel | undefined;
+  @Input() post: PostModel = {} as PostModel;
 
   constructor(private service: AuthService) { }
 

@@ -46,6 +46,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import { PostComponent } from './components/post/post.component';
 import {MatCardModule} from '@angular/material/card';
 import { CommentListComponent } from './components/comment-list/comment-list.component';
+import { CommentItemComponent } from './components/comment-item/comment-item.component';
+import { AddCommentComponent } from './components/add-comment/add-comment.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +72,9 @@ AddCategoryComponent,
  CommentToBeApprovedComponent,
   CommentsToBeApprovedListComponent,
   PostComponent,
-  CommentListComponent
+  CommentListComponent,
+  CommentItemComponent,
+  AddCommentComponent
 ],
     imports: [
         BrowserModule,
@@ -86,7 +90,6 @@ AddCategoryComponent,
         MatDialogModule,
         CommonModule,
         NgSelectModule,
-
         MatMenuModule,
         MatListModule,
         MatExpansionModule,

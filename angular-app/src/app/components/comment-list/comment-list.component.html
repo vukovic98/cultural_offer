@@ -1,3 +1,14 @@
 <div class="jumbotron col-md-12 mt-3 bg-white pt-4">
   <mat-card-title>Comments</mat-card-title>
+  <div>
+    <app-add-comment></app-add-comment>
+  </div>
+  <div class="mt-3">
+    <h3>{{comments?.length}} comments</h3>
+    <mat-divider class="mt-0 mb-3"></mat-divider>
+    <app-comment-item
+      [comment]="comment"
+      *ngFor="let comment of comments"
+    ></app-comment-item>
+  </div>
 </div>

@@ -1,0 +1,9 @@
+.commentCard {
+  border: 1px solid lightgray;
+  border-radius: 3px;
+}
+
+.userImg {
+  height: 45px;
+  width: 45px;
+}

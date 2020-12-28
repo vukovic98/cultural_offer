@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { CulturalOfferService } from '../../services/culturalOffer.service';
-import { OfferDetailsModel } from '../../model/offer-mode';
+import {CulturalOffer, OfferDetailsModel, OfferModel} from '../../model/offer-mode';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import {AuthService} from '../../services/auth.service';
+import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-offer-details',
@@ -16,12 +17,18 @@ export class OfferDetailsComponent implements OnInit {
   selectedValue: number = 0;
   id: string = '';
   offer!: OfferDetailsModel;
+  private subscribedItems: Array<CulturalOffer> = [];
 
   constructor(private route: ActivatedRoute,
     private service: CulturalOfferService,
     private authService: AuthService) { }
 
   ngOnInit() {
+    if(this.authService.isUser()) {
+      this.service.getSubscribedItems().subscribe((data: string) => {
+        this.subscribedItems = JSON.parse(data);
+      })
+    }
     //@ts-ignore
     this.id = this.route.snapshot.paramMap.get('id');
     console.log(this.id);
@@ -44,5 +51,29 @@ export class OfferDetailsComponent implements OnInit {
     } else {
       console.log('already voted');
     }
+  }
+
+  subscribeToggle(event: MatSlideToggleChange, offer_id: string) {
+    let id: number = Number(offer_id);
+    if(event.checked) { // subscribe to offer
+      this.service.subscribeUser(id);
+    }
+    else {//unsubscribe from offer
+      this.service.unsubscribeUser(id);
+    }
+  }
+
+  isUser(): boolean {
+    return this.authService.isUser();
+  }
+
+  isSubscribed(offer: OfferDetailsModel): boolean {
+    if(this.authService.isLoggedIn()) {
+      for (let i of this.subscribedItems) {
+        if (i.id === Number(offer.id))
+          return true;
+      }
+    }
+    return false;
   }
 }
