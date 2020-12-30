@@ -1,0 +1,28 @@
+<div class="row mt-3">
+  <mat-expansion-panel class="w-100" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Want to add comment? Click here!
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div *ngIf="isLoggedIn()">
+      <div class="col-md-12">
+        <textarea placeholder="Enter comment" class="form-control" style="resize: none;"></textarea>
+      </div>
+      <div class="col-md-12 mt-2">
+        <p class="float-left col-md-1 mt-1 pl-0">Attachment? </p>
+        <div class="custom-file float-left col-md-11">
+          <input type="file" class="custom-file-input" id="customFile">
+          <label class="custom-file-label" for="customFile">Choose file</label>
+        </div>
+      </div>
+      <div class="col-md-12 pt-2 float-left">
+        <button mat-raised-button class="float-right" color="primary">Submit</button>
+      </div>
+    </div>
+    <div *ngIf="!isLoggedIn()">
+      <h3 class="float-left">You have to be logged in to leave a comment!</h3>
+      <h3 class="float-left ml-2"><a routerLink="/login">Login here</a>, or <a routerLink="/sign-up">Sign up</a>!</h3>
+    </div>
+  </mat-expansion-panel>
+</div>

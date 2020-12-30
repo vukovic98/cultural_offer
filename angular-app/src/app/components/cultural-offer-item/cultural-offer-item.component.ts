@@ -3,6 +3,7 @@ import {AuthService} from '../../services/auth.service';
 import {CulturalOffer} from '../../model/offer-mode';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 import {CulturalOfferService} from '../../services/culturalOffer.service';
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'app-cultural-offer-item',
@@ -17,7 +18,12 @@ export class CulturalOfferItemComponent implements OnInit {
   @Output() removeOffer = new EventEmitter<number>();
   @Output() editOffer = new EventEmitter<CulturalOffer>();
 
-  constructor(private auth: AuthService, private service: CulturalOfferService) { }
+  constructor(
+    private auth: AuthService,
+    private service: CulturalOfferService,
+    private route: Router
+  )
+  { }
 
   ngOnInit(): void {
     console.log(this.offer);
@@ -48,5 +54,8 @@ export class CulturalOfferItemComponent implements OnInit {
     return this.auth.isAdmin();
   }
 
+  showDetails(): void {
+    this.route.navigate(['/offer-details/'+this.offer.id]);
+  }
 
 }
