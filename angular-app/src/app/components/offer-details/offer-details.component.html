@@ -6,10 +6,6 @@
     <div *ngIf="offer">
       <div class="row">
         <div class="col-md-4">
-
-
-
-
           <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active">
@@ -30,12 +26,6 @@
             </a>
           </div>
 
-
-
-
-
-
-
         </div>
         <div class="col-md-8">
           <div class="float-right" *ngIf="isUser()">
@@ -46,6 +36,13 @@
             <h1 class="mb-0"><div class="badge badge-light" title="Average grade">
               <mat-icon class="float-left mr-3">star</mat-icon> <p class="pt-1">{{offer.avgGrade}}</p>
             </div></h1>
+            <div>
+              <ul class="list-inline rating-list" *ngFor="let star of stars" style="display: inline-block">
+                <li (click)="countStar(star)" [ngClass]="{'selected': (star <= selectedValue)}">
+                  <i class="fa fa-star"></i>
+                </li>
+              </ul>
+            </div>
           </div>
           <mat-divider></mat-divider>
           <div class="col-md-12 pl-0 mb-0">

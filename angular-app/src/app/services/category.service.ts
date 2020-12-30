@@ -16,11 +16,9 @@ export class CategoryService{
   constructor(private http: HttpClient) { } 
 
   getCategories(): Observable<Array<CategoryModel>> {
-    console.log("getCategories");
     const headers = new HttpHeaders({
       'Authorization' : 'Bearer ' + localStorage.getItem("accessToken")
     });
-    console.log(headers);
     return this.http.get<Array<CategoryModel>>(environment.apiUrl + 'cultural-offer-categories/', 
                                                 {headers: headers});
   }

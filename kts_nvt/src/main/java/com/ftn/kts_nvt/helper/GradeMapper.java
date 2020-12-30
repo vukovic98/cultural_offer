@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.ftn.kts_nvt.beans.Grade;
 import com.ftn.kts_nvt.dto.GradeDTO;
 import com.ftn.kts_nvt.dto.UserDTO;
+import com.ftn.kts_nvt.services.CulturalOfferService;
 import com.ftn.kts_nvt.services.RegisteredUserService;
 
 @Component
@@ -17,11 +18,16 @@ public class GradeMapper implements MapperInterface<Grade, GradeDTO>{
 	@Autowired
 	private RegisteredUserService userService;
 	
+	@Autowired
+	private CulturalOfferService culturalOfferService;
+	
 	@Override
 	public Grade toEntity(GradeDTO dto) {
+		
 		CulturalOfferMapper mapper = new CulturalOfferMapper();
-		return new Grade(dto.getId(), dto.getValue(), userService.findOne(dto.getUser().getId()), 
-				mapper.toEntity(dto.getCulturalOffer()));
+		return new Grade(dto.getId(), dto.getValue(),
+						userService.findOne(dto.getUser().getId()), 
+						culturalOfferService.findById(dto.getCulturalOffer().getId()));
 	}
 
 	@Override

@@ -211,7 +211,7 @@ export class CulturalOfferService {
       }, error => {
         Swal.fire({
           title: 'Error!',
-          text: 'Something went wrong!',
+          text: 'Something went wrong! ' + error.error,
           icon: 'error',
           confirmButtonColor: '#DC143C',
           confirmButtonText: 'OK'
