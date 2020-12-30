@@ -26,7 +26,6 @@ export class CulturalOfferItemComponent implements OnInit {
   { }
 
   ngOnInit(): void {
-    console.log(this.offer);
   }
 
   deleteOffer(offer_id: number) {
