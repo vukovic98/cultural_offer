@@ -43,23 +43,6 @@ public class CulturalOfferController {
 	@Autowired
 	private CulturalOfferMapper mapper;
 	
-	@GetMapping(path = "/pageImpl")
-	public ResponseEntity<PageImplementation<CulturalOfferDTO>> findAllPa() {
-		Pageable pageRequest = PageRequest.of(0, 8);
-		
-		Page<CulturalOffer> page = this.culturalOfferService.findAll(pageRequest);
-		
-		
-		List<CulturalOfferDTO> offersDTOS = this.mapper.listToDTO(page.toList());
-		Page<CulturalOfferDTO> pageOffersDTOS = new PageImpl<>(offersDTOS, page.getPageable(), page.getTotalElements());
-
-		//TO PAGE IMPL
-		PageImplMapper<CulturalOfferDTO> pageMapper = new PageImplMapper<>();
-		PageImplementation<CulturalOfferDTO> pageImpl = pageMapper.toPageImpl(pageOffersDTOS);
-		
-		return new ResponseEntity<>(pageImpl, HttpStatus.OK);
-	}
-	
 	//GET: http://localhost:8080/culturalOffers
 	@GetMapping
 	public ResponseEntity<ArrayList<CulturalOfferDTO>> findAll() {
