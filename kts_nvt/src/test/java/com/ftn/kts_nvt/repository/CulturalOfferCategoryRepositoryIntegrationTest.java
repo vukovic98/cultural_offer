@@ -16,26 +16,27 @@ import com.ftn.kts_nvt.beans.CulturalOfferCategory;
 import com.ftn.kts_nvt.repositories.CulturalOfferCategoryRepository;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestPropertySource("classpath:test.properties")
 public class CulturalOfferCategoryRepositoryIntegrationTest {
-	
+
 	@Autowired
 	private CulturalOfferCategoryRepository repository;
-	
+
 	@Test
 	public void testGetByName() {
 		String name = "Institution";
-		String nameFail = "decembar";
-	
-		
 		CulturalOfferCategory category = this.repository.findCulturalOfferCategoryByName(name).orElse(null);
-		
 		assertNotNull(category);
 		assertEquals(category.getName(), "Institution");
-		
+
+	}
+
+	@Test
+	public void testGetByNameFal() {
+		String nameFail = "decembar";
 		CulturalOfferCategory categoryFail = this.repository.findCulturalOfferCategoryByName(nameFail).orElse(null);
-		
+
 		assertNull(categoryFail);
 	}
 

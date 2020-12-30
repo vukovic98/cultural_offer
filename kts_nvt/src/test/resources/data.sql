@@ -30,6 +30,7 @@ insert into kts_nvt_test.verification_code values (2,"qwre2",3);
 
 //GEO_LOCATION
 insert into kts_nvt_test.geo_location values(1, 23.23, 23.23, "Novi Sad");
+insert into kts_nvt_test.geo_location values(2, 23.23, 23.23, "Palic");
 
 //COMMENT
 insert into kts_nvt_test.comment values(1, true, 'This is comment', 1, null);

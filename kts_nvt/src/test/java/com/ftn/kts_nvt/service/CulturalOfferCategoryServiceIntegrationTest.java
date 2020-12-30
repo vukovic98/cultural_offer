@@ -24,109 +24,141 @@ import com.ftn.kts_nvt.repositories.CulturalOfferTypeRepository;
 import com.ftn.kts_nvt.services.CulturalOfferCategoryService;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("classpath:test.properties")
 public class CulturalOfferCategoryServiceIntegrationTest {
 
 	@Autowired
 	private CulturalOfferCategoryService service;
-	
+
 	@Autowired
 	private CulturalOfferTypeRepository typeRepository;
-	
+
 	@Test
 	public void testFindAll() {
 		List<CulturalOfferCategory> categories = this.service.findAll();
 		assertNotNull(categories);
 		assertEquals(2, categories.size());
-				
+
 	}
-	
+
 	@Test
 	public void testFindAllPageable() {
 		Pageable pageable = PageRequest.of(0, 5);
 		Page<CulturalOfferCategory> categoriesPage = this.service.findAll(pageable);
 		assertEquals(2, categoriesPage.getNumberOfElements());
-		
+
 	}
-	
+
 	@Test
 	public void testFindOne() {
 		long id = 1;
-		long idFail = 5;
-		
+
 		CulturalOfferCategory c1 = this.service.findOne(id);
 		assertNotNull(c1);
 		assertEquals(id, c1.getId());
-		
+
+	}
+
+	@Test
+	public void testFindOneFail() {
+		long idFail = 5;
 		CulturalOfferCategory c2 = this.service.findOne(idFail);
 		assertNull(c2);
 	}
-	
+
 	@Test
 	public void testFindByName() {
 		String name = "Manifestation";
-		String nameFail = "Ivana";
-		
 		CulturalOfferCategory c1 = this.service.findByName(name);
 		assertNotNull(c1);
 		assertEquals("Manifestation", c1.getName());
-		
+	}
+
+	@Test
+	public void testFindByNameFail() {
+		String nameFail = "Ivana";
 		CulturalOfferCategory c2 = this.service.findByName(nameFail);
 		assertNull(c2);
 
 	}
-	
+
 	@Test
 	public void testCreateAndDelete() throws Exception {
-		//ArrayList<CulturalOfferType> types = new ArrayList<>();
 		CulturalOfferCategory category = new CulturalOfferCategory(6L, "New Category", null);
-		//CulturalOfferType type = this.typeRepository.getOne(1L);
-		
-		//types.add(type);
-		//category.setTypes(types);
-		
+
 		CulturalOfferCategory saved = this.service.save(category);
 		CulturalOfferCategory found = this.service.findOne(saved.getId());
-		
+
 		assertTrue(category.getName().equalsIgnoreCase(saved.getName()));
 		assertEquals(found.getId(), saved.getId());
-		
+
 		this.service.delete(saved.getId());
 		CulturalOfferCategory deleted = this.service.findOne(saved.getId());
 		assertNull(deleted);
-	
+
 	}
+
+	@Test
+	public void testCreateFail() throws Exception {
+		CulturalOfferCategory category = new CulturalOfferCategory(6L, "Institution", null);
+		CulturalOfferCategory saved;
+
+		try {
+			saved = this.service.create(category);
+			assertNull(saved);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	@Test
 	public void testUpdateAndDelete() throws Exception {
-		ArrayList<CulturalOfferType> types = new ArrayList<>();
 		CulturalOfferCategory category = new CulturalOfferCategory(65L, "New Category", null);
-		//CulturalOfferType type = new CulturalOfferType(23L, "Novi tip", category);
-		//CulturalOfferType savedType = this.typeRepository.save(type);
-		
-		//assertNotNull(savedType);
-		//assertEquals(type.getId(), savedType.getId());
-		
-		//types.add(savedType);
-		//category.setTypes(types);
-		
+
 		CulturalOfferCategory saved = this.service.save(category);
 		saved.setName("Changed");
 		CulturalOfferCategory updated = this.service.update(saved, saved.getId());
-		
+
 		assertNotNull(updated);
 		assertTrue(saved.getName().equalsIgnoreCase(updated.getName()));
 		assertEquals(saved.getId(), updated.getId());
-		
-		//delete type
-		//this.typeRepository.delete(savedType);
-		//CulturalOfferType deletedType = this.typeRepository.getOne(savedType.getId());
-		//assertNull(deletedType);
-		
-		//delete category
+
+		// delete category
 		this.service.delete(saved.getId());
 		CulturalOfferCategory deleted = this.service.findOne(saved.getId());
 		assertNull(deleted);
-	
+
+	}
+
+	@Test
+	public void testUpdateFail() throws Exception {
+
+		CulturalOfferCategory category = this.service.findByName("Institution");
+		category.setName("Manifestation");
+
+		try {
+			CulturalOfferCategory updated = this.service.update(category, category.getId());
+			// "CulturalOfferCategory with given name already exist"
+			assertNull(updated);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+
+	@Test
+	public void testDeleteFail() throws Exception {
+		try {
+			this.service.delete(67L);
+		} catch (Exception e) {
+			//Category with this ID doesn't exists
+			e.printStackTrace();
+		}
+
 	}
 }
