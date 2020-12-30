@@ -1,8 +1,9 @@
 package com.ftn.kts_nvt.controller;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.time.Instant;
 import java.util.List;
@@ -24,11 +25,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.Post;
+import com.ftn.kts_nvt.dto.CulturalOfferCategoryDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferDTO;
 import com.ftn.kts_nvt.dto.PostDTO;
 import com.ftn.kts_nvt.dto.UserLoginDTO;
 import com.ftn.kts_nvt.dto.UserTokenStateDTO;
 import com.ftn.kts_nvt.helper.CulturalOfferMapper;
+import com.ftn.kts_nvt.helper.PageImplementation;
 import com.ftn.kts_nvt.helper.PostMapper;
 import com.ftn.kts_nvt.services.CulturalOfferService;
 import com.ftn.kts_nvt.services.PostService;
@@ -75,6 +78,26 @@ public class PostControllerIntegrationTest {
 		assertNotNull(posts);
 		assertEquals(postsSize, posts.size());
 	}
+	
+	@Test
+	public void testFindAllPageable() {
+		login("vlado@gmail.com", "vukovic");
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", this.accessToken);
+
+		HttpEntity<PostDTO> httpEntity = new HttpEntity<PostDTO>(headers);
+		ResponseEntity<PageImplementation<PostDTO>> responseEntity = 
+				this.restTemplate.exchange("/posts/by-page/1", HttpMethod.GET, httpEntity,
+						new ParameterizedTypeReference<PageImplementation<PostDTO>>() {
+						});
+		
+		PageImplementation<PostDTO> posts = responseEntity.getBody();
+		
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(4, posts.getNumberOfElements());
+        assertTrue(posts.isLast());
+	}
 
 	@Test
 	public void testFindById() {
@@ -92,7 +115,8 @@ public class PostControllerIntegrationTest {
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertNotNull(post);
-		assertEquals(5L, post.getId());
+		Long i = 5L;
+		assertEquals(i, post.getId());
 	}
 
 	@Test

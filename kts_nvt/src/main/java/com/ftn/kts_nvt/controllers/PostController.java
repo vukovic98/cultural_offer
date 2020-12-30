@@ -22,7 +22,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.kts_nvt.beans.Post;
+import com.ftn.kts_nvt.dto.CulturalOfferCategoryDTO;
 import com.ftn.kts_nvt.dto.PostDTO;
+import com.ftn.kts_nvt.helper.PageImplMapper;
+import com.ftn.kts_nvt.helper.PageImplementation;
 import com.ftn.kts_nvt.helper.PostMapper;
 import com.ftn.kts_nvt.services.PostService;
 
@@ -43,7 +46,7 @@ public class PostController {
 	}
 
 	@GetMapping(path = "/by-page/{pageNum}")
-	public ResponseEntity<Page<PostDTO>> findAll(@PathVariable int pageNum) {
+	public ResponseEntity<PageImplementation<PostDTO>> findAll(@PathVariable int pageNum) {
 		Pageable pageRequest = PageRequest.of(pageNum - 1, 10);
 
 		Page<Post> page = this.postService.findAll(pageRequest);
@@ -51,7 +54,10 @@ public class PostController {
 		List<PostDTO> postDTOS = this.postMapper.listToDto(page.toList());
 		Page<PostDTO> pagePostDTOS = new PageImpl<>(postDTOS, page.getPageable(), page.getTotalElements());
 
-		return new ResponseEntity<>(pagePostDTOS, HttpStatus.OK);
+		PageImplMapper<PostDTO> pageMapper = new PageImplMapper<>();
+		PageImplementation<PostDTO> pageImpl = pageMapper.toPageImpl(pagePostDTOS);
+		
+		return new ResponseEntity<>(pageImpl, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

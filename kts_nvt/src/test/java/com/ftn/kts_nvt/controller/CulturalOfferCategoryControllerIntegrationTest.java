@@ -1,8 +1,9 @@
 package com.ftn.kts_nvt.controller;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +24,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ftn.kts_nvt.beans.CulturalOfferCategory;
+import com.ftn.kts_nvt.beans.GeoLocation;
 import com.ftn.kts_nvt.dto.CulturalOfferCategoryDTO;
+import com.ftn.kts_nvt.dto.CulturalOfferDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferTypeDTO;
 import com.ftn.kts_nvt.dto.UserLoginDTO;
 import com.ftn.kts_nvt.dto.UserTokenStateDTO;
 import com.ftn.kts_nvt.helper.CulturalOfferCategoryMapper;
+import com.ftn.kts_nvt.helper.PageImplementation;
 import com.ftn.kts_nvt.services.CulturalOfferCategoryService;
 
 @RunWith(SpringRunner.class)
@@ -70,7 +74,27 @@ public class CulturalOfferCategoryControllerIntegrationTest {
 		assertEquals(categoriesSize, categories.size());
 
 	}
+	
+	@Test
+	public void testFindAllPageable() {
+		login("vlado@gmail.com", "vukovic");
 
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", this.accessToken);
+
+		HttpEntity<CulturalOfferCategoryDTO> httpEntity = new HttpEntity<CulturalOfferCategoryDTO>(headers);
+		ResponseEntity<PageImplementation<CulturalOfferCategoryDTO>> responseEntity = 
+				this.restTemplate.exchange("/cultural-offer-categories/by-page/1", HttpMethod.GET, httpEntity,
+						new ParameterizedTypeReference<PageImplementation<CulturalOfferCategoryDTO>>() {
+						});
+		
+		PageImplementation<CulturalOfferCategoryDTO> cat = responseEntity.getBody();
+		
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(2, cat.getNumberOfElements());
+        assertTrue(cat.isLast());
+	}
+	
 	@Test
 	public void testFindOne() {
 		login("vlado@gmail.com", "vukovic");
@@ -86,7 +110,8 @@ public class CulturalOfferCategoryControllerIntegrationTest {
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertTrue("Manifestation".equalsIgnoreCase(cat.getName()));
 		assertNotNull(cat);
-		assertEquals(1L, cat.getId());
+		Long i = 1L;
+		assertEquals(i, cat.getId());
 	}
 	
 	@Test
@@ -120,7 +145,9 @@ public class CulturalOfferCategoryControllerIntegrationTest {
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertTrue(name.equalsIgnoreCase(cat.getName()));
 		assertNotNull(cat);
-		assertEquals(2L, cat.getId());
+		Long i = 2L;
+		assertEquals(i, cat.getId());
+		
 	}
 	
 	@Test

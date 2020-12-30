@@ -27,6 +27,8 @@ import com.ftn.kts_nvt.dto.CulturalOfferCategoryDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferTypeDTO;
 import com.ftn.kts_nvt.helper.CulturalOfferCategoryMapper;
 import com.ftn.kts_nvt.helper.CulturalOfferTypeMapper;
+import com.ftn.kts_nvt.helper.PageImplMapper;
+import com.ftn.kts_nvt.helper.PageImplementation;
 import com.ftn.kts_nvt.services.CulturalOfferCategoryService;
 import com.ftn.kts_nvt.services.CulturalOfferTypeService;
 
@@ -59,14 +61,16 @@ public class CulturalOfferCategoryController {
 	 * GET http://localhost:8080/cultural-offer-categories/by-page
 	 */
 	@GetMapping(value = "/by-page/{pageNum}")
-	public ResponseEntity<Page<CulturalOfferCategoryDTO>> getAll(@PathVariable int pageNum) {
+	public ResponseEntity<PageImplementation<CulturalOfferCategoryDTO>> getAll(@PathVariable int pageNum) {
 		Pageable pageable = PageRequest.of(pageNum - 1, 10);
 		Page<CulturalOfferCategory> page = service.findAll(pageable);
 		List<CulturalOfferCategoryDTO> offerDTOS = mapper.toDTOList(page.toList());
 		Page<CulturalOfferCategoryDTO> pageOfferDTOS = new PageImpl<>(offerDTOS, page.getPageable(),
 				page.getTotalElements());
+		PageImplMapper<CulturalOfferCategoryDTO> pageMapper = new PageImplMapper<>();
+		PageImplementation<CulturalOfferCategoryDTO> pageImpl = pageMapper.toPageImpl(pageOfferDTOS);
 
-		return new ResponseEntity<>(pageOfferDTOS, HttpStatus.OK);
+		return new ResponseEntity<>(pageImpl, HttpStatus.OK);
 	}
 
 	/*

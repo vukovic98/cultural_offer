@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.kts_nvt.beans.GeoLocation;
+import com.ftn.kts_nvt.dto.CulturalOfferCategoryDTO;
+import com.ftn.kts_nvt.helper.PageImplMapper;
+import com.ftn.kts_nvt.helper.PageImplementation;
 import com.ftn.kts_nvt.services.GeoLocationService;
 
 @RestController
@@ -53,14 +56,17 @@ public class GeoLocationController {
 	}
 	
 	@GetMapping(path="/by-page/{pageNum}")
-	public ResponseEntity<Page<GeoLocation>> findAll(@PathVariable int pageNum) {
+	public ResponseEntity<PageImplementation<GeoLocation>> findAll(@PathVariable int pageNum) {
 		Pageable pageable = PageRequest.of(pageNum-1, 10);
 		Page<GeoLocation> page = this.geoLocationService.findAll(pageable);
 		
 		List<GeoLocation> locations = page.toList();
 		Page<GeoLocation> pageLocations = new PageImpl<>(locations, page.getPageable(), page.getTotalElements());
 
-		return new ResponseEntity<>(pageLocations, HttpStatus.OK);
+		PageImplMapper<GeoLocation> pageMapper = new PageImplMapper<>();
+		PageImplementation<GeoLocation> pageImpl = pageMapper.toPageImpl(pageLocations);
+		
+		return new ResponseEntity<>(pageImpl, HttpStatus.OK);
 	}
 
 	@PostMapping(consumes = "application/json")

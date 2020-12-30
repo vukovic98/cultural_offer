@@ -26,6 +26,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.ftn.kts_nvt.beans.GeoLocation;
 import com.ftn.kts_nvt.dto.UserLoginDTO;
 import com.ftn.kts_nvt.dto.UserTokenStateDTO;
+import com.ftn.kts_nvt.helper.PageImplementation;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -95,6 +96,25 @@ public class GeoLocationControllerIntegrationTest {
 		assertNotNull(locations);
 		assertTrue(!locations.isEmpty());
 		assertEquals(1, locations.size());
+	}
+	
+	@Test
+	public void testFindAllPageable() {
+		login("vlado@gmail.com", "vukovic");
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", this.accessToken);
+
+		HttpEntity<GeoLocation> httpEntity = new HttpEntity<GeoLocation>(headers);
+		
+		ResponseEntity<PageImplementation<GeoLocation>> responseEntity = this.restTemplate.exchange("/geolocation/by-page/1", HttpMethod.GET, httpEntity,
+				new ParameterizedTypeReference<PageImplementation<GeoLocation>>() {
+				});
+		PageImplementation<GeoLocation> locations = responseEntity.getBody();
+		
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertEquals(1, locations.getNumberOfElements());
+		assertTrue(locations.isLast());
 	}
 
 	@Test
