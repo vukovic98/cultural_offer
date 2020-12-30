@@ -81,8 +81,7 @@ import com.ftn.kts_nvt.service.VerificationCodeServiceIntegrationTest;
 	     AdminServiceIntegrationTest.class,
 	     RegisteredUserServiceIntegrationTest.class,
 	     VerificationCodeServiceIntegrationTest.class,
-	     
-	     
+     
 	     //repository I
 		 CulturalOfferCategoryRepositoryIntegrationTest.class,
 		 CulturalOfferTypeRepositoryIntegrationTest.class,

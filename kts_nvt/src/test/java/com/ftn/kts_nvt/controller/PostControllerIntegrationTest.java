@@ -96,6 +96,20 @@ public class PostControllerIntegrationTest {
 	}
 
 	@Test
+	public void testFindByIdFail() {
+		login("vlado@gmail.com", "vukovic");
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", this.accessToken);
+
+		HttpEntity<PostDTO> httpEntity = new HttpEntity<>(headers);
+
+		ResponseEntity<PostDTO> responseEntity = restTemplate.exchange("/posts/555", HttpMethod.GET, httpEntity,
+				PostDTO.class);
+		assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+	}
+
+	@Test
 	@Transactional
 	public void testCreateAndDelete() {
 		login("vlado@gmail.com", "vukovic");
@@ -139,13 +153,13 @@ public class PostControllerIntegrationTest {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", this.accessToken);
-		//get Post
+		// get Post
 		Post p = this.postService.findOne(5L);
 		PostMapper postMapper = new PostMapper();
 		PostDTO post = postMapper.toDto(p);
 		post.setTitle("Updated title");
 		System.out.println(post.getTitle());
-		
+
 		/*
 		 * CulturalOfferMapper offerMapper = new CulturalOfferMapper(); CulturalOffer o
 		 * = this.offerService.findById(1L); if (o != null) { CulturalOfferDTO offer =
@@ -154,8 +168,8 @@ public class PostControllerIntegrationTest {
 
 		HttpEntity<PostDTO> httpEntity = new HttpEntity<PostDTO>(post, headers);
 
-		ResponseEntity<PostDTO> responseEntity = restTemplate.exchange("/posts/" + p.getPostId(), HttpMethod.PUT, httpEntity,
-				PostDTO.class);
+		ResponseEntity<PostDTO> responseEntity = restTemplate.exchange("/posts/" + p.getPostId(), HttpMethod.PUT,
+				httpEntity, PostDTO.class);
 
 		PostDTO updated = responseEntity.getBody();
 
@@ -163,14 +177,32 @@ public class PostControllerIntegrationTest {
 		assertNotNull(updated);
 		assertTrue("Updated title".equalsIgnoreCase(updated.getTitle()));
 
-		//vrati na staro
+		// vrati na staro
 		updated.setTitle("This is post5");
 		HttpEntity<PostDTO> httpEntity2 = new HttpEntity<PostDTO>(updated, headers);
 
-		ResponseEntity<PostDTO> responseEntity2 = restTemplate.exchange("/posts/"+post.getId(), HttpMethod.PUT, httpEntity2,
-				PostDTO.class);
+		ResponseEntity<PostDTO> responseEntity2 = restTemplate.exchange("/posts/" + post.getId(), HttpMethod.PUT,
+				httpEntity2, PostDTO.class);
 		assertEquals(HttpStatus.OK, responseEntity2.getStatusCode());
 
 	}
+	
+	@Test
+	@Transactional
+	public void testUpdateFail() {
+		login("vlado@gmail.com", "vukovic");
 
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", this.accessToken);
+		// make new Post
+		PostDTO post = new PostDTO(555L, "Novi", "Lala", Instant.now());
+
+		HttpEntity<PostDTO> httpEntity = new HttpEntity<PostDTO>(post, headers);
+
+		ResponseEntity<PostDTO> responseEntity = restTemplate.exchange("/posts/" + post.getId(), HttpMethod.PUT,
+				httpEntity, PostDTO.class);
+
+		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+
+	}
 }

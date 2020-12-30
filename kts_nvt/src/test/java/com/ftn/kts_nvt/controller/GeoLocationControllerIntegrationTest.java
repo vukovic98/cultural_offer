@@ -35,111 +35,129 @@ public class GeoLocationControllerIntegrationTest {
 
 	@Autowired
 	private TestRestTemplate restTemplate;
-	
+
 	public void login(String username, String password) {
 		UserLoginDTO dto = new UserLoginDTO(username, password);
-        ResponseEntity<UserTokenStateDTO> responseEntity =
-        		restTemplate.postForEntity("/auth/log-in",
-                dto, UserTokenStateDTO.class);
-        
-        accessToken = "Bearer " + responseEntity.getBody().getAuthenticationToken();
-    }
-	
+		ResponseEntity<UserTokenStateDTO> responseEntity = restTemplate.postForEntity("/auth/log-in", dto,
+				UserTokenStateDTO.class);
+
+		accessToken = "Bearer " + responseEntity.getBody().getAuthenticationToken();
+	}
+
 	@Test
 	public void testFindById() {
-		login("vlado@gmail.com","vukovic");		
-		
+		login("vlado@gmail.com", "vukovic");
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", this.accessToken);
-		
+
 		HttpEntity<GeoLocation> httpEntity = new HttpEntity<GeoLocation>(headers);
-		
-		ResponseEntity<GeoLocation> responseEntity = restTemplate.exchange("/geolocation/1", HttpMethod.GET,httpEntity,GeoLocation.class);
-		
+
+		ResponseEntity<GeoLocation> responseEntity = restTemplate.exchange("/geolocation/1", HttpMethod.GET, httpEntity,
+				GeoLocation.class);
+
 		GeoLocation location = responseEntity.getBody();
 		assertEquals(HttpStatus.FOUND, responseEntity.getStatusCode());
 		assertEquals(1L, location.getLocationId());
 	}
 	
 	@Test
-	public void testFindAll() {
-		login("vlado@gmail.com","vukovic");		
-		
+	public void testFindByIdFail() {
+		login("vlado@gmail.com", "vukovic");
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", this.accessToken);
-		
+
 		HttpEntity<GeoLocation> httpEntity = new HttpEntity<GeoLocation>(headers);
-		
-		ResponseEntity<ArrayList<GeoLocation>> responseEntity = restTemplate.
-				exchange("/geolocation", HttpMethod.GET,httpEntity, new ParameterizedTypeReference<ArrayList<GeoLocation>>() {
-		});
-		
+
+		ResponseEntity<GeoLocation> responseEntity = restTemplate.exchange("/geolocation/99", HttpMethod.GET, httpEntity,
+				GeoLocation.class);
+
+		GeoLocation location = responseEntity.getBody();
+		assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+	}
+	
+	@Test
+	public void testFindAll() {
+		login("vlado@gmail.com", "vukovic");
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", this.accessToken);
+
+		HttpEntity<GeoLocation> httpEntity = new HttpEntity<GeoLocation>(headers);
+
+		ResponseEntity<ArrayList<GeoLocation>> responseEntity = restTemplate.exchange("/geolocation", HttpMethod.GET,
+				httpEntity, new ParameterizedTypeReference<ArrayList<GeoLocation>>() {
+				});
+
 		ArrayList<GeoLocation> locations = responseEntity.getBody();
-		
+
 		assertNotNull(locations);
 		assertTrue(!locations.isEmpty());
 		assertEquals(1, locations.size());
 	}
 
-	
 	@Test
 	@Transactional
 	@Rollback(value = true)
 	public void testCreateAndDelete() {
-		login("vlado@gmail.com","vukovic");
-		
+		login("vlado@gmail.com", "vukovic");
+
 		GeoLocation location = new GeoLocation(22.2, 22.2, "New Location");
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", this.accessToken);
-		
+
 		HttpEntity<GeoLocation> httpEntity = new HttpEntity<GeoLocation>(location, headers);
-		
-		ResponseEntity<GeoLocation> responseEntity = restTemplate.postForEntity("/geolocation", httpEntity, GeoLocation.class);
-		
+
+		ResponseEntity<GeoLocation> responseEntity = restTemplate.postForEntity("/geolocation", httpEntity,
+				GeoLocation.class);
+
 		GeoLocation created = responseEntity.getBody();
-		
+
 		assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
 		assertTrue("New Location".equalsIgnoreCase(created.getPlace()));
-		
-		//removing
+
+		// removing
 		HttpEntity<Object> httpEntityDelete = new HttpEntity<Object>(headers);
-		
-		ResponseEntity<?> responseEntityDelete =
-				restTemplate.exchange("/geolocation/"+created.getLocationId(), HttpMethod.DELETE, httpEntityDelete, Object.class);
+
+		ResponseEntity<?> responseEntityDelete = restTemplate.exchange("/geolocation/" + created.getLocationId(),
+				HttpMethod.DELETE, httpEntityDelete, Object.class);
 		assertEquals(HttpStatus.OK, responseEntityDelete.getStatusCode());
-		
+
 	}
 	
+
+
 	@Test
 	public void testUpdate() {
-		login("vlado@gmail.com","vukovic");
-		
+		login("vlado@gmail.com", "vukovic");
+
 		GeoLocation location = new GeoLocation(23.23, 23.23, "Updated Location");
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", this.accessToken);
-		
+
 		HttpEntity<GeoLocation> httpEntity = new HttpEntity<GeoLocation>(location, headers);
-		
-		ResponseEntity<GeoLocation> responseEntity = restTemplate.exchange("/geolocation/1", HttpMethod.PUT, httpEntity, GeoLocation.class);
-		
-		
+
+		ResponseEntity<GeoLocation> responseEntity = restTemplate.exchange("/geolocation/1", HttpMethod.PUT, httpEntity,
+				GeoLocation.class);
+
 		GeoLocation updated = responseEntity.getBody();
-		
+
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertTrue("Updated Location".equalsIgnoreCase(updated.getPlace()));
-		
-		//putting attributes back
+
+		// putting attributes back
 		GeoLocation loc = new GeoLocation(23.23, 23.23, "Novi Sad");
-		
-		HttpEntity<GeoLocation> httpEntity2 = new HttpEntity<>(loc,headers);
-		
-		responseEntity = restTemplate.exchange("/geolocation/1", HttpMethod.PUT, httpEntity2,GeoLocation.class);
+
+		HttpEntity<GeoLocation> httpEntity2 = new HttpEntity<>(loc, headers);
+
+		responseEntity = restTemplate.exchange("/geolocation/1", HttpMethod.PUT, httpEntity2, GeoLocation.class);
 		updated = responseEntity.getBody();
-		
+
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertTrue(updated.getPlace().equalsIgnoreCase("Novi Sad"));
-		
+
 	}
 }

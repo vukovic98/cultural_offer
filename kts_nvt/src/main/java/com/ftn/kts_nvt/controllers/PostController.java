@@ -84,6 +84,7 @@ public class PostController {
 			post = postService.update(post, id);
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
 		return new ResponseEntity<>(this.postMapper.toDto(post), HttpStatus.OK);

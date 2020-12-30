@@ -133,6 +133,17 @@ public class CulturalOfferControllerIntegrationTest {
 		assertTrue("Name2".equalsIgnoreCase(dto.getName()));
 	}
 	
+
+	@Test
+	public void testFindDetailsFail() {
+		ResponseEntity<CulturalOfferDetailsDTO> responseEntity =
+                restTemplate.getForEntity("/culturalOffers/detail/222",
+                		CulturalOfferDetailsDTO.class);
+		
+		assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+		
+	}
+	
 	@Test
 	public void testUpdate() {
 		login("vlado@gmail.com", "vukovic");
@@ -165,5 +176,22 @@ public class CulturalOfferControllerIntegrationTest {
                         CulturalOfferDTO.class);
 		
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+	
+	@Test
+	public void testDeleteFail() {
+		login("vlado@gmail.com", "vukovic");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", this.accessToken);
+		
+		HttpEntity<Object> httpEntityDelete = new HttpEntity<Object>(headers);
+		
+		ResponseEntity<?> responseEntityDelete =
+                restTemplate.exchange("/culturalOffers/222", HttpMethod.DELETE,
+                		httpEntityDelete, Object.class);
+		
+		assertEquals(HttpStatus.BAD_REQUEST, responseEntityDelete.getStatusCode());
+		
 	}
 }
