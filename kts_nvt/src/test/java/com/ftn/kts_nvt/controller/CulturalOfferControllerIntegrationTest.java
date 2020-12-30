@@ -28,6 +28,7 @@ import com.ftn.kts_nvt.dto.CulturalOfferDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferDetailsDTO;
 import com.ftn.kts_nvt.dto.UserLoginDTO;
 import com.ftn.kts_nvt.dto.UserTokenStateDTO;
+import com.ftn.kts_nvt.helper.PageImplementation;
 import com.ftn.kts_nvt.repositories.GeoLocationRepository;
 import com.ftn.kts_nvt.services.CulturalOfferService;
 
@@ -66,6 +67,20 @@ public class CulturalOfferControllerIntegrationTest {
 		
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(4, offers.size());
+	}
+	
+	@Test
+	public void testFindAllPageable() {
+		ResponseEntity<PageImplementation<CulturalOfferDTO>> responseEntity = 
+				this.restTemplate.exchange("/culturalOffers/by-page/1", HttpMethod.GET, null,
+						new ParameterizedTypeReference<PageImplementation<CulturalOfferDTO>>() {
+						});
+		
+		PageImplementation<CulturalOfferDTO> offers = responseEntity.getBody();
+		
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(4, offers.getNumberOfElements());
+        assertTrue(offers.isLast());
 	}
 	
 	@Test
