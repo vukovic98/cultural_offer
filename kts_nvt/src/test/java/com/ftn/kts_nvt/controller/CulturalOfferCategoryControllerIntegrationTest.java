@@ -88,6 +88,20 @@ public class CulturalOfferCategoryControllerIntegrationTest {
 		assertNotNull(cat);
 		assertEquals(1L, cat.getId());
 	}
+	
+	@Test
+	public void testFindOneFail() {
+		login("vlado@gmail.com", "vukovic");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", this.accessToken);
+
+		HttpEntity<Object> httpEntity = new HttpEntity<>(headers);
+		ResponseEntity<CulturalOfferCategoryDTO> responseEntity = restTemplate.exchange("/cultural-offer-categories/111",
+				HttpMethod.GET, httpEntity, CulturalOfferCategoryDTO.class);
+
+		assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+
+	}
 
 	@Test
 	public void testFindByName() {
@@ -107,6 +121,22 @@ public class CulturalOfferCategoryControllerIntegrationTest {
 		assertTrue(name.equalsIgnoreCase(cat.getName()));
 		assertNotNull(cat);
 		assertEquals(2L, cat.getId());
+	}
+	
+	@Test
+	public void testFindByNameFail() {
+		login("vlado@gmail.com", "vukovic");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", this.accessToken);
+
+		HttpEntity<Object> httpEntity = new HttpEntity<>(headers);
+
+		String name = "Ivana";
+		ResponseEntity<CulturalOfferCategoryDTO> responseEntity = restTemplate.exchange(
+				"/cultural-offer-categories/name/" + name, HttpMethod.GET, httpEntity, CulturalOfferCategoryDTO.class);
+
+
+		assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
 	}
 
 	@Test
@@ -135,6 +165,25 @@ public class CulturalOfferCategoryControllerIntegrationTest {
 		
 		assertEquals(HttpStatus.OK, respEntDelete.getStatusCode());
 	}
+	
+
+	@Test
+	@Transactional
+	public void testCreateFail() {
+
+		login("vlado@gmail.com", "vukovic");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", this.accessToken);
+		List<CulturalOfferTypeDTO> types = new ArrayList<>();
+		CulturalOfferCategoryDTO category = new CulturalOfferCategoryDTO(3L, "Institution", types);
+
+		HttpEntity<CulturalOfferCategoryDTO> httpEntity = new HttpEntity<>(category,headers);
+		
+		ResponseEntity<CulturalOfferCategoryDTO> responseEntity = restTemplate.exchange("/cultural-offer-categories", HttpMethod.POST, httpEntity, CulturalOfferCategoryDTO.class);
+		
+		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+	}
+	
 	
 	@Test
 	@Transactional
@@ -167,5 +216,24 @@ public class CulturalOfferCategoryControllerIntegrationTest {
 		CulturalOfferCategoryDTO oldCat = respEntDelete.getBody();
 		assertEquals(HttpStatus.OK, respEntDelete.getStatusCode());
 		assertTrue(oldName.equalsIgnoreCase(oldCat.getName()));
+	}
+	
+	@Test
+	@Transactional
+	public void testUpdateFail() {
+
+		login("vlado@gmail.com", "vukovic");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", this.accessToken);
+	
+		CulturalOfferCategoryDTO category = new CulturalOfferCategoryDTO(333L, "Ivana", null);
+		
+		HttpEntity<CulturalOfferCategoryDTO> httpEntity = new HttpEntity<>(category,headers);
+		
+		ResponseEntity<CulturalOfferCategoryDTO> responseEntity = restTemplate.exchange("/cultural-offer-categories/"+category.getId(), HttpMethod.PUT, httpEntity, CulturalOfferCategoryDTO.class);
+		
+		
+		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+		
 	}
 }

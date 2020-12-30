@@ -45,12 +45,14 @@ public class GeoLocationServiceIntegrationTest {
 	@Test
 	public void testFindById() {
 		long id = 1;
-		long idFail = 89;
-		
 		GeoLocation loc = this.service.findById(id);
 		assertNotNull(loc);
 		assertEquals(1L, loc.getLocationId());
-		
+	}
+	
+	@Test
+	public void testFindByIdFail() {
+		long idFail = 89;
 		GeoLocation locF = this.service.findById(idFail);
 		assertNull(locF);
 	}
@@ -69,6 +71,24 @@ public class GeoLocationServiceIntegrationTest {
 		
 		assertTrue(deleted);
 		assertNull(found);
+	}
+	
+
+	
+	@Test
+	public void testDeleteFail() {
+		GeoLocation gl = new GeoLocation(33.3, 44.4, "Katakomba");
+		gl.setLocationId(100L);
+		boolean deleted = this.service.delete(gl);
+		
+	
+		assertEquals(false, deleted);
+	}
+	
+	@Test
+	public void testDeleteByIdFail() {
+		boolean deleted = this.service.deleteById(68L);
+		assertEquals(false, deleted);
 	}
 	
 	@Test

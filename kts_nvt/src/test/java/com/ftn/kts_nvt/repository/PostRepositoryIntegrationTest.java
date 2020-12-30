@@ -1,6 +1,7 @@
 package com.ftn.kts_nvt.repository;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
@@ -29,5 +30,11 @@ public class PostRepositoryIntegrationTest {
 		ArrayList<Post> postsForOffer = this.repository.findPostsForOffer(1L);
 		assertNotNull(postsForOffer);
 		assertEquals(4, postsForOffer.size());
+	}
+	
+	@Test
+	public void testFindPostsForOfferFail() {
+		ArrayList<Post> postsForOffer = this.repository.findPostsForOffer(77L);
+		assertEquals(0, postsForOffer.size());
 	}
 }

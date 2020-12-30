@@ -40,4 +40,12 @@ public class CommentRepositoryIntegrationTest {
 		
 		assertEquals(2, list.size());
 	}
+	
+	
+	@Test
+	public void testFindCommentsForOfferFail() {
+		ArrayList<Comment> list = this.commentRepository.findCommentsForOffer(111L);
+		
+		assertEquals(0, list.size());
+	}
 }

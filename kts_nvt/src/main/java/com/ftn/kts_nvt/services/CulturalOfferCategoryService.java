@@ -81,5 +81,6 @@ public class CulturalOfferCategoryService implements ServiceInterface<CulturalOf
 		repository.delete(existingCategory);
 	}
 	
+
 	
 }

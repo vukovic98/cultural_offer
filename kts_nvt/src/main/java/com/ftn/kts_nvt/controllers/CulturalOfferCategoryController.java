@@ -107,9 +107,7 @@ public class CulturalOfferCategoryController {
 		try {
 			category = mapper.toEntityNoTypes(categoryDTO);
 			saved = this.service.create(category);
-			
-			System.out.println(saved.getId());
-			
+						
 			for (CulturalOfferTypeDTO t : categoryDTO.getTypes()) {
 				t.setCategoryId(saved.getId());
 			}
