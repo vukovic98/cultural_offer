@@ -6,6 +6,12 @@
   cursor: pointer;
 }
 
+.myFont{
+  font-family: "Modern No. 20";
+  font-size: xx-large;
+
+}
+
 .logoImg {
   height: 80px;
 }
