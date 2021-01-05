@@ -24,7 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.kts_nvt.beans.CulturalOfferType;
 import com.ftn.kts_nvt.dto.CulturalOfferTypeDTO;
+import com.ftn.kts_nvt.dto.PostDTO;
 import com.ftn.kts_nvt.helper.CulturalOfferTypeMapper;
+import com.ftn.kts_nvt.helper.PageImplMapper;
+import com.ftn.kts_nvt.helper.PageImplementation;
 import com.ftn.kts_nvt.services.CulturalOfferTypeService;
 
 @RestController
@@ -50,7 +53,7 @@ public class CulturalOfferTypeController {
 
 	// GET http://localhost:8080/culturalOfferTypes/byPage/1
 	@GetMapping(path = "/byPage/{pageNum}")
-	public ResponseEntity<Page<CulturalOfferTypeDTO>> findAll(@PathVariable int pageNum) {
+	public ResponseEntity<PageImplementation<CulturalOfferTypeDTO>> findAll(@PathVariable int pageNum) {
 
 		Pageable pageRequest = PageRequest.of(pageNum - 1, 10);
 
@@ -60,7 +63,10 @@ public class CulturalOfferTypeController {
 		Page<CulturalOfferTypeDTO> pageCulturalOfferTypeDTOS = new PageImpl<>(culturalOfferTypeDTOS, page.getPageable(),
 				page.getTotalElements());
 
-		return new ResponseEntity<>(pageCulturalOfferTypeDTOS, HttpStatus.OK);
+		PageImplMapper<CulturalOfferTypeDTO> pageMapper = new PageImplMapper<>();
+		PageImplementation<CulturalOfferTypeDTO> pageImpl = pageMapper.toPageImpl(pageCulturalOfferTypeDTOS);
+		
+		return new ResponseEntity<>(pageImpl, HttpStatus.OK);
 	}
 
 	// GET http://localhost:8080/culturalOfferTypes/1
@@ -157,7 +163,6 @@ public class CulturalOfferTypeController {
 	// GET http://localhost:8080/cultural-offer-types/getAll
 		@GetMapping(path = "/getAll")
 		public ResponseEntity<String[]> findAll() {
-
 
 			ArrayList<CulturalOfferType> typesObj = this.culturalOfferTypeService.findAll();
 			ArrayList<String> types = new ArrayList<>();
