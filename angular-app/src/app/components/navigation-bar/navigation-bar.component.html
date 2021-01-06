@@ -10,17 +10,23 @@
           <li class="nav-item" *ngIf="isUserAdmin()">
             <a class="nav-link" routerLink="/add-offer">Add offer</a>
           </li>
-		<li class="nav-item" *ngIf="isUserAdmin()">
+          <li class="nav-item" *ngIf="isUserAdmin()">
             <a class="nav-link" routerLink="/category">Category</a>
-          </li> 		<li class="nav-item" *ngIf="isUserAdmin()">
+          </li>
+          <li class="nav-item" *ngIf="isUserAdmin()">
+            <a class="nav-link" routerLink="/type">Type</a>
+          </li>
+          <li class="nav-item" *ngIf="isUserAdmin()">
             <a class="nav-link" routerLink="/approving-comments">Approving comments</a>
-          </li>        </ul>
+          </li>
+        </ul>
       </div>
       <span class="float-right" *ngIf="!getUser()">
-          <a routerLink="/login"><button mat-raised-button color="primary" class="mr-2">Login</button></a>
-          <a routerLink="/sign-up"><button mat-raised-button color="primary">Sign Up</button></a>
+        <a routerLink="/login"><button mat-raised-button color="primary" class="mr-2">Login</button></a>
+        <a routerLink="/sign-up"><button mat-raised-button color="primary">Sign Up</button></a>
       </span>
-      <button mat-mini-fab color="primary" class="dropdown" [matMenuTriggerFor]="beforeMenu" *ngIf="getUser()">{{getUserName()[0]}}</button>
+      <button mat-mini-fab color="primary" class="dropdown" [matMenuTriggerFor]="beforeMenu"
+        *ngIf="getUser()">{{getUserName()[0]}}</button>
       <mat-menu #beforeMenu="matMenu" xPosition="before">
         <button class="dropdown" mat-menu-item routerLink="/profile">Profile</button>
         <button class="dropdown" mat-menu-item routerLink="/change-password">Change password</button>

@@ -46,17 +46,12 @@
                         <tr class="text-center" *ngFor="let c of getAllCategories()">
                             <td>{{c.name}}</td>
                             <td>
-                                <mat-select >
+                                <mat-select>
                                     <mat-option *ngIf="c.types.length == 0">No types</mat-option>
                                     <mat-option *ngFor='let type of c.types' [value]="type.id">
-                                        <div style="display:flex; justify-content: space-between">
-                                            <span>{{type.name}}</span>
-                                            <span></span>
-                                            <span (click)="deleteType(type.id)"><mat-icon>delete</mat-icon></span>
-                                        </div>
+                                        {{type.name}}
                                     </mat-option>
                                 </mat-select>
-
                             </td>
                             <td>
                                 <button mat-mini-fab color="warn" class="mr-2 mb-2" (click)="deleteCategory(c.id)"

@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 
-import { FormsModule, NgSelectOption } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -38,13 +38,14 @@ import { FilterOffersService } from "./services/filter-offers.service";
 import { CommonModule } from "@angular/common";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { AddCategoryComponent } from './components/add-category/add-category.component';
+import { AddTypeComponent } from './components/add-type/add-type.component';
 import { CommentToBeApprovedComponent } from './components/comment-to-be-approved/comment-to-be-approved.component';
 import { CommentsToBeApprovedListComponent } from './components/comments-to-be-approved-list/comments-to-be-approved-list.component';
-import {CommentsToBeApprovedService} from "./services/comments-to-be-approved.service";
-import {MatListModule} from "@angular/material/list";
-import {MatExpansionModule} from "@angular/material/expansion";
+import { CommentsToBeApprovedService } from "./services/comments-to-be-approved.service";
+import { MatListModule } from "@angular/material/list";
+import { MatExpansionModule } from "@angular/material/expansion";
 import { PostComponent } from './components/post/post.component';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { CommentListComponent } from './components/comment-list/comment-list.component';
 import { CommentItemComponent } from './components/comment-item/comment-item.component';
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
@@ -67,34 +68,35 @@ import { AddCommentComponent } from './components/add-comment/add-comment.compon
     FilterOffersComponent,
     OfferDetailsComponent,
     EditOfferComponent,
-  ChangePasswordComponent,
-AddCategoryComponent,
- CommentToBeApprovedComponent,
-  CommentsToBeApprovedListComponent,
-  PostComponent,
-  CommentListComponent,
-  CommentItemComponent,
-  AddCommentComponent
-],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        MatIconModule,
-        MatSelectModule,
-        MatSlideToggleModule,
-        MatButtonModule,
-        MatDialogModule,
-        CommonModule,
-        NgSelectModule,
-        MatMenuModule,
-        MatListModule,
-        MatExpansionModule,
-        MatCardModule
-    ],
+    ChangePasswordComponent,
+    AddCategoryComponent,
+    CommentToBeApprovedComponent,
+    CommentsToBeApprovedListComponent,
+    PostComponent,
+    CommentListComponent,
+    CommentItemComponent,
+    AddCommentComponent,
+    AddTypeComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatButtonModule,
+    MatDialogModule,
+    CommonModule,
+    NgSelectModule,
+    MatMenuModule,
+    MatListModule,
+    MatExpansionModule,
+    MatCardModule
+  ],
   providers: [
     AuthService,
     CulturalOfferService,

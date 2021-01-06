@@ -1,6 +1,7 @@
 package com.ftn.kts_nvt.services;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ftn.kts_nvt.beans.CulturalOffer;
+import com.ftn.kts_nvt.beans.CulturalOfferCategory;
 import com.ftn.kts_nvt.beans.CulturalOfferType;
+import com.ftn.kts_nvt.repositories.CulturalOfferCategoryRepository;
 import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
 import com.ftn.kts_nvt.repositories.CulturalOfferTypeRepository;
 
@@ -19,7 +22,11 @@ public class CulturalOfferTypeService {
 	private CulturalOfferTypeRepository culturalOfferTypeRepository;
 
 	@Autowired 
-	CulturalOfferRepository culturalOfferRepository;
+	private CulturalOfferRepository culturalOfferRepository;
+	
+	@Autowired 
+	private CulturalOfferCategoryRepository culturalOfferCategoryRepository;
+	
 	
 	public ArrayList<CulturalOfferType> findAll(long categoryId) {
 		return this.culturalOfferTypeRepository.findByCategoryId(categoryId);
@@ -52,16 +59,24 @@ public class CulturalOfferTypeService {
 	}
 
 	public boolean deleteById(long id) throws Exception {
+		System.out.println("delte by id = " + id);
 		boolean exists = this.culturalOfferTypeRepository.existsById(id);
 
 		if (exists) {
 			ArrayList<CulturalOffer> list = culturalOfferRepository.findByTypeId(id);
-			/*for(CulturalOffer c : list) {
+			for(CulturalOffer c : list) {
 				System.out.println("for = " + c.getName());
-			}*/
+			}
+			System.out.println("size = " + list.size());
 			if(list.size() != 0) {
 				throw new Exception("CulturalOfferType with given id exist CulturalOffer");
 			}else {
+				CulturalOfferType type = culturalOfferTypeRepository.findById(id).orElse(null);
+				CulturalOfferCategory category = culturalOfferCategoryRepository.findById(type.getCategory().getId()).orElse(null);
+				boolean delCatType = category.getTypes().remove(type);
+				System.out.println("deleted type from category list = " + delCatType);
+				
+				culturalOfferCategoryRepository.save(category);
 				this.culturalOfferTypeRepository.deleteById(id);
 			}
 		}
@@ -71,7 +86,16 @@ public class CulturalOfferTypeService {
 	public CulturalOfferType save(CulturalOfferType culturalOfferType) {
 		CulturalOfferType exist = culturalOfferTypeRepository.findByName(culturalOfferType.getName());
 		if(exist == null) {
-			return this.culturalOfferTypeRepository.save(culturalOfferType);			
+			CulturalOfferType addedType = this.culturalOfferTypeRepository.save(culturalOfferType);
+			
+			//System.out.println("exist == null");
+			//System.out.println("id = " + culturalOfferType.getCategory().getId());
+			CulturalOfferCategory category = culturalOfferCategoryRepository.findById(culturalOfferType.getCategory().getId()).orElse(null);
+			//System.out.println("found category = " + category.getName() + " " + category.getTypes().size());
+			category.getTypes().add(addedType);
+			//System.out.println(" size =  " + category.getTypes().size());
+			culturalOfferCategoryRepository.save(category);
+			return addedType;			
 		}else {
 			return null;
 		}
