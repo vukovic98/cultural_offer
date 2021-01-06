@@ -21,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.kts_nvt.beans.Grade;
+import com.ftn.kts_nvt.dto.CulturalOfferDTO;
 import com.ftn.kts_nvt.dto.GradeDTO;
 import com.ftn.kts_nvt.helper.GradeMapper;
+import com.ftn.kts_nvt.helper.PageImplMapper;
+import com.ftn.kts_nvt.helper.PageImplementation;
 import com.ftn.kts_nvt.services.GradeService;
 
 @RestController
@@ -53,13 +56,16 @@ public class GradeController {
 	 * GET http://localhost:8080/grades/byPage/1
 	 */
  	@GetMapping(value = "/by-page/{pageNum}")
-	public ResponseEntity<Page<GradeDTO>> getAll(@PathVariable int pageNum) {
+	public ResponseEntity<PageImplementation<GradeDTO>> getAll(@PathVariable int pageNum) {
 		Pageable pageRequest = PageRequest.of(pageNum - 1, 10);
 		Page<Grade> page = gradeService.findAll(pageRequest);
 		List<GradeDTO> gradeDTOS = gradeMapper.toGradeDTOList(page.toList());
 		Page<GradeDTO> pageGradeDTOS = new PageImpl<>(gradeDTOS, page.getPageable(), page.getTotalElements());
 
-		return new ResponseEntity<>(pageGradeDTOS, HttpStatus.OK);
+		PageImplMapper<GradeDTO> pageMapper = new PageImplMapper<>();
+		PageImplementation<GradeDTO> pageImpl = pageMapper.toPageImpl(pageGradeDTOS);
+		
+		return new ResponseEntity<>(pageImpl, HttpStatus.OK);
 	}
 
 	/*
