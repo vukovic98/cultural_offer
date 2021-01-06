@@ -3,6 +3,7 @@ package com.ftn.kts_nvt.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -22,11 +23,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ftn.kts_nvt.beans.Grade;
 import com.ftn.kts_nvt.beans.RegisteredUser;
+import com.ftn.kts_nvt.dto.CulturalOfferCategoryDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferDTO;
 import com.ftn.kts_nvt.dto.GradeDTO;
 import com.ftn.kts_nvt.dto.UserDTO;
 import com.ftn.kts_nvt.dto.UserLoginDTO;
 import com.ftn.kts_nvt.dto.UserTokenStateDTO;
+import com.ftn.kts_nvt.helper.PageImplementation;
 import com.ftn.kts_nvt.services.CulturalOfferService;
 import com.ftn.kts_nvt.services.GradeService;
 import com.ftn.kts_nvt.services.RegisteredUserService;
@@ -61,7 +64,7 @@ public class GradeControllerIntegrationTest {
 	
 	@Test
 	public void testFindAll() {
-		login("a@a", "vukovic");		//ROLE_USER
+		login("a2@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -79,6 +82,26 @@ public class GradeControllerIntegrationTest {
 	}
 	
 	@Test
+	public void testFindAllPageable() {
+		login("a2@a", "vukovic");		//ROLE_USER
+		HttpHeaders headers = new HttpHeaders();
+	    headers.add("Authorization", this.accessToken); 
+	    
+	    HttpEntity<GradeDTO> httpEntity = new HttpEntity<GradeDTO>(headers);
+		ResponseEntity<PageImplementation<GradeDTO>> responseEntity = 
+				this.restTemplate.exchange("/grades/by-page/1",
+											HttpMethod.GET,
+											httpEntity,
+											new ParameterizedTypeReference<PageImplementation<GradeDTO>>() {});
+		
+		PageImplementation<GradeDTO> grades = responseEntity.getBody();
+    		
+	    assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	    assertEquals(4, grades.getNumberOfElements());
+	    assertTrue(grades.isLast());
+	}
+	
+	@Test
 	public void testFindById() {		
 		ResponseEntity<GradeDTO> responseEntity =
                 restTemplate.exchange("/grades/1",
@@ -87,7 +110,7 @@ public class GradeControllerIntegrationTest {
                 						GradeDTO.class);
 		assertEquals(HttpStatus.UNAUTHORIZED, responseEntity.getStatusCode());
 
-		login("a@a", "vukovic");		//ROLE_USER
+		login("a2@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -111,7 +134,7 @@ public class GradeControllerIntegrationTest {
 	
 	@Test
 	public void testGetGradeForUser() {
-		login("a@a", "vukovic");		//ROLE_USER
+		login("a2@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -133,7 +156,7 @@ public class GradeControllerIntegrationTest {
 	
 	@Test
 	public void testGetGradeForOffer() {
-		login("a@a", "vukovic");		//ROLE_USER
+		login("a2@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -156,7 +179,7 @@ public class GradeControllerIntegrationTest {
 	@Test
 	public void testCreateAndDelete() {
 		int sizeBefore = service.findAll().size();
-		login("a@a", "vukovic");		//ROLE_USER
+		login("a2@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		
@@ -200,7 +223,7 @@ public class GradeControllerIntegrationTest {
 	
 	@Test
 	public void testUpdate() {
-		login("a@a", "vukovic");		//ROLE_USER
+		login("a2@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 	    

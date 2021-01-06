@@ -25,9 +25,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ftn.kts_nvt.beans.CulturalOfferCategory;
 import com.ftn.kts_nvt.beans.CulturalOfferType;
+import com.ftn.kts_nvt.dto.CulturalOfferCategoryDTO;
+import com.ftn.kts_nvt.dto.CulturalOfferDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferTypeDTO;
 import com.ftn.kts_nvt.dto.UserLoginDTO;
 import com.ftn.kts_nvt.dto.UserTokenStateDTO;
+import com.ftn.kts_nvt.helper.PageImplementation;
 import com.ftn.kts_nvt.repositories.CulturalOfferCategoryRepository;
 import com.ftn.kts_nvt.services.CulturalOfferTypeService;
 
@@ -67,7 +70,28 @@ public class CulturalOfferTypeControllerIntegrationTest {
 			
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	     assertEquals(4, types.size());
-	     assertEquals("Festival", types.get(1));
+	     assertEquals("Festival", types.get(0));
+	 }
+	 
+	@Test
+	public void testFindAllPageable() {
+		login("vlado@gmail.com", "vukovic");
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", this.accessToken);
+		
+		HttpEntity<CulturalOfferTypeDTO> httpEntity = new HttpEntity<CulturalOfferTypeDTO>(headers);
+		
+		ResponseEntity<PageImplementation<CulturalOfferTypeDTO>> responseEntity = 
+				this.restTemplate.exchange("/cultural-offer-types/by-page/1", HttpMethod.GET, httpEntity,
+						new ParameterizedTypeReference<PageImplementation<CulturalOfferTypeDTO>>() {
+						});
+		
+		PageImplementation<CulturalOfferTypeDTO> types = responseEntity.getBody();
+			
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	    assertEquals(4, types.getNumberOfElements());
+	    assertTrue(types.isLast());
 	 }
 	 
 	 @Test
@@ -192,7 +216,7 @@ public class CulturalOfferTypeControllerIntegrationTest {
 	 
 	 @Test
 	 public void testDeleteFailRole() {
-		 login("a@a", "vukovic");
+		 login("a2@a", "vukovic");
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", this.accessToken);
 	     

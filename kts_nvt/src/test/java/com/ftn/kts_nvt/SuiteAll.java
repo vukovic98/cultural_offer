@@ -48,51 +48,51 @@ import com.ftn.kts_nvt.service.VerificationCodeServiceIntegrationTest;
 @SuiteClasses({
 	
 		//controller I
-		CulturalOfferCategoryControllerIntegrationTest.class,
-		PostControllerIntegrationTest.class,
-		GeoLocationControllerIntegrationTest.class,
-	    CommentControllerIntegrationTest.class,
-	    CulturalOfferControllerIntegrationTest.class,
+		//CulturalOfferCategoryControllerIntegrationTest.class,
+		//PostControllerIntegrationTest.class,
+		//GeoLocationControllerIntegrationTest.class,
+	    //CommentControllerIntegrationTest.class,
+	    //CulturalOfferControllerIntegrationTest.class,
 	    GradeControllerIntegrationTest.class,
-	    ImageControllerIntegrationTest.class,
-	    CulturalOfferTypeControllerIntegrationTest.class,
-	    AdminControllerIntegrationTest.class,
-	    AuthenticationControllerIntegrationTest.class,
-	    RegisteredUserControllerIntegrationTest.class,
+	    //ImageControllerIntegrationTest.class,
+	    //CulturalOfferTypeControllerIntegrationTest.class,
+	    //AdminControllerIntegrationTest.class,
+	    //AuthenticationControllerIntegrationTest.class,
+	    //RegisteredUserControllerIntegrationTest.class,
 	    
 	    //service U
-		 CulturalOfferServiceUnitTest.class,
-		 CommentServiceUnitTest.class,
-	     CulturalOfferCategoryServiceUnitTest.class,
-	     GeoLocationServiceUnitTest.class,
-	     ImageServiceUnitTest.class,
-	     PostServiceUnitTest.class,
-	     GradeServiceUnitTest.class,
-	     
-	     //service I
-	     CommentServiceIntegrationTest.class,
-	     CulturalOfferServiceIntegrationTest.class,
-	     CulturalOfferCategoryServiceIntegrationTest.class,
-	     CulturalOfferTypeServiceIntegrationTest.class,
-	     GeoLocationServiceIntegrationTest.class,
-	     GradeServiceIntegrationTest.class,
-	     ImageServiceIntegrationTest.class,
-	     PostServiceIntegrationTest.class,
-	     AdminServiceIntegrationTest.class,
-	     RegisteredUserServiceIntegrationTest.class,
-	     VerificationCodeServiceIntegrationTest.class,
+		//CulturalOfferServiceUnitTest.class,
+		//CommentServiceUnitTest.class,
+	    //CulturalOfferCategoryServiceUnitTest.class,
+	    //GeoLocationServiceUnitTest.class,
+	    //ImageServiceUnitTest.class,
+	    //PostServiceUnitTest.class,
+	    //GradeServiceUnitTest.class,
+	    
+	    //service I
+	    //CommentServiceIntegrationTest.class,
+	    //CulturalOfferServiceIntegrationTest.class,
+	    //CulturalOfferCategoryServiceIntegrationTest.class,
+	    //CulturalOfferTypeServiceIntegrationTest.class,
+	    //GeoLocationServiceIntegrationTest.class,
+	    //GradeServiceIntegrationTest.class,
+	    //ImageServiceIntegrationTest.class,
+	    //PostServiceIntegrationTest.class,
+	    //AdminServiceIntegrationTest.class,
+	    //RegisteredUserServiceIntegrationTest.class,
+	    //VerificationCodeServiceIntegrationTest.class,
      
-	     //repository I
-		 CulturalOfferCategoryRepositoryIntegrationTest.class,
-		 CulturalOfferTypeRepositoryIntegrationTest.class,
-		 PostRepositoryIntegrationTest.class,
-		 GradeRepositoryIntegrationTest.class,
-		 CulturalOfferRepositoryIntegrationTest.class,
-		 CommentRepositoryIntegrationTest.class, 
-		 GradeRepositoryIntegrationTest.class,
-		 AdminRepositoryIntegrationTest.class,
-		 RegisteredUserRepositoryIntegrationTest.class,
-		 VerificationCodeRepositoryIntegrationTest.class
+	    //repository I
+		//CulturalOfferCategoryRepositoryIntegrationTest.class,
+		//CulturalOfferTypeRepositoryIntegrationTest.class,
+		//PostRepositoryIntegrationTest.class,
+		//GradeRepositoryIntegrationTest.class,
+		//CulturalOfferRepositoryIntegrationTest.class,
+		//CommentRepositoryIntegrationTest.class, 
+		//GradeRepositoryIntegrationTest.class,
+		//AdminRepositoryIntegrationTest.class,
+		//RegisteredUserRepositoryIntegrationTest.class,
+		//VerificationCodeRepositoryIntegrationTest.class
 
 })
 @TestPropertySource("classpath:test.properties")
