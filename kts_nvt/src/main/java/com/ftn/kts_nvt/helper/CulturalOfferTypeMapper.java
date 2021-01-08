@@ -22,7 +22,6 @@ public class CulturalOfferTypeMapper implements MapperInterface<CulturalOfferTyp
 		culturalOfferType.setId(dto.getId());
 		culturalOfferType.setCategory(this.culturalOfferCategoryRepository.findById(dto.getCategoryId()).orElse(null));
 		culturalOfferType.setName(dto.getName());
-
 		return culturalOfferType;
 	}
 

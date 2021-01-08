@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms'
 import { CategoryService } from '../../services/category.service';
-import { TypeService } from '../../services/type.service';
+//import { TypeService } from '../../services/type.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CategoryModel } from '../../model/category-model';
 
@@ -18,7 +18,7 @@ export class AddCategoryComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private categoryService: CategoryService,
-    private typeService: TypeService,
+    //private typeService: TypeService,
     private http: HttpClient) {
 
     this.categoryForm = this.fb.group({
@@ -70,13 +70,14 @@ export class AddCategoryComponent implements OnInit {
     });
   }
   
-  deleteType(id: number){
+  /*deleteType(id: number){
     console.log("delete = ");
     console.log(id)
     this.typeService.deleteType(id, ()=> {
       this.refreshCategories();
     });
-  }
+  }*/
+
   onSubmit() {
     console.log(this.categoryForm.value);
     this.categoryService.addCategory(this.categoryForm.value, ()=>{

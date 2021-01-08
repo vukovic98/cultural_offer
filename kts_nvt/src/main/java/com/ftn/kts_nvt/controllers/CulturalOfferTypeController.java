@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.kts_nvt.beans.CulturalOfferType;
+import com.ftn.kts_nvt.dto.CulturalOfferDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferTypeDTO;
 import com.ftn.kts_nvt.dto.PostDTO;
 import com.ftn.kts_nvt.helper.CulturalOfferTypeMapper;
@@ -54,9 +55,8 @@ public class CulturalOfferTypeController {
 	// GET http://localhost:8080/culturalOfferTypes/byPage/1
 	@GetMapping(path = "/byPage/{pageNum}")
 	public ResponseEntity<PageImplementation<CulturalOfferTypeDTO>> findAll(@PathVariable int pageNum) {
-
 		Pageable pageRequest = PageRequest.of(pageNum - 1, 10);
-
+    
 		Page<CulturalOfferType> page = this.culturalOfferTypeService.findAll(pageRequest);
 		List<CulturalOfferTypeDTO> culturalOfferTypeDTOS = this.mapper.listToDto(page.toList());
 
@@ -88,6 +88,7 @@ public class CulturalOfferTypeController {
 	@PostMapping(consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<CulturalOfferTypeDTO> create(@Valid @RequestBody CulturalOfferTypeDTO dto) {
+		//System.out.println("add type dto = " + dto);
 		CulturalOfferType changedType = this.culturalOfferTypeService.save(this.mapper.toEntity(dto));
 		if (changedType != null) {
 			CulturalOfferTypeDTO changedDto = new CulturalOfferTypeDTO(changedType.getId(), changedType.getName(),
@@ -101,7 +102,8 @@ public class CulturalOfferTypeController {
 
 	// DELETE http://localhost:8080/culturalOfferType/1
 	@DeleteMapping(path = "/{id}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	//TODO
+	//@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") long id) {
 		boolean deleted;
 		try {
