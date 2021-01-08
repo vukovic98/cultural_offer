@@ -40,6 +40,10 @@
                             <td>{{type.name}}</td>
                             <td>{{type.categoryName}}</td>
                             <td>
+                                <button mat-mini-fab color="primary" class="mr-2 mb-2" (click)="editType(type)"
+                                    style="outline: none">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
                                 <button mat-mini-fab color="warn" class="mr-2 mb-2" (click)="deleteType(type)"
                                     style="outline: none">
                                     <mat-icon>delete</mat-icon>
@@ -56,7 +60,7 @@
                 <button class="btn btn-outline-info float-left" [disabled]="pageNum===1" (click)="previousPage()"><<</button>
                 <p class=" float-left text-center ml-3 pt-2">{{pageNum}}</p>
                 <button class="btn btn-outline-info" (click)="nextPage()" [disabled]="nextBtn">>></button>
-              </div>
+            </div>
         </div>
     </div>
 </div>

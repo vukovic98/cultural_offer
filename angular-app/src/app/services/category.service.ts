@@ -19,10 +19,15 @@ export class CategoryService{
     const headers = new HttpHeaders({
       'Authorization' : 'Bearer ' + localStorage.getItem("accessToken")
     });
-    return this.http.get<Array<CategoryModel>>(environment.apiUrl + 'cultural-offer-categories/', 
+    return this.http.get<Array<CategoryModel>>(environment.apiUrl + this.manageCategoriesEndPoint, 
                                                 {headers: headers});
   }
 
+  getCategoriesByPage(page: number): Observable<Array<CategoryModel>>{
+    const headers = new HttpHeaders({'Authorization' : 'Bearer ' + localStorage.getItem("accessToken")});
+    return this.http.get<Array<CategoryModel>>(environment.apiUrl + this.manageCategoriesEndPoint + 'by-page/'+page, {headers: headers});
+  }
+  
   deleteCategory(id: number, updateTable: Function){
     console.log("delete in service");
     var headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
@@ -50,9 +55,36 @@ export class CategoryService{
       })
   }
 
+  updateCategory(category: CategoryModel, updateTable: Function){
+    console.log("update category");
+    console.log(category);
+    var headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
+    this.http.put(environment.apiUrl + this.manageCategoriesEndPoint + category.id, category, { headers: headers })
+    .pipe(map(response => response))
+    .subscribe(response => {
+      updateTable();
+      Swal.fire({
+        title: 'Success!',
+        text: 'Category successfully updated!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+      return true;
+    }, error => {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Something went wrong! Category name already exists',
+        icon: 'error',
+        confirmButtonColor: '#DC143C',
+        confirmButtonText: 'OK'
+      });
+      return false;
+    })
+  }
+
   addCategory(category: CategoryModel, updateTable: Function){
-    //console.log("add catgegory");
-    //console.log(category);
+    console.log("add catgegory");
+    console.log(category);
 
     var headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
     this.http.post(environment.apiUrl + this.manageCategoriesEndPoint, category, { headers: headers })
@@ -69,7 +101,7 @@ export class CategoryService{
       }, error => {
         Swal.fire({
           title: 'Error!',
-          text: 'Something went wrong!',
+          text: 'Something went wrong! Category already exist',
           icon: 'error',
           confirmButtonColor: '#DC143C',
           confirmButtonText: 'OK'

@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Edit type</h2>
+<mat-dialog-content>
+    <form [formGroup]="myForm">
+        <div class="form-group">
+            <label for="name">Type name:</label>
+            <input formControlName="name" id="name" type="text" class="form-control">
+            <div *ngIf="f.name.touched && f.name.invalid" class="alert alert-danger">
+                <div *ngIf="f.name.errors!.required">Type name is required.</div>
+            </div>
+        </div>
+    </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button class="mat-raised-button mr-2"(click)="close()">Close</button>
+    <button class="mat-raised-button mat-primary"(click)="save()">Save</button>
+</mat-dialog-actions>
+

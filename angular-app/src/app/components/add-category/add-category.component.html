@@ -12,22 +12,6 @@
                         <div *ngIf="f.name.errors!.required">Name is required.</div>
                     </div>
                 </div>
-                <table class="table table-bordered" formArrayName="types">
-                    <tr>
-                        <th colspan="2">Add types:</th>
-                        <th width="150px"><button type="button" (click)="addType()" class="btn btn-primary">Add
-                                More</button></th>
-                    </tr>
-                    <tr *ngFor="let type of types().controls; let i=index" [formGroupName]="i">
-                        <td>
-                            Type name:
-                            <input type="text" formControlName="name" class="form-control">
-                        </td>
-                        <td>
-                            <button (click)="removeType(i)" class="btn btn-danger">Remove</button>
-                        </td>
-                    </tr>
-                </table>
                 <div class="form-group float-right mt-3">
                     <button mat-raised-button color="primary" [disabled]="!categoryForm.valid" type="submit"
                         class="btn-block">Submit</button>
@@ -54,6 +38,10 @@
                                 </mat-select>
                             </td>
                             <td>
+                                <button mat-mini-fab color="primary" class="mr-2 mb-2" (click)="editCategory(c)"
+                                    style="outline: none">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
                                 <button mat-mini-fab color="warn" class="mr-2 mb-2" (click)="deleteCategory(c.id)"
                                     style="outline: none">
                                     <mat-icon>delete</mat-icon>
@@ -66,7 +54,11 @@
                     <h4>No categories in the database</h4>
                 </div>
             </div>
-
+            <div class="text-center col-md-2 ml-auto mr-auto mt-5" *ngIf="getAllCategories().length !== 0">
+                <button class="btn btn-outline-info float-left" [disabled]="pageNum===1" (click)="previousPage()"><<</button>
+                <p class=" float-left text-center ml-3 pt-2">{{pageNum}}</p>
+                <button class="btn btn-outline-info" (click)="nextPage()" [disabled]="nextBtn">>></button>
+            </div>
         </div>
     </div>
 </div>

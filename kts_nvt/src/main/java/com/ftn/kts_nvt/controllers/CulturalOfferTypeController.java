@@ -148,13 +148,18 @@ public class CulturalOfferTypeController {
 	 */
 	@PutMapping(path = "/{id}", consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<CulturalOfferTypeDTO> update(@Valid @PathVariable("id") long id, @RequestBody CulturalOfferTypeDTO dto) {
+	public ResponseEntity<CulturalOfferTypeDTO> update(@Valid @PathVariable("id") long id,
+													   @RequestBody CulturalOfferTypeDTO dto) {
 		CulturalOfferType type = this.mapper.toEntity(dto);
+		//System.out.println("update = " + type.getId()+" "+type.getName()+" "+type.getCategory().getName());
 		CulturalOfferType changedType = this.culturalOfferTypeService.update(type, type.getId());
+		//System.out.println("changedupdate = " + changedType.getId()+" "+changedType.getName()+" "+changedType.getCategory().getName());
 		
 		if (changedType != null) {
-			CulturalOfferTypeDTO changedDto = new CulturalOfferTypeDTO(changedType.getId(), changedType.getName(),
-					changedType.getCategory().getId(), changedType.getCategory().getName());
+			CulturalOfferTypeDTO changedDto = new CulturalOfferTypeDTO(changedType.getId(),
+																	   changedType.getName(),
+																	   changedType.getCategory().getId(),
+																	   changedType.getCategory().getName());
 			return new ResponseEntity<>(changedDto, HttpStatus.OK);
 		}
 		else

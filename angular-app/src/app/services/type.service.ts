@@ -88,4 +88,31 @@ export class TypeService {
         return false;
       })
   }
+
+  updateType(type: AllTypesModel, updateTable: Function){
+    console.log("update type");
+    console.log(type);
+    var headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
+    this.http.put(environment.apiUrl + this.manageTypesEndPoint + type.id, type, { headers: headers })
+    .pipe(map(response => response))
+    .subscribe(response => {
+      updateTable();
+      Swal.fire({
+        title: 'Success!',
+        text: 'Type successfully updated!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+      return true;
+    }, error => {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Something went wrong! Type name already exists',
+        icon: 'error',
+        confirmButtonColor: '#DC143C',
+        confirmButtonText: 'OK'
+      });
+      return false;
+    })
+  }
 }

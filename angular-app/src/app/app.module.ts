@@ -37,8 +37,8 @@ import { FilterOffersComponent } from './components/filter-offers/filter-offers.
 import { FilterOffersService } from "./services/filter-offers.service";
 import { CommonModule } from "@angular/common";
 import { NgSelectModule } from "@ng-select/ng-select";
-import { AddCategoryComponent } from './components/add-category/add-category.component';
-import { AddTypeComponent } from './components/add-type/add-type.component';
+import { AddCategoryComponent, EditDialog } from './components/add-category/add-category.component';
+import { AddTypeComponent, EditTypeDialog } from './components/add-type/add-type.component';
 import { CommentToBeApprovedComponent } from './components/comment-to-be-approved/comment-to-be-approved.component';
 import { CommentsToBeApprovedListComponent } from './components/comments-to-be-approved-list/comments-to-be-approved-list.component';
 import { CommentsToBeApprovedService } from "./services/comments-to-be-approved.service";
@@ -76,7 +76,9 @@ import { AddCommentComponent } from './components/add-comment/add-comment.compon
     CommentListComponent,
     CommentItemComponent,
     AddCommentComponent,
-    AddTypeComponent
+    AddTypeComponent,
+    EditDialog,
+    EditTypeDialog
   ],
   imports: [
     BrowserModule,
@@ -91,6 +93,7 @@ import { AddCommentComponent } from './components/add-comment/add-comment.compon
     MatButtonModule,
     MatDialogModule,
     CommonModule,
+    MatDialogModule,
     NgSelectModule,
     MatMenuModule,
     MatListModule,

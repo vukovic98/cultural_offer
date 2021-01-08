@@ -39,8 +39,8 @@ public class CulturalOfferCategoryController {
 	@Autowired
 	private CulturalOfferCategoryService service;
 
-	@Autowired
-	private CulturalOfferTypeService typeService;
+	//@Autowired
+	//private CulturalOfferTypeService typeService;
 
 	@Autowired
 	private CulturalOfferCategoryMapper mapper;
@@ -107,6 +107,17 @@ public class CulturalOfferCategoryController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<CulturalOfferCategoryDTO> create(@Valid @RequestBody CulturalOfferCategoryDTO categoryDTO)
 			throws Exception {
+		CulturalOfferCategory category = mapper.toEntityNoTypes(categoryDTO);
+		System.out.println("adding category = " + category);
+		CulturalOfferCategory exist = service.findByName(category.getName());
+		if(exist != null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		CulturalOfferCategory saved = service.save(category);
+		return new ResponseEntity<>(mapper.toDtoNoTypes(saved) ,HttpStatus.CREATED);
+	}
+	/*public ResponseEntity<CulturalOfferCategoryDTO> create(@Valid @RequestBody CulturalOfferCategoryDTO categoryDTO)
+			throws Exception {
 		CulturalOfferCategory category, saved;
 		try {
 			category = mapper.toEntityNoTypes(categoryDTO);
@@ -130,7 +141,7 @@ public class CulturalOfferCategoryController {
 		}
 
 		return new ResponseEntity<>(mapper.toDto(saved) ,HttpStatus.CREATED);
-	}
+	}*/
 
 	/*
 	 * PUT http://localhost:8080/cultural-offer-categories/2 { "name":

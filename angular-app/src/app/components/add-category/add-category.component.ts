@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms'
 import { CategoryService } from '../../services/category.service';
-//import { TypeService } from '../../services/type.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CategoryModel } from '../../model/category-model';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-category',
@@ -13,23 +13,24 @@ import { CategoryModel } from '../../model/category-model';
 export class AddCategoryComponent implements OnInit {
 
   private categories: Array<CategoryModel> = [];
-
-  categoryForm: FormGroup;
+  public pageNum: number = 1;
+  public nextBtn: boolean = false;
+  public categoryForm: FormGroup;
 
   constructor(private fb: FormBuilder,
     private categoryService: CategoryService,
-    //private typeService: TypeService,
+    public dialog: MatDialog,
     private http: HttpClient) {
 
     this.categoryForm = this.fb.group({
-      name: new FormControl('', Validators.required),
-      types: this.fb.array([]),
+      name: new FormControl('', Validators.required)
     });
   }
 
   ngOnInit(): void {
-    this.refreshCategories();
+    this.getCategories();
   }
+
   getAllCategories() {
     return this.categories || [];
   }
@@ -44,12 +45,21 @@ export class AddCategoryComponent implements OnInit {
     })
   }
 
-  addType() {
-    this.types().push(this.newType());
-  }
+  editCategory(category: CategoryModel){
+    console.log("edit = ");
+    console.log(category);
+    const dialogRef = this.dialog.open(EditDialog, {
+      width: '250px',
+      data: {name: category.name, id: category.id}
+    });
 
-  removeType(i: number) {
-    this.types().removeAt(i);
+    dialogRef.afterClosed().subscribe(data => {
+      //console.log('The dialog was closed');
+      //console.log(data);
+      if(data != undefined){
+        this.getCategories();
+      }
+    });
   }
 
   deleteCategory(id: number){
@@ -58,47 +68,72 @@ export class AddCategoryComponent implements OnInit {
     this.categoryService.deleteCategory(id, ()=> {
       this.categories = this.categories.filter(item => item.id != id);
     });
-    
   }
 
-  refreshCategories(){
-    this.categoryService.getCategories().subscribe(data => {
-      this.categories = data;
+  getCategories(){
+    this.categoryService.getCategoriesByPage(this.pageNum).subscribe((data: any)  => {
+      this.categories = data.content;
+      this.nextBtn = data.last;
       console.log(this.categories);
     }, error => {
       console.log(error);
     });
   }
-  
-  /*deleteType(id: number){
-    console.log("delete = ");
-    console.log(id)
-    this.typeService.deleteType(id, ()=> {
-      this.refreshCategories();
-    });
-  }*/
+
+  nextPage() {
+    this.pageNum += 1;
+    this.getCategories();
+  }
+
+  previousPage() {
+    this.pageNum -= 1;
+    this.getCategories();
+  }
 
   onSubmit() {
     console.log(this.categoryForm.value);
     this.categoryService.addCategory(this.categoryForm.value, ()=>{
-      this.refreshCategories();
+      this.getCategories();
     });
   }
 
   get f() {
     return this.categoryForm.controls;
   }
+}
 
-  /*submit() {
-    let obj = {
-      'name': this.categoryForm.value.name,
-      'types': this.categoryForm.value.types
-    }
-    let category!: CategoryModel;
-    category.name = obj.name;
-    category.types = obj.types;
+@Component({
+  selector: 'edit-dialog',
+  templateUrl: 'edit-dialog.html',
+})
+export class EditDialog {
 
-    console.log(category);
-    this.categoryService.addCategory(category);
-  }*/
+  myForm = new FormGroup({
+    name: new FormControl(this.data.name, Validators.required)
+  });
+
+  constructor(
+    public dialogRef: MatDialogRef<EditDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: CategoryModel,
+    private categoryService: CategoryService) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  save(){
+    this.data.name = this.myForm.value.name;
+    console.log(this.data);
+    this.categoryService.updateCategory(this.data, ()=>{
+      this.dialogRef.close({data:this.data});
+    });
+  }
+
+  close(){
+    this.dialogRef.close();
+  }
+
+  get f() {
+    return this.myForm.controls;
+  }
 }
