@@ -17,6 +17,18 @@
                         class="btn-block">Submit</button>
                 </div>
             </form>
+            <form [formGroup]="categoryFormByName" (ngSubmit)="onSubmitByName()">
+                <div class="form-group">
+                    <input formControlName="byname" placeholder="Search by name" id="byname" type="text" class="form-control">
+                    <div *ngIf="fbyname.byname.touched && fbyname.byname.invalid" class="text-danger">
+                        <div *ngIf="fbyname.byname.errors!.required">Name is required.</div>
+                    </div>
+                </div>
+                <div class="form-group float-right mt-3">
+                    <button mat-raised-button color="primary" [disabled]="!categoryFormByName.valid" type="submit"
+                        class="btn-block">Search</button>
+                </div>
+            </form>
             <div>
                 <table class="table table-bordered table-hover">
                     <thead>

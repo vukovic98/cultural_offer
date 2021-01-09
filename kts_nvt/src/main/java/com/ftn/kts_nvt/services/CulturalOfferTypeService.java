@@ -41,6 +41,10 @@ public class CulturalOfferTypeService {
 		return this.culturalOfferTypeRepository.findById(culturalOfferTypeId).orElse(null);
 	}
 
+	public CulturalOfferType findByName(String name) {
+		return this.culturalOfferTypeRepository.findByName(name);
+	}
+
 	public boolean delete(CulturalOfferType culturalOfferType) throws Exception {
 		boolean exists = this.culturalOfferTypeRepository.existsById(culturalOfferType.getId());
 

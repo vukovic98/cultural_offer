@@ -116,6 +116,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 												   "/culturalOffers/detail/**",
 												   "/comments/**");
 		web.ignoring().antMatchers(HttpMethod.GET, "/culturalOffers/filter/**");
+		web.ignoring().antMatchers(HttpMethod.GET, "/cultural-offer-categories/**");
 
 		web.ignoring().antMatchers(HttpMethod.GET, "/cultural-offer-types/getAll");
 		web.ignoring().antMatchers(HttpMethod.GET, "/cultural-offer-types/**");

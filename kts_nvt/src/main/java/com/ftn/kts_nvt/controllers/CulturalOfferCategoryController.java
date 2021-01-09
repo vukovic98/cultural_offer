@@ -95,7 +95,7 @@ public class CulturalOfferCategoryController {
 		if (category == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-
+		System.out.println("got category by name = " + category.getName());
 		return new ResponseEntity<>(mapper.toDto(category), HttpStatus.OK);
 	}
 

@@ -77,7 +77,15 @@ public class CulturalOfferTypeController {
 			return new ResponseEntity<CulturalOfferTypeDTO>(this.mapper.toDto(found), HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
 
+	@GetMapping(path = "/name/{name}")
+	public ResponseEntity<CulturalOfferTypeDTO> findByName(@PathVariable("name") String name) {
+		CulturalOfferType found = this.culturalOfferTypeService.findByName(name);
+		if (found != null)
+			return new ResponseEntity<CulturalOfferTypeDTO>(this.mapper.toDto(found), HttpStatus.OK);
+		else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	// POST http://localhost:8080/culturalOfferTypes

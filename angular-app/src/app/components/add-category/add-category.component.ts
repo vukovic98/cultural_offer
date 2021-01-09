@@ -4,6 +4,7 @@ import { CategoryService } from '../../services/category.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CategoryModel } from '../../model/category-model';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-add-category',
@@ -16,7 +17,8 @@ export class AddCategoryComponent implements OnInit {
   public pageNum: number = 1;
   public nextBtn: boolean = false;
   public categoryForm: FormGroup;
-
+  public categoryFormByName: FormGroup;
+  
   constructor(private fb: FormBuilder,
     private categoryService: CategoryService,
     public dialog: MatDialog,
@@ -24,6 +26,9 @@ export class AddCategoryComponent implements OnInit {
 
     this.categoryForm = this.fb.group({
       name: new FormControl('', Validators.required)
+    });
+    this.categoryFormByName = this.fb.group({
+      byname: new FormControl('')
     });
   }
 
@@ -49,7 +54,7 @@ export class AddCategoryComponent implements OnInit {
     console.log("edit = ");
     console.log(category);
     const dialogRef = this.dialog.open(EditDialog, {
-      width: '250px',
+      width: '350px',
       data: {name: category.name, id: category.id}
     });
 
@@ -97,8 +102,33 @@ export class AddCategoryComponent implements OnInit {
     });
   }
 
+  onSubmitByName() {
+    console.log(this.categoryFormByName.value);
+    if(this.categoryFormByName.value.byname == ""){
+      this.getCategories();
+    }else{
+      this.categoryService.getByName(this.categoryFormByName.value.byname).subscribe((data: CategoryModel) => {
+        //console.log(data);
+        this.categories = [data];
+      }, (error: any) => {
+        console.log(error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'Category not found',
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        });
+      });  
+    }
+  }
+  
   get f() {
     return this.categoryForm.controls;
+  }
+
+  get fbyname() {
+    return this.categoryFormByName.controls;
   }
 }
 

@@ -13,6 +13,7 @@ export class TypeService {
 
   private readonly manageTypesEndPoint = "cultural-offer-types/";
   private readonly manageTypesEndPointPage = "cultural-offer-types/byPage/";
+  private readonly manageTypesEndPointByName = "cultural-offer-types/name/";
 
   constructor(private http: HttpClient) { }
 
@@ -40,6 +41,7 @@ export class TypeService {
         return false;
       })
   }
+
   getByPage(page: number): any {
     var headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
 
@@ -87,6 +89,13 @@ export class TypeService {
         });
         return false;
       })
+  }
+
+  getByName(name: string): Observable<AllTypesModel> {
+    console.log("get by name = " + name);
+    const headers = new HttpHeaders({'Content-Type': 'application/json','Accept': 'application/json'});
+    return this.http.get<AllTypesModel>(environment.apiUrl + this.manageTypesEndPointByName + name, { headers: headers})
+    .pipe(map(response => response));
   }
 
   updateType(type: AllTypesModel, updateTable: Function){

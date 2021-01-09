@@ -6,6 +6,7 @@ import { CategoryModel } from '../../model/category-model';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms'
 import { TypeModel, AllTypesModel } from '../../model/type-model';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-add-type',
@@ -19,7 +20,8 @@ export class AddTypeComponent implements OnInit {
   public nextBtn: boolean = false;
   public categories: Array<CategoryModel> = [];
   public typeForm: FormGroup;
-
+  public typeFormByName: FormGroup;
+  
   constructor(private fb: FormBuilder,
     private typeService: TypeService,
     private categoryService: CategoryService,
@@ -29,6 +31,9 @@ export class AddTypeComponent implements OnInit {
     this.typeForm = this.fb.group({
       name: new FormControl('', Validators.required),
       category: new FormControl('', Validators.required),
+    });
+    this.typeFormByName = this.fb.group({
+      byname: new FormControl('')
     });
   }
 
@@ -52,7 +57,7 @@ export class AddTypeComponent implements OnInit {
     console.log("edit = ");
     console.log(type);
     const dialogRef = this.dialog.open(EditTypeDialog, {
-      width: '250px',
+      width: '350px',
       data: {name: type.name,
             id: type.id,
             categoryId: type.categoryId,
@@ -104,8 +109,33 @@ export class AddTypeComponent implements OnInit {
     });*/
   }
 
+  onSubmitByName() {
+    console.log(this.typeFormByName.value);
+    if(this.typeFormByName.value.byname == ""){
+      this.getTypes();
+    }else{
+      this.typeService.getByName(this.typeFormByName.value.byname).subscribe((data: AllTypesModel) => {
+        console.log(data);
+        this.types = [data];
+      }, (error: any) => {
+        console.log(error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'Type not found',
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        });
+      });  
+    }
+  }
+
   get f() {
     return this.typeForm.controls;
+  }
+
+  get fbyname() {
+    return this.typeFormByName.controls;
   }
 
   /*refreshTypes(){

@@ -12,7 +12,8 @@ import Swal from "sweetalert2";
 export class CategoryService{
 
   private readonly manageCategoriesEndPoint = "cultural-offer-categories/";
-  
+  private readonly manageCategoriesEndPointByName = "cultural-offer-categories/name/";
+
   constructor(private http: HttpClient) { } 
 
   getCategories(): Observable<Array<CategoryModel>> {
@@ -28,6 +29,13 @@ export class CategoryService{
     return this.http.get<Array<CategoryModel>>(environment.apiUrl + this.manageCategoriesEndPoint + 'by-page/'+page, {headers: headers});
   }
   
+  getByName(name: string): Observable<CategoryModel> {
+    console.log("get by name = " + name);
+    const headers = new HttpHeaders({'Content-Type': 'application/json','Accept': 'application/json'});
+    return this.http.get<CategoryModel>(environment.apiUrl + this.manageCategoriesEndPointByName + name, { headers: headers})
+    .pipe(map(response => response));
+  }
+
   deleteCategory(id: number, updateTable: Function){
     console.log("delete in service");
     var headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
