@@ -68,6 +68,7 @@ import { AddCommentComponent } from './components/add-comment/add-comment.compon
     FilterOffersComponent,
     OfferDetailsComponent,
     EditOfferComponent,
+        MatCardModule,
     ChangePasswordComponent,
     AddCategoryComponent,
     CommentToBeApprovedComponent,

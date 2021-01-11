@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import Swal from "sweetalert2";
 import { CulturalOffer } from '../model/offer-mode';
+import {AddPostModel} from '../model/post-model';
 
 @Injectable()
 export class CulturalOfferService {
@@ -14,6 +15,7 @@ export class CulturalOfferService {
   private readonly offerDetailsById = "culturalOffers/detail/";
   private readonly subscribeUserEndPoint = "registeredUser/subscribe";
   private readonly offersPageEndPointFilter = "culturalOffers/filter/";
+  private readonly addPostEndPoint = "posts/";
 
   constructor(private http: HttpClient) {
   }
@@ -173,6 +175,37 @@ export class CulturalOfferService {
       .pipe(map((response) => JSON.stringify(response)));
   }
 
+  addPost(postDto: AddPostModel) {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
+    });
+
+    this.http.post(environment.apiUrl + this.addPostEndPoint, postDto, {headers: headers})
+      .pipe(map((response) => response))
+      .subscribe(response => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Post added successfully! ',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+        return true;
+      }, error => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Something went wrong! ' + error.error,
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        });
+        return false;
+      });
+  }
+
+
   getOffer(id: string): any {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -202,8 +235,7 @@ export class CulturalOfferService {
       "user": { "id": userId },
       "culturalOffer": { "id": offerId }
     }
-    console.log("grade offer with grade = ");
-    console.log(gradeObj);
+
     let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
     this.http.post(environment.apiUrl + "grades", gradeObj, { headers: headers })
       .pipe(map((response) => response)).subscribe(response => {

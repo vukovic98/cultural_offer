@@ -30,6 +30,8 @@ import com.ftn.kts_nvt.dto.CommentDTO;
 import com.ftn.kts_nvt.dto.CommentUserDTO;
 import com.ftn.kts_nvt.dto.NewCommentDTO;
 import com.ftn.kts_nvt.helper.CommentMapper;
+import com.ftn.kts_nvt.helper.PageImplMapper;
+import com.ftn.kts_nvt.helper.PageImplementation;
 import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
 import com.ftn.kts_nvt.services.CommentService;
 import com.ftn.kts_nvt.services.RegisteredUserService;
@@ -63,14 +65,17 @@ public class CommentController {
 
 	// GET: http://localhost:8080/comments/by-page
 	@GetMapping(value = "/by-page/{pageNum}")
-	public ResponseEntity<Page<CommentUserDTO>> getAllComments(@PathVariable int pageNum) {
+	public ResponseEntity<PageImplementation<CommentUserDTO>> getAllComments(@PathVariable int pageNum) {
 		Pageable pageRequest = PageRequest.of(pageNum - 1, 10);
 
 		Page<Comment> page = this.commentService.findAll(pageRequest);
 		List<CommentUserDTO> commentDTOS = mapper.listToDto(page.toList());
 		Page<CommentUserDTO> pageCommentDTOS = new PageImpl<>(commentDTOS, page.getPageable(), page.getTotalElements());
 
-		return new ResponseEntity<>(pageCommentDTOS, HttpStatus.OK);
+		PageImplMapper<CommentUserDTO> pageMapper = new PageImplMapper<>();
+		PageImplementation<CommentUserDTO> pageImpl = pageMapper.toPageImpl(pageCommentDTOS);
+		
+		return new ResponseEntity<>(pageImpl, HttpStatus.OK);
 	}
 
 	// GET: http://localhost:8080/comments/{id}
@@ -170,14 +175,17 @@ public class CommentController {
 	// GET: http://localhost:8080/comments/pendingComments/1
 	@GetMapping(path = "/pendingComments/{pageNum}")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<Page<CommentUserDTO>> findAllPendingComments(@PathVariable int pageNum) {
+	public ResponseEntity<PageImplementation<CommentUserDTO>> findAllPendingComments(@PathVariable int pageNum) {
 		Pageable pageRequest = PageRequest.of(pageNum - 1, 5);
 		Page<Comment> page = this.commentService.findAllPendingComments(pageRequest);
 		List<CommentUserDTO> pendingCommentsDto = this.mapper.listToDto(page.toList());
 		Page<CommentUserDTO> pagePendingCommentsDtop = new PageImpl<>(pendingCommentsDto, page.getPageable(),
 				page.getTotalElements());
+		
+		PageImplMapper<CommentUserDTO> pageMapper = new PageImplMapper<>();
+		PageImplementation<CommentUserDTO> pageImpl = pageMapper.toPageImpl(pagePendingCommentsDtop);
 
-		return new ResponseEntity<>(pagePendingCommentsDtop, HttpStatus.OK);
+		return new ResponseEntity<>(pageImpl, HttpStatus.OK);
 	}
 	
 	// PUT: http://localhost:8080/comments/approve/{id} 

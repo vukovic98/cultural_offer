@@ -16,6 +16,7 @@ import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.beans.VerificationCode;
 import com.ftn.kts_nvt.repositories.RegisteredUserRepository;
 import com.ftn.kts_nvt.services.VerificationCodeService;
+import com.sun.mail.imap.protocol.MailboxInfo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -27,6 +28,7 @@ public class VerificationCodeServiceIntegrationTest {
 	
 	@Autowired
 	private RegisteredUserRepository userRepository;
+	
 	
 	@Test
 	public void testFindById() {

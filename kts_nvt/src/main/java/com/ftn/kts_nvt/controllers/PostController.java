@@ -1,5 +1,6 @@
 package com.ftn.kts_nvt.controllers;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +23,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.Post;
-import com.ftn.kts_nvt.dto.CulturalOfferCategoryDTO;
+import com.ftn.kts_nvt.dto.AddPostDTO;
 import com.ftn.kts_nvt.dto.PostDTO;
 import com.ftn.kts_nvt.helper.PageImplMapper;
 import com.ftn.kts_nvt.helper.PageImplementation;
 import com.ftn.kts_nvt.helper.PostMapper;
+import com.ftn.kts_nvt.services.CulturalOfferService;
 import com.ftn.kts_nvt.services.PostService;
 
 @RestController
@@ -38,16 +42,20 @@ public class PostController {
 
 	@Autowired
 	private PostMapper postMapper;
+	
+	@Autowired
+	private CulturalOfferService offerService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<PostDTO>> getAllPosts() {
 		List<Post> posts = postService.findAll();
+		System.out.println(posts);
 		return new ResponseEntity<>(toPostDTOList(posts), HttpStatus.OK);
 	}
 
 	@GetMapping(path = "/by-page/{pageNum}")
 	public ResponseEntity<PageImplementation<PostDTO>> findAll(@PathVariable int pageNum) {
-		Pageable pageRequest = PageRequest.of(pageNum - 1, 10);
+		Pageable pageRequest = PageRequest.of(pageNum - 1, 10, Sort.by("postTime").ascending());
 
 		Page<Post> page = this.postService.findAll(pageRequest);
 
@@ -71,15 +79,25 @@ public class PostController {
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<PostDTO> createPost(@Valid @RequestBody PostDTO postDTO) {
-		Post post;
-		try {
-			post = postService.create(postMapper.toEntity(postDTO));
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	public ResponseEntity<AddPostDTO> createPost(@Valid @RequestBody AddPostDTO postDTO) {
+		Post post = new Post();
+		
+		post.setContent(postDTO.getContent());
+		post.setTitle(postDTO.getTitle());
+		post.setPostTime(Instant.now());
+		
+		CulturalOffer offer = this.offerService.findById(postDTO.getCulturalOfferId());
+		
+		if(offer != null) {
+			post.setOffer(offer);
+			Post added = this.postService.create(post);
+			
+			postDTO.setId(added.getPostId());
+			return new ResponseEntity<AddPostDTO>(postDTO, HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<>(postMapper.toDto(post), HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -16,8 +16,8 @@ export class CommentListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  isLogged() {
-    return this.authService.isLoggedIn();
+  isAdmin() {
+    return this.authService.isAdmin();
   }
 
 }

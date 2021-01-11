@@ -7,14 +7,24 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.Grade;
+import com.ftn.kts_nvt.beans.RegisteredUser;
+import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
 import com.ftn.kts_nvt.repositories.GradeRepository;
+import com.ftn.kts_nvt.repositories.RegisteredUserRepository;
 
 @Service
 public class GradeService implements ServiceInterface<Grade>{
 
 	@Autowired
 	private GradeRepository gradeRepository;
+	
+	@Autowired
+	private CulturalOfferRepository offerRepository;
+	
+	@Autowired
+	private RegisteredUserRepository userRepository;
 	
 	@Override
 	public List<Grade> findAll() {
@@ -44,12 +54,22 @@ public class GradeService implements ServiceInterface<Grade>{
 				entity.getCulturalOffer().getId()).orElse(null);
 		
 		if(grade == null) {
-			return gradeRepository.save(entity);			
+			CulturalOffer offer = this.offerRepository.findById(entity.getCulturalOffer().getId()).orElse(null);
+			RegisteredUser user = this.userRepository.findById(entity.getUser().getId()).orElse(null);
+			
+			
+			gradeRepository.save(entity);
+			
+			offer.getGrades().add(entity);
+			this.offerRepository.save(offer);
+			
+			return entity;
 		}else {
-			System.out.println(grade.getUser().getId() + " " + 
-					grade.getCulturalOffer().getId() + " " + 
-					grade.getValue());
-			throw new Exception("Grade already exist");
+			grade.setValue(entity.getValue());
+			
+			this.gradeRepository.save(grade);
+			
+			return grade;
 		}
 	}
 	

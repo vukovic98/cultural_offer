@@ -7,3 +7,10 @@ export interface PostModel{
   postTime: string,
   title: string
 }
+
+export interface AddPostModel{
+  id: number,
+  title: string,
+  content: string,
+  culturalOfferId: number
+}

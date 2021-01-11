@@ -2,12 +2,21 @@ package com.ftn.kts_nvt.services;
 
 import java.util.List;
 
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.Post;
+import com.ftn.kts_nvt.beans.RegisteredUser;
+import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
 import com.ftn.kts_nvt.repositories.PostRepository;
 
 @Service
@@ -15,10 +24,16 @@ public class PostService implements ServiceInterface<Post>{
 
 	@Autowired
 	private PostRepository postRepository;
+	
+	@Autowired
+	private CulturalOfferRepository offerRepository;
+
+	@Autowired
+	private JavaMailSender javaMailSender;
 
 	@Override
 	public List<Post> findAll() {
-        return postRepository.findAll();
+        return postRepository.findAll(Sort.by("postTime").ascending());
 	}
 	
 	public Page<Post> findAll(Pageable pageable) {
@@ -32,7 +47,40 @@ public class PostService implements ServiceInterface<Post>{
 
 	@Override
 	public Post create(Post entity){
-        return postRepository.save(entity);
+        Post added = postRepository.save(entity);
+        
+        entity.getOffer().getPosts().add(added);
+        this.offerRepository.save(entity.getOffer());
+        this.sendMailToSubscribedUsers(entity.getOffer(), added.getTitle());
+        
+        return added;
+        
+	}
+	
+	@Async
+	public void sendMailToSubscribedUsers(CulturalOffer c, String title) {
+		try {
+			for(RegisteredUser u : c.getSubscribedUsers()) {
+				MimeMessage msg = this.javaMailSender.createMimeMessage();
+				MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+	
+				helper.setTo(u.getEmail());
+				helper.setSubject(c.getName() + " : New post is here!");
+	
+				StringBuffer sb = new StringBuffer();
+	
+				sb.append("<h2>" + u.getFirstName() + ", new post for offer you are subscribed to has arrived!</h2><br><br>");
+				sb.append("<h3>" + title + "</h3> <br><br>");
+				sb.append("<h4>Go check it out <a href='http://localhost:4200/offer-details/" + c.getId() + "'>here!</a></h4>");
+	
+				helper.setText(sb.toString(), true);
+				this.javaMailSender.send(msg);
+	
+				System.out.println("SENT ACCEPTED MAIL!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

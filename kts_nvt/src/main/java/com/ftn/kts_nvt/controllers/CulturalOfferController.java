@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.kts_nvt.beans.CulturalOffer;
-import com.ftn.kts_nvt.beans.Image;
 import com.ftn.kts_nvt.dto.CulturalOfferAddDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferDetailsDTO;
@@ -152,7 +151,7 @@ public class CulturalOfferController {
 	
 	//GET: http://localhost:8080/culturalOffers/filter/{pageNum}?expression=a&selectedTypes=a,a,a
 		@GetMapping(path="/filter/{pageNum}")
-		public ResponseEntity<Page<CulturalOfferDTO>> filter(@PathVariable int pageNum, @RequestParam("expression") String expression, @RequestParam("types") ArrayList<String> types) {
+		public ResponseEntity<PageImplementation<CulturalOfferDTO>> filter(@PathVariable int pageNum, @RequestParam("expression") String expression, @RequestParam("types") ArrayList<String> types) {
 			System.out.println(types);
 			
 			Pageable pageRequest = PageRequest.of(pageNum-1, 8);
@@ -163,6 +162,9 @@ public class CulturalOfferController {
 			List<CulturalOfferDTO> offersDTOS = this.mapper.listToDTO(page.toList());
 			Page<CulturalOfferDTO> pageOffersDTOS = new PageImpl<>(offersDTOS, page.getPageable(), page.getTotalElements());
 
-			return new ResponseEntity<>(pageOffersDTOS, HttpStatus.OK);
+			PageImplMapper<CulturalOfferDTO> pageMapper = new PageImplMapper<>();
+			PageImplementation<CulturalOfferDTO> pageImpl = pageMapper.toPageImpl(pageOffersDTOS);
+			
+			return new ResponseEntity<>(pageImpl, HttpStatus.OK);
 		}
 }

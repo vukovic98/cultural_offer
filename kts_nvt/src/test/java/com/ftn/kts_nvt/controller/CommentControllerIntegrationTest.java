@@ -28,6 +28,7 @@ import com.ftn.kts_nvt.dto.CommentUserDTO;
 import com.ftn.kts_nvt.dto.NewCommentDTO;
 import com.ftn.kts_nvt.dto.UserLoginDTO;
 import com.ftn.kts_nvt.dto.UserTokenStateDTO;
+import com.ftn.kts_nvt.helper.PageImplementation;
 import com.ftn.kts_nvt.services.CommentService;
 
 @RunWith(SpringRunner.class)
@@ -62,6 +63,19 @@ public class CommentControllerIntegrationTest {
 		assertNotNull(comments);
 		assertTrue(!comments.isEmpty());
 		assertEquals(2, comments.size());
+	}
+	
+	@Test
+	public void testFindAllPageable() {
+		ResponseEntity<PageImplementation<CommentUserDTO>> responseEntity = this.restTemplate.exchange("/comments/by-page/1",
+				HttpMethod.GET, null, new ParameterizedTypeReference<PageImplementation<CommentUserDTO>>() {
+				});
+		
+		PageImplementation<CommentUserDTO> comments = responseEntity.getBody();
+		
+		assertNotNull(comments);
+		assertTrue(!comments.isEmpty());
+		assertEquals(2, comments.getNumberOfElements());
 	}
 
 	@Test

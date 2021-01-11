@@ -1,5 +1,6 @@
 import {PostModel} from './post-model';
 import {CommentModel} from './comment-model';
+import {userDto} from './userDto';
 
 export class OfferModel {
     name: string = '';
@@ -12,7 +13,7 @@ export interface OfferDetailsModel{
   "description": string,
   "posts": Array<PostModel>,
   "comments": Array<CommentModel>,
-  "grades": Array<object>,
+  "grades": Array<GradeModel>,
   "type": OfferType
   "avgGrade": number,
   "subscribersCount": number,
@@ -48,4 +49,11 @@ export interface Location{
   "latitude": number,
   "longitude": number,
   "place": string
+}
+
+export interface GradeModel{
+  "culturalOffer": CulturalOffer,
+  "id": number,
+  "value": number,
+  "user": userDto
 }

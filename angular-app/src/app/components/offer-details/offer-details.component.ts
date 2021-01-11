@@ -6,6 +6,10 @@ import {CulturalOffer, OfferDetailsModel, OfferModel} from '../../model/offer-mo
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
+import {EditOfferComponent} from '../edit-offer/edit-offer.component';
+import {MatDialog} from '@angular/material/dialog';
+import {AddPostComponent} from '../add-post/add-post.component';
+import {AddPostModel} from '../../model/post-model';
 
 @Component({
   selector: 'app-offer-details',
@@ -18,10 +22,12 @@ export class OfferDetailsComponent implements OnInit {
   id: string = '';
   offer!: OfferDetailsModel;
   private subscribedItems: Array<CulturalOffer> = [];
+  newModel: AddPostModel = {id: 0, content: "", culturalOfferId: 0, title: ""};
 
   constructor(private route: ActivatedRoute,
     private service: CulturalOfferService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     if(this.authService.isUser()) {
@@ -31,26 +37,36 @@ export class OfferDetailsComponent implements OnInit {
     }
     //@ts-ignore
     this.id = this.route.snapshot.paramMap.get('id');
-    console.log(this.id);
+    this.getOffer();
+  }
+
+  getOffer(): void {
     this.service.getOffer(this.id).subscribe((data: OfferDetailsModel) => {
       this.offer = data;
       console.log(this.offer);
+
+      let token = this.authService.getToken();
+      let userData = this.authService.decodeToken(token);
+
+      for(let p of this.offer.grades) {
+        if(p.user.id === Number(userData?.user_id)) {
+          this.selectedValue = p.value;
+        }
+      }
     }, (error: any) => {
       console.log(error);
     });
   }
 
   countStar(star: any) {
-    if (this.selectedValue == 0) {
+
       this.selectedValue = star;
-      console.log('Value of star', star);
+
       let userId = this.authService.getUserId();
       if(userId == "-1"){return;}
       let offerId = this.offer.id;
       this.service.gradeOffer(parseInt(userId), parseInt(offerId), this.selectedValue);
-    } else {
-      console.log('already voted');
-    }
+
   }
 
   subscribeToggle(event: MatSlideToggleChange, offer_id: string) {
@@ -65,6 +81,26 @@ export class OfferDetailsComponent implements OnInit {
 
   isUser(): boolean {
     return this.authService.isUser();
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  addPost(){
+    const dialogRef = this.dialog.open(AddPostComponent, {
+      width: '500px',
+      data: this.newModel
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result != undefined){
+        let post = result.data;
+        post.culturalOfferId = this.offer.id;
+        this.service.addPost(post);
+        location.reload();
+      }
+    });
   }
 
   isSubscribed(offer: OfferDetailsModel): boolean {
