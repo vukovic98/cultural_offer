@@ -42,7 +42,7 @@ public class LoginE2ETest {
 		
 		assertTrue(!loginPage.getLoginBtn().isEnabled());
 
-        loginPage.getEmail().sendKeys("a@a");
+        loginPage.getEmail().sendKeys("vlado@maildrop.cc");
 
         loginPage.getPassword().sendKeys("vukovic");
 
@@ -78,9 +78,9 @@ public class LoginE2ETest {
 		
 		assertTrue(!loginPage.getLoginBtn().isEnabled());
 
-        loginPage.getEmail().sendKeys("a@a");
+        loginPage.getEmail().sendKeys("vlado@maildrop.cc");
 
-        loginPage.getPassword().sendKeys("123456");
+        loginPage.getPassword().sendKeys("vukovsic");
 
         loginPage.getLoginBtn().click();
 
