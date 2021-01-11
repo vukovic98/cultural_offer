@@ -1,6 +1,7 @@
 package com.ftn.kts_nvt.e2e;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
@@ -40,14 +41,18 @@ public class LoginE2ETest {
 		
 		justWait();
 		
-		assertTrue(!loginPage.getLoginBtn().isEnabled());
+		assertFalse(loginPage.getLoginBtn().isEnabled());
 
-        loginPage.getEmail().sendKeys("a@a");
+        loginPage.getEmail().sendKeys("vladimirvukovic98@maildrop.cc");
 
         loginPage.getPassword().sendKeys("vukovic");
+        
+        loginPage.ensureIsButtonEnabled();
 
         loginPage.getLoginBtn().click();
 
+        justWait();
+        
         loginPage.ensureIsNotVisibleButton();
 
         assertEquals("http://localhost:4200/home-page", driver.getCurrentUrl());
@@ -78,9 +83,9 @@ public class LoginE2ETest {
 		
 		assertTrue(!loginPage.getLoginBtn().isEnabled());
 
-        loginPage.getEmail().sendKeys("a@a");
+        loginPage.getEmail().sendKeys("vladimirvukovic98@maildrop.cc");
 
-        loginPage.getPassword().sendKeys("123456");
+        loginPage.getPassword().sendKeys("vukovic123");
 
         loginPage.getLoginBtn().click();
 
