@@ -17,7 +17,7 @@ public class LoginPage {
 	@FindBy(xpath = "//*[@id=\"password\"]")
 	private WebElement password;
 
-	@FindBy(xpath = "//*[@id=\"login-button\"]")
+	@FindBy(xpath = "//*[@id=\"loginBtn\"]")
 	private WebElement loginBtn;
 
 	public LoginPage() {
@@ -55,6 +55,10 @@ public class LoginPage {
 
 	public void ensureIsDisplayedEmail() {
 		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("email")));
+	}
+
+	public void ensureIsButtonEnabled() {
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(By.id("loginBtn")));
 	}
 
 	public void ensureIsNotVisibleButton() {
