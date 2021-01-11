@@ -49,6 +49,7 @@ import { MatCardModule } from '@angular/material/card';
 import { CommentListComponent } from './components/comment-list/comment-list.component';
 import { CommentItemComponent } from './components/comment-item/comment-item.component';
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
+import {AddPostComponent} from './components/add-post/add-post.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,6 @@ import { AddCommentComponent } from './components/add-comment/add-comment.compon
     FilterOffersComponent,
     OfferDetailsComponent,
     EditOfferComponent,
-        MatCardModule,
     ChangePasswordComponent,
     AddCategoryComponent,
     CommentToBeApprovedComponent,
@@ -79,7 +79,8 @@ import { AddCommentComponent } from './components/add-comment/add-comment.compon
     AddCommentComponent,
     AddTypeComponent,
     EditDialog,
-    EditTypeDialog
+    EditTypeDialog,
+    AddPostComponent
   ],
   imports: [
     BrowserModule,

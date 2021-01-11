@@ -57,10 +57,6 @@ public class LoginPage {
 		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("email")));
 	}
 
-	public void ensureIsButtonEnabled() {
-		(new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(By.id("loginBtn")));
-	}
-
 	public void ensureIsNotVisibleButton() {
 		(new WebDriverWait(driver, 10)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loginBtn")));
 	}
