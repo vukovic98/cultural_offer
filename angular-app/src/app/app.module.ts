@@ -96,7 +96,6 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatButtonModule,
     MatDialogModule,
     CommonModule,
-    MatDialogModule,
     NgSelectModule,
     MatMenuModule,
     MatListModule,

@@ -93,6 +93,9 @@
             <div class="float-left" style="font-size: medium;">
               {{offer.description}}
             </div>
+            <div class="float-left" style="font-size: medium;">
+              <mat-icon (click)="showLocation(offer.location)"> location_on</mat-icon> {{offer.location.place}}
+            </div>
             <mat-divider></mat-divider>
         </div>
       </div>
