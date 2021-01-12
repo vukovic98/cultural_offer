@@ -7,9 +7,14 @@ import static org.junit.Assert.assertTrue;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ftn.kts_nvt.pages.LoginPage;
 
@@ -73,6 +78,10 @@ public class LoginE2ETest {
         loginPage.getLoginBtn().click();
 
         assertEquals("http://localhost:4200/login", driver.getCurrentUrl());
+        
+        loginPage.ensureIsDisplayedSwal();
+        
+        assertTrue(loginPage.isSwalVisible());
 	}
 	
 	@Test
@@ -90,6 +99,10 @@ public class LoginE2ETest {
         loginPage.getLoginBtn().click();
 
         assertEquals("http://localhost:4200/login", driver.getCurrentUrl());
+        
+        loginPage.ensureIsDisplayedSwal();
+        
+        assertTrue(loginPage.isSwalVisible());
 	}
 
 	private void justWait() throws InterruptedException {

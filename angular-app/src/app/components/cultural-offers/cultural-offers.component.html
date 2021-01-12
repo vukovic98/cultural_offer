@@ -3,12 +3,12 @@
     <h2><mat-icon>filter_list</mat-icon> Filter offers</h2>
     <app-filter-offers (filterEvent)="filterOffers($event)" ></app-filter-offers>
   </div>
-  <div class="row col-md-12 w-100 pt-1 pl-auto pr-auto">
+  <div id="offersListDiv" class="row col-md-12 w-100 pt-1 pl-auto pr-auto">
     <app-cultural-offer-item class="col-md-3" (removeOffer)="removeOffer($event)" (editOffer)="editOffer($event)" [isSubscribed]="isSubscribed(offer)" *ngFor="let offer of getAllOffers()"
       [offer]="offer"
     >
     </app-cultural-offer-item>
-    <div *ngIf="getAllOffers().length === 0">
+    <div id="noOffersDiv" *ngIf="getAllOffers().length === 0">
       <h4>No offers in the database</h4>
     </div>
   </div>

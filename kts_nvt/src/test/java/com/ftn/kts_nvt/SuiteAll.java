@@ -17,6 +17,7 @@ import com.ftn.kts_nvt.controller.GradeControllerIntegrationTest;
 import com.ftn.kts_nvt.controller.ImageControllerIntegrationTest;
 import com.ftn.kts_nvt.controller.PostControllerIntegrationTest;
 import com.ftn.kts_nvt.controller.RegisteredUserControllerIntegrationTest;
+import com.ftn.kts_nvt.e2e.HomePageUnsubscribedUserE2ETest;
 import com.ftn.kts_nvt.e2e.LoginE2ETest;
 import com.ftn.kts_nvt.repository.AdminRepositoryIntegrationTest;
 import com.ftn.kts_nvt.repository.CommentRepositoryIntegrationTest;
@@ -94,9 +95,11 @@ import com.ftn.kts_nvt.service.VerificationCodeServiceIntegrationTest;
 		//GradeRepositoryIntegrationTest.class,
 		//AdminRepositoryIntegrationTest.class,
 		//RegisteredUserRepositoryIntegrationTest.class,
-		VerificationCodeRepositoryIntegrationTest.class,
+		//VerificationCodeRepositoryIntegrationTest.class,
 	
-		LoginE2ETest.class
+		//E2E SW3
+		//LoginE2ETest.class,
+		//HomePageUnsubscribedUserE2ETest.class,
 
 })
 @TestPropertySource("classpath:test.properties")
