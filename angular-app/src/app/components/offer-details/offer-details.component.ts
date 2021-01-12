@@ -10,6 +10,7 @@ import {EditOfferComponent} from '../edit-offer/edit-offer.component';
 import {MatDialog} from '@angular/material/dialog';
 import {AddPostComponent} from '../add-post/add-post.component';
 import {AddPostModel} from '../../model/post-model';
+import {MatGridListModule} from '@angular/material/grid-list'; 
 
 @Component({
   selector: 'app-offer-details',

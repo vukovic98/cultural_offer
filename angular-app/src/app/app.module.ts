@@ -50,6 +50,7 @@ import { CommentListComponent } from './components/comment-list/comment-list.com
 import { CommentItemComponent } from './components/comment-item/comment-item.component';
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
 import {AddPostComponent} from './components/add-post/add-post.component';
+import {MatGridListModule} from '@angular/material/grid-list'; 
 
 @NgModule({
   declarations: [
@@ -90,7 +91,7 @@ import {AddPostComponent} from './components/add-post/add-post.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatIconModule,
-    MatSelectModule,
+    MatSelectModule,MatGridListModule,
     MatSlideToggleModule,
     MatButtonModule,
     MatDialogModule,
