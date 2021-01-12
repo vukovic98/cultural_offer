@@ -91,10 +91,10 @@
             </div>
             <mat-divider></mat-divider>
             <div class="float-left" style="font-size: medium;">
-              {{offer.description}}
+              <mat-icon (click)="showLocation(offer.location)"> location_on</mat-icon> {{offer.location.place}}
             </div>
             <div class="float-left" style="font-size: medium;">
-              <mat-icon (click)="showLocation(offer.location)"> location_on</mat-icon> {{offer.location.place}}
+              {{offer.description}}
             </div>
             <mat-divider></mat-divider>
         </div>
