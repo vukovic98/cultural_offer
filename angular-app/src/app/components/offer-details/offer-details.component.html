@@ -26,7 +26,11 @@
               <span class="sr-only">Next</span>
             </a>
           </div>
-
+          <button mat-raised-button (click)="showLocation(offer.location)" style="margin-top: 10px;">
+            <div class="float-left" style="font-size: medium;">
+              <mat-icon> location_on</mat-icon> {{offer.location.place}}
+            </div>  
+          </button>
         </div>
         <div class="col-md-8">
           <mat-grid-list cols="3" rowHeight="7:1">
@@ -90,9 +94,6 @@
               </h1>
             </div>
             <mat-divider></mat-divider>
-            <div class="float-left" style="font-size: medium;">
-              <mat-icon (click)="showLocation(offer.location)"> location_on</mat-icon> {{offer.location.place}}
-            </div>
             <div class="float-left" style="font-size: medium;">
               {{offer.description}}
             </div>
