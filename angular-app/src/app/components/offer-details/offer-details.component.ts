@@ -17,13 +17,14 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
   templateUrl: './offer-details.component.html',
   styleUrls: ['./offer-details.component.css']
 })
-export class OfferDetailsComponent implements OnInit {
+export class OfferDetailsComponent implements OnInit{
   stars: number[] = [1, 2, 3, 4, 5];
   selectedValue: number = 0;
   id: string = '';
   offer!: OfferDetailsModel;
   private subscribedItems: Array<CulturalOffer> = [];
   newModel: AddPostModel = { id: 0, content: "", culturalOfferId: 0, title: "" };
+  timer: number = 0;
 
   constructor(private route: ActivatedRoute,
     private service: CulturalOfferService,
@@ -45,7 +46,6 @@ export class OfferDetailsComponent implements OnInit {
   getOffer(): void {
     this.service.getOffer(this.id).subscribe((data: OfferDetailsModel) => {
       this.offer = data;
-      console.log(this.offer);
 
       let token = this.authService.getToken();
       let userData = this.authService.decodeToken(token);
@@ -55,7 +55,6 @@ export class OfferDetailsComponent implements OnInit {
           this.selectedValue = p.value;
         }
       }
-      console.log(this.offer.images.slice(1, this.offer.images.length));
     }, (error: any) => {
       console.log(error);
     });
@@ -126,6 +125,7 @@ export class OfferDetailsComponent implements OnInit {
 
   }
 }
+
 @Component({
   selector: 'location-dialog',
   templateUrl: 'location-dialog.html',
