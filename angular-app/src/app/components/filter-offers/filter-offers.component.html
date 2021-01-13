@@ -10,6 +10,7 @@
             [(ngModel)]="selectedTypes"
             [clearable]="false"
             name="sTypes"
+            id="typeSelect"
             >
             <ng-option *ngFor="let t of types" [value]="t" >{{t}}</ng-option>
           </ng-select>
@@ -23,7 +24,7 @@
       </div>
       <div class="form-group col-md-2">
         <div>
-          <button mat-raised-button color="primary" class="btn-block" (click)="onApplyFilter()">Apply filter</button>
+          <button mat-raised-button color="primary" id="applyFilter" class="btn-block" (click)="onApplyFilter()">Apply filter</button>
         </div>
       </div>
     </form>

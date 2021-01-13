@@ -19,6 +19,9 @@ public class LoginPage {
 
 	@FindBy(xpath = "//*[@id=\"loginBtn\"]")
 	private WebElement loginBtn;
+	
+	@FindBy(xpath = "//div[contains(@class, 'swal2-popup')]")
+	private WebElement swalAlert;
 
 	public LoginPage() {
 		super();
@@ -56,6 +59,14 @@ public class LoginPage {
 	public void ensureIsDisplayedEmail() {
 		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("email")));
 	}
+	
+	public void ensureIsDisplayedSwal() {
+		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.className("swal2-popup")));
+	}
+
+	public void ensureIsButtonEnabled() {
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(By.id("loginBtn")));
+	}
 
 	public void ensureIsNotVisibleButton() {
 		(new WebDriverWait(driver, 10)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loginBtn")));
@@ -63,6 +74,10 @@ public class LoginPage {
 
 	public void ensureIsNotVisibleEmail() {
 		(new WebDriverWait(driver, 10)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("email")));
+	}
+	
+	public boolean isSwalVisible() {
+		return this.swalAlert.isDisplayed();
 	}
 
 }

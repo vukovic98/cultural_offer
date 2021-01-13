@@ -6,14 +6,15 @@
     <div *ngIf="offer">
       <div class="row">
         <div class="col-md-4">
+          <h3><b style="font-size: large;">{{offer.name}}</b></h3>
           <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <img *ngIf="offer.images.length > 0" [src]="'data:image/png;base64,'+offer.images[0].picByte" [alt]="offer.name"/>
                 <img *ngIf="offer.images.length === 0" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg" [alt]="offer.name">
               </div>
-              <div class="carousel-item" *ngFor="let i of offer.images.slice(1, offer.images.length-1)">
-                <img class="d-block w-100" src="..." alt="Second slide">
+              <div class="carousel-item" *ngFor="let i of offer.images.slice(1, offer.images.length)">
+                <img class="d-block w-100" [src]="'data:image/png;base64,'+i.picByte" alt="Second slide">
               </div>
             </div>
             <a *ngIf="offer.images.length > 1" class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -25,47 +26,60 @@
               <span class="sr-only">Next</span>
             </a>
           </div>
-
+          <button mat-raised-button (click)="showLocation(offer.location)" style="margin-top: 10px;">
+            <div class="float-left" style="font-size: medium;">
+              <mat-icon> location_on</mat-icon> {{offer.location.place}}
+            </div>  
+          </button>
         </div>
         <div class="col-md-8">
+          <mat-grid-list cols="3" rowHeight="7:1">
+            <mat-grid-tile>
+              <div class="col-md-12 pl-0 mb-0">
+                <h1 class="mb-0"><div class="badge badge-light" title="Average grade">
+                  <mat-icon class="float-left mr-3">star</mat-icon> <p class="pt-1">{{offer.avgGrade}}</p>
+                </div></h1>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="col-md-12 pl-0 mb-0">
+                <h1 class="mb-0"><div class="badge badge-light" title="Number of subscribers">
+                  <mat-icon class="float-left mr-3">people</mat-icon> <p class="pt-1">{{offer.subscribersCount}}</p>
+                </div></h1>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="col-md-12 pl-0 mb-0">
+                <h1 class="mb-0"><div class="badge badge-light" title="Number of posts">
+                  <mat-icon class="float-left mr-3">pages</mat-icon> <p class="pt-1">{{offer.postsCount}}</p>
+                </div></h1>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="col-md-12 pl-0 mb-0">
+                <h1 class="mb-0"><div class="badge badge-light" title="Number of comments">
+                  <mat-icon class="float-left mr-3">comment</mat-icon> <p class="pt-1">{{offer.commentsCount}}</p>
+                </div></h1>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="col-md-12 pl-0 mb-0">
+                <h1 class="mb-0"><div class="badge badge-light" title="Cultural Offer Category">
+                  <mat-icon class="float-left mr-3">spa</mat-icon><p class="pt-1">{{offer.type.categoryName}}</p>
+                </div></h1>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="col-md-12 pl-0 mb-0">
+                <h1 class="mb-0"><div class="badge badge-light" title="Cultural Offer Type">
+                  <mat-icon class="float-left mr-3">location_city</mat-icon><p class="pt-1">{{offer.type.name}}</p>
+                </div></h1>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
           <div class="float-right" *ngIf="isUser()">
             <small class="float-left mr-2">Subscribe</small>
             <mat-slide-toggle class="float-right mr-2" color="primary" (change)="subscribeToggle($event, offer.id)" [checked]="isSubscribed(offer)" title="(Un)Subscribe"></mat-slide-toggle>
-          </div>
-          <div class="col-md-12 pl-0 mb-0">
-            <h1 class="mb-0"><div class="badge badge-light" title="Average grade">
-              <mat-icon class="float-left mr-3">star</mat-icon> <p class="pt-1">{{offer.avgGrade}}</p>
-            </div></h1>
-          </div>
-          <mat-divider></mat-divider>
-          <div class="col-md-12 pl-0 mb-0">
-            <h1 class="mb-0"><div class="badge badge-light" title="Number of subscribers">
-              <mat-icon class="float-left mr-3">people</mat-icon> <p class="pt-1">{{offer.subscribersCount}}</p>
-            </div></h1>
-          </div>
-          <mat-divider></mat-divider>
-          <div class="col-md-12 pl-0 mb-0">
-            <h1 class="mb-0"><div class="badge badge-light" title="Number of posts">
-              <mat-icon class="float-left mr-3">pages</mat-icon> <p class="pt-1">{{offer.postsCount}}</p>
-            </div></h1>
-          </div>
-          <mat-divider></mat-divider>
-          <div class="col-md-12 pl-0 mb-0">
-            <h1 class="mb-0"><div class="badge badge-light" title="Number of comments">
-              <mat-icon class="float-left mr-3">comment</mat-icon> <p class="pt-1">{{offer.commentsCount}}</p>
-            </div></h1>
-          </div>
-          <mat-divider></mat-divider>
-          <div class="col-md-12 pl-0 mb-0">
-            <h1 class="mb-0"><div class="badge badge-light" title="Cultural Offer Category">
-              <mat-icon class="float-left mr-3">spa</mat-icon><p class="pt-1">{{offer.type.categoryName}}</p>
-            </div></h1>
-          </div>
-          <mat-divider></mat-divider>
-          <div class="col-md-12 pl-0 mb-0">
-            <h1 class="mb-0"><div class="badge badge-light" title="Cultural Offer Type">
-              <mat-icon class="float-left mr-3">location_city</mat-icon><p class="pt-1">{{offer.type.name}}</p>
-            </div></h1>
           </div>
           <mat-divider></mat-divider>
             <div class="col-md-12 pl-0 mb-0">
@@ -79,6 +93,11 @@
               </div>
               </h1>
             </div>
+            <mat-divider></mat-divider>
+            <div class="float-left" style="font-size: medium;">
+              {{offer.description}}
+            </div>
+            <mat-divider></mat-divider>
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 <div>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
+    <div id="navbarDiv" class="container-fluid">
       <a class="navbar-brand myFont" href="#"><i>Culture on The Palm</i></a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
@@ -22,8 +22,8 @@
         </ul>
       </div>
       <span class="float-right" *ngIf="!getUser()">
-        <a routerLink="/login"><button mat-raised-button color="primary" class="mr-2">Login</button></a>
-        <a routerLink="/sign-up"><button mat-raised-button color="primary">Sign Up</button></a>
+        <a routerLink="/login"><button mat-raised-button color="primary" id="loginBtn" class="mr-2">Login</button></a>
+        <a routerLink="/sign-up"><button mat-raised-button color="primary" id="signUpBtn">Sign Up</button></a>
       </span>
       <button mat-mini-fab color="primary" class="dropdown" [matMenuTriggerFor]="beforeMenu"
         *ngIf="getUser()">{{getUserName()[0]}}</button>

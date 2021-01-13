@@ -153,7 +153,6 @@ export class EditDialog {
 
   save(){
     this.data.name = this.myForm.value.name;
-    console.log(this.data);
     this.categoryService.updateCategory(this.data, ()=>{
       this.dialogRef.close({data:this.data});
     });
