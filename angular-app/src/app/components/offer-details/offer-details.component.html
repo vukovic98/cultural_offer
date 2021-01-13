@@ -13,8 +13,8 @@
                 <img *ngIf="offer.images.length > 0" [src]="'data:image/png;base64,'+offer.images[0].picByte" [alt]="offer.name"/>
                 <img *ngIf="offer.images.length === 0" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg" [alt]="offer.name">
               </div>
-              <div class="carousel-item" *ngFor="let i of offer.images.slice(1, offer.images.length-1)">
-                <img class="d-block w-100" src="..." alt="Second slide">
+              <div class="carousel-item" *ngFor="let i of offer.images.slice(1, offer.images.length)">
+                <img class="d-block w-100" [src]="'data:image/png;base64,'+i.picByte" alt="Second slide">
               </div>
             </div>
             <a *ngIf="offer.images.length > 1" class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">

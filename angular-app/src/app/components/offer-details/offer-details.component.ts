@@ -55,6 +55,7 @@ export class OfferDetailsComponent implements OnInit {
           this.selectedValue = p.value;
         }
       }
+      console.log(this.offer.images.slice(1, this.offer.images.length));
     }, (error: any) => {
       console.log(error);
     });
