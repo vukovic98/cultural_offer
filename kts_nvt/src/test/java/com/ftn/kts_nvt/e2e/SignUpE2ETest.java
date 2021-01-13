@@ -52,7 +52,6 @@ public class SignUpE2ETest {
 		justWait();
 		assertTrue(!signUpPage.getSignUpBtn().isEnabled());
 
-		//SIGN UP
 		
 		String email = "ttt@maildrop.cc";
 
@@ -68,39 +67,29 @@ public class SignUpE2ETest {
 		verifyPage.ensureButtonIsVisible();
 
 		assertEquals("http://localhost:4200/verify?email=" + email, driver.getCurrentUrl());
-		
-		// VERIFY ACCOUNT
-		/*
-		 * String code = "S";
-		 * 
-		 * verifyPage.getCode().sendKeys(code); verifyPage.getVerifyBtn().click();
-		 * justWait(); verifyPage.getGoToLoginPageBtn().click();
-		 * assertEquals("http://localhost:4200/login", driver.getCurrentUrl());
-		 */
 	
-
 	}
 
-	/*
-	 * @Test public void signUpTestFail() throws InterruptedException {
-	 * driver.get("http://localhost:4200/sign-up");
-	 * 
-	 * justWait();
-	 * 
-	 * assertTrue(!signUpPage.getSignUpBtn().isEnabled());
-	 * 
-	 * signUpPage.getFirstName().sendKeys("Ivana");
-	 * signUpPage.getLastName().sendKeys("Vlaisavljevic");
-	 * signUpPage.getEmail().sendKeys("haha@maildrop.cc");
-	 * signUpPage.getPassword().sendKeys("1234567i");
-	 * signUpPage.getPasswordConfirm().sendKeys("1234567i");
-	 * signUpPage.getSignUpBtn().click();
-	 * 
-	 * justWait();
-	 * 
-	 * assertFalse("http://localhost:4200/verify?email=haha@maildrop.cc".
-	 * equalsIgnoreCase(driver.getCurrentUrl())); }
-	 */
+	
+	  @Test public void signUpTestFail() throws InterruptedException {
+	  driver.get("http://localhost:4200/sign-up");
+	  
+	  justWait();
+	  
+	  assertTrue(!signUpPage.getSignUpBtn().isEnabled());
+	  
+	  signUpPage.getFirstName().sendKeys("Ivana");
+	  signUpPage.getLastName().sendKeys("Vlaisavljevic");
+	  signUpPage.getEmail().sendKeys("haha@maildrop.cc");
+	  signUpPage.getPassword().sendKeys("1234567i");
+	  signUpPage.getPasswordConfirm().sendKeys("1234567i");
+	  signUpPage.getSignUpBtn().click();
+	  
+	  justWait();
+	  
+	  assertFalse("http://localhost:4200/verify?email=haha@maildrop.cc".
+	  equalsIgnoreCase(driver.getCurrentUrl())); }
+	 
 
 	private void justWait() throws InterruptedException {
 		synchronized (driver) {
