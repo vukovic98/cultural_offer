@@ -5,7 +5,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item" *ngIf="isUser()">
-            <a class="nav-link" routerLink="/subscribed-items">Subscribed items</a>
+            <a class="nav-link" id="subscribedItemsLink" routerLink="/subscribed-items">Subscribed items</a>
           </li>
           <li class="nav-item" *ngIf="isUserAdmin()">
             <a class="nav-link" routerLink="/add-offer">Add offer</a>
@@ -25,12 +25,12 @@
         <a routerLink="/login"><button mat-raised-button color="primary" id="loginBtn" class="mr-2">Login</button></a>
         <a routerLink="/sign-up"><button mat-raised-button color="primary" id="signUpBtn">Sign Up</button></a>
       </span>
-      <button mat-mini-fab color="primary" class="dropdown" [matMenuTriggerFor]="beforeMenu"
+      <button id="userBtn" mat-mini-fab color="primary" class="dropdown" [matMenuTriggerFor]="beforeMenu"
         *ngIf="getUser()">{{getUserName()[0]}}</button>
       <mat-menu #beforeMenu="matMenu" xPosition="before">
-        <button class="dropdown" mat-menu-item routerLink="/profile">Profile</button>
-        <button class="dropdown" mat-menu-item routerLink="/change-password">Change password</button>
-        <button class="dropdown" mat-menu-item (click)="logout()">Logout</button>
+        <button id="profileLink" class="dropdown" mat-menu-item routerLink="/profile">Profile</button>
+        <button id="changePasswordLink" class="dropdown" mat-menu-item routerLink="/change-password">Change password</button>
+        <button id="logoutLink" class="dropdown" mat-menu-item (click)="logout()">Logout</button>
       </mat-menu>
     </div>
   </nav>

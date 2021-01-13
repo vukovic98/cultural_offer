@@ -6,9 +6,9 @@
     <div *ngIf="offer">
       <div class="row">
         <div class="col-md-4">
-          <h3><b style="font-size: large;">{{offer.name}}</b></h3>
-          <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
+          <h1><b>{{offer.name}}</b></h1>
+          <div id="carouselExampleControls" class="carousel slide" style="height: 350px;" data-ride="carousel">
+            <div class="carousel-inner h-100">
               <div class="carousel-item active">
                 <img *ngIf="offer.images.length > 0" [src]="'data:image/png;base64,'+offer.images[0].picByte" [alt]="offer.name"/>
                 <img *ngIf="offer.images.length === 0" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg" [alt]="offer.name">
@@ -26,11 +26,7 @@
               <span class="sr-only">Next</span>
             </a>
           </div>
-          <button mat-raised-button (click)="showLocation(offer.location)" style="margin-top: 10px;">
-            <div class="float-left" style="font-size: medium;">
-              <mat-icon> location_on</mat-icon> {{offer.location.place}}
-            </div>  
-          </button>
+
         </div>
         <div class="col-md-8">
           <mat-grid-list cols="3" rowHeight="7:1">
@@ -76,26 +72,44 @@
                 </div></h1>
               </div>
             </mat-grid-tile>
-          </mat-grid-list>
-          <div class="float-right" *ngIf="isUser()">
-            <small class="float-left mr-2">Subscribe</small>
-            <mat-slide-toggle class="float-right mr-2" color="primary" (change)="subscribeToggle($event, offer.id)" [checked]="isSubscribed(offer)" title="(Un)Subscribe"></mat-slide-toggle>
-          </div>
-          <mat-divider></mat-divider>
-            <div class="col-md-12 pl-0 mb-0">
-              <h1 class="mb-0"><div class="badge badge-light" title="Grade offer!">
-                <mat-icon class="float-left mr-3 mt-1">grade</mat-icon>
-                <ul class="list-inline rating-list" *ngFor="let star of stars" style="display: inline-block">
-                  <li (click)="countStar(star)" [ngClass]="{'selected': (star <= selectedValue)}">
-                    <i class="fa fa-star"></i>
-                  </li>
-                </ul>
+
+            <mat-grid-tile>
+              <div class="col-md-12 pl-0 mb-0 pt-2">
+                <h1 class="mb-0"><div class="badge badge-light" title="Grade offer!">
+                  <mat-icon class="float-left mr-3 mt-1">grade</mat-icon>
+                  <ul class="list-inline rating-list" *ngFor="let star of stars" style="display: inline-block">
+                    <li (click)="countStar(star)" [ngClass]="{'selected': (star <= selectedValue)}">
+                      <i class="fa fa-star"></i>
+                    </li>
+                  </ul>
+                </div>
+                </h1>
               </div>
-              </h1>
-            </div>
-            <mat-divider></mat-divider>
-            <div class="float-left" style="font-size: medium;">
-              {{offer.description}}
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <div class="col-md-12 pl-0 mb-0 pb-2">
+                <button mat-raised-button title="See location" (click)="showLocation(offer.location)" class="mb-1">
+                    <mat-icon> location_on</mat-icon> {{offer.location.place}}
+                </button>
+             </div>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <div class="col-md-12 pl-0 mb-1" *ngIf="isUser()">
+                <p class="float-left mr-2 mt-1">Subscribe</p>
+                <mat-slide-toggle class="mb-1" color="primary" (change)="subscribeToggle($event, offer.id)" [checked]="isSubscribed(offer)" title="(Un)Subscribe"></mat-slide-toggle>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-divider></mat-divider>
+
+            <div class="float-left col-md-12 pl-0" style="font-size: medium;">
+              <div class="form-group">
+                <h2><label for="exampleFormControlTextarea1">Description</label></h2>
+                <textarea title="Description" disabled class="form-control bg-white" id="exampleFormControlTextarea1" style="resize: none;" rows="7">{{offer.description}}</textarea>
+              </div>
             </div>
             <mat-divider></mat-divider>
         </div>
