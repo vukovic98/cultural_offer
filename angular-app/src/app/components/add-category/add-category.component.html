@@ -42,12 +42,12 @@
                         <tr class="text-center" *ngFor="let c of getAllCategories()">
                             <td>{{c.name}}</td>
                             <td>
-                                <mat-select>
-                                    <mat-option *ngIf="c.types.length == 0">No types</mat-option>
-                                    <mat-option *ngFor='let type of c.types' [value]="type.id">
+                                <select class="form-select form-select-lg mb-3">
+                                    <option>{{c.types.length}} types</option>
+                                    <option *ngFor='let type of c.types' [value]="type.id" disabled>
                                         {{type.name}}
-                                    </mat-option>
-                                </mat-select>
+                                    </option>
+                                </select>
                             </td>
                             <td>
                                 <button mat-mini-fab color="primary" class="mr-2 mb-2" (click)="editCategory(c)"
