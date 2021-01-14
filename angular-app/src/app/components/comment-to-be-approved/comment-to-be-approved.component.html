@@ -33,18 +33,14 @@
 
       </div>
       <div class="col-md-2">
-        <button mat-raised-button color="primary" class="mr-2" (click)="authoriseComment(commentToBeApproved.id)">
+        <button id="approveBtn" mat-raised-button color="primary" class="mr-2" (click)="authoriseComment(commentToBeApproved.id)">
           <mat-icon>check_circle</mat-icon>
         </button>
-        <button mat-raised-button color="warn" (click)="rejectComment(commentToBeApproved.id)">
+        <button id="rejectBtn" mat-raised-button color="warn" (click)="rejectComment(commentToBeApproved.id)">
           <mat-icon>remove_circle</mat-icon>
         </button>
       </div>
     </div>
-
-
-
-
   </mat-expansion-panel>
 </div>
 

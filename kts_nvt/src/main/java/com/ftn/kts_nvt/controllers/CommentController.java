@@ -188,7 +188,6 @@ public class CommentController {
 		PageImplMapper<CommentUserDTO> pageMapper = new PageImplMapper<>();
 		PageImplementation<CommentUserDTO> pageImpl = pageMapper.toPageImpl(pagePendingCommentsDtop);
 
-		System.out.println(pageImpl.getContent().get(0).getOffer());
 		return new ResponseEntity<>(pageImpl, HttpStatus.OK);
 	}
 	

@@ -2,7 +2,7 @@
   <div class="col-md-12 pl-0 pr-0">
   <app-navigation-bar></app-navigation-bar>
   </div>
-  <div class="jumbotron col-md-10 ml-auto mr-auto bg-light shadow mt-5 float-left pt-3">
+  <div class="jumbotron col-md-10 ml-auto mr-auto bg-light shadow mt-5 float-left pt-3" id="commentsDiv">
     <div class="row col-md-12 pl-5 pr-0">
       <div class="row col-md-12 w-100 pt-1 pl-auto pr-auto">
         <mat-list role="list" class="col-md-12">
@@ -16,7 +16,7 @@
             </app-comment-to-be-approved>
 
         </mat-list>
-        <div *ngIf=" getAllComments().length === 0">
+        <div *ngIf=" getAllComments().length === 0" id="noCommentsDiv">
           <h4>There are no comments to be approved.</h4>
         </div>
       </div>
