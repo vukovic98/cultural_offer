@@ -13,7 +13,7 @@ import { Router} from '@angular/router';
 export class CulturalOfferItemComponent implements OnInit {
 
   @Input() public offer: any;
-  offerDescription: string = "";
+  //offerDescription: string = "";
 
   @Input() public isSubscribed: boolean = false;
   @Output() removeOffer = new EventEmitter<number>();
@@ -30,7 +30,8 @@ export class CulturalOfferItemComponent implements OnInit {
     const regex = /((\s*\S+){25})([\s\S]*)/;
     const subst = `$1...`;
     const result = this.offer.description.replace(regex, subst);
-    this.offerDescription = result;
+    //this.offerDescription = result;
+    this.offer.description = result;
   }
 
   deleteOffer(offer_id: number) {
