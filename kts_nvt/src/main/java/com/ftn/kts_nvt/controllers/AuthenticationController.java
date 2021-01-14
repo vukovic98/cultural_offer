@@ -1,6 +1,5 @@
 package com.ftn.kts_nvt.controllers;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,28 +75,33 @@ public class AuthenticationController {
 			HttpServletResponse response) {
 
 		try {
+			RegisteredUser u = this.registeredUserService.findOneByEmail(authenticationRequest.getEmail());
+			boolean verified = u.isVerified();
+
 			Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 					authenticationRequest.getEmail(), authenticationRequest.getPassword()));
-			
+
 			// Ubaci korisnika u trenutni security kontekst
 			SecurityContextHolder.getContext().setAuthentication(authentication);
-			
+
 			// Kreiraj token za tog korisnika
 			User user = (User) authentication.getPrincipal();
+			String email = user.getEmail();
 			String jwt = tokenUtils.generateToken(user.getEmail()); // prijavljujemo se na sistem sa email adresom
 			int expiresIn = tokenUtils.getExpiredIn();
-	
+
 			// Vrati token kao odgovor na uspesnu autentifikaciju
-			return ResponseEntity.ok(new UserTokenStateDTO(jwt, expiresIn));
-		}catch (Exception e) {
+			return ResponseEntity.ok(new UserTokenStateDTO(jwt, expiresIn, email, verified));
+		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+
 	}
-	
+
 	@PostMapping("/verify")
 	public ResponseEntity<HttpStatus> verifyUser(@RequestBody VerificationCodeDTO dto) {
 		RegisteredUser user = this.registeredUserService.findOneByEmail(dto.getUserEmail());
-		
+
 		if (user != null) {
 			VerificationCode code = this.verificationCodeService.findCodeByUser(user.getId());
 
@@ -114,13 +118,20 @@ public class AuthenticationController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
+	@PostMapping("/sendCodeAgain")
+	public ResponseEntity<HttpStatus> sendCodeAgain(@RequestBody String email) {
+		RegisteredUser user = this.registeredUserService.findOneByEmail(email);
+		VerificationCode code = this.verificationCodeService.findCodeByUser(user.getId());
+		this.verificationCodeService.sendCode(user, code);
+		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+
+	}
 	// Endpoint za registraciju novog korisnika
-	
+
 	@PostMapping("/sign-up")
 	public ResponseEntity<?> addUser(@Valid @RequestBody UserDTO userRequest, Errors er) throws Exception {
-		
-		if(!er.hasErrors()) {
-			System.out.println("signUp userDTO = " + userRequest);
+
+		if (!er.hasErrors()) {
 
 			User existUser = this.userService.findByEmail(userRequest.getEmail());
 			if (existUser != null) {
@@ -128,32 +139,27 @@ public class AuthenticationController {
 				return new ResponseEntity<>("Username already exists", HttpStatus.BAD_REQUEST);
 
 			}
-			System.out.println("existUser = " + existUser);
 			BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
 			userRequest.setPassword(enc.encode(userRequest.getPassword()));
 			try {
 				existUser = registeredUserService.create(regUserMapper.toEntity(userRequest));
-        VerificationCode code = new VerificationCode((RegisteredUser) existUser);
+				VerificationCode code = new VerificationCode((RegisteredUser) existUser);
 
-        this.verificationCodeService.create(code);
-        this.verificationCodeService.sendCode(existUser, code);
-				System.out.println("existUser create = " + existUser);
+				this.verificationCodeService.create(code);
+				this.verificationCodeService.sendCode(existUser, code);
 
 			} catch (Exception e) {
-				
+
 				return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 			}
 			return new ResponseEntity<>(userMapper.toDto(existUser), HttpStatus.CREATED);
-			
-		}
-		else {
+
+		} else {
 			return new ResponseEntity<>(er.getAllErrors(), HttpStatus.BAD_REQUEST);
 
 		}
 	}
-	
-	
-	
+
 	// U slucaju isteka vazenja JWT tokena, endpoint koji se poziva da se token
 	// osvezi
 	@PostMapping(value = "/refresh")

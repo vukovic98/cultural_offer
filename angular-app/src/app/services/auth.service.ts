@@ -11,6 +11,7 @@ export class AuthService {
   private readonly loginPath = "auth/log-in";
   private  readonly signupPath = "auth/sign-up";
   private  readonly verificationCodePath = "auth/verify";
+  private  readonly sendCodeAgainPath = "auth/sendCodeAgain";
 
   constructor(private http: HttpClient, private route: Router) {
   }
@@ -21,11 +22,17 @@ export class AuthService {
     });
 
     let response = this.http.post<loginResponse>(environment.apiUrl + this.loginPath, loginDto, {headers: headers})
-      .pipe(map(response => response.authenticationToken))
-      .subscribe(token => {
-        localStorage.setItem("accessToken", token);
-        this.route.navigate(['/']);
-        return true;
+      .pipe(map(response => response))
+      .subscribe(response => {
+        if (response.verified === true){
+          localStorage.setItem("accessToken", response.authenticationToken);
+          this.route.navigate(['/']);
+          return true;
+        } else {
+          this.route.navigate(['/verify'],{  queryParams: {  email: response.email } });
+          return true;
+        };
+
       }, error => {
         Swal.fire({
           title: 'Error!',
@@ -35,6 +42,7 @@ export class AuthService {
           confirmButtonText: 'OK'
         })
       })
+
   }
   verifyCode(verifyDto: string):any{
     const headers = new HttpHeaders({
@@ -155,6 +163,24 @@ export class AuthService {
       return "-1";
     }
   }
+
+  sendCodeAgain(email: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    let response = this.http.post<String>(environment.apiUrl + this.sendCodeAgainPath, email, {headers: headers})
+      .pipe(map(response => response))
+      .subscribe(response => {
+        Swal.fire({
+          title: 'Code sent again. Please check your mail!',
+          text: 'It may take a few minutes to get mail.',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 2100
+        });
+        return true;
+        })
+  }
 }
 
 
@@ -162,6 +188,7 @@ interface loginResponse {
   authenticationToken: string;
   expiresAt: number;
   email: string;
+  verified: boolean;
 }
 interface signupResponse {
   id: number;

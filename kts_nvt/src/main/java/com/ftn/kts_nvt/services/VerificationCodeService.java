@@ -59,14 +59,14 @@ public class VerificationCodeService {
 
 			StringBuffer sb = new StringBuffer();
 
-			sb.append("<h2>" + existUser.getFirstName() + ", in order to successfully register on our website, please use code</h2><br>");
-			sb.append("<h3>" + code.getCode() + "</h3> <br><br>");
-			sb.append("<h2>to verify your account on your next login!</h2>");
+			sb.append("<h2>" + existUser.getFirstName() + ", in order to successfully register on our website, please use following code</h2><br>");
+			sb.append("<h3>" + code.getCode() + "</h3> <br>");
+			sb.append("<h2>to verify your account.</h2>");
 
 			helper.setText(sb.toString(), true);
 			this.javaMailSender.send(msg);
 
-			System.out.println("SENT ACCEPTED MAIL!");
+			System.out.println("VERIFICATION MAIL SENT!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

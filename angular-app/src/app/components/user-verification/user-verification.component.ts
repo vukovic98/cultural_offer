@@ -32,4 +32,8 @@ export class UserVerificationComponent implements OnInit {
     });
   }
 
+  sendCodeAgain(email: string) {
+    this.service.sendCodeAgain(email);
+
+  }
 }
