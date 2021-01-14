@@ -52,7 +52,7 @@ export class TypeService {
         response
       }));*/
 
-    return this.http.get(environment.apiUrl + this.manageTypesEndPoint + 'byPage/1', { headers: headers });
+    return this.http.get(environment.apiUrl + this.manageTypesEndPointPage + page, { headers: headers });
   }
 
   /*getAllTypes(): Observable<Array<AllTypesModel>>{
