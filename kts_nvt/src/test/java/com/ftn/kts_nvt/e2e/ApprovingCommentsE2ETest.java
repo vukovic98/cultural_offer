@@ -66,7 +66,6 @@ public class ApprovingCommentsE2ETest {
 		homePageAdmin.getApprovingCommentsLink().click();
 		approvingCommentsPage.ensureIsPageDisplayed();
 		justWait();
-		approvingCommentsPage.ensureNoCommentsIsNotDisplayed();
 		approvingCommentsPage.getExpandComment().click();
 		justWait();
 		approvingCommentsPage.getApproveBtn().click();
@@ -84,7 +83,6 @@ public class ApprovingCommentsE2ETest {
 		homePageAdmin.getApprovingCommentsLink().click();
 		approvingCommentsPage.ensureIsPageDisplayed();
 		justWait();
-		approvingCommentsPage.ensureNoCommentsIsNotDisplayed();
 		approvingCommentsPage.getExpandComment().click();
 		justWait();
 		approvingCommentsPage.getRejectBtn().click();

@@ -1,6 +1,5 @@
 package com.ftn.kts_nvt.e2e;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -10,14 +9,10 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ftn.kts_nvt.beans.RegisteredUser;
-import com.ftn.kts_nvt.beans.VerificationCode;
+
 import com.ftn.kts_nvt.pages.SignUpPage;
 import com.ftn.kts_nvt.pages.VerifyPage;
-import com.ftn.kts_nvt.services.RegisteredUserService;
-import com.ftn.kts_nvt.services.VerificationCodeService;
 
 public class SignUpE2ETest {
 
@@ -53,7 +48,7 @@ public class SignUpE2ETest {
 		assertTrue(!signUpPage.getSignUpBtn().isEnabled());
 
 		
-		String email = "ttt@maildrop.cc";
+		String email = "e2etest@maildrop.cc";
 
 		signUpPage.getFirstName().sendKeys("Ivana");
 		signUpPage.getLastName().sendKeys("Vlaisavljevic");
@@ -85,10 +80,9 @@ public class SignUpE2ETest {
 	  signUpPage.getPasswordConfirm().sendKeys("1234567i");
 	  signUpPage.getSignUpBtn().click();
 	  
-	  justWait();
+	  signUpPage.ensureErrorSwalIsShown();
 	  
-	  assertFalse("http://localhost:4200/verify?email=haha@maildrop.cc".
-	  equalsIgnoreCase(driver.getCurrentUrl())); }
+	  }
 	 
 
 	private void justWait() throws InterruptedException {

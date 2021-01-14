@@ -46,7 +46,7 @@ public class EditProfileE2ETest {
 
 		loginPage.getEmail().sendKeys("haha@maildrop.cc");
 
-		loginPage.getPassword().sendKeys("123456789a");
+		loginPage.getPassword().sendKeys("123456789b");
 
 		loginPage.ensureIsButtonEnabled();
 
