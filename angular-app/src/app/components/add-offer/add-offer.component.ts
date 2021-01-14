@@ -34,8 +34,6 @@ export class AddOfferComponent implements OnInit {
               private offerService: CulturalOfferService,
               private typeService: TypeService,
               private http: HttpClient) {
-
-    this.myForm.controls['place'].disable();
   }
 
   ngOnInit() {

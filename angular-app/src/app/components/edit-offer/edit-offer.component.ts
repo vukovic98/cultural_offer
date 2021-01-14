@@ -18,14 +18,12 @@ export class EditOfferComponent implements OnInit {
     place: new FormControl(this.data.location.place, Validators.required),
     location: new FormControl('', [Validators.required]),
   });
-
   constructor(
     public dialogRef: MatDialogRef<EditOfferComponent>,
     @Inject(MAT_DIALOG_DATA) public data: CulturalOffer,
     public service: CulturalOfferService) {
     
     this.placeName = data.location.place;
-    this.myForm.controls['place'].disable();
   }
 
   ngOnInit(): void {
