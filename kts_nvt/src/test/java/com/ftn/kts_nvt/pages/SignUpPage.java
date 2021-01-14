@@ -31,6 +31,8 @@ public class SignUpPage {
 	@FindBy(xpath = "//*[@id=\"signUpBtn\"]")
 	private WebElement signUpBtn;
 
+	@FindBy(xpath = "//*[contains(@class, 'swal2-icon-error')]")
+	private WebElement swalError;
 	
 	public SignUpPage() {
 		super();
@@ -65,6 +67,14 @@ public class SignUpPage {
 		this.email = email;
 	}
 
+	public WebElement getSwalError() {
+		return swalError;
+	}
+
+	public void setSwalError(WebElement swalError) {
+		this.swalError = swalError;
+	}
+
 	public WebElement getPassword() {
 		return password;
 	}
@@ -94,5 +104,8 @@ public class SignUpPage {
 		(new WebDriverWait(driver, 10)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("signUpBtn")));
 	}
 
+	public void ensureErrorSwalIsShown() {
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOfElementLocated(By.className("swal2-icon-error")));
+	}
 
 }

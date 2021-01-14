@@ -3,8 +3,7 @@ package com.ftn.kts_nvt.e2e;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.List;
-import java.util.Optional;
+
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,14 +11,9 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ftn.kts_nvt.beans.RegisteredUser;
-import com.ftn.kts_nvt.beans.VerificationCode;
 import com.ftn.kts_nvt.pages.VerifyPage;
-import com.ftn.kts_nvt.repositories.RegisteredUserRepository;
-import com.ftn.kts_nvt.services.RegisteredUserService;
-import com.ftn.kts_nvt.services.VerificationCodeService;
+
 
 public class VerifyUserE2ETest {
 	
@@ -45,13 +39,13 @@ public class VerifyUserE2ETest {
 	
 	@Test
 	public void VerifyTestSuccess() throws InterruptedException {
-		driver.get("http://localhost:4200/verify?email=ttt@maildrop.cc");
+		driver.get("http://localhost:4200/verify?email=luna@maildrop.cc");
 		
 		justWait();
 		
 		assertTrue(!verifyPage.getVerifyBtn().isEnabled());
 		
-		verifyPage.getCode().sendKeys("gx4TP4ZXIF");
+		verifyPage.getCode().sendKeys("enobH824pm");
 		verifyPage.getVerifyBtn().click();
 		verifyPage.ensureGoToLoginButtonIsVisible();
 		verifyPage.getGoToLoginPageBtn().click();
