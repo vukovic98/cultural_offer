@@ -12,6 +12,12 @@ import { CulturalOfferService } from '../../services/culturalOffer.service';
 export class EditOfferComponent implements OnInit {
 
   placeName: string = "";
+  myForm = new FormGroup({
+    name: new FormControl(this.data.name, Validators.required),
+    description: new FormControl(this.data.description, Validators.required),
+    place: new FormControl(this.data.location.place, Validators.required),
+    location: new FormControl('', [Validators.required]),
+  });
 
   constructor(
     public dialogRef: MatDialogRef<EditOfferComponent>,
@@ -19,14 +25,8 @@ export class EditOfferComponent implements OnInit {
     public service: CulturalOfferService) {
     
     this.placeName = data.location.place;
+    this.myForm.controls['place'].disable();
   }
-
-  myForm = new FormGroup({
-    name: new FormControl(this.data.name, Validators.required),
-    description: new FormControl(this.data.description, Validators.required),
-    place: new FormControl(this.data.location.place, Validators.required),
-    location: new FormControl('', [Validators.required]),
-  });
 
   ngOnInit(): void {
     this.initMap();

@@ -24,7 +24,7 @@ export class AddOfferComponent implements OnInit {
     description: new FormControl('', Validators.required),
     category: new FormControl('', Validators.required),
     type: new FormControl('', Validators.required),
-    place: new FormControl('', Validators.required),
+    place: new FormControl('', [Validators.required]),
     location: new FormControl('', [Validators.required]),
     file: new FormControl('', [Validators.required]),
     fileSource: new FormControl('', [Validators.required])
@@ -34,6 +34,8 @@ export class AddOfferComponent implements OnInit {
               private offerService: CulturalOfferService,
               private typeService: TypeService,
               private http: HttpClient) {
+
+    this.myForm.controls['place'].disable();
   }
 
   ngOnInit() {
