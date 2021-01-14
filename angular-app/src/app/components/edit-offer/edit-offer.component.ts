@@ -24,6 +24,7 @@ export class EditOfferComponent implements OnInit {
     public service: CulturalOfferService) {
     
     this.placeName = data.location.place;
+    //console.log("old location = ", data.location);
   }
 
   ngOnInit(): void {
@@ -31,9 +32,13 @@ export class EditOfferComponent implements OnInit {
   }
 
   save(){
+   
     this.data.name = this.myForm.value.name;
     this.data.description = this.myForm.value.description;
-    this.data.location.place = this.myForm.value.place;
+    this.data.location.place = this.placeName;
+    //this.data.location.latitude = this.myForm.value.location.lat;
+    //this.data.location.longitude = this.myForm.value.location.lng;
+    //console.log("new coordinated = ", this.data.location);
     this.dialogRef.close({data:this.data});
   }
 
