@@ -46,6 +46,12 @@ public class HomePageAdminPage {
 	@FindBy(xpath = "//*[@id=\"userBtn\"]")
 	private WebElement userMenuBtn;
 
+	@FindBy(xpath = "//*[@id=\"editSaveBtn\"]")
+	private WebElement editSaveBtn;
+
+	@FindBy(xpath = "//*[@id=\"editCloseBtn\"]")
+	private WebElement editCloseBtn;
+
 	@FindBy(xpath = "//*[@id=\"typeSelect\"]")
 	private WebElement typeSelect;
 
@@ -61,6 +67,9 @@ public class HomePageAdminPage {
 	@FindBy(xpath = "//*[@id=\"noOffersDiv\"]")
 	private WebElement noOffersDiv;
 
+	@FindBy(xpath = "//input[@id=\"name\"]")
+	private WebElement editNameField;
+
 	@FindBy(xpath = "//*[@id=\"offersListDiv\"]/child::*")
 	private List<WebElement> offers;
 
@@ -72,6 +81,18 @@ public class HomePageAdminPage {
 
 	@FindBy(xpath = "//button[contains(@class, 'swal2-confirm')]")
 	private WebElement swalBtn;
+
+	@FindBy(xpath = "//div[@id='offersListDiv']/app-cultural-offer-item/div/div/div[2]/div[2]/button/span/mat-icon")
+	private WebElement editOfferBtn;
+
+	@FindBy(xpath = "//div[@id='offersListDiv']/app-cultural-offer-item[8]/div/div/div[2]/div[1]/button/span/mat-icon")
+	private WebElement deleteOfferBtn;
+
+	@FindBy(xpath = "//div[@id='offersListDiv']/app-cultural-offer-item/div/div/div[1]/div/div/h3")
+	private WebElement offerTitle;
+
+	@FindBy(xpath = "//div[@id='offersListDiv']/app-cultural-offer-item[8]/div/div/div[1]/div/div/h3")
+	private WebElement deleteOfferTitle;
 
 	public HomePageAdminPage() {
 		super();
@@ -88,6 +109,62 @@ public class HomePageAdminPage {
 
 	public void setHomeDiv(WebElement homeDiv) {
 		this.homeDiv = homeDiv;
+	}
+
+	public WebElement getDeleteOfferBtn() {
+		return deleteOfferBtn;
+	}
+
+	public void setDeleteOfferBtn(WebElement deleteOfferBtn) {
+		this.deleteOfferBtn = deleteOfferBtn;
+	}
+
+	public WebElement getDeleteOfferTitle() {
+		return deleteOfferTitle;
+	}
+
+	public void setDeleteOfferTitle(WebElement deleteOfferTitle) {
+		this.deleteOfferTitle = deleteOfferTitle;
+	}
+
+	public WebElement getEditOfferBtn() {
+		return editOfferBtn;
+	}
+
+	public void setEditOfferBtn(WebElement editOfferBtn) {
+		this.editOfferBtn = editOfferBtn;
+	}
+
+	public WebElement getEditNameField() {
+		return editNameField;
+	}
+
+	public void setEditNameField(WebElement editNameField) {
+		this.editNameField = editNameField;
+	}
+
+	public WebElement getEditSaveBtn() {
+		return editSaveBtn;
+	}
+
+	public void setEditSaveBtn(WebElement editSaveBtn) {
+		this.editSaveBtn = editSaveBtn;
+	}
+
+	public WebElement getEditCloseBtn() {
+		return editCloseBtn;
+	}
+
+	public void setEditCloseBtn(WebElement editCloseBtn) {
+		this.editCloseBtn = editCloseBtn;
+	}
+
+	public WebElement getOfferTitle() {
+		return offerTitle;
+	}
+
+	public void setOfferTitle(WebElement offerTitle) {
+		this.offerTitle = offerTitle;
 	}
 
 	public WebElement getAddOfferLink() {

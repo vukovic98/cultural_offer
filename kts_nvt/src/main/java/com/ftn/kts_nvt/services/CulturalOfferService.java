@@ -119,7 +119,7 @@ public class CulturalOfferService {
 			CulturalOffer found = foundOptional.get();
 			found.setName(changedOffer.getName());
 			found.setDescription(changedOffer.getDescription());
-			found.setImages(changedOffer.getImages());
+			//found.setImages(changedOffer.getImages());
 			return this.culturalOfferRepository.save(found);
 		} else
 			return null;

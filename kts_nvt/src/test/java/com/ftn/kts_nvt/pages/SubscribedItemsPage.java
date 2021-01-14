@@ -19,6 +19,18 @@ public class SubscribedItemsPage {
 	@FindBy(xpath = "//table/tbody/tr")
 	private List<WebElement> tableRows;
 
+	@FindBy(xpath = "//table/tbody/tr[td//text()[contains(., 'Sonsing')]]/td[5]/button")
+	private WebElement unsubscribeButton;
+
+	@FindBy(xpath = "//table/tbody/tr[td//text()[contains(., 'Sonsing')]]/td[3]")
+	private WebElement offerTitle;
+
+	@FindBy(xpath = "//div[contains(@class, 'swal2-icon-success')]")
+	private WebElement swalSuccess;
+
+	@FindBy(xpath = "//button[contains(@class, 'swal2-confirm')]")
+	private WebElement swalBtn;
+
 	public SubscribedItemsPage() {
 		super();
 	}
@@ -36,6 +48,46 @@ public class SubscribedItemsPage {
 		this.tableBody = tableBody;
 	}
 
+	public WebDriver getDriver() {
+		return driver;
+	}
+
+	public void setDriver(WebDriver driver) {
+		this.driver = driver;
+	}
+
+	public WebElement getSwalSuccess() {
+		return swalSuccess;
+	}
+
+	public void setSwalSuccess(WebElement swalSuccess) {
+		this.swalSuccess = swalSuccess;
+	}
+
+	public WebElement getSwalBtn() {
+		return swalBtn;
+	}
+
+	public void setSwalBtn(WebElement swalBtn) {
+		this.swalBtn = swalBtn;
+	}
+
+	public WebElement getUnsubscribeButton() {
+		return unsubscribeButton;
+	}
+
+	public void setUnsubscribeButton(WebElement unsubscribeButton) {
+		this.unsubscribeButton = unsubscribeButton;
+	}
+
+	public WebElement getOfferTitle() {
+		return offerTitle;
+	}
+
+	public void setOfferTitle(WebElement offerTitle) {
+		this.offerTitle = offerTitle;
+	}
+
 	public List<WebElement> getTableRows() {
 		return tableRows;
 	}
@@ -46,5 +98,9 @@ public class SubscribedItemsPage {
 
 	public void ensureTableIsVisible() {
 		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.tagName("tbody")));
+	}
+
+	public void ensureIsPageDisplayed() {
+		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("subscribedItemsDiv")));
 	}
 }
