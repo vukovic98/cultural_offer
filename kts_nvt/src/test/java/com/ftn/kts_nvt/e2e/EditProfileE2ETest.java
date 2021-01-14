@@ -2,6 +2,7 @@ package com.ftn.kts_nvt.e2e;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,22 +12,24 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 
 import com.ftn.kts_nvt.pages.EditProfilePage;
+import com.ftn.kts_nvt.pages.HomePageSubscribedUser;
 import com.ftn.kts_nvt.pages.LoginPage;
-import com.ftn.kts_nvt.pages.SignUpPage;
-import com.ftn.kts_nvt.pages.VerifyPage;
 
 
 public class EditProfileE2ETest {
-	
-	private EditProfilePage editProfilePage;
-	
-	private LoginPage loginPage;
-	
-	private WebDriver driver;
 
+	private EditProfilePage editProfilePage;
+
+	private LoginPage loginPage;
+
+	private HomePageSubscribedUser homePage;
+
+	private WebDriver driver;
+	
+	//u bazi mora biti korisnik haha@maidrop.cc, pass=123456789b, Ana Maric
 
 	@Before
-	public void setup() {
+	public void setup() throws InterruptedException {
 
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
 		this.driver = new ChromeDriver();
@@ -34,42 +37,92 @@ public class EditProfileE2ETest {
 		this.driver.manage().window().maximize();
 		this.editProfilePage = PageFactory.initElements(driver, EditProfilePage.class);
 		this.loginPage = PageFactory.initElements(driver, LoginPage.class);
+		this.homePage = PageFactory.initElements(driver, HomePageSubscribedUser.class);
+
+		driver.get("http://localhost:4200/login");
+
+		justWait();
+
+		assertFalse(loginPage.getLoginBtn().isEnabled());
+
+		loginPage.getEmail().sendKeys("haha@maildrop.cc");
+
+		loginPage.getPassword().sendKeys("123456789a");
+
+		loginPage.ensureIsButtonEnabled();
+
+		loginPage.getLoginBtn().click();
+
+		justWait();
+
+		loginPage.ensureIsNotVisibleButton();
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		this.driver.quit();
 	}
-	
+
 	@Test
 	public void editProfileTestSuccess() throws InterruptedException {
-		//Log in
-		driver.get("http://localhost:4200/login");
 
+		assertEquals("http://localhost:4200/home-page", driver.getCurrentUrl());
+
+		homePage.getUserBtn().click();
+		homePage.getProfileLink().click();
 		justWait();
-		
-		assertFalse(loginPage.getLoginBtn().isEnabled());
+		assertEquals("http://localhost:4200/profile", driver.getCurrentUrl());
 
-        loginPage.getEmail().sendKeys("haha@maildrop.cc");
+		// Edit profile
+		editProfilePage.getFirstName().clear();
+		editProfilePage.getFirstName().sendKeys("Test");
+		editProfilePage.getLastName().clear();
+		editProfilePage.getLastName().sendKeys("Test");
+		editProfilePage.getEditProfileBtn().click();
 
-        loginPage.getPassword().sendKeys("123456");
-        
-        loginPage.ensureIsButtonEnabled();
+		driver.get("http://localhost:4200/profile");
 
-        loginPage.getLoginBtn().click();
+		assertEquals(editProfilePage.getFirstName().getAttribute("value"), "Test");
+		assertEquals(editProfilePage.getLastName().getAttribute("value"), "Test");
 
-        justWait();
-        
-        loginPage.ensureIsNotVisibleButton();
+		// rollback
+		editProfilePage.getFirstName().clear();
+		editProfilePage.getFirstName().sendKeys("Ana");
+		editProfilePage.getLastName().clear();
+		editProfilePage.getLastName().sendKeys("Maric");
+		editProfilePage.getEditProfileBtn().click();
 
-        assertEquals("http://localhost:4200/home-page", driver.getCurrentUrl());
-	
-        //class="mat-focus-indicator mat-menu-trigger dropdown mat-mini-fab mat-button-base mat-primary ng-star-inserted"
-        //ng-reflect-router-link = "/profile"
-        
-        
 	}
-	
+
+	@Test
+	public void editProfileTestCancel() throws InterruptedException {
+
+		assertEquals("http://localhost:4200/home-page", driver.getCurrentUrl());
+
+		homePage.getUserBtn().click();
+		homePage.getProfileLink().click();
+		justWait();
+		assertEquals("http://localhost:4200/profile", driver.getCurrentUrl());
+
+		editProfilePage.getCancelEditProfileBtn().click();
+		assertEquals("http://localhost:4200/home-page", driver.getCurrentUrl());
+	}
+
+	@Test
+	public void editProfileTestGoToChangePasswordPage() throws InterruptedException {
+
+		assertEquals("http://localhost:4200/home-page", driver.getCurrentUrl());
+
+		homePage.getUserBtn().click();
+		homePage.getProfileLink().click();
+		justWait();
+		assertEquals("http://localhost:4200/profile", driver.getCurrentUrl());
+
+		editProfilePage.getChangePassLink().click();
+		assertEquals("http://localhost:4200/change-password", driver.getCurrentUrl());
+
+	}
+
 	private void justWait() throws InterruptedException {
 		synchronized (driver) {
 			driver.wait(1000);

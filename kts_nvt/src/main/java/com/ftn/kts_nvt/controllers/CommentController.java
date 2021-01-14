@@ -179,6 +179,9 @@ public class CommentController {
 		Pageable pageRequest = PageRequest.of(pageNum - 1, 5);
 		Page<Comment> page = this.commentService.findAllPendingComments(pageRequest);
 		List<CommentUserDTO> pendingCommentsDto = this.mapper.listToDto(page.toList());
+		for(CommentUserDTO c: pendingCommentsDto) {
+			c.setOffer(this.offerRepository.getOfferByComment(c.getId()).getName());
+		}
 		Page<CommentUserDTO> pagePendingCommentsDtop = new PageImpl<>(pendingCommentsDto, page.getPageable(),
 				page.getTotalElements());
 		

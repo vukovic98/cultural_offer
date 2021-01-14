@@ -11,7 +11,7 @@ public class EditProfilePage {
 	@FindBy(xpath = "//*[@id=\"firstName\"]")
 	private WebElement firstName;
 	
-	@FindBy(xpath = "//*[@id=\"lasttName\"]")
+	@FindBy(xpath = "//*[@id=\"lastName\"]")
 	private WebElement lastName;
 	
 	@FindBy(xpath = "//*[@id=\"editProfileBtn\"]")
@@ -19,6 +19,9 @@ public class EditProfilePage {
 	
 	@FindBy(xpath = "//*[@id=\"cancelEditProfileBtn\"]")
 	private WebElement cancelEditProfileBtn;
+	
+	@FindBy(xpath = "//*[@id=\"changePassId\"]")
+	private WebElement changePassLink;
 	
 	public EditProfilePage() {
 		super();
@@ -59,6 +62,14 @@ public class EditProfilePage {
 
 	public void setCancelEditProfileBtn(WebElement cancelEditProfileBtn) {
 		this.cancelEditProfileBtn = cancelEditProfileBtn;
+	}
+
+	public WebElement getChangePassLink() {
+		return changePassLink;
+	}
+
+	public void setChangePassLink(WebElement changePassLink) {
+		this.changePassLink = changePassLink;
 	}
 	
 

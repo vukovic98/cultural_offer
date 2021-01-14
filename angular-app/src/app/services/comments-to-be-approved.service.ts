@@ -4,6 +4,7 @@ import {environment} from "../../environments/environment";
 import {map} from "rxjs/operators";
 import Swal from "sweetalert2";
 import {Router} from "@angular/router";
+import {CommentToBeApprovedModel} from "../model/comment-to-be-approved-model";
 
 @Injectable()
 export class CommentsToBeApprovedService{
@@ -13,7 +14,7 @@ export class CommentsToBeApprovedService{
 
   constructor(private http: HttpClient, private route: Router) {}
 
-  getCommentsByPage(page: number): any{
+  getCommentsByPage(page: number):any{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -21,7 +22,7 @@ export class CommentsToBeApprovedService{
     });
 
     return this.http.get(environment.apiUrl + this.commentsToBeApprovedEndPoint + page, {headers: headers})
-      .pipe(map((response) => JSON.stringify(response)));
+     .pipe(map((response) => JSON.stringify(response)));
   }
 
   approveComment(commentId: number) {

@@ -39,7 +39,7 @@ export class EditProfileService{
           icon: 'success',
           showConfirmButton: false,
           timer: 1500
-        }).then(() => this.route.navigate(['/home-page']))
+        })
 
         return true;
       }, error => {
