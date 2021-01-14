@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { CulturalOffer } from '../../model/offer-mode';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { CulturalOfferService } from '../../services/culturalOffer.service';
 
 @Component({
   selector: 'app-edit-offer',
@@ -10,9 +11,14 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class EditOfferComponent implements OnInit {
 
+  placeName: string = "";
+
   constructor(
     public dialogRef: MatDialogRef<EditOfferComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: CulturalOffer) {
+    @Inject(MAT_DIALOG_DATA) public data: CulturalOffer,
+    public service: CulturalOfferService) {
+    
+    this.placeName = data.location.place;
   }
 
   myForm = new FormGroup({
@@ -63,6 +69,12 @@ export class EditOfferComponent implements OnInit {
       });
       this.data.location.latitude = e.latlng.lat;
       this.data.location.longitude = e.latlng.lng;
+      this.service.getLocationName(e.latlng).subscribe((data:any) => {
+        this.placeName = data.address.road+", "+data.address.city+", "+data.address.country;
+      }, (error:any) => {
+        console.log(error);
+      });
+
       //@ts-ignore
       marker = new L.Marker(e.latlng);
       mymap.addLayer(marker);
