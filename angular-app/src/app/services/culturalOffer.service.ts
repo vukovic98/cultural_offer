@@ -51,7 +51,7 @@ export class CulturalOfferService {
       }, error => {
         Swal.fire({
           title: 'Error!',
-          text: 'Something went wrong!',
+          text: 'Image size must be less than 64Kb!',
           icon: 'error',
           confirmButtonColor: '#DC143C',
           confirmButtonText: 'OK'
