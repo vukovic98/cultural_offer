@@ -17,13 +17,14 @@ export class AddOfferComponent implements OnInit {
   categories: Array<CategoryModel> = [];
   types: Array<TypeModel> = [];
   files: string[] = [];
+  placeName: string = "";
 
   myForm = new FormGroup({
     name: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
     category: new FormControl('', Validators.required),
     type: new FormControl('', Validators.required),
-    place: new FormControl('', Validators.required),
+    place: new FormControl('', [Validators.required]),
     location: new FormControl('', [Validators.required]),
     file: new FormControl('', [Validators.required]),
     fileSource: new FormControl('', [Validators.required])
@@ -33,6 +34,8 @@ export class AddOfferComponent implements OnInit {
               private offerService: CulturalOfferService,
               private typeService: TypeService,
               private http: HttpClient) {
+
+    this.myForm.controls['place'].disable();
   }
 
   ngOnInit() {
@@ -55,6 +58,27 @@ export class AddOfferComponent implements OnInit {
       this.myForm.patchValue({
         location: e.latlng
       });
+      
+      /*
+      "address": {
+        "museum": "Louvre Museum",
+        "road": "Rue Saint-Honoré",
+        "suburb": "Quartier du Palais Royal",
+        "city_district": "1st Arrondissement",
+        "city": "Paris",
+        "county": "Paris",
+        "state": "Ile-de-France",
+        "country": "France",
+        "postcode": "75001",
+        "country_code": "fr"
+    },
+      */
+      this.offerService.getLocationName(e.latlng).subscribe((data:any) => {
+        this.placeName = data.address.road+", "+data.address.city+", "+data.address.country;
+      }, (error:any) => {
+        console.log(error);
+      });
+    
       // @ts-ignore
       marker = new L.Marker(e.latlng);
       mymap.addLayer(marker);
@@ -131,6 +155,7 @@ export class AddOfferComponent implements OnInit {
       'images': images_copy,
       'location': locationObj
     }
+    //console.log(obj);
     this.offerService.createOffer(obj);
   }
 }
