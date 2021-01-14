@@ -6,7 +6,7 @@ export interface CommentModel{
   content: string,
   id: number,
   image: ImageModel | null,
-  offer: CulturalOffer | null
+  offer: string | null
 }
 
 export interface ImageModel{

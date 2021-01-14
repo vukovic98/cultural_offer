@@ -86,6 +86,7 @@ export class OfferDetailsComponent implements OnInit{
   }
 
   isAdmin(): boolean {
+    console.log(this.authService.isAdmin());
     return this.authService.isAdmin();
   }
 
