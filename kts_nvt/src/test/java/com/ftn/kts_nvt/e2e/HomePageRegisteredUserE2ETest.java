@@ -1,6 +1,5 @@
 package com.ftn.kts_nvt.e2e;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -14,24 +13,38 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 
-import com.ftn.kts_nvt.pages.HomePageUnsubscribedUser;
+import com.ftn.kts_nvt.pages.HomePageRegisteredUser;
+import com.ftn.kts_nvt.pages.LoginPage;
 
-public class HomePageUnsubscribedUserE2ETest {
-	
+public class HomePageRegisteredUserE2ETest {
+
 	public static final String HOME_PAGE = "http://localhost:4200/";
 
 	private WebDriver driver;
 
-	private HomePageUnsubscribedUser homePage;
+	private HomePageRegisteredUser homePage;
+
+	private LoginPage loginPage;
 
 	@Before
-	public void setup() {
+	public void setup() throws InterruptedException {
 
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
 		this.driver = new ChromeDriver();
 
 		this.driver.manage().window().maximize();
-		this.homePage = PageFactory.initElements(this.driver, HomePageUnsubscribedUser.class);
+		this.homePage = PageFactory.initElements(this.driver, HomePageRegisteredUser.class);
+		this.loginPage = PageFactory.initElements(driver, LoginPage.class);
+
+		driver.get(HOME_PAGE + "login");
+
+		this.loginPage.getEmail().sendKeys("vladimirvukovic98@maildrop.cc");
+		this.loginPage.getPassword().sendKeys("vukovic");
+
+		this.loginPage.getLoginBtn().click();
+
+		justWait();
+
 	}
 
 	@After
@@ -49,8 +62,7 @@ public class HomePageUnsubscribedUserE2ETest {
 
 		assertEquals(HOME_PAGE + "home-page", this.driver.getCurrentUrl());
 
-		assertTrue(this.homePage.getLoginBtn().isDisplayed());
-		assertTrue(this.homePage.getSignUpBtn().isDisplayed());
+		assertTrue(this.homePage.getUserBtn().isDisplayed());
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
 
 		assertEquals(8, this.homePage.getOffers().size());
@@ -58,7 +70,7 @@ public class HomePageUnsubscribedUserE2ETest {
 	}
 	
 	@Test
-	public void testLogin() throws InterruptedException {
+	public void testUserMenu() throws InterruptedException {
 		driver.get(HOME_PAGE);
 
 		justWait();
@@ -67,28 +79,100 @@ public class HomePageUnsubscribedUserE2ETest {
 
 		assertEquals(HOME_PAGE + "home-page", this.driver.getCurrentUrl());
 		
-		this.homePage.getLoginBtn().click();
+		assertTrue(this.homePage.getUserBtn().isDisplayed());
 		
-		justWait();
+		this.homePage.getUserBtn().click();
 		
-		assertEquals("http://localhost:4200/login", this.driver.getCurrentUrl());
+		this.homePage.ensureUserMenuIsDisplayed();
+		
+		assertTrue(this.homePage.getUserMenu().isDisplayed());
 	}
 	
 	@Test
-	public void testSignUp() throws InterruptedException {
+	public void testSubscribedItemsLink() throws InterruptedException {
 		driver.get(HOME_PAGE);
 
 		justWait();
 
 		this.homePage.ensureIsPageDisplayed();
-
-		assertEquals(HOME_PAGE + "home-page", this.driver.getCurrentUrl());
 		
-		this.homePage.getSignUpBtn().click();
+		assertTrue(this.homePage.getSubscribedItemsLink().isDisplayed());
+		
+		this.homePage.getSubscribedItemsLink().click();
+		
+		assertEquals("http://localhost:4200/subscribed-items", this.driver.getCurrentUrl());
+	}
+	
+	@Test
+	public void testProfileLink() throws InterruptedException {
+		driver.get(HOME_PAGE);
+
+		justWait();
+
+		this.homePage.ensureIsPageDisplayed();
+		
+		assertTrue(this.homePage.getUserBtn().isDisplayed());
+		
+		this.homePage.getUserBtn().click();
+		
+		assertTrue(this.homePage.getUserMenu().isDisplayed());
+		
+		assertTrue(this.homePage.getProfileLink().isDisplayed());
+		
+		this.homePage.getProfileLink().click();
 		
 		justWait();
 		
-		assertEquals("http://localhost:4200/sign-up", this.driver.getCurrentUrl());
+		assertEquals(HOME_PAGE + "profile", this.driver.getCurrentUrl());
+	}
+	
+	@Test
+	public void testChangePasswordLink() throws InterruptedException {
+		driver.get(HOME_PAGE);
+
+		justWait();
+
+		this.homePage.ensureIsPageDisplayed();
+		
+		assertTrue(this.homePage.getUserBtn().isDisplayed());
+		
+		this.homePage.getUserBtn().click();
+		
+		assertTrue(this.homePage.getUserMenu().isDisplayed());
+		
+		assertTrue(this.homePage.getChangePasswordLink().isDisplayed());
+		
+		this.homePage.getChangePasswordLink().click();
+		
+		justWait();
+		
+		assertEquals(HOME_PAGE + "change-password", this.driver.getCurrentUrl());
+	}
+	
+	@Test
+	public void testLogoutLink() throws InterruptedException {
+		driver.get(HOME_PAGE);
+
+		justWait();
+
+		this.homePage.ensureIsPageDisplayed();
+		
+		assertTrue(this.homePage.getUserBtn().isDisplayed());
+		
+		this.homePage.getUserBtn().click();
+		
+		assertTrue(this.homePage.getUserMenu().isDisplayed());
+		
+		assertTrue(this.homePage.getLogoutLink().isDisplayed());
+		
+		this.homePage.getLogoutLink().click();
+		
+		justWait();
+		
+		assertEquals(HOME_PAGE + "home-page", this.driver.getCurrentUrl());
+		
+		assertTrue(this.homePage.getLoginBtn().isDisplayed());
+		
 	}
 	
 	@Test
@@ -238,9 +322,41 @@ public class HomePageUnsubscribedUserE2ETest {
 		assertEquals("http://localhost:4200/offer-details/1", this.driver.getCurrentUrl());
 	}
 
+	@Test
+	public void testSubscribeAndUnsubscribe() throws InterruptedException {
+		driver.get(HOME_PAGE);
+
+		justWait();
+
+		this.homePage.ensureIsPageDisplayed();
+
+		assertTrue(this.homePage.getSubscribeToggle().isDisplayed());
+
+		//Subscribe
+		
+		this.homePage.getSubscribeToggle().click();
+
+		this.homePage.ensureSwalIsDisplayed();
+
+		assertTrue(this.homePage.getSwalSuccess().isDisplayed());
+		
+		this.homePage.getSwalBtn().click();
+		
+		//Unsubscribe
+
+		this.homePage.getSubscribeToggle().click();
+
+		this.homePage.ensureSwalIsDisplayed();
+
+		assertTrue(this.homePage.getSwalSuccess().isDisplayed());
+		
+		this.homePage.getSwalBtn().click();
+	}
+
 	private void justWait() throws InterruptedException {
 		synchronized (driver) {
 			driver.wait(1000);
 		}
 	}
+
 }

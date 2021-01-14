@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class HomePageUnsubscribedUser {
+public class HomePageUnregisteredUser {
 
 	private WebDriver driver;
 
@@ -44,11 +44,11 @@ public class HomePageUnsubscribedUser {
 	private List<WebElement> offers;
 	
 
-	public HomePageUnsubscribedUser() {
+	public HomePageUnregisteredUser() {
 		super();
 	}
 
-	public HomePageUnsubscribedUser(WebDriver driver) {
+	public HomePageUnregisteredUser(WebDriver driver) {
 		super();
 		this.driver = driver;
 	}

@@ -8,16 +8,16 @@
             <a class="nav-link" id="subscribedItemsLink" routerLink="/subscribed-items">Subscribed items</a>
           </li>
           <li class="nav-item" *ngIf="isUserAdmin()">
-            <a class="nav-link" routerLink="/add-offer">Add offer</a>
+            <a class="nav-link" id="addOfferLink" routerLink="/add-offer">Add offer</a>
           </li>
           <li class="nav-item" *ngIf="isUserAdmin()">
-            <a class="nav-link" routerLink="/category">Category</a>
+            <a class="nav-link" id="categoryLink" routerLink="/category">Category</a>
           </li>
           <li class="nav-item" *ngIf="isUserAdmin()">
-            <a class="nav-link" routerLink="/type">Type</a>
+            <a class="nav-link" id="typeLink" routerLink="/type">Type</a>
           </li>
           <li class="nav-item" *ngIf="isUserAdmin()">
-            <a class="nav-link" routerLink="/approving-comments">Approving comments</a>
+            <a class="nav-link" id="approvingCommentsLink" routerLink="/approving-comments">Approving comments</a>
           </li>
         </ul>
       </div>

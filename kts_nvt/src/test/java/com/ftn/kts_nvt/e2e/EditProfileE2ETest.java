@@ -2,7 +2,6 @@ package com.ftn.kts_nvt.e2e;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,7 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 
 import com.ftn.kts_nvt.pages.EditProfilePage;
-import com.ftn.kts_nvt.pages.HomePageSubscribedUser;
+import com.ftn.kts_nvt.pages.HomePageRegisteredUser;
 import com.ftn.kts_nvt.pages.LoginPage;
 
 
@@ -22,7 +21,7 @@ public class EditProfileE2ETest {
 
 	private LoginPage loginPage;
 
-	private HomePageSubscribedUser homePage;
+	private HomePageRegisteredUser homePage;
 
 	private WebDriver driver;
 	
@@ -37,7 +36,7 @@ public class EditProfileE2ETest {
 		this.driver.manage().window().maximize();
 		this.editProfilePage = PageFactory.initElements(driver, EditProfilePage.class);
 		this.loginPage = PageFactory.initElements(driver, LoginPage.class);
-		this.homePage = PageFactory.initElements(driver, HomePageSubscribedUser.class);
+		this.homePage = PageFactory.initElements(driver, HomePageRegisteredUser.class);
 
 		driver.get("http://localhost:4200/login");
 

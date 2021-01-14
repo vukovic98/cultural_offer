@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class HomePageSubscribedUser {
+public class HomePageRegisteredUser {
 
 	private WebDriver driver;
 
@@ -67,11 +67,11 @@ public class HomePageSubscribedUser {
 	@FindBy(xpath = "//button[contains(@class, 'swal2-confirm')]")
 	private WebElement swalBtn;
 
-	public HomePageSubscribedUser() {
+	public HomePageRegisteredUser() {
 		super();
 	}
 
-	public HomePageSubscribedUser(WebDriver driver) {
+	public HomePageRegisteredUser(WebDriver driver) {
 		super();
 		this.driver = driver;
 	}

@@ -11,9 +11,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 
 import com.ftn.kts_nvt.pages.ChangePasswordPage;
-import com.ftn.kts_nvt.pages.EditProfilePage;
-import com.ftn.kts_nvt.pages.HomePageSubscribedUser;
-import com.ftn.kts_nvt.pages.HomePageUnsubscribedUser;
+import com.ftn.kts_nvt.pages.HomePageRegisteredUser;
+import com.ftn.kts_nvt.pages.HomePageUnregisteredUser;
 import com.ftn.kts_nvt.pages.LoginPage;
 
 public class ChangePasswordE2ETest {
@@ -24,9 +23,9 @@ public class ChangePasswordE2ETest {
 
 	private LoginPage loginPage;
 
-	private HomePageSubscribedUser homePage;
+	private HomePageRegisteredUser homePage;
 
-	private HomePageUnsubscribedUser homePageUnregistered;
+	private HomePageUnregisteredUser homePageUnregistered;
 
 	//u bazi mora biti korisnik haha@maidrop.cc, pass=123456789b
 	
@@ -38,9 +37,9 @@ public class ChangePasswordE2ETest {
 
 		this.driver.manage().window().maximize();
 		this.loginPage = PageFactory.initElements(driver, LoginPage.class);
-		this.homePage = PageFactory.initElements(driver, HomePageSubscribedUser.class);
+		this.homePage = PageFactory.initElements(driver, HomePageRegisteredUser.class);
 		this.changePasswordPage = PageFactory.initElements(driver, ChangePasswordPage.class);
-		this.homePageUnregistered = PageFactory.initElements(driver, HomePageUnsubscribedUser.class);
+		this.homePageUnregistered = PageFactory.initElements(driver, HomePageUnregisteredUser.class);
 
 		driver.get("http://localhost:4200/login");
 
