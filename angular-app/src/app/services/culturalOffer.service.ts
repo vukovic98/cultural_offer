@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -20,6 +21,9 @@ export class CulturalOfferService {
   constructor(private http: HttpClient) {
   }
 
+  getLocationName(location: any): Observable<any>{
+    return this.http.get('https://us1.locationiq.com/v1/reverse.php?key=pk.fc61974e4d8d7d9a2df2bdc98b5ad87e&format=json&lat='+location.lat+'&lon='+location.lng)
+  }
 
   getByPage(page: number): any {
     const headers = new HttpHeaders({
