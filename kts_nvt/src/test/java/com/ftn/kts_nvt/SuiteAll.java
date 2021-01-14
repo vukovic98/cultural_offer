@@ -6,11 +6,19 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.springframework.test.context.TestPropertySource;
 
+
 import com.ftn.kts_nvt.e2e.HomePageAdminE2ETest;
 import com.ftn.kts_nvt.e2e.HomePageRegisteredUserE2ETest;
 import com.ftn.kts_nvt.e2e.HomePageUnregisteredUserE2ETest;
 import com.ftn.kts_nvt.e2e.LoginE2ETest;
 import com.ftn.kts_nvt.e2e.SubscribedItemsE2ETest;
+
+import com.ftn.kts_nvt.e2e.ApprovingCommentsE2ETest;
+import com.ftn.kts_nvt.e2e.ChangePasswordE2ETest;
+import com.ftn.kts_nvt.e2e.EditProfileE2ETest;
+import com.ftn.kts_nvt.e2e.SignUpE2ETest;
+import com.ftn.kts_nvt.e2e.VerifyUserE2ETest;
+
 
 @RunWith(Suite.class)
 @SuiteClasses({
@@ -69,7 +77,15 @@ import com.ftn.kts_nvt.e2e.SubscribedItemsE2ETest;
 //		HomePageAdminE2ETest.class,
 //		SubscribedItemsE2ETest.class,
 		
-	
+
+		//E2E SW78
+		SignUpE2ETest.class,
+		VerifyUserE2ETest.class,
+		EditProfileE2ETest.class,
+		ChangePasswordE2ETest.class,
+		ApprovingCommentsE2ETest.class
+		
+
 
 })
 @TestPropertySource("classpath:test.properties")
