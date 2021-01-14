@@ -120,13 +120,13 @@ public class CulturalOfferService {
 			CulturalOffer found = foundOptional.get();
 			found.setName(changedOffer.getName());
 			found.setDescription(changedOffer.getDescription());
-			found.setImages(changedOffer.getImages());
 			GeoLocation lc = location.findById(found.getLocation().getLocationId());
 			lc.setLatitude(changedOffer.getLocation().getLatitude());
 			lc.setLongitude(changedOffer.getLocation().getLongitude());
 			lc.setPlace(changedOffer.getLocation().getPlace());
 			GeoLocation savedLocation = location.save(lc);
 			found.setLocation(savedLocation);
+			//found.setImages(changedOffer.getImages());
 			return this.culturalOfferRepository.save(found);
 		} else
 			return null;

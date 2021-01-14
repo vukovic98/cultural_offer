@@ -61,6 +61,9 @@ public class HomePageRegisteredUser {
 	@FindBy(xpath = "//mat-slide-toggle[@id='mat-slide-toggle-5']/label/div/div/div")
 	private WebElement subscribeToggle;
 
+	@FindBy(xpath = "//mat-slide-toggle[@id='mat-slide-toggle-1']/label/div/div/div")
+	private WebElement sonsingSubscribeToggle;
+
 	@FindBy(xpath = "//div[contains(@class, 'swal2-icon-success')]")
 	private WebElement swalSuccess;
 
@@ -82,6 +85,14 @@ public class HomePageRegisteredUser {
 
 	public void setDriver(WebDriver driver) {
 		this.driver = driver;
+	}
+
+	public WebElement getSonsingSubscribeToggle() {
+		return sonsingSubscribeToggle;
+	}
+
+	public void setSonsingSubscribeToggle(WebElement sonsingSubscribeToggle) {
+		this.sonsingSubscribeToggle = sonsingSubscribeToggle;
 	}
 
 	public WebElement getSwalSuccess() {

@@ -50,6 +50,8 @@ export class CulturalOffersComponent implements OnInit {
   removeOffer(id: number) {
     this.service.deleteOffer(id);
     this.offers = this.offers.filter(item => item.id != id);
+
+    location.reload();
   }
 
   editOffer(offer: CulturalOffer){
