@@ -244,4 +244,13 @@ public class HomePageSubscribedUser {
 	public List<WebElement> getTypeOptions() {
 		return this.typeSelect.findElements(By.tagName("option"));
 	}
+
+	public WebElement getUserMenuBtn() {
+		return userMenuBtn;
+	}
+
+	public void setUserMenuBtn(WebElement userMenuBtn) {
+		this.userMenuBtn = userMenuBtn;
+	}
+
 }

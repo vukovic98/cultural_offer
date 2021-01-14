@@ -24,7 +24,7 @@
         <div class="form-group">
           <label class="col-lg-3 control-label">First name</label>
           <div class="col-md-12">
-            <input class="form-control" type="text"  formControlName="firstName" required pattern="[A-Z][a-z]+">
+            <input class="form-control" type="text" id="firstName" formControlName="firstName" required pattern="[A-Z][a-z]+">
             <div *ngIf="editProfileForm.controls['firstName'].touched && editProfileForm.controls['firstName'].errors?.required" class="mt-1 pl-1 inputError">
               <small>First Name is required.</small>
             </div>
@@ -36,7 +36,7 @@
         <div class="form-group">
           <label class="col-lg-3 control-label">Last name</label>
           <div class="col-md-12">
-            <input class="form-control" type="text"  formControlName="lastName" required pattern="[A-Z][a-z]+">
+            <input class="form-control" type="text" id="lastName" formControlName="lastName" required pattern="[A-Z][a-z]+">
             <div *ngIf="editProfileForm.controls['lastName'].touched && editProfileForm.controls['lastName'].errors?.required" class="mt-1 pl-1 inputError">
               <small>Last Name is required.</small>
             </div>
@@ -52,14 +52,14 @@
           </div>
         </div>
         <div class="text-left pt-3 ml-3">
-          <p> <a routerLink="/change-password" class="Link">Change password</a></p>
+          <p> <a id="changePassId" routerLink="/change-password" class="Link">Change password</a></p>
         </div>
         <div class="form-group">
           <label class="col-md-3 control-label"></label>
           <div class="col-md-8 ">
-            <button button mat-raised-button color="primary" class="mr-2" (click)="editProfile()">Save Changes</button>
+            <button button mat-raised-button color="primary" id="editProfileBtn" [disabled]="!editProfileForm.valid" class="mr-2" (click)="editProfile()">Save Changes</button>
             <span></span>
-            <button button mat-raised-button color="warn" routerLink="/home-page">Cancel</button>
+            <button button mat-raised-button color="warn" id="cancelEditProfileBtn" routerLink="/home-page">Cancel</button>
           </div>
         </div>
       </form>

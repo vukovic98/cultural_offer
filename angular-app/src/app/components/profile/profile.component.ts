@@ -43,6 +43,10 @@ export class ProfileComponent implements OnInit {
 
     }
     this.service.editUser(JSON.stringify(userDto),this.id);
+
+    this.initials = userDto.firstName.charAt(0).toUpperCase() + userDto.lastName.charAt(0).toUpperCase();
+    this.firstName = userDto.firstName;
+    this.lastName = userDto.lastName;
   }
 
   getUser():void{
