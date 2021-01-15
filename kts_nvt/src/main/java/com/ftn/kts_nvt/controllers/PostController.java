@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ftn.kts_nvt.beans.Comment;
 import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.Post;
 import com.ftn.kts_nvt.dto.AddPostDTO;
+import com.ftn.kts_nvt.dto.CommentUserDTO;
 import com.ftn.kts_nvt.dto.PostDTO;
 import com.ftn.kts_nvt.helper.PageImplMapper;
 import com.ftn.kts_nvt.helper.PageImplementation;
@@ -68,6 +70,29 @@ public class PostController {
 		return new ResponseEntity<>(pageImpl, HttpStatus.OK);
 	}
 
+	@GetMapping(path = "/for-offer/{offerId}/{pageNum}")
+	public ResponseEntity<PageImplementation<PostDTO>> findPostsForOffer(@PathVariable("offerId") int offerId,
+			@PathVariable("pageNum") int pageNum) {
+		System.out.println("findPostsforoffer = " + offerId);
+		
+		Pageable pageable = PageRequest.of(pageNum - 1, 5);
+
+		Page<Post> page = postService.findPostsForOffer(offerId, pageable);
+
+		List<PostDTO> postDTOS = postMapper.listToDto(page.toList());
+		System.out.println("postlength = " + postDTOS.size());
+		for(PostDTO post : postDTOS) {
+			System.out.println("post = " + post.getTitle());
+		}
+		Page<PostDTO> pagePostDTOS = new PageImpl<>(postDTOS , page.getPageable(), page.getTotalElements());
+
+		PageImplMapper<PostDTO> pageMapper = new PageImplMapper<>();
+		PageImplementation<PostDTO> pageImpl = pageMapper.toPageImpl(pagePostDTOS);
+
+		return new ResponseEntity<>(pageImpl, HttpStatus.OK);
+
+	}
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<PostDTO> getPost(@PathVariable Long id) {
 		Post post = postService.findOne(id);

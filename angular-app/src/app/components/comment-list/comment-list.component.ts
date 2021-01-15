@@ -64,5 +64,4 @@ export class CommentListComponent implements OnInit {
     this.pageNum = this.totalPages;
     this.retrieveComments();
   }
-
 }

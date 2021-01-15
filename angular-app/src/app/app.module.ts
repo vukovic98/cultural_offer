@@ -50,7 +50,9 @@ import { CommentListComponent } from './components/comment-list/comment-list.com
 import { CommentItemComponent } from './components/comment-item/comment-item.component';
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
 import {AddPostComponent} from './components/add-post/add-post.component';
-import {MatGridListModule} from '@angular/material/grid-list'; 
+import {MatGridListModule} from '@angular/material/grid-list';
+import { PostListComponent } from './components/post-list/post-list.component';
+import { PostItemComponent } from './components/post-item/post-item.component'; 
 
 @NgModule({
   declarations: [
@@ -81,7 +83,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
     AddTypeComponent,
     EditDialog,
     EditTypeDialog,
-    AddPostComponent
+    AddPostComponent,
+    PostListComponent,
+    PostItemComponent
   ],
   imports: [
     BrowserModule,

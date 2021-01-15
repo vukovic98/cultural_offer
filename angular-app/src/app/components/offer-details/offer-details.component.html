@@ -113,25 +113,9 @@
         </div>
       </div>
 
-      <div class="mt-3" *ngIf="offer.posts.length === 0">
-        <mat-card class="col-md-12">
-          There are no posts for this offer! <button *ngIf="isAdmin()" mat-raised-button color="primary" (click)="addPost()" class="ml-3">Add new post</button>
-        </mat-card>
-      </div>
-      <div class="mt-3 jumbotron bg-white col-md-12 p-3" *ngIf="offer.posts.length > 0">
-        <mat-card-title class="ml-3 mb-5 mt-2">Posts
-          <button *ngIf="isAdmin()" (click)="addPost()" mat-raised-button color="primary" title="Add new post" class="float-right"><mat-icon>add</mat-icon></button>
-        </mat-card-title>
-        <app-post
-          *ngFor="let post of offer.posts"
-          [post]="post"
-        ></app-post>
-      </div>
-
-      <app-comment-list
-        [offer_id]="offer.id"
-      >
-      </app-comment-list>
+      <app-post-list [offer_id]="offer.id"></app-post-list>
+      <app-comment-list [offer_id]="offer.id"></app-comment-list>
     </div>
   </div>
 </div>
+ 
