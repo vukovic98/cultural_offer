@@ -5,6 +5,8 @@ import {map} from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import {Router} from "@angular/router";
 import {Role, TokenModel} from '../model/token.model';
+import {Observable} from 'rxjs';
+import {loginResponse, signupResponse, verifyResponse} from '../model/auth-model';
 
 @Injectable()
 export class AuthService {
@@ -16,86 +18,27 @@ export class AuthService {
   constructor(private http: HttpClient, private route: Router) {
   }
 
-  login(loginDto: string):any {
+  login(loginDto: string):Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
 
-    let response = this.http.post<loginResponse>(environment.apiUrl + this.loginPath, loginDto, {headers: headers})
-      .pipe(map(response => response))
-      .subscribe(response => {
-        if (response.verified === true){
-          localStorage.setItem("accessToken", response.authenticationToken);
-          this.route.navigate(['/']);
-          return true;
-        } else {
-          this.route.navigate(['/verify'],{  queryParams: {  email: response.email } });
-          return true;
-        };
-
-      }, error => {
-        Swal.fire({
-          title: 'Error!',
-          text: 'There is no user with these credentials!',
-          icon: 'error',
-          confirmButtonColor: '#DC143C',
-          confirmButtonText: 'OK'
-        })
-      })
-
+    return this.http.post<loginResponse>(environment.apiUrl + this.loginPath, loginDto, {headers: headers})
   }
-  verifyCode(verifyDto: string):any{
+
+  verifyCode(verifyDto: string):Observable<any>{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-      let response = this.http.post<verifyResponse>(environment.apiUrl + this.verificationCodePath, verifyDto, {headers: headers})
-        .pipe(map(response => response))
-        .subscribe(response => {
-          Swal.fire({
-            title: 'Successful verification!',
-            icon: 'success',
-            confirmButtonColor: '#287507',
-            confirmButtonText: 'Go to login page'
-          }).then((result) => {
-            if(result.isConfirmed){
-              this.route.navigate(['/login']);
-            }
-          })
-
-          return true;
-        }, error => {
-          Swal.fire({
-            title: 'Error!',
-            text: 'Wrong verification code.',
-            icon: 'error',
-            confirmButtonColor: '#DC143C',
-            confirmButtonText: 'OK'
-          })
-        })
-
-
+    return this.http.post<verifyResponse>(environment.apiUrl + this.verificationCodePath, verifyDto, {headers: headers})
   }
-  signUp(signupDto: string):any {
+
+  signUp(signupDto: string):Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
 
-    let response = this.http.post<signupResponse>(environment.apiUrl + this.signupPath, signupDto, {headers: headers})
-      .pipe(map(response => response))
-      .subscribe(response => {
-        this.route.navigate(['/verify'],{  queryParams: {  email: response.email } })
-
-        return true;
-      }, error => {
-        Swal.fire({
-          title: 'Error!',
-          text: 'User with this email already exists!',
-          icon: 'error',
-          confirmButtonColor: '#DC143C',
-          confirmButtonText: 'OK'
-        });
-        return false;
-      })
+    return this.http.post<signupResponse>(environment.apiUrl + this.signupPath, signupDto, {headers: headers})
   }
 
   logout(): void {
@@ -164,40 +107,11 @@ export class AuthService {
     }
   }
 
-  sendCodeAgain(email: string) {
+  sendCodeAgain(email: string): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    let response = this.http.post<String>(environment.apiUrl + this.sendCodeAgainPath, email, {headers: headers})
-      .pipe(map(response => response))
-      .subscribe(response => {
-        Swal.fire({
-          title: 'Code sent again. Please check your mail!',
-          text: 'It may take a few minutes to get mail.',
-          icon: 'success',
-          showConfirmButton: false,
-          timer: 2100
-        });
-        return true;
-        })
+
+    return this.http.post<String>(environment.apiUrl + this.sendCodeAgainPath, email, {headers: headers})
   }
-}
-
-
-interface loginResponse {
-  authenticationToken: string;
-  expiresAt: number;
-  email: string;
-  verified: boolean;
-}
-interface signupResponse {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
-interface verifyResponse {
-  code: string;
-  userEmail: string;
 }

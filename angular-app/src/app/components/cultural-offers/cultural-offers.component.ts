@@ -7,6 +7,8 @@ import {of} from 'rxjs';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {EditOfferComponent} from '../edit-offer/edit-offer.component';
 import {FilterObject} from "../../model/filter-model";
+import {map} from 'rxjs/operators';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-cultural-offers',
@@ -50,7 +52,23 @@ export class CulturalOffersComponent implements OnInit {
   }
 
   removeOffer(id: number) {
-    this.service.deleteOffer(id);
+    this.service.deleteOffer(id)
+      .subscribe(response => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Cultural offer successfully deleted!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+      }, error => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Something went wrong!',
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        });
+      })
     this.offers = this.offers.filter(item => item.id != id);
 
     location.reload();
@@ -64,7 +82,23 @@ export class CulturalOffersComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result != undefined){
         offer = result.data;
-        this.service.updateOffer(offer);
+        this.service.updateOffer(offer)
+          .subscribe(response => {
+            Swal.fire({
+              title: 'Success!',
+              text: 'Cultural offer successfully updated!',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            });
+          }, error => {
+            Swal.fire({
+              title: 'Error!',
+              text: 'Something went wrong!',
+              icon: 'error',
+              confirmButtonColor: '#DC143C',
+              confirmButtonText: 'OK'
+            });
+          })
       }
     });
   }

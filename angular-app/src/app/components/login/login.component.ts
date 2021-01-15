@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {map} from 'rxjs/operators';
+import Swal from "sweetalert2";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,15 +17,34 @@ export class LoginComponent implements OnInit {
     "password": new FormControl('', Validators.required)
   });
 
-  constructor(private service: AuthService) {
-  }
+  constructor(
+    private service: AuthService,
+    private route: Router
+  ) {}
+
   loginUser(): void {
     let loginDto = {
       "email": this.loginForm.value.email,
       "password": this.loginForm.value.password
     };
 
-    this.service.login(JSON.stringify(loginDto));
+    this.service.login(JSON.stringify(loginDto))
+      .subscribe(response => {
+        if (response.verified){
+          localStorage.setItem("accessToken", response.authenticationToken);
+          this.route.navigate(['/']);
+        } else {
+          this.route.navigate(['/verify'],{  queryParams: {  email: response.email } });
+        }
+      }, error => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'There is no user with these credentials!',
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        })
+      })
   }
 
   ngOnInit(): void {

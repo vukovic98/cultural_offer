@@ -5,6 +5,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {map} from "rxjs/operators";
 import {passwordDto} from "../model/password-model";
+import {Observable} from 'rxjs';
 
 
 @Injectable()
@@ -16,34 +17,13 @@ export class ChangePasswordService{
 
   }
 
-  changePassword(passDto: string):any{
+  changePassword(passDto: string):Observable<any>{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization' : 'Bearer ' + localStorage.getItem("accessToken")
     });
-    console.log(passDto);
-    return this.http.put<passwordDto>(environment.apiUrl + this.changePassPath, passDto, {headers: headers})
-      .pipe(map(response => response))
-      .subscribe(token => {
-        Swal.fire({
-          position: 'center',
-          title: 'Password successfully changed',
-          icon: 'success',
-          showConfirmButton: false,
-          timer: 1500
-        }).then(() => this.route.navigate(['/home-page']))
 
-        return true;
-      }, error => {
-        console.log(error);
-        Swal.fire({
-          title: 'Error!',
-          text: 'Old password is wrong.',
-          icon: 'error',
-          confirmButtonColor: '#DC143C',
-          confirmButtonText: 'OK'
-        })
-      })
+    return this.http.put<passwordDto>(environment.apiUrl + this.changePassPath, passDto, {headers: headers})
   }
 
 }
