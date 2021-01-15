@@ -30,6 +30,7 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser> {
 	public Page<RegisteredUser> findAll(Pageable pageable){
 		return registeredUserRepository.findAll(pageable);
 	}
+	
 
 	@Override
 	public RegisteredUser findOne(Long id) {

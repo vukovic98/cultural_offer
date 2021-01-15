@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.h2.engine.SysProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -42,10 +43,10 @@ public class CommentController {
 
 	@Autowired
 	private CommentService commentService;
-	
+
 	@Autowired
 	private CulturalOfferRepository offerRepository;
-	
+
 	@Autowired
 	private RegisteredUserService registeredUserService;
 
@@ -74,7 +75,7 @@ public class CommentController {
 
 		PageImplMapper<CommentUserDTO> pageMapper = new PageImplMapper<>();
 		PageImplementation<CommentUserDTO> pageImpl = pageMapper.toPageImpl(pageCommentDTOS);
-		
+
 		return new ResponseEntity<>(pageImpl, HttpStatus.OK);
 	}
 
@@ -85,8 +86,7 @@ public class CommentController {
 		if (found != null) {
 			CommentDTO dto = new CommentDTO(found.getCommentId(), found.getContent(), found.getImage());
 			return new ResponseEntity<>(dto, HttpStatus.OK);
-		}
-		else
+		} else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
@@ -95,30 +95,35 @@ public class CommentController {
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<CommentDTO> create(@Valid @RequestBody NewCommentDTO commentDto) {
 
-		//Comment newComment = this.mapper.toEntity(commentDto);
+		String mail = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 
-		RegisteredUser user = (RegisteredUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		RegisteredUser user = this.registeredUserService.findOneByEmail(mail);
 
-		// TODO Add logged user to comment
+		if (user != null) {
+			Comment newComment = new Comment(commentDto.getContent(), commentDto.getImage(), user);
+			CulturalOffer offer = offerRepository.getOne(commentDto.getOfferId());
 
-		Comment newComment = new Comment(commentDto.getContent(), commentDto.getImage(), user);
-		CulturalOffer offer = offerRepository.getOne(commentDto.getOfferId());
-		
-		Comment ok = this.commentService.save(newComment);
+			Comment ok = this.commentService.save(newComment);
 
-		if(offer != null) {
-			offer.getComments().add(newComment);
-			offerRepository.save(offer);
-		}else {
+			if (offer != null) {
+				offer.getComments().add(newComment);
+				offerRepository.save(offer);
+
+				user.getComments().add(ok);
+				this.registeredUserService.save(user);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+
+			if (ok != null) {
+				CommentDTO ret = new CommentDTO(ok.getCommentId(), ok.getContent(), ok.getImage());
+				return new ResponseEntity<>(ret, HttpStatus.CREATED);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+
+		} else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		
-		if (ok != null) {
-			CommentDTO ret = new CommentDTO(ok.getCommentId(), ok.getContent(), ok.getImage());
-			return new ResponseEntity<>(ret, HttpStatus.CREATED);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 	}
 
 	// DELETE http://localhost:8080/comments -> RequestBody (DTO)
@@ -166,8 +171,7 @@ public class CommentController {
 		if (newComment != null) {
 			CommentDTO dto = new CommentDTO(newComment.getCommentId(), newComment.getContent(), newComment.getImage());
 			return new ResponseEntity<>(dto, HttpStatus.OK);
-		}
-		else
+		} else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
 	}
@@ -179,19 +183,19 @@ public class CommentController {
 		Pageable pageRequest = PageRequest.of(pageNum - 1, 5);
 		Page<Comment> page = this.commentService.findAllPendingComments(pageRequest);
 		List<CommentUserDTO> pendingCommentsDto = this.mapper.listToDto(page.toList());
-		for(CommentUserDTO c: pendingCommentsDto) {
+		for (CommentUserDTO c : pendingCommentsDto) {
 			c.setOffer(this.offerRepository.getOfferByComment(c.getId()).getName());
 		}
 		Page<CommentUserDTO> pagePendingCommentsDtop = new PageImpl<>(pendingCommentsDto, page.getPageable(),
 				page.getTotalElements());
-		
+
 		PageImplMapper<CommentUserDTO> pageMapper = new PageImplMapper<>();
 		PageImplementation<CommentUserDTO> pageImpl = pageMapper.toPageImpl(pagePendingCommentsDtop);
 
 		return new ResponseEntity<>(pageImpl, HttpStatus.OK);
 	}
-	
-	// PUT: http://localhost:8080/comments/approve/{id} 
+
+	// PUT: http://localhost:8080/comments/approve/{id}
 	@PutMapping(path = "/approve/{id}")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<CommentDTO> approve(@PathVariable("id") long id) {
@@ -199,8 +203,7 @@ public class CommentController {
 		if (newComment != null) {
 			CommentDTO dto = new CommentDTO(newComment.getCommentId(), newComment.getContent(), newComment.getImage());
 			return new ResponseEntity<>(dto, HttpStatus.OK);
-		}
-		else
+		} else
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
 	}
