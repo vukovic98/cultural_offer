@@ -79,6 +79,24 @@ public class CommentController {
 		return new ResponseEntity<>(pageImpl, HttpStatus.OK);
 	}
 
+	// GET: http://localhost:8080/comments/for-offer/{offerId}/{pageNum}
+	@GetMapping(path = "/for-offer/{offerId}/{pageNum}")
+	public ResponseEntity<PageImplementation<CommentUserDTO>> findCommentsForOffer(@PathVariable("offerId") int offerId,
+			@PathVariable("pageNum") int pageNum) {
+		Pageable pageable = PageRequest.of(pageNum - 1, 5);
+
+		Page<Comment> page = this.commentService.findCommentsForOffer(offerId, pageable);
+
+		List<CommentUserDTO> commentDTOS = mapper.listToDto(page.toList());
+		Page<CommentUserDTO> pageCommentDTOS = new PageImpl<>(commentDTOS, page.getPageable(), page.getTotalElements());
+
+		PageImplMapper<CommentUserDTO> pageMapper = new PageImplMapper<>();
+		PageImplementation<CommentUserDTO> pageImpl = pageMapper.toPageImpl(pageCommentDTOS);
+
+		return new ResponseEntity<>(pageImpl, HttpStatus.OK);
+
+	}
+
 	// GET: http://localhost:8080/comments/{id}
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<CommentDTO> findById(@PathVariable("id") long id) {

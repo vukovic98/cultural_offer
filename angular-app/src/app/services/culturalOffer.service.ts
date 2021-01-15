@@ -17,12 +17,22 @@ export class CulturalOfferService {
   private readonly subscribeUserEndPoint = "registeredUser/subscribe";
   private readonly offersPageEndPointFilter = "culturalOffers/filter/";
   private readonly addPostEndPoint = "posts/";
+  private readonly commentsForOfferEndPoint = "comments/for-offer/";
 
   constructor(private http: HttpClient) {
   }
 
   getLocationName(location: any): Observable<any>{
     return this.http.get('https://us1.locationiq.com/v1/reverse.php?key=pk.fc61974e4d8d7d9a2df2bdc98b5ad87e&format=json&lat='+location.lat+'&lon='+location.lng)
+  }
+
+  getCommentsForOffer(offer_id: number, page: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    });
+
+    return this.http.get(environment.apiUrl + this.commentsForOfferEndPoint + offer_id + "/" + page);
   }
 
   getByPage(page: number): any {

@@ -75,8 +75,8 @@ public class AuthenticationController {
 			HttpServletResponse response) {
 
 		try {
-			RegisteredUser u = this.registeredUserService.findOneByEmail(authenticationRequest.getEmail());
-			boolean verified = u.isVerified();
+			//RegisteredUser u = this.registeredUserService.findOneByEmail(authenticationRequest.getEmail());
+			boolean verified = false;
 
 			Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 					authenticationRequest.getEmail(), authenticationRequest.getPassword()));
@@ -86,6 +86,13 @@ public class AuthenticationController {
 
 			// Kreiraj token za tog korisnika
 			User user = (User) authentication.getPrincipal();
+			if(user instanceof RegisteredUser) {
+				RegisteredUser temp = (RegisteredUser) user;
+				verified = temp.isVerified();
+			} else {
+				verified = true;
+			}
+			
 			String email = user.getEmail();
 			String jwt = tokenUtils.generateToken(user.getEmail()); // prijavljujemo se na sistem sa email adresom
 			int expiresIn = tokenUtils.getExpiredIn();

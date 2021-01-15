@@ -21,6 +21,7 @@ export class CulturalOffersComponent implements OnInit {
   public pageNum: number = 1;
   public nextBtn: boolean = false;
   private isFilter: boolean = false;
+  public totalPages: number = 1;
   private filterObj: FilterObject = {exp: '', types: []};
 
   constructor(private service: CulturalOfferService,
@@ -31,6 +32,7 @@ export class CulturalOffersComponent implements OnInit {
     this.service.getByPage(this.pageNum).subscribe((data: string) => {
       this.offers = JSON.parse(data).content;
       this.nextBtn = JSON.parse(data).last;
+      this.totalPages = JSON.parse(data).totalPages;
     });
 
     if(this.auth.isUser()) {
@@ -69,6 +71,16 @@ export class CulturalOffersComponent implements OnInit {
 
   getAllOffers() {
     return this.offers || [];
+  }
+
+  firstPage() {
+    this.pageNum = 1;
+    this.retrieveOffers();
+  }
+
+  lastPage() {
+    this.pageNum = this.totalPages;
+    this.retrieveOffers();
   }
 
   retrieveOffers() {
