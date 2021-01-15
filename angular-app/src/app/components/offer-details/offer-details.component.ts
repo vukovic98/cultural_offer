@@ -86,7 +86,6 @@ export class OfferDetailsComponent implements OnInit{
   }
 
   isAdmin(): boolean {
-    console.log(this.authService.isAdmin());
     return this.authService.isAdmin();
   }
 
@@ -117,7 +116,6 @@ export class OfferDetailsComponent implements OnInit{
   }
 
   showLocation(location: Location) {
-    console.log(location);
     const dialogRef = this.locationDialog.open(LocationDialog, {
       width: '450px',
       height: '450px',

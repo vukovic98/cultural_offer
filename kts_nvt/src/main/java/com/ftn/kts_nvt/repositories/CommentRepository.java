@@ -21,5 +21,11 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 			nativeQuery = true
 			)
 	ArrayList<Comment> findCommentsForOffer(long offer_id);
+	
+	@Query(
+			value="SELECT comment_id, approved, content, commenter_id, image_id FROM (kts_nvt.cultural_offer c inner join kts_nvt.cultural_offer_comment com on c.cultural_offer_id = com.cultural_offer_id) inner join comment cm on cm.comment_id = com.comments_comment_id where c.cultural_offer_id = ?1 and cm.approved = true",
+			nativeQuery = true
+			)
+	Page<Comment> findCommentsForOffer(long offer_id, Pageable pageable);
 
 }

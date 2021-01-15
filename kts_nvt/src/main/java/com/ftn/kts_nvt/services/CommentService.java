@@ -24,16 +24,20 @@ public class CommentService {
 
 	@Autowired
 	private ImageRepository imageRepository;
-	
+
 	@Autowired
 	private CulturalOfferRepository culturalOfferRepository;
 
 	public Comment save(Comment c) {
 		return this.commentRepository.save(c);
 	}
-	
+
 	public ArrayList<Comment> findCommentsForOffer(long offer_id) {
 		return this.commentRepository.findCommentsForOffer(offer_id);
+	}
+
+	public Page<Comment> findCommentsForOffer(long offer_id, Pageable pageable) {
+		return this.commentRepository.findCommentsForOffer(offer_id, pageable);
 	}
 
 	public ArrayList<Comment> findAll() {
@@ -66,15 +70,17 @@ public class CommentService {
 			if (image != null) {
 
 				exists.setImage(null);
-				//Ivana: Zakomentarisala sam ovo da bi mi proradilo jer u mojoj bazi koristim jednu
-				//te istu sliku i za komentare i za offere, kad napravimo zajednicku otkomenarisacemo
-				//imageRepository.delete(image);
+				// Ivana: Zakomentarisala sam ovo da bi mi proradilo jer u mojoj bazi koristim
+				// jednu
+				// te istu sliku i za komentare i za offere, kad napravimo zajednicku
+				// otkomenarisacemo
+				// imageRepository.delete(image);
 
 			}
 			System.out.println("prodje2");
 			CulturalOffer offer = this.culturalOfferRepository.getOfferByComment(exists.getCommentId());
 			System.out.println("prodje3" + offer);
-			
+
 			List<Comment> comments = this.commentRepository.findCommentsForOffer(offer.getId());
 			comments.remove(exists);
 			offer.setComments(comments);
@@ -95,7 +101,7 @@ public class CommentService {
 
 		if (oldComment.isPresent()) {
 			Comment found = oldComment.get();
-			
+
 			found.setContent(changedComment.getContent());
 			found.setImage(changedComment.getImage());
 
@@ -115,8 +121,7 @@ public class CommentService {
 		if (c != null) {
 			c.setApproved(true);
 			return this.commentRepository.save(c);
-		}
-		else
+		} else
 			return null;
 	}
 

@@ -12,9 +12,11 @@
       <h4>No offers in the database</h4>
     </div>
   </div>
-  <div class="text-center col-md-2 ml-auto mr-auto mt-5" *ngIf="getAllOffers().length !== 0">
-    <button class="btn btn-outline-info float-left" [disabled]="pageNum===1" (click)="previousPage()"><<</button>
-    <p class=" float-left text-center ml-3 pt-2">{{pageNum}}</p>
-    <button class="btn btn-outline-info" (click)="nextPage()" [disabled]="nextBtn">>></button>
+  <div class="text-center col-md-3 ml-auto mr-auto mt-5" *ngIf="getAllOffers().length !== 0">
+    <button class="btn btn-outline-info float-left mr-1" title="First page" (click)="firstPage()">|<</button>
+    <button class="btn btn-outline-info float-left" title="Previous page" [disabled]="pageNum===1" (click)="previousPage()"><<</button>
+    <p class=" float-left text-center ml-3 pt-2">{{pageNum}} of {{totalPages}}</p>
+    <button class="btn btn-outline-info mr-1" title="Next page" (click)="nextPage()" [disabled]="nextBtn">>></button>
+    <button class="btn btn-outline-info" title="Last page" (click)="lastPage()">>|</button>
   </div>
 </div>
