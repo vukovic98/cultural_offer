@@ -23,14 +23,14 @@ export class OfferDetailsComponent implements OnInit{
   id: string = '';
   offer!: OfferDetailsModel;
   private subscribedItems: Array<CulturalOffer> = [];
-  newModel: AddPostModel = { id: 0, content: "", culturalOfferId: 0, title: "" };
+  //newModel: AddPostModel = { id: 0, content: "", culturalOfferId: 0, title: "" };
   timer: number = 0;
 
   constructor(private route: ActivatedRoute,
     private service: CulturalOfferService,
     private authService: AuthService,
-    public locationDialog: MatDialog,
-    private dialog: MatDialog) { }
+    public locationDialog: MatDialog/*,
+    private dialog: MatDialog*/) { }
 
   ngOnInit() {
     if (this.authService.isUser()) {
@@ -89,7 +89,7 @@ export class OfferDetailsComponent implements OnInit{
     return this.authService.isAdmin();
   }
 
-  addPost() {
+  /*addPost() {
     const dialogRef = this.dialog.open(AddPostComponent, {
       width: '500px',
       data: this.newModel
@@ -99,11 +99,12 @@ export class OfferDetailsComponent implements OnInit{
       if (result != undefined) {
         let post = result.data;
         post.culturalOfferId = this.offer.id;
-        this.service.addPost(post);
-        location.reload();
+        this.service.addPost(post, ()=>{
+          location.reload()
+        });
       }
     });
-  }
+  }*/
 
   isSubscribed(offer: OfferDetailsModel): boolean {
     if (this.authService.isLoggedIn()) {

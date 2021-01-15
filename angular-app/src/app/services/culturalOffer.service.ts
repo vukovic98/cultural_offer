@@ -18,6 +18,7 @@ export class CulturalOfferService {
   private readonly offersPageEndPointFilter = "culturalOffers/filter/";
   private readonly addPostEndPoint = "posts/";
   private readonly commentsForOfferEndPoint = "comments/for-offer/";
+  private readonly postsForOfferEndPoint = "posts/for-offer/";
 
   constructor(private http: HttpClient) {
   }
@@ -31,8 +32,15 @@ export class CulturalOfferService {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     });
-
     return this.http.get(environment.apiUrl + this.commentsForOfferEndPoint + offer_id + "/" + page);
+  }
+
+  getPostsForOffer(offer_id: number, page: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    });
+    return this.http.get(environment.apiUrl + this.postsForOfferEndPoint + offer_id + "/" + page);
   }
 
   getByPage(page: number): any {
@@ -40,8 +48,6 @@ export class CulturalOfferService {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     });
-
-
     return this.http.get(environment.apiUrl + this.offersPageEndPoint + page, {headers: headers})
       .pipe(map((response) => JSON.stringify(response)));
   }
@@ -189,13 +195,14 @@ export class CulturalOfferService {
       .pipe(map((response) => JSON.stringify(response)));
   }
 
-  addPost(postDto: AddPostModel) {
+  addPost(postDto: AddPostModel, update: Function) {
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
     });
+    console.log("add post = ", postDto);
 
     this.http.post(environment.apiUrl + this.addPostEndPoint, postDto, {headers: headers})
       .pipe(map((response) => response))
@@ -206,6 +213,7 @@ export class CulturalOfferService {
           icon: 'success',
           confirmButtonText: 'OK'
         });
+        update();
         return true;
       }, error => {
         Swal.fire({

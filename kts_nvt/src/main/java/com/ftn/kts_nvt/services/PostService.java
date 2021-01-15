@@ -13,6 +13,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import com.ftn.kts_nvt.beans.Comment;
 import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.Post;
 import com.ftn.kts_nvt.beans.RegisteredUser;
@@ -83,6 +84,10 @@ public class PostService implements ServiceInterface<Post>{
 		}
 	}
 
+	public Page<Post> findPostsForOffer(long offer_id, Pageable pageable) {
+		return postRepository.findPostsForOffer(offer_id, pageable);
+	}
+	
 	@Override
 	public Post update(Post entity, Long id) throws Exception {
 		Post existingPost =  postRepository.findById(id).orElse(null);
