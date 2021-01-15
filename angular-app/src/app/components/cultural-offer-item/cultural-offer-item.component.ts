@@ -4,6 +4,8 @@ import {CulturalOffer} from '../../model/offer-mode';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 import {CulturalOfferService} from '../../services/culturalOffer.service';
 import { Router} from '@angular/router';
+import {map} from 'rxjs/operators';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-cultural-offer-item',
@@ -44,10 +46,42 @@ export class CulturalOfferItemComponent implements OnInit {
 
   subscribeToggle(event: MatSlideToggleChange, offer_id: number) {
     if(event.checked) { // subscribe to offer
-      this.service.subscribeUser(offer_id);
+      this.service.subscribeUser(offer_id)
+        .subscribe(response => {
+          Swal.fire({
+            title: 'Success!',
+            text: 'Successfully subscribed to offer! Now you will get all the latest updates!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+        }, error => {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Something went wrong!',
+            icon: 'error',
+            confirmButtonColor: '#DC143C',
+            confirmButtonText: 'OK'
+          });
+        })
     }
     else {//unsubscribe from offer
-      this.service.unsubscribeUser(offer_id);
+      this.service.unsubscribeUser(offer_id)
+        .subscribe(response => {
+          Swal.fire({
+            title: 'Success!',
+            text: 'Successfully unsubscribed from offer!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+        }, error => {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Something went wrong!',
+            icon: 'error',
+            confirmButtonColor: '#DC143C',
+            confirmButtonText: 'OK'
+          });
+        })
     }
   }
 
@@ -60,7 +94,7 @@ export class CulturalOfferItemComponent implements OnInit {
   }
 
   showDetails(): void {
-    this.route.navigate(['/offer-details/'+this.offer.id]);
+    this.route.navigate(['/cultural-offer/offer-details/'+this.offer.id]);
   }
 
 }

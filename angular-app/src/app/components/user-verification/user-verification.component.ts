@@ -1,7 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {map} from 'rxjs/operators';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-user-verification',
@@ -15,7 +17,11 @@ export class UserVerificationComponent implements OnInit {
     "code": new FormControl('',Validators.required)
   });
 
-  constructor(private service: AuthService, private route: ActivatedRoute) { }
+  constructor(
+    private service: AuthService,
+    private route: ActivatedRoute,
+    private router: Router,
+    ) { }
 
   verifyUser(){
     let verifyDto = {
@@ -24,7 +30,27 @@ export class UserVerificationComponent implements OnInit {
 
     };
 
-    this.service.verifyCode(JSON.stringify(verifyDto));
+    this.service.verifyCode(JSON.stringify(verifyDto))
+      .subscribe(response => {
+        Swal.fire({
+          title: 'Successful verification!',
+          icon: 'success',
+          confirmButtonColor: '#287507',
+          confirmButtonText: 'Go to login page'
+        }).then((result) => {
+          if(result.isConfirmed){
+            this.router.navigate(['/login']);
+          }
+        })
+      }, error => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Wrong verification code.',
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        })
+      })
   }
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -33,7 +59,15 @@ export class UserVerificationComponent implements OnInit {
   }
 
   sendCodeAgain(email: string) {
-    this.service.sendCodeAgain(email);
-
+    this.service.sendCodeAgain(email)
+      .subscribe(response => {
+        Swal.fire({
+          title: 'Code sent again. Please check your mail!',
+          text: 'It may take a few minutes to get mail.',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 2100
+        });
+      })
   }
 }

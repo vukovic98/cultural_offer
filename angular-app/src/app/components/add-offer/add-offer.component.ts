@@ -6,6 +6,8 @@ import { TypeService } from '../../services/type.service';
 import { TypeModel } from '../../model/type-model';
 import { CulturalOfferService } from '../../services/culturalOffer.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {map} from 'rxjs/operators';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-add-offer',
@@ -56,7 +58,7 @@ export class AddOfferComponent implements OnInit {
       this.myForm.patchValue({
         location: e.latlng
       });
-      
+
       /*
       "address": {
         "museum": "Louvre Museum",
@@ -76,7 +78,7 @@ export class AddOfferComponent implements OnInit {
       }, (error:any) => {
         console.log(error);
       });
-    
+
       // @ts-ignore
       marker = new L.Marker(e.latlng);
       mymap.addLayer(marker);
@@ -153,7 +155,23 @@ export class AddOfferComponent implements OnInit {
       'images': images_copy,
       'location': locationObj
     }
-    //console.log(obj);
-    this.offerService.createOffer(obj);
+
+    this.offerService.createOffer(obj)
+      .subscribe(response => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Cultural offer successfully created!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+      }, error => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Image size must be less than 64Kb!',
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        });
+      })
   }
 }

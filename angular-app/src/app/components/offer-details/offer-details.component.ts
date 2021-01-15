@@ -11,6 +11,7 @@ import { AddPostComponent } from '../add-post/add-post.component';
 import { AddPostModel } from '../../model/post-model';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-offer-details',
@@ -67,17 +68,66 @@ export class OfferDetailsComponent implements OnInit{
     let userId = this.authService.getUserId();
     if (userId == "-1") { return; }
     let offerId = this.offer.id;
-    this.service.gradeOffer(parseInt(userId), parseInt(offerId), this.selectedValue);
+    this.service.gradeOffer(parseInt(userId), parseInt(offerId), this.selectedValue)
+      .subscribe(response => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'We marked you grade! ' ,
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+    }, error => {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Something went wrong! ' + error.error,
+        icon: 'error',
+        confirmButtonColor: '#DC143C',
+        confirmButtonText: 'OK'
+      });
+      return false;
+    });
 
   }
 
   subscribeToggle(event: MatSlideToggleChange, offer_id: string) {
     let id: number = Number(offer_id);
     if (event.checked) { // subscribe to offer
-      this.service.subscribeUser(id);
+      this.service.subscribeUser(id)
+        .subscribe(response => {
+          Swal.fire({
+            title: 'Success!',
+            text: 'Successfully subscribed to offer! Now you will get all the latest updates!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+        }, error => {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Something went wrong!',
+            icon: 'error',
+            confirmButtonColor: '#DC143C',
+            confirmButtonText: 'OK'
+          });
+        })
     }
     else {//unsubscribe from offer
-      this.service.unsubscribeUser(id);
+      this.service.unsubscribeUser(id)
+        .subscribe(response => {
+          Swal.fire({
+            title: 'Success!',
+            text: 'Successfully unsubscribed from offer!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+        }, error => {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Something went wrong!',
+            icon: 'error',
+            confirmButtonColor: '#DC143C',
+            confirmButtonText: 'OK'
+          });
+        })
     }
   }
 
@@ -88,23 +138,6 @@ export class OfferDetailsComponent implements OnInit{
   isAdmin(): boolean {
     return this.authService.isAdmin();
   }
-
-  /*addPost() {
-    const dialogRef = this.dialog.open(AddPostComponent, {
-      width: '500px',
-      data: this.newModel
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
-        let post = result.data;
-        post.culturalOfferId = this.offer.id;
-        this.service.addPost(post, ()=>{
-          location.reload()
-        });
-      }
-    });
-  }*/
 
   isSubscribed(offer: OfferDetailsModel): boolean {
     if (this.authService.isLoggedIn()) {

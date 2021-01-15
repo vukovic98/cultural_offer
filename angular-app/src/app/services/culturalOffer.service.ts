@@ -52,136 +52,51 @@ export class CulturalOfferService {
       .pipe(map((response) => JSON.stringify(response)));
   }
 
-  createOffer(offer: any) {
-    var headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
-    this.http.post(environment.apiUrl + this.manageOffersEndPoint, offer, { headers: headers })
-      .pipe(map(response => response))
-      .subscribe(response => {
-        Swal.fire({
-          title: 'Success!',
-          text: 'Cultural offer successfully created!',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        });
-        return true;
-      }, error => {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Image size must be less than 64Kb!',
-          icon: 'error',
-          confirmButtonColor: '#DC143C',
-          confirmButtonText: 'OK'
-        });
-        return false;
-      })
+  createOffer(offer: any): Observable<any> {
+    let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
+
+    return this.http.post(environment.apiUrl + this.manageOffersEndPoint, offer, { headers: headers })
 
   }
 
-  updateOffer(offer: CulturalOffer) {
+  updateOffer(offer: CulturalOffer): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
     });
-    this.http.put(environment.apiUrl + this.manageOffersEndPoint + offer.id, offer, { headers: headers })
-      .pipe(map(response => response))
-      .subscribe(response => {
-        Swal.fire({
-          title: 'Success!',
-          text: 'Cultural offer successfully updated!',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        });
-        return true;
-      }, error => {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Something went wrong!',
-          icon: 'error',
-          confirmButtonColor: '#DC143C',
-          confirmButtonText: 'OK'
-        });
-        return false;
-      })
+
+    return this.http.put(environment.apiUrl + this.manageOffersEndPoint + offer.id, offer, { headers: headers })
+
   }
 
-  deleteOffer(offer_id: number): void {
+  deleteOffer(offer_id: number): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
     });
 
-    this.http.delete(environment.apiUrl + this.manageOffersEndPoint + offer_id, { headers: headers })
-      .pipe(map(response => response))
-      .subscribe(response => {
-        Swal.fire({
-          title: 'Success!',
-          text: 'Cultural offer successfully deleted!',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        });
-        return true;
-      }, error => {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Something went wrong!',
-          icon: 'error',
-          confirmButtonColor: '#DC143C',
-          confirmButtonText: 'OK'
-        });
-        return false;
-      })
+    return this.http.delete(environment.apiUrl + this.manageOffersEndPoint + offer_id, { headers: headers })
+
   }
 
-  subscribeUser(offer_id: number): void {
+  subscribeUser(offer_id: number): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization' : 'Bearer ' + localStorage.getItem("accessToken")
     });
     let params = new HttpParams().set('offer_id', offer_id.toString())
 
-    this.http.post(environment.apiUrl + this.subscribeUserEndPoint, null , {params: params, headers: headers})
-      .pipe(map(response => response))
-      .subscribe(response => {
-        Swal.fire({
-          title: 'Success!',
-          text: 'Successfully subscribed to offer! Now you will get all the latest updates!',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        });
-      }, error => {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Something went wrong!',
-          icon: 'error',
-          confirmButtonColor: '#DC143C',
-          confirmButtonText: 'OK'
-        });
-      })
+    return this.http.post(environment.apiUrl + this.subscribeUserEndPoint, null , {params: params, headers: headers})
+
   }
 
-  unsubscribeUser(offer_id: number): void {
+  unsubscribeUser(offer_id: number): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
     });
 
     let params = new HttpParams().set('offer_id', offer_id.toString())
 
-    this.http.delete(environment.apiUrl + this.unsubscribeEndPoint, { params: params, headers: headers })
-      .pipe(map(response => response))
-      .subscribe(response => {
-        Swal.fire({
-          title: 'Success!',
-          text: 'Successfully unsubscribed from offer!',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        });
-      }, error => {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Something went wrong!',
-          icon: 'error',
-          confirmButtonColor: '#DC143C',
-          confirmButtonText: 'OK'
-        });
-      })
+    return this.http.delete(environment.apiUrl + this.unsubscribeEndPoint, { params: params, headers: headers })
+
   }
 
   getSubscribedItems(): any {
@@ -195,38 +110,17 @@ export class CulturalOfferService {
       .pipe(map((response) => JSON.stringify(response)));
   }
 
-  addPost(postDto: AddPostModel, update: Function) {
+  addPost(postDto: AddPostModel): Observable<any> {
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
     });
-    console.log("add post = ", postDto);
 
-    this.http.post(environment.apiUrl + this.addPostEndPoint, postDto, {headers: headers})
-      .pipe(map((response) => response))
-      .subscribe(response => {
-        Swal.fire({
-          title: 'Success!',
-          text: 'Post added successfully! ',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        });
-        update();
-        return true;
-      }, error => {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Something went wrong! ' + error.error,
-          icon: 'error',
-          confirmButtonColor: '#DC143C',
-          confirmButtonText: 'OK'
-        });
-        return false;
-      });
+    return this.http.post(environment.apiUrl + this.addPostEndPoint, postDto, {headers: headers})
+
   }
-
 
   getOffer(id: string): any {
     const headers = new HttpHeaders({
@@ -251,7 +145,7 @@ export class CulturalOfferService {
       .pipe(map((response) => JSON.stringify(response)));
   }
 
-  gradeOffer(userId: number, offerId: number, value: number) {
+  gradeOffer(userId: number, offerId: number, value: number): Observable<any> {
     let gradeObj = {
       "value": value,
       "user": { "id": userId },
@@ -259,18 +153,7 @@ export class CulturalOfferService {
     }
 
     let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
-    this.http.post(environment.apiUrl + "grades", gradeObj, { headers: headers })
-      .pipe(map((response) => response)).subscribe(response => {
-        return true;
-      }, error => {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Something went wrong! ' + error.error,
-          icon: 'error',
-          confirmButtonColor: '#DC143C',
-          confirmButtonText: 'OK'
-        });
-        return false;
-      });
+    return this.http.post(environment.apiUrl + "grades", gradeObj, { headers: headers })
+
   }
 }

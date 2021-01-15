@@ -5,6 +5,8 @@ import { CulturalOfferService } from '../../services/culturalOffer.service';
 import { AddPostComponent } from '../add-post/add-post.component';
 import { AddPostModel } from '../../model/post-model';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {map} from 'rxjs/operators';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-post-list',
@@ -51,13 +53,30 @@ export class PostListComponent implements OnInit {
       if (result != undefined) {
         let post = result.data;
         post.culturalOfferId = this.offer_id;
-        this.offerService.addPost(post, ()=>{
-          location.reload()
-        });
+        this.offerService.addPost(post)
+          .subscribe(response => {
+            Swal.fire({
+              title: 'Success!',
+              text: 'Post added successfully! ',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then(() => {
+              location.reload();
+            })
+
+          }, error => {
+            Swal.fire({
+              title: 'Error!',
+              text: 'Something went wrong! ' + error.error,
+              icon: 'error',
+              confirmButtonColor: '#DC143C',
+              confirmButtonText: 'OK'
+            });
+          });
       }
     });
   }
-  
+
   isAdmin() {
     return this.authService.isAdmin();
   }
