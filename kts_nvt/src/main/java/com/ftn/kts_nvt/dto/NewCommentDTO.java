@@ -1,18 +1,17 @@
 package com.ftn.kts_nvt.dto;
 
-import com.ftn.kts_nvt.beans.Image;
 
 public class NewCommentDTO {
 
 	private Long offerId;
 	private String content;
-	private Image image;
+	private byte[] image;
 
 	public NewCommentDTO() {
 		super();
 	}
 
-	public NewCommentDTO(Long offerId, String content, Image image) {
+	public NewCommentDTO(Long offerId, String content, byte[] image) {
 		super();
 		this.offerId = offerId;
 		this.content = content;
@@ -35,12 +34,13 @@ public class NewCommentDTO {
 		this.content = content;
 	}
 
-	public Image getImage() {
+	public byte[] getImage() {
 		return image;
 	}
 
-	public void setImage(Image image) {
+	public void setImage(byte[] image) {
 		this.image = image;
 	}
+
 
 }

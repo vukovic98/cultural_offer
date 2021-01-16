@@ -84,10 +84,11 @@ public class CommentController {
 	public ResponseEntity<PageImplementation<CommentUserDTO>> findCommentsForOffer(@PathVariable("offerId") int offerId,
 			@PathVariable("pageNum") int pageNum) {
 		Pageable pageable = PageRequest.of(pageNum - 1, 5);
-
+	
 		Page<Comment> page = this.commentService.findCommentsForOffer(offerId, pageable);
 
 		List<CommentUserDTO> commentDTOS = mapper.listToDto(page.toList());
+
 		Page<CommentUserDTO> pageCommentDTOS = new PageImpl<>(commentDTOS, page.getPageable(), page.getTotalElements());
 
 		PageImplMapper<CommentUserDTO> pageMapper = new PageImplMapper<>();
@@ -118,28 +119,7 @@ public class CommentController {
 		RegisteredUser user = this.registeredUserService.findOneByEmail(mail);
 
 		if (user != null) {
-			Comment newComment = new Comment(commentDto.getContent(), commentDto.getImage(), user);
-			CulturalOffer offer = offerRepository.getOne(commentDto.getOfferId());
-
-			Comment ok = this.commentService.save(newComment);
-
-			if (offer != null) {
-				offer.getComments().add(newComment);
-				offerRepository.save(offer);
-
-				user.getComments().add(ok);
-				this.registeredUserService.save(user);
-			} else {
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			}
-
-			if (ok != null) {
-				CommentDTO ret = new CommentDTO(ok.getCommentId(), ok.getContent(), ok.getImage());
-				return new ResponseEntity<>(ret, HttpStatus.CREATED);
-			} else {
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			}
-
+			return this.commentService.save(commentDto, user);
 		} else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}

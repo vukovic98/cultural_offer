@@ -104,6 +104,24 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.icegreen/greenmail -->
+		<dependency>
+			<groupId>com.icegreen</groupId>
+			<artifactId>greenmail</artifactId>
+			<version>1.6.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.30</version>
+		</dependency>
+
+
+
 	</dependencies>
 
 	<build>
