@@ -75,7 +75,8 @@ public class AuthenticationController {
 			HttpServletResponse response) {
 
 		try {
-			//RegisteredUser u = this.registeredUserService.findOneByEmail(authenticationRequest.getEmail());
+			// RegisteredUser u =
+			// this.registeredUserService.findOneByEmail(authenticationRequest.getEmail());
 			boolean verified = false;
 
 			Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -86,13 +87,13 @@ public class AuthenticationController {
 
 			// Kreiraj token za tog korisnika
 			User user = (User) authentication.getPrincipal();
-			if(user instanceof RegisteredUser) {
+			if (user instanceof RegisteredUser) {
 				RegisteredUser temp = (RegisteredUser) user;
 				verified = temp.isVerified();
 			} else {
 				verified = true;
 			}
-			
+
 			String email = user.getEmail();
 			String jwt = tokenUtils.generateToken(user.getEmail()); // prijavljujemo se na sistem sa email adresom
 			int expiresIn = tokenUtils.getExpiredIn();
@@ -129,8 +130,13 @@ public class AuthenticationController {
 	public ResponseEntity<HttpStatus> sendCodeAgain(@RequestBody String email) {
 		RegisteredUser user = this.registeredUserService.findOneByEmail(email);
 		VerificationCode code = this.verificationCodeService.findCodeByUser(user.getId());
-		this.verificationCodeService.sendCode(user, code);
-		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+
+		if (user == null || code == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} else {
+			this.verificationCodeService.sendCode(user, code);
+			return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+		}
 
 	}
 	// Endpoint za registraciju novog korisnika
