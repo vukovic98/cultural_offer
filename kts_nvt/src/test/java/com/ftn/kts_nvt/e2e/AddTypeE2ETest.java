@@ -75,7 +75,6 @@ public class AddTypeE2ETest {
 	public void tearDown() throws Exception {
 		this.driver.quit();
 	}
-	
 
 	@Test()
 	public void a_addTypeTestSuccess() throws InterruptedException {		
@@ -166,6 +165,19 @@ public class AddTypeE2ETest {
 	    addTypePage.getSearchButton().click();
 	    justWait();
 	    assertEquals("Museum", driver.findElement(By.xpath("//td")).getText());
+	}
+	
+	@Test 
+	public void h_searchFail() throws InterruptedException {	    
+	    addTypePage.getByName().click();
+	    addTypePage.getByName().clear();
+	    addTypePage.getByName().sendKeys("asasddsasda");
+	    justWait();
+	    addTypePage.getSearchButton().click();
+	    assertTrue(addTypePage.isSwalVisible());
+	    assertEquals("Error!", driver.findElement(By.id("swal2-title")).getText());
+	    assertEquals("Type not found", driver.findElement(By.id("swal2-content")).getText());
+	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();
 	}
 	
 	private void justWait() throws InterruptedException {

@@ -14,6 +14,7 @@ import com.ftn.kts_nvt.e2e.LoginE2ETest;
 import com.ftn.kts_nvt.e2e.OfferDetailsAdminE2ETest;
 import com.ftn.kts_nvt.e2e.OfferDetailsRegisteredUserE2ETest;
 import com.ftn.kts_nvt.e2e.SubscribedItemsE2ETest;
+import com.ftn.kts_nvt.e2e.AddCategoryE2ETest;
 import com.ftn.kts_nvt.e2e.AddOfferE2ETest;
 import com.ftn.kts_nvt.e2e.AddTypeE2ETest;
 import com.ftn.kts_nvt.e2e.ApprovingCommentsE2ETest;
@@ -89,10 +90,12 @@ import com.ftn.kts_nvt.e2e.VerifyUserE2ETest;
 		//ApprovingCommentsE2ETest.class
 		
 		//E2E SW1
-		//AddTypeE2ETest.class,
+		AddTypeE2ETest.class,
 		//AddOfferE2ETest.class,
 		//OfferDetailsRegisteredUserE2ETest.class,
-		//OfferDetailsAdminE2ETest.class
+		//OfferDetailsAdminE2ETest.class,
+		//AddCategoryE2ETest.class
+	
 	
 })
 @TestPropertySource("classpath:test.properties")
