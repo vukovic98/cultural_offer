@@ -14,13 +14,13 @@ export class CategoryService{
   private readonly manageCategoriesEndPoint = "cultural-offer-categories/";
   private readonly manageCategoriesEndPointByName = "cultural-offer-categories/name/";
 
-  constructor(private http: HttpClient) { } 
+  constructor(private http: HttpClient) { }
 
   getCategories(): Observable<Array<CategoryModel>> {
     const headers = new HttpHeaders({
       'Authorization' : 'Bearer ' + localStorage.getItem("accessToken")
     });
-    return this.http.get<Array<CategoryModel>>(environment.apiUrl + this.manageCategoriesEndPoint, 
+    return this.http.get<Array<CategoryModel>>(environment.apiUrl + this.manageCategoriesEndPoint,
                                                 {headers: headers});
   }
 
@@ -28,17 +28,16 @@ export class CategoryService{
     const headers = new HttpHeaders({'Authorization' : 'Bearer ' + localStorage.getItem("accessToken")});
     return this.http.get<Array<CategoryModel>>(environment.apiUrl + this.manageCategoriesEndPoint + 'by-page/'+page, {headers: headers});
   }
-  
+
   getByName(name: string): Observable<CategoryModel> {
-    console.log("get by name = " + name);
     const headers = new HttpHeaders({'Content-Type': 'application/json','Accept': 'application/json'});
+
     return this.http.get<CategoryModel>(environment.apiUrl + this.manageCategoriesEndPointByName + name, { headers: headers})
     .pipe(map(response => response));
   }
 
   deleteCategory(id: number, updateTable: Function){
-    console.log("delete in service");
-    var headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
+    let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
     this.http.delete(environment.apiUrl + this.manageCategoriesEndPoint + id , { headers: headers })
       .pipe(map(response => response))
       .subscribe(response => {

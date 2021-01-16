@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MustMatch} from "../../helper/must-match-validator";
+import {map} from 'rxjs/operators';
+import Swal from "sweetalert2";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -10,17 +13,6 @@ import {MustMatch} from "../../helper/must-match-validator";
 })
 export class SignUpComponent implements OnInit {
 
-
-  /*signupForm = new FormGroup(
-    {
-      "firstName": new FormControl('',[Validators.required,Validators.pattern("[A-Z][a-z]+")]),
-      "lastName": new FormControl('',[Validators.required,Validators.pattern("[A-Z][a-z]+")]),
-      "email": new FormControl('',[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@maildrop.cc")]),
-      "password": new FormControl('',[Validators.required,Validators.pattern("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}")]),
-      "passConfirm": new FormControl('',[Validators.required])
-    }, {
-      validator: MustMatch('password', 'passConfirm')
-    });*/
 
   signupForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.pattern("")]],
@@ -34,7 +26,11 @@ export class SignUpComponent implements OnInit {
     });
 
 
-  constructor(private service: AuthService, private formBuilder: FormBuilder) { }
+  constructor(
+    private service: AuthService,
+    private formBuilder: FormBuilder,
+    private route: Router
+    ) { }
 
 
   signUp(): void{
@@ -46,7 +42,18 @@ export class SignUpComponent implements OnInit {
       "password": this.signupForm.value.password
     };
 
-    this.service.signUp(JSON.stringify(signUpDto));
+    this.service.signUp(JSON.stringify(signUpDto))
+      .subscribe(response => {
+        this.route.navigate(['/verify'],{  queryParams: {  email: response.email } })
+      }, error => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'User with this email already exists!',
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        });
+      })
   }
   ngOnInit(): void {
   }
