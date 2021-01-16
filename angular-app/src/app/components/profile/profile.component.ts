@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EditProfileService} from "../../services/edit-profile.service";
 import {userDto} from "../../model/userDto";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-profile',
@@ -34,15 +35,31 @@ export class ProfileComponent implements OnInit {
 
   editProfile():void{
     let userDto = {
-
       "firstName": this.editProfileForm.value.firstName,
       "lastName": this.editProfileForm.value.lastName,
       "email": this.editProfileForm.value.email,
       "id": this.id,
       "password":this.password
-
     }
-    this.service.editUser(JSON.stringify(userDto),this.id);
+
+    this.service.editUser(JSON.stringify(userDto),this.id)
+      .subscribe(token => {
+        Swal.fire({
+          position: 'center',
+          title: 'Changes saved!',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }, error => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Can not save changes.',
+          icon: 'error',
+          confirmButtonColor: '#DC143C',
+          confirmButtonText: 'OK'
+        })
+      })
 
     this.initials = userDto.firstName.charAt(0).toUpperCase() + userDto.lastName.charAt(0).toUpperCase();
     this.firstName = userDto.firstName;
