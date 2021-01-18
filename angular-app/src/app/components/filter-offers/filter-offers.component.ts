@@ -20,10 +20,7 @@ export class FilterOffersComponent implements OnInit {
   expression = '';
   filteredOffers: Array<CulturalOffer> = [];
 
- filterForm = new FormGroup({
-    "expression": new FormControl('',null),
-    "types": new FormControl(this.types)
-  });
+
 
   constructor(private service: FilterOffersService) { }
 
@@ -34,26 +31,32 @@ export class FilterOffersComponent implements OnInit {
     };
 
     this.filterEvent.emit(filterParams);
-    console.log("Expression: "+this.expression);
-    console.log("Types: "+ this.selectedTypes);
+
 
 }
+
+
+
+
   filterOffers(){
     //this.culturalOfferService.getByPageFilter(1,this.expression,this.selectedTypes);
 
 
   }
 
-  getTypes():void{
+
+
+
+
+getTypes():void{
     this.service.getTypes()
-      .subscribe((types: String[]) => {
+      .subscribe(types => {
         this.types = types;
       });
   }
 
   addType($event: any){
     this.selectedTypes.push($event);
-    console.log("Dodat! selected:"+this.selectedTypes);
 
   }
 
@@ -62,7 +65,6 @@ export class FilterOffersComponent implements OnInit {
     if (index > -1)
       this.selectedTypes.splice(index, 1);
 
-    console.log("Obrisan! selected:"+this.selectedTypes);
   }
 
   ngOnInit(): void {

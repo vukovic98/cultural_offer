@@ -114,10 +114,7 @@ public class CommentService {
 			if (image != null) {
 
 				exists.setImage(null);
-				// Ivana: Zakomentarisala sam ovo da bi mi proradilo jer u mojoj bazi koristim
-				// jednu
-				// te istu sliku i za komentare i za offere, kad napravimo zajednicku
-				// otkomenarisacemo
+			
 				imageRepository.delete(image);
 
 			}

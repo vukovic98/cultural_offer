@@ -7,7 +7,7 @@
 .backgroundImg {
   height: 100vh;
   display: flow-root;
-  background-image: url("src/assets/img/cultureOnThePalm.jpg");
+  background-image: url("src/assets/img/backgroundCOP.jpg");
   background-size: cover;
 }
 
