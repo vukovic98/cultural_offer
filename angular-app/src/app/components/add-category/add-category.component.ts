@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@ang
 import { CategoryService } from '../../services/category.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CategoryModel } from '../../model/category-model';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from "sweetalert2";
 
 @Component({
@@ -18,7 +18,7 @@ export class AddCategoryComponent implements OnInit {
   public nextBtn: boolean = false;
   public categoryForm: FormGroup;
   public categoryFormByName: FormGroup;
-  
+
   constructor(private fb: FormBuilder,
     private categoryService: CategoryService,
     public dialog: MatDialog,
@@ -50,33 +50,59 @@ export class AddCategoryComponent implements OnInit {
     })
   }
 
-  editCategory(category: CategoryModel){
+  editCategory(category: CategoryModel) {
     console.log("edit = ");
     console.log(category);
     const dialogRef = this.dialog.open(EditDialog, {
       width: '350px',
-      data: {name: category.name, id: category.id}
+      data: { name: category.name, id: category.id }
     });
 
     dialogRef.afterClosed().subscribe(data => {
       //console.log('The dialog was closed');
       //console.log(data);
-      if(data != undefined){
+      if (data != undefined) {
         this.getCategories();
       }
     });
   }
 
-  deleteCategory(id: number){
+  deleteCategory(id: number) {
     //console.log("delete with id = ");
-    console.log(id);
-    this.categoryService.deleteCategory(id, ()=> {
+    //console.log(id);
+    /*this.categoryService.deleteCategory(id, ()=> {
       this.categories = this.categories.filter(item => item.id != id);
-    });
+    });*/
+
+    this.categoryService.deleteCategory(id).subscribe((response: any) => {
+      console.log("delete category = ");
+      console.log(response);
+      this.categories = this.categories.filter(item => item.id != id);
+      Swal.fire({
+        title: 'Success!',
+        text: 'Category successfully deleted!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+      return true;
+    }, error => {
+      console.log("delete category error = ");
+      console.log(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Something went wrong! ' + error.error,
+        icon: 'error',
+        confirmButtonColor: '#DC143C',
+        confirmButtonText: 'OK'
+      });
+      return false;
+    })
   }
 
-  getCategories(){
-    this.categoryService.getCategoriesByPage(this.pageNum).subscribe((data: any)  => {
+  getCategories() {
+    this.categoryService.getCategoriesByPage(this.pageNum).subscribe((data: any) => {
+      //console.log("getcategoriesbypage = ");
+      //console.log(data);
       this.categories = data.content;
       this.nextBtn = data.last;
       console.log(this.categories);
@@ -96,22 +122,41 @@ export class AddCategoryComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.categoryForm.value);
-    this.categoryService.addCategory(this.categoryForm.value, ()=>{
+    //console.log(this.categoryForm.value);
+    this.categoryService.addCategory(this.categoryForm.value).subscribe(response => {
+      console.log("addcategory response = ", response);
       this.getCategories();
+      Swal.fire({
+        title: 'Success!',
+        text: 'Category successfully created!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+      return true;
+    }, error => {
+      console.log("addcategory error = ", error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Something went wrong! Category already exist',
+        icon: 'error',
+        confirmButtonColor: '#DC143C',
+        confirmButtonText: 'OK'
+      });
+      return false;
     });
   }
 
   onSubmitByName() {
     console.log(this.categoryFormByName.value);
-    if(this.categoryFormByName.value.byname == ""){
+    if (this.categoryFormByName.value.byname == "") {
       this.getCategories();
-    }else{
+    } else {
       this.categoryService.getByName(this.categoryFormByName.value.byname).subscribe((data: CategoryModel) => {
+        //console.log("getbyname = ");
         //console.log(data);
         this.categories = [data];
       }, (error: any) => {
-        console.log(error);
+        //console.log(error);
         Swal.fire({
           title: 'Error!',
           text: 'Category not found',
@@ -119,10 +164,10 @@ export class AddCategoryComponent implements OnInit {
           confirmButtonColor: '#DC143C',
           confirmButtonText: 'OK'
         });
-      });  
+      });
     }
   }
-  
+
   get f() {
     return this.categoryForm.controls;
   }
@@ -145,20 +190,41 @@ export class EditDialog {
   constructor(
     public dialogRef: MatDialogRef<EditDialog>,
     @Inject(MAT_DIALOG_DATA) public data: CategoryModel,
-    private categoryService: CategoryService) {}
+    private categoryService: CategoryService) { }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  save(){
+  save() {
     this.data.name = this.myForm.value.name;
-    this.categoryService.updateCategory(this.data, ()=>{
-      this.dialogRef.close({data:this.data});
+
+    this.categoryService.updateCategory(this.data).subscribe(response => {
+      console.log("response = ");
+      console.log(response);
+      this.dialogRef.close({ data: this.data });
+      Swal.fire({
+        title: 'Success!',
+        text: 'Category successfully updated!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+      return true;
+    }, error => {
+      console.log("update error = ");
+      console.log(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Something went wrong! Category name already exists',
+        icon: 'error',
+        confirmButtonColor: '#DC143C',
+        confirmButtonText: 'OK'
+      });
+      return false;
     });
   }
 
-  close(){
+  close() {
     this.dialogRef.close();
   }
 
