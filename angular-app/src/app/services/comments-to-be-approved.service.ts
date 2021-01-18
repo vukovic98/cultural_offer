@@ -1,10 +1,11 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {map} from "rxjs/operators";
 import Swal from "sweetalert2";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
+import {CommentToBeApprovedModel} from "../model/comment-to-be-approved-model";
 
 @Injectable()
 export class CommentsToBeApprovedService{
@@ -24,21 +25,21 @@ export class CommentsToBeApprovedService{
      .pipe(map((response) => JSON.stringify(response)));
   }
 
-  approveComment(commentId: number): Observable<any> {
+  approveComment(commentId: number): Observable<CommentToBeApprovedModel> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      "Authorization" :  "Bearer " + localStorage.getItem("accessToken")
+      "Authorization": "Bearer " + localStorage.getItem("accessToken")
     });
-
-    return this.http.put(environment.apiUrl + this.approveCommentEndPoint + commentId,"",{headers: headers});
+    return this.http.put<CommentToBeApprovedModel>(environment.apiUrl + this.approveCommentEndPoint + commentId, "", {headers: headers});
   }
 
-  denyComment(commentId: number): Observable<any> {
+  denyComment(commentId: number): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders({
       "Authorization" :  "Bearer " + localStorage.getItem("accessToken")
     });
 
-    return this.http.delete(environment.apiUrl + this.denyCommentEndPoint + commentId,{headers: headers});
+    return this.http.delete<any>(environment.apiUrl + this.denyCommentEndPoint + commentId,
+      {headers: headers, observe: "response"});
 
   }
 }

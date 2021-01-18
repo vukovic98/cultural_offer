@@ -5,6 +5,7 @@ import {ProfileComponent} from '../../components/profile/profile.component';
 import {ChangePasswordComponent} from '../../components/change-password/change-password.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
+import {MatButtonModule} from "@angular/material/button";
 
 
 
@@ -13,12 +14,13 @@ import {SharedModule} from '../shared/shared.module';
     ProfileComponent,
     ChangePasswordComponent,
   ],
-  imports: [
-    CommonModule,
-    UserRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SharedModule
-  ]
+    imports: [
+        CommonModule,
+        UserRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SharedModule,
+        MatButtonModule
+    ]
 })
 export class UserModule { }

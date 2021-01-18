@@ -87,7 +87,7 @@ public class CommentService {
 			this.culturalOfferRepository.save(offer);
 			System.out.println("prodje4");
 
-			this.commentRepository.delete(exists);
+			this.commentRepository.deleteById(exists.getCommentId());
 			System.out.println("prodje5");
 			return true;
 		} catch (Exception e) {

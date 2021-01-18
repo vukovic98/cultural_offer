@@ -15,3 +15,7 @@ export interface verifyResponse {
   code: string;
   userEmail: string;
 }
+
+export interface statusCodeModel{
+  statusCode:  number;
+}
