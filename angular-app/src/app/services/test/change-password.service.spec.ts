@@ -6,6 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import {RouterTestingModule} from "@angular/router/testing";
 import {passwordDto} from "../../model/password-model";
 import {userDto} from "../../model/userDto";
+import {statusCodeModel} from "../../model/auth-model";
 
 describe('ChangePasswordService', () => {
   let service: ChangePasswordService;
@@ -70,6 +71,36 @@ describe('ChangePasswordService', () => {
     expect(user.firstName).toEqual("Ivana");
     expect(user.lastName).toEqual("Vlaisavljevic");
     expect(user.password).toEqual("elena123nova");
+
+
+  }));
+
+  it('changePassword() should fail to change password', fakeAsync(() => {
+    let statusCode: statusCodeModel = {
+      statusCode: 0
+    };
+
+    let passDto = {
+      "oldPassword": "elena123",
+      "newPassword":"elena123nova"
+    }
+
+    const mockCode: statusCodeModel = {
+      statusCode: 400
+    }
+
+    service.changePassword(JSON.stringify(passDto)).subscribe(res =>{
+      statusCode = res;
+    });
+
+    const req = httpMock.expectOne('http://localhost:8080/users/changePassword');
+    expect(req.request.method).toBe('PUT');
+    req.flush(mockCode);
+
+    tick();
+
+    expect(statusCode.statusCode).toEqual(400);
+
 
 
   }));

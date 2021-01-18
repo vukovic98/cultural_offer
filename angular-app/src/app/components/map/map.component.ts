@@ -12,7 +12,7 @@ import { AddPostModel } from '../../model/post-model';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from "sweetalert2";
-import * as L from 'leaflet';
+//import * as L from 'leaflet';
 @Component({
     selector: 'app-map',
     templateUrl: './map.component.html',
@@ -20,12 +20,12 @@ import * as L from 'leaflet';
   })
   export class MapComponent {
     private offers: Array<CulturalOffer> = [];
-    
+
     constructor(private offerService: CulturalOfferService,
         private auth: AuthService) {
-      
+
     }
-  
+
     ngOnInit() {
       //@ts-ignore
       let mymap = L.map('map').setView([44.787197, 20.457273], 3);
@@ -40,7 +40,7 @@ import * as L from 'leaflet';
       }).addTo(mymap);
       //@ts-ignore
 
-      
+
 
       this.offerService.getByPage(1).subscribe((result: string) => {
         this.offers = JSON.parse(result).content;
@@ -49,19 +49,19 @@ import * as L from 'leaflet';
             marker.on('click', function(e) {
                 //open popup;
                 var popup = L.popup()
-                 .setLatLng(marker.getLatLng()) 
+                 .setLatLng(marker.getLatLng())
                  .setContent(offer.name)
                  .openOn(mymap);
               });
         });
-            
 
-          
+
+
       });
 
 
-      
 
-    
+
+
     }
   }

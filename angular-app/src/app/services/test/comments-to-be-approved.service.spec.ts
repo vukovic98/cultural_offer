@@ -96,6 +96,42 @@ describe('CommentsToBeApprovedService', () => {
     expect(comments.content[1].content).toEqual("Ponuda je odlicna");
     expect(comments.content[1].image).toBeNull();
 
+  }));
+  it('getCommentsByPage() should not return comments for not existing page',fakeAsync(() => {
+    let pendingCommentsPage : string = "";
+
+    const mockComments  = {
+        "content": [],
+        "totalElements": 0,
+        "last": true,
+        "totalPages": 0,
+        "size": 5,
+        "number": 0,
+        "numberOfElements": 0,
+        "first": true,
+        "empty": true,
+        "pageNumber": 0,
+        "pageSize": 5
+
+    };
+
+    service.getCommentsByPage(1111).subscribe(response => pendingCommentsPage = response);
+
+
+    const req = httpMock.expectOne('http://localhost:8080/comments/pendingComments/1111');
+    expect(req.request.method).toBe('GET');
+    req.flush(mockComments);
+
+    tick();
+
+    let comments = JSON.parse(pendingCommentsPage);
+    expect(comments).toBeDefined();
+    expect(comments.content.length).toBe(0);
+    expect(comments.numberOfElements).toEqual(0);
+    expect(comments.totalElements).toEqual(0);
+    expect(comments.empty).toEqual(true);
+
+
 
 
   }));
@@ -137,6 +173,26 @@ describe('CommentsToBeApprovedService', () => {
     expect(approvedComment.commenterName).toEqual("Ana Maric");
     expect(approvedComment.commenterEmail).toEqual("ana@maildrop.cc");
     expect(approvedComment.id).toEqual(1);
+
+  }));
+  it('approveComment() should fail to approve pending comment by id', fakeAsync(() => {
+    let code: statusCodeModel = {
+     statusCode: 0
+    };
+
+    const mockCode : statusCodeModel = {
+      statusCode: 400
+    }
+
+    service.approveComment(1).subscribe(res => code = res);
+    const req = httpMock.expectOne("http://localhost:8080/comments/approve/1")
+    expect(req.request.method).toBe('PUT');
+    req.flush(mockCode);
+
+    tick();
+
+    expect(code.statusCode).toEqual(400);
+
 
   }));
   it('denyComment() should deny pending comment by id', () => {

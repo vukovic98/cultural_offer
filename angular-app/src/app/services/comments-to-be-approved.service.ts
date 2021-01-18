@@ -15,7 +15,7 @@ export class CommentsToBeApprovedService{
 
   constructor(private http: HttpClient) {}
 
-  getCommentsByPage(page: number):any{
+  getCommentsByPage(page: number):Observable<any>{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -25,7 +25,7 @@ export class CommentsToBeApprovedService{
      .pipe(map((response) => JSON.stringify(response)));
   }
 
-  approveComment(commentId: number): Observable<CommentToBeApprovedModel> {
+  approveComment(commentId: number): Observable<CommentToBeApprovedModel | any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       "Authorization": "Bearer " + localStorage.getItem("accessToken")

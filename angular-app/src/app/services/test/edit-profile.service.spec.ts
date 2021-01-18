@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {RouterTestingModule} from "@angular/router/testing";
 import {EditProfileService} from "../edit-profile.service";
 import {userDto} from "../../model/userDto";
+import {statusCodeModel} from "../../model/auth-model";
 
 describe('EditProfileService', () => {
   let service: EditProfileService;
@@ -67,6 +68,36 @@ describe('EditProfileService', () => {
     expect(user.password).toEqual("lozinka123");
 
   }));
+  it('editUser() should fail to edit user by user id', fakeAsync(() => {
+    let statusCode: statusCodeModel = {
+      statusCode: 0
+    };
+
+    let user = {
+      "firstName": "Ivana",
+      "lastName": "Vlaisavljevic",
+      "email": "ivana@maildrop.cc",
+      "id": 27,
+      "password":"lozinka123"
+    };
+
+    const mockCode: statusCodeModel = {
+      statusCode: 400
+    };
+
+    service.editUser(JSON.stringify(user), user.id).subscribe(res => statusCode = res);
+
+    const req = httpMock.expectOne('http://localhost:8080/users/editProfile/'+user.id);
+    expect(req.request.method).toBe('PUT');
+    req.flush(mockCode);
+
+    tick();
+
+    expect(statusCode).toBeDefined();
+    expect(statusCode.statusCode).toEqual(400);
+
+
+  }));
   it('getUser() should return currently looged user',fakeAsync(() => {
     let loggedUser : userDto = {
       firstName: "",
@@ -98,6 +129,28 @@ describe('EditProfileService', () => {
     expect(loggedUser.email).toEqual("ivana@maildrop.cc");
     expect(loggedUser.id).toEqual(27);
     expect(loggedUser.password).toEqual("lozinka123");
+
+  }));
+  it('getUser() should fail to return currently looged user',fakeAsync(() => {
+    let statusCode: statusCodeModel = {
+      statusCode: 0
+    };
+
+    const mockCode : statusCodeModel = {
+      statusCode: 404
+    };
+
+    service.getUser().subscribe(res => statusCode = res);
+
+    const req = httpMock.expectOne('http://localhost:8080/users/loggedInUser');
+    expect(req.request.method).toBe('GET');
+    req.flush(mockCode);
+
+    tick();
+
+    expect(statusCode).toBeDefined();
+    expect(statusCode.statusCode).toEqual(404);
+
 
   }));
 });

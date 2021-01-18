@@ -4,6 +4,7 @@ import {HttpClientTestingModule, HttpTestingController} from "@angular/common/ht
 import {HttpClient} from "@angular/common/http";
 import {RouterTestingModule} from "@angular/router/testing";
 import {FilterOffersService} from "../filter-offers.service";
+import {statusCodeModel} from "../../model/auth-model";
 
 describe('FilterOfferService', () => {
   let service: FilterOffersService;
@@ -48,6 +49,26 @@ describe('FilterOfferService', () => {
     expect(offerTypes[0]).toEqual("Type1");
     expect(offerTypes[1]).toEqual("Type2");
     expect(offerTypes[2]).toEqual("Type3");
+  }));
+  it('getTypes() should fail to return some cultural offer types',fakeAsync(() => {
+    let code: statusCodeModel = {
+      statusCode: 0
+    };
+
+    const mockCode : statusCodeModel = {
+      statusCode: 404
+    }
+
+    service.getTypes().subscribe(res => code = res);
+
+    const req = httpMock.expectOne('http://localhost:8080/cultural-offer-types/getAll');
+    expect(req.request.method).toBe('GET');
+    req.flush(mockCode);
+
+    tick();
+
+    expect(code.statusCode).toEqual(404);
+
   }));
 
 });
