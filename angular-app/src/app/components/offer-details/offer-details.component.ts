@@ -76,6 +76,13 @@ export class OfferDetailsComponent implements OnInit{
           icon: 'success',
           confirmButtonText: 'OK'
         });
+        let sum = this.selectedValue;
+        let i = 1;
+        for (let p of this.offer.grades) {
+          sum += p.value;
+          i+=1;
+        }
+        this.offer.avgGrade = sum/i;
     }, error => {
       Swal.fire({
         title: 'Error!',
@@ -100,6 +107,7 @@ export class OfferDetailsComponent implements OnInit{
             icon: 'success',
             confirmButtonText: 'OK'
           });
+          this.offer.subscribersCount += 1;
         }, error => {
           Swal.fire({
             title: 'Error!',
@@ -119,6 +127,7 @@ export class OfferDetailsComponent implements OnInit{
             icon: 'success',
             confirmButtonText: 'OK'
           });
+          this.offer.subscribersCount -= 1;
         }, error => {
           Swal.fire({
             title: 'Error!',

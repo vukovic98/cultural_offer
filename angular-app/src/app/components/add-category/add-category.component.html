@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="form-group float-right mt-3">
-                    <button mat-raised-button color="primary" [disabled]="!categoryForm.valid" type="submit"
+                    <button mat-raised-button color="primary" id="submit" [disabled]="!categoryForm.valid" type="submit"
                         class="btn-block">Submit</button>
                 </div>
             </form>
@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="form-group float-right mt-3">
-                    <button mat-raised-button color="primary" [disabled]="!categoryFormByName.valid" type="submit"
+                    <button mat-raised-button color="primary" id="search" [disabled]="!categoryFormByName.valid" type="submit"
                         class="btn-block">Search</button>
                 </div>
             </form>
@@ -50,11 +50,11 @@
                                 </select>
                             </td>
                             <td>
-                                <button mat-mini-fab color="primary" class="mr-2 mb-2" (click)="editCategory(c)"
+                                <button mat-mini-fab color="primary" id="editButton" class="mr-2 mb-2" (click)="editCategory(c)"
                                     style="outline: none">
                                     <mat-icon>edit</mat-icon>
                                 </button>
-                                <button mat-mini-fab color="warn" class="mr-2 mb-2" (click)="deleteCategory(c.id)"
+                                <button mat-mini-fab color="warn" id="deleteButton" class="mr-2 mb-2" (click)="deleteCategory(c.id)"
                                     style="outline: none">
                                     <mat-icon>delete</mat-icon>
                                 </button>

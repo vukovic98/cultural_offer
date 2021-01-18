@@ -3,6 +3,8 @@ import {CommentModel, ImageModel} from '../../model/comment-model';
 import {CulturalOffer} from '../../model/offer-mode';
 import {environment} from '../../../environments/environment';
 import {AuthService} from '../../services/auth.service';
+import { CulturalOfferService } from '../../services/culturalOffer.service';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-comment-item',
@@ -20,7 +22,8 @@ export class CommentItemComponent implements OnInit {
     offer:  null
   };
 
-  constructor(private authService: AuthService) { }
+  constructor(private offerService: CulturalOfferService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -32,6 +35,30 @@ export class CommentItemComponent implements OnInit {
 
   imagePrefix() {
     return environment.picPrefix;
+  }
+
+  onClickDeleteComment(){
+
+    this.offerService.deleteComment(this.comment.id)
+    .subscribe(response => {
+      Swal.fire({
+        title: 'Success!',
+        text: 'Comment successfully deleted!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        location.reload();
+      });
+    }, error => {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Something went wrong while attempting to delete the comment.',
+        icon: 'error',
+        confirmButtonColor: '#DC143C',
+        confirmButtonText: 'OK'
+      });
+    })
+
   }
 
 }

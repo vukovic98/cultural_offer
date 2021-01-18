@@ -16,6 +16,6 @@ export interface verifyResponse {
   userEmail: string;
 }
 
-export interface statusCodeModel{
-  statusCode:  number;
+export interface statusCodeModel {
+  statusCode: number;
 }

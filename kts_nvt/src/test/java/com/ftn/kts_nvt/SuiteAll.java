@@ -11,8 +11,12 @@ import com.ftn.kts_nvt.e2e.HomePageAdminE2ETest;
 import com.ftn.kts_nvt.e2e.HomePageRegisteredUserE2ETest;
 import com.ftn.kts_nvt.e2e.HomePageUnregisteredUserE2ETest;
 import com.ftn.kts_nvt.e2e.LoginE2ETest;
+import com.ftn.kts_nvt.e2e.OfferDetailsAdminE2ETest;
+import com.ftn.kts_nvt.e2e.OfferDetailsRegisteredUserE2ETest;
 import com.ftn.kts_nvt.e2e.SubscribedItemsE2ETest;
-
+import com.ftn.kts_nvt.e2e.AddCategoryE2ETest;
+import com.ftn.kts_nvt.e2e.AddOfferE2ETest;
+import com.ftn.kts_nvt.e2e.AddTypeE2ETest;
 import com.ftn.kts_nvt.e2e.ApprovingCommentsE2ETest;
 import com.ftn.kts_nvt.e2e.ChangePasswordE2ETest;
 import com.ftn.kts_nvt.e2e.EditProfileE2ETest;
@@ -79,14 +83,20 @@ import com.ftn.kts_nvt.e2e.VerifyUserE2ETest;
 		
 
 		//E2E SW78
-		SignUpE2ETest.class,
-		VerifyUserE2ETest.class,
-		EditProfileE2ETest.class,
-		ChangePasswordE2ETest.class,
-		ApprovingCommentsE2ETest.class
+		//SignUpE2ETest.class,
+		//VerifyUserE2ETest.class,
+		//EditProfileE2ETest.class,
+		//ChangePasswordE2ETest.class,
+		//ApprovingCommentsE2ETest.class
 		
-
-
+		//E2E SW1
+		AddTypeE2ETest.class,
+		//AddOfferE2ETest.class,
+		//OfferDetailsRegisteredUserE2ETest.class,
+		//OfferDetailsAdminE2ETest.class,
+		//AddCategoryE2ETest.class
+	
+	
 })
 @TestPropertySource("classpath:test.properties")
 public class SuiteAll {

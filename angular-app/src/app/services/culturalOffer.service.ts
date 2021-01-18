@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import Swal from "sweetalert2";
 import { CulturalOffer } from '../model/offer-mode';
 import {AddPostModel} from '../model/post-model';
+import { ImageModel } from '../model/comment-model';
 
 @Injectable()
 export class CulturalOfferService {
@@ -53,6 +54,7 @@ export class CulturalOfferService {
   }
 
   createOffer(offer: any): Observable<any> {
+    console.log(offer);
     let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
 
     return this.http.post(environment.apiUrl + this.manageOffersEndPoint, offer, { headers: headers })
@@ -154,6 +156,32 @@ export class CulturalOfferService {
 
     let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
     return this.http.post(environment.apiUrl + "grades", gradeObj, { headers: headers })
+
+  }
+
+  addComment(offerId: number,commentText: string,image: any): Observable<any>{
+    let newCommentDto = {
+      "offerId": offerId,
+      "content": commentText,
+      "image": image
+    }
+
+    let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
+    return this.http.post(environment.apiUrl + "comments", newCommentDto, { headers: headers })
+
+  }
+
+  deleteComment(commentId: number){
+
+    let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
+    return this.http.delete(environment.apiUrl + "comments/"+commentId, { headers: headers })
+
+  }
+
+  deletePost(postId : number){
+
+    let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
+    return this.http.delete(environment.apiUrl + "posts/"+postId, { headers: headers })
 
   }
 }

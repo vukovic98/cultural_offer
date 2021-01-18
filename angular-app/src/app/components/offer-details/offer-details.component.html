@@ -40,7 +40,7 @@
             <mat-grid-tile>
               <div class="col-md-12 pl-0 mb-0">
                 <h1 class="mb-0"><div class="badge badge-light" title="Number of subscribers">
-                  <mat-icon class="float-left mr-3">people</mat-icon> <p class="pt-1">{{offer.subscribersCount}}</p>
+                  <mat-icon class="float-left mr-3">people</mat-icon> <p class="pt-1" id="subscribersCountText">{{offer.subscribersCount}}</p>
                 </div></h1>
               </div>
             </mat-grid-tile>
@@ -98,7 +98,7 @@
             <mat-grid-tile>
               <div class="col-md-12 pl-0 mb-1" *ngIf="isUser()">
                 <p class="float-left mr-2 mt-1">Subscribe</p>
-                <mat-slide-toggle class="mb-1" color="primary" (change)="subscribeToggle($event, offer.id)" [checked]="isSubscribed(offer)" title="(Un)Subscribe"></mat-slide-toggle>
+                <mat-slide-toggle class="mb-1" id="subscribe-toggle" color="primary" (change)="subscribeToggle($event, offer.id)" [checked]="isSubscribed(offer)" title="(Un)Subscribe"></mat-slide-toggle>
               </div>
             </mat-grid-tile>
           </mat-grid-list>
