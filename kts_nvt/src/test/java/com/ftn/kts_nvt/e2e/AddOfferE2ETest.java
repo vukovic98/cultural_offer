@@ -72,7 +72,7 @@ public class AddOfferE2ETest {
 	public void a_addOffer() throws InterruptedException {
 	    addOfferPage.getOfferName().click();
 	    addOfferPage.getOfferName().clear();
-	    addOfferPage.getOfferName().sendKeys("offername");
+	    addOfferPage.getOfferName().sendKeys("newoffername");
 	    addOfferPage.getOfferDescription().clear();
 	    addOfferPage.getOfferDescription().sendKeys("description");
 	    addOfferPage.getCategorySelect().click();
@@ -91,6 +91,51 @@ public class AddOfferE2ETest {
 	    assertTrue(addOfferPage.isSwalVisible());
 		assertTrue(this.homePage.getSwalSuccess().isDisplayed());
 	    //assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
+	}
+	
+	@Test 
+	public void b_addOfferFail() throws InterruptedException {
+	    addOfferPage.getOfferName().click();
+	    addOfferPage.getOfferName().clear();
+	    addOfferPage.getOfferName().sendKeys("newoffername");
+	    addOfferPage.getOfferDescription().clear();
+	    addOfferPage.getOfferDescription().sendKeys("description");
+	    addOfferPage.getCategorySelect().click();
+	    new Select(addOfferPage.getCategorySelect()).selectByVisibleText("Institution");
+	    addOfferPage.getCategorySelect().click();
+	    justWait();
+	    addOfferPage.getTypeSelect().click();
+	    new Select(addOfferPage.getTypeSelect()).selectByVisibleText("Museum");
+	    addOfferPage.getTypeSelect().click();	    
+	    addOfferPage.getMapid().click();
+	    addOfferPage.getFile().sendKeys("D:\\2020\\NVT\\projekat\\index.jpg");
+	    justWait();
+	    driver.findElement(By.xpath("//button[@id='submit']")).click();
+	    justWait();
+	    addOfferPage.ensureIsDisplayedSwal();
+	    assertTrue(addOfferPage.isSwalVisible());
+	    assertEquals("Error!", driver.findElement(By.id("swal2-title")).getText());
+		//assertTrue(this.homePage.getSwalSuccess().isDisplayed());
+	    //assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
+	}
+	
+	@Test
+	public void c_addImageTest() throws InterruptedException {
+	    int itemsBefore= driver.findElements(By.id("imagesIdsTest")).size();
+	    assertEquals(0, itemsBefore);
+	    
+	    addOfferPage.getFile().sendKeys("D:\\2020\\NVT\\projekat\\index.jpg");
+	    justWait();
+	    
+	    int itemsAfterAdd = driver.findElements(By.id("imagesIdsTest")).size();
+	    assertEquals(1, itemsAfterAdd);
+	    
+	    driver.findElement(By.xpath("//mat-icon")).click();
+	    justWait();
+	    
+	    int itemsAfterDelete = driver.findElements(By.id("imagesIdsTest")).size();
+	    assertEquals(0, itemsAfterDelete);
+	    
 	}
 	
 	private void justWait() throws InterruptedException {
