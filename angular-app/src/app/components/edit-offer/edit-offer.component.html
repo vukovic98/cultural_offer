@@ -13,7 +13,7 @@
         </div>
         <div class="form-group">
             <label for="description">Description:</label>
-            <textarea formControlName="description" id="description" type="text" class="form-control" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+            <textarea formControlName="description" id="description" type="text" class="form-control" rows="5" style="resize: none;"></textarea>
             <div *ngIf="f.description.touched && f.description.invalid" class="alert alert-danger">
                 <div *ngIf="f.description.errors!.required">Description is required.</div>
             </div>
