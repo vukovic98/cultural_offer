@@ -170,4 +170,18 @@ export class CulturalOfferService {
     return this.http.post(environment.apiUrl + "comments", newCommentDto, { headers: headers })
 
   }
+
+  deleteComment(commentId: number){
+
+    let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
+    return this.http.delete(environment.apiUrl + "comments/"+commentId, { headers: headers })
+
+  }
+
+  deletePost(postId : number){
+
+    let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
+    return this.http.delete(environment.apiUrl + "posts/"+postId, { headers: headers })
+
+  }
 }

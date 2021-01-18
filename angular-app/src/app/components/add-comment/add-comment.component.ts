@@ -74,7 +74,7 @@ export class AddCommentComponent implements OnInit {
     .subscribe(response => {
       Swal.fire({
         title: 'Success!',
-        text: 'Comment successfully created!',
+        text: 'Comment successfully created! It will show up once one of our admins approves it.',
         icon: 'success',
         confirmButtonText: 'OK'
       });
