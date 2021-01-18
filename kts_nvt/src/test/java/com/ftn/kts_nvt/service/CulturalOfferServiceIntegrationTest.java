@@ -63,7 +63,7 @@ public class CulturalOfferServiceIntegrationTest {
 	}
 
 	@Test
-	public void testSaveAndDeleteDTO() {
+	public void testSaveAndDeleteDTO() throws Exception {
 		GeoLocation g = this.geoRepository.findById(1L).orElse(null);
 		CulturalOfferType t = this.typeRepository.findById(1L).orElse(null);
 		CulturalOffer found;
