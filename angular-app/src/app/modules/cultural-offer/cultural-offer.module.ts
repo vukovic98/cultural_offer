@@ -33,6 +33,7 @@ import {PostListComponent} from '../../components/post-list/post-list.component'
 import {HomeComponent} from '../../components/home/home.component';
 import {EditDialog} from '../../components/add-category/add-category.component';
 import { MapComponent } from 'src/app/components/map/map.component';
+import {TextFieldModule} from '@angular/cdk/text-field';
 
 
 
@@ -57,24 +58,24 @@ import { MapComponent } from 'src/app/components/map/map.component';
     EditDialog,
     MapComponent
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    CulturalOfferRoutingModule,
-    SharedModule,
-    MatMenuModule,
-    MatIconModule,
-    MatSelectModule, MatGridListModule,
-    MatSlideToggleModule,
-    MatButtonModule,
-    MatDialogModule,
-    NgSelectModule,
-    MatMenuModule,
-    MatListModule,
-    MatExpansionModule,
-    MatCardModule,
-    RouterModule
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CulturalOfferRoutingModule,
+        SharedModule,
+        MatMenuModule,
+        MatIconModule,
+        MatSelectModule, MatGridListModule,
+        MatSlideToggleModule,
+        MatButtonModule,
+        MatDialogModule,
+        NgSelectModule,
+        MatMenuModule,
+        MatListModule,
+        MatExpansionModule,
+        MatCardModule,
+        RouterModule, TextFieldModule
+    ]
 })
 export class CulturalOfferModule { }

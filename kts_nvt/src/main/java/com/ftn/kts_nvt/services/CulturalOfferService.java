@@ -46,7 +46,7 @@ public class CulturalOfferService {
 	}
 
 	@Transactional
-	public CulturalOffer save(CulturalOfferAddDTO dto) {
+	public CulturalOffer save(CulturalOfferAddDTO dto) throws Exception {
 		List<CulturalOffer> found = this.culturalOfferRepository.findByName(dto.getName());
 
 		if (found.isEmpty()) {
@@ -54,6 +54,10 @@ public class CulturalOfferService {
 
 			if (dto.getImages() != null) {
 				for (byte[] a : dto.getImages()) {
+					//System.out.println("img size = " + a.length);
+					if(a.length > 64000) {
+						throw new Exception("IMGSIZE");
+					}
 					System.out.println(a);
 					Image i = new Image(a);
 					this.imageService.save(i);
@@ -73,8 +77,9 @@ public class CulturalOfferService {
 			c.setImages(images);
 
 			return this.culturalOfferRepository.save(c);
-		} else
-			return null;
+		} else {
+			throw new Exception("EXISTS");
+		}
 	}
 
 	public ArrayList<CulturalOffer> findAll() {

@@ -45,9 +45,11 @@ import Swal from "sweetalert2";
       this.offerService.getByPage(1).subscribe((result: string) => {
         this.offers = JSON.parse(result).content;
         this.offers.forEach(offer => {
+            //@ts-ignore
             let marker = L.marker([offer.location.latitude, offer.location.longitude]).addTo(mymap);
-            marker.on('click', function(e) {
+            marker.on('click', function(e: any) {
                 //open popup;
+                //@ts-ignore
                 var popup = L.popup()
                  .setLatLng(marker.getLatLng())
                  .setContent(offer.name)
