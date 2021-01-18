@@ -36,84 +36,25 @@ export class CategoryService{
     .pipe(map(response => response));
   }
 
-  deleteCategory(id: number, updateTable: Function){
+  deleteCategory(id: number): Observable<any>{
+    console.log("deletecategorycall");
     let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
-    this.http.delete(environment.apiUrl + this.manageCategoriesEndPoint + id , { headers: headers })
-      .pipe(map(response => response))
-      .subscribe(response => {
-        updateTable();
-        Swal.fire({
-          title: 'Success!',
-          text: 'Category successfully deleted!',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        });
-        return true;
-      }, error => {
-        console.log(error);
-        Swal.fire({
-          title: 'Error!',
-          text: 'Something went wrong! ' + error.error,
-          icon: 'error',
-          confirmButtonColor: '#DC143C',
-          confirmButtonText: 'OK'
-        });
-        return false;
-      })
+    return this.http.delete(environment.apiUrl + this.manageCategoriesEndPoint + id , { headers: headers })
+      .pipe(map(response => response));
   }
 
-  updateCategory(category: CategoryModel, updateTable: Function){
-    console.log("update category");
+  updateCategory(category: CategoryModel): Observable<any>{
+    console.log("update category = ");
     console.log(category);
     var headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
-    this.http.put(environment.apiUrl + this.manageCategoriesEndPoint + category.id, category, { headers: headers })
-    .pipe(map(response => response))
-    .subscribe(response => {
-      updateTable();
-      Swal.fire({
-        title: 'Success!',
-        text: 'Category successfully updated!',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      });
-      return true;
-    }, error => {
-      Swal.fire({
-        title: 'Error!',
-        text: 'Something went wrong! Category name already exists',
-        icon: 'error',
-        confirmButtonColor: '#DC143C',
-        confirmButtonText: 'OK'
-      });
-      return false;
-    })
+    return this.http.put(environment.apiUrl + this.manageCategoriesEndPoint + category.id, category, { headers: headers })
+                .pipe(map(response => response));
   }
 
-  addCategory(category: CategoryModel, updateTable: Function){
-    console.log("add catgegory");
-    console.log(category);
-
+  addCategory(category: CategoryModel): Observable<any>{
+    console.log("add catgegory = ", category);
     var headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
-    this.http.post(environment.apiUrl + this.manageCategoriesEndPoint, category, { headers: headers })
-      .pipe(map(response => response))
-      .subscribe(response => {
-        updateTable();
-        Swal.fire({
-          title: 'Success!',
-          text: 'Category successfully created!',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        });
-        return true;
-      }, error => {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Something went wrong! Category already exist',
-          icon: 'error',
-          confirmButtonColor: '#DC143C',
-          confirmButtonText: 'OK'
-        });
-        return false;
-      })
+    return this.http.post(environment.apiUrl + this.manageCategoriesEndPoint, category, { headers: headers })
+      .pipe(map(response => response));
   }
 }

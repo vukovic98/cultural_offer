@@ -6,7 +6,7 @@ import { TypeService } from '../../services/type.service';
 import { TypeModel } from '../../model/type-model';
 import { CulturalOfferService } from '../../services/culturalOffer.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import Swal from "sweetalert2";
 import { Router } from '@angular/router';
 
@@ -34,10 +34,10 @@ export class AddOfferComponent implements OnInit {
   });
 
   constructor(private categoryService: CategoryService,
-              private offerService: CulturalOfferService,
-              private typeService: TypeService,
-              private route: Router,
-              private http: HttpClient) {
+    private offerService: CulturalOfferService,
+    private typeService: TypeService,
+    private route: Router,
+    private http: HttpClient) {
   }
 
   ngOnInit() {
@@ -75,9 +75,9 @@ export class AddOfferComponent implements OnInit {
         "country_code": "fr"
     },
       */
-      this.offerService.getLocationName(e.latlng).subscribe((data:any) => {
-        this.placeName = data.address.road+", "+data.address.city+", "+data.address.country;
-      }, (error:any) => {
+      this.offerService.getLocationName(e.latlng).subscribe((data: any) => {
+        this.placeName = data.address.road + ", " + data.address.city + ", " + data.address.country;
+      }, (error: any) => {
         console.log(error);
       });
 
@@ -90,9 +90,12 @@ export class AddOfferComponent implements OnInit {
   }
 
   onChange(event: any): void {
+    console.log("gettypes = ", event);
     this.typeService.getTypesForCategory(event).subscribe(data => {
+      console.log("data = ", data);
       this.types = data;
     }, error => {
+      console.log("error = ", error);
       this.types = []
       console.log(error);
     });
@@ -146,7 +149,7 @@ export class AddOfferComponent implements OnInit {
     }
     let images_copy: any = [];
 
-    for(let p of this.images) {
+    for (let p of this.images) {
       images_copy.push(p.split(',')[1]);
     }
 
@@ -160,7 +163,7 @@ export class AddOfferComponent implements OnInit {
 
     this.offerService.createOffer(obj)
       .subscribe(response => {
-        console.log("RES:"+response);
+        console.log("RES:" + response);
         Swal.fire({
           title: 'Success!',
           text: 'Cultural offer successfully created!',
@@ -172,9 +175,9 @@ export class AddOfferComponent implements OnInit {
       }, error => {
         //console.log(error);
         let msg = "";
-        if(error.status == 413){  //PAYLOAD_TOO_LARGE
+        if (error.status == 413) {  //PAYLOAD_TOO_LARGE
           msg = "Image size must be less than 64Kb!";
-        }else if(error.status == 400){  //BAD_REQUEST
+        } else if (error.status == 400) {  //BAD_REQUEST
           msg = "Cultural offer with that name already exists!";
         }
         Swal.fire({
