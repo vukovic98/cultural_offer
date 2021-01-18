@@ -26,6 +26,9 @@ public class AddCategoryPage {
 	@FindBy(xpath = "//*[@id=\"byname\"]")
 	private WebElement byname;
 	
+	@FindBy(xpath = "//tr[last()]/td[1]")
+	private WebElement lastRow;
+	
 	@FindBy(xpath = "//div[contains(@class, 'swal2-popup')]")
 	private WebElement swalAlert;
 	
@@ -42,6 +45,10 @@ public class AddCategoryPage {
 		return driver;
 	}
 
+	public WebElement getLastRow() {
+		return lastRow;
+	}
+	
 	public WebElement getName() {
 		return name;
 	}
