@@ -160,7 +160,6 @@ export class CulturalOfferService {
 
   addComment(offerId: number,commentText: string,image: any){
 
-    console.log(offerId);
     let newCommentDto = {
 
       "offerId": offerId,
@@ -171,6 +170,20 @@ export class CulturalOfferService {
 
     let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
     return this.http.post(environment.apiUrl + "comments", newCommentDto, { headers: headers })
+
+  }
+
+  deleteComment(commentId: number){
+
+    let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
+    return this.http.delete(environment.apiUrl + "comments/"+commentId, { headers: headers })
+
+  }
+
+  deletePost(postId : number){
+
+    let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
+    return this.http.delete(environment.apiUrl + "posts/"+postId, { headers: headers })
 
   }
 }

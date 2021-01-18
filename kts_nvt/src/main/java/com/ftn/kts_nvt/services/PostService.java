@@ -108,6 +108,14 @@ public class PostService implements ServiceInterface<Post>{
 	    if(existingPost == null){
 	    	throw new Exception("Post with given id doesn't exist");
 	    }
+	    
+	    CulturalOffer offer = offerRepository.findById(existingPost.getOffer().getId()).orElse(null);
+	    
+	    List<Post> posts = offer.getPosts();
+	    posts.remove(existingPost);
+	    
+	    offer.setPosts(posts);
+	    offerRepository.save(offer);
 	    postRepository.delete(existingPost);
 	}
 }

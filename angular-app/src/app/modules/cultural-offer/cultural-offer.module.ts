@@ -32,6 +32,7 @@ import {PostListComponent} from '../../components/post-list/post-list.component'
 //import {PostItemComponent} from '../../components/post-item/post-item.component';
 import {HomeComponent} from '../../components/home/home.component';
 import {EditDialog} from '../../components/add-category/add-category.component';
+import { MapComponent } from 'src/app/components/map/map.component';
 
 
 
@@ -53,7 +54,8 @@ import {EditDialog} from '../../components/add-category/add-category.component';
     PostListComponent,
     //PostItemComponent,
     HomeComponent,
-    EditDialog
+    EditDialog,
+    MapComponent
   ],
   imports: [
     CommonModule,

@@ -76,6 +76,10 @@ public class CommentService {
 	public ArrayList<Comment> findCommentsForOffer(long offer_id) {
 		return this.commentRepository.findCommentsForOffer(offer_id);
 	}
+	
+	public ArrayList<Comment> findCommentsForUser(long user_id) {
+		return this.commentRepository.findCommentsForUser(user_id);
+	}
 
 	public Page<Comment> findCommentsForOffer(long offer_id, Pageable pageable) {
 		return this.commentRepository.findCommentsForOffer(offer_id, pageable);
@@ -95,7 +99,6 @@ public class CommentService {
 
 	public boolean delete(Comment c) {
 		boolean exists = this.commentRepository.existsById(c.getCommentId());
-
 		if (exists)
 			this.commentRepository.delete(c);
 
@@ -115,7 +118,7 @@ public class CommentService {
 				// jednu
 				// te istu sliku i za komentare i za offere, kad napravimo zajednicku
 				// otkomenarisacemo
-				// imageRepository.delete(image);
+				imageRepository.delete(image);
 
 			}
 			System.out.println("prodje2");
@@ -125,9 +128,20 @@ public class CommentService {
 			List<Comment> comments = this.commentRepository.findCommentsForOffer(offer.getId());
 			comments.remove(exists);
 			offer.setComments(comments);
+			
+			
+		
 			this.culturalOfferRepository.save(offer);
 			System.out.println("prodje4");
 
+			RegisteredUser user = this.registeredUserService.findOne(exists.getCommenter().getId());
+			
+			List<Comment> userComments = this.commentRepository.findCommentsForUser(exists.getCommenter().getId());
+			userComments.remove(exists);
+			user.setComments(userComments);
+			
+			this.registeredUserService.save(user);
+			
 			this.commentRepository.delete(exists);
 			System.out.println("prodje5");
 			return true;
