@@ -158,6 +158,7 @@ export class AddOfferComponent implements OnInit {
 
     this.offerService.createOffer(obj)
       .subscribe(response => {
+        console.log("RES:"+response);
         Swal.fire({
           title: 'Success!',
           text: 'Cultural offer successfully created!',

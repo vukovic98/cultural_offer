@@ -24,54 +24,59 @@ public class CulturalOfferService {
 
 	@Autowired
 	private CulturalOfferRepository culturalOfferRepository;
-	
+
 	@Autowired
 	private CulturalOfferTypeService type;
-	
+
 	@Autowired
 	private PostRepository postRepository;
-	
+
 	@Autowired
 	private GeoLocationService location;
-	
+
 	@Autowired
 	private ImageService imageService;
-	
+
 	public CulturalOffer save(CulturalOffer c) {
 		return this.culturalOfferRepository.save(c);
 	}
-	
+
 	public List<CulturalOffer> findByName(String name) {
 		return this.culturalOfferRepository.findByName(name);
 	}
-	
+
 	@Transactional
 	public CulturalOffer save(CulturalOfferAddDTO dto) {
-		ArrayList<Image> images = new ArrayList<>();
-		
-		if(dto.getImages() != null) {
-			for(byte[] a : dto.getImages()) {
-				System.out.println(a);
-				Image i = new Image(a);
-				this.imageService.save(i);
-				images.add(i);
+		List<CulturalOffer> found = this.culturalOfferRepository.findByName(dto.getName());
+
+		if (found.isEmpty()) {
+			ArrayList<Image> images = new ArrayList<>();
+
+			if (dto.getImages() != null) {
+				for (byte[] a : dto.getImages()) {
+					System.out.println(a);
+					Image i = new Image(a);
+					this.imageService.save(i);
+					images.add(i);
+				}
 			}
-		}
-		
-		CulturalOffer c = new CulturalOffer();
-		c.setName(dto.getName());
-		c.setDescription(dto.getDescription());
-		c.setComments(new ArrayList<>());
-		c.setGrades(new ArrayList<>());
-		c.setPosts(new ArrayList<>());
-		c.setSubscribedUsers(new ArrayList<>());
-		c.setLocation(location.save(dto.getLocation()));		
-		c.setType(type.findById(dto.getType()));
-		c.setImages(images);
-		
-		return this.culturalOfferRepository.save(c);
+
+			CulturalOffer c = new CulturalOffer();
+			c.setName(dto.getName());
+			c.setDescription(dto.getDescription());
+			c.setComments(new ArrayList<>());
+			c.setGrades(new ArrayList<>());
+			c.setPosts(new ArrayList<>());
+			c.setSubscribedUsers(new ArrayList<>());
+			c.setLocation(location.save(dto.getLocation()));
+			c.setType(type.findById(dto.getType()));
+			c.setImages(images);
+
+			return this.culturalOfferRepository.save(c);
+		} else
+			return null;
 	}
-	
+
 	public ArrayList<CulturalOffer> findAll() {
 		return (ArrayList<CulturalOffer>) this.culturalOfferRepository.findAll();
 	}
@@ -82,7 +87,7 @@ public class CulturalOfferService {
 
 	public CulturalOffer findById(long id) {
 		CulturalOffer found = this.culturalOfferRepository.findById(id).orElse(null);
-		
+
 		if (found != null) {
 			return found;
 		} else
@@ -95,18 +100,18 @@ public class CulturalOfferService {
 		CulturalOffer c = null;
 		if (exists) {
 			c = this.culturalOfferRepository.findById(id).orElse(null);
-			if(c != null) {
+			if (c != null) {
 				List<Post> newPosts = c.getPosts();
 				c.setPosts(new ArrayList<>());
 				this.culturalOfferRepository.save(c);
 				System.out.println(newPosts);
-				for(Post p : newPosts) {
+				for (Post p : newPosts) {
 					p.setOffer(null);
 					this.postRepository.save(p);
 					this.postRepository.delete(p);
-					
+
 				}
-				
+
 				this.culturalOfferRepository.deleteById(id);
 			}
 		}
@@ -115,25 +120,31 @@ public class CulturalOfferService {
 
 	public CulturalOffer update(CulturalOffer changedOffer, long id) {
 		Optional<CulturalOffer> foundOptional = this.culturalOfferRepository.findById(id);
-		
+
 		if (foundOptional.isPresent()) {
 			CulturalOffer found = foundOptional.get();
-			found.setName(changedOffer.getName());
-			found.setDescription(changedOffer.getDescription());
-			GeoLocation lc = location.findById(found.getLocation().getLocationId());
-			lc.setLatitude(changedOffer.getLocation().getLatitude());
-			lc.setLongitude(changedOffer.getLocation().getLongitude());
-			lc.setPlace(changedOffer.getLocation().getPlace());
-			GeoLocation savedLocation = location.save(lc);
-			found.setLocation(savedLocation);
-			//found.setImages(changedOffer.getImages());
-			return this.culturalOfferRepository.save(found);
+
+			List<CulturalOffer> nameFound = this.culturalOfferRepository.findByName(changedOffer.getName());
+
+			if (nameFound.isEmpty()) {
+				found.setName(changedOffer.getName());
+				found.setDescription(changedOffer.getDescription());
+				GeoLocation lc = location.findById(found.getLocation().getLocationId());
+				lc.setLatitude(changedOffer.getLocation().getLatitude());
+				lc.setLongitude(changedOffer.getLocation().getLongitude());
+				lc.setPlace(changedOffer.getLocation().getPlace());
+				GeoLocation savedLocation = location.save(lc);
+				found.setLocation(savedLocation);
+				// found.setImages(changedOffer.getImages());
+				return this.culturalOfferRepository.save(found);
+			} else
+				return null;
 		} else
 			return null;
 	}
 
 	public Page<CulturalOffer> filter(Pageable pageRequest, String exp, ArrayList<String> types) {
-		if(!exp.equals("") && types.size() == 0)
+		if (!exp.equals("") && types.size() == 0)
 			return this.culturalOfferRepository.filter(pageRequest, exp);
 		else if (!exp.equals("") && types.size() > 0)
 			return this.culturalOfferRepository.filter(pageRequest, exp, types);

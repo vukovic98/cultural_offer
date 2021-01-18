@@ -54,6 +54,7 @@ export class CulturalOfferService {
   }
 
   createOffer(offer: any): Observable<any> {
+    console.log(offer);
     let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
 
     return this.http.post(environment.apiUrl + this.manageOffersEndPoint, offer, { headers: headers })
@@ -158,15 +159,11 @@ export class CulturalOfferService {
 
   }
 
-  addComment(offerId: number,commentText: string,image: any){
-
-    console.log(offerId);
+  addComment(offerId: number,commentText: string,image: any): Observable<any>{
     let newCommentDto = {
-
       "offerId": offerId,
       "content": commentText,
       "image": image
-
     }
 
     let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));

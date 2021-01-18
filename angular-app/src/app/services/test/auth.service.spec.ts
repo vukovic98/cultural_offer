@@ -5,8 +5,9 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {HttpClient} from '@angular/common/http';
 import {RouterTestingModule} from '@angular/router/testing';
 import {Role, TokenModel} from '../../model/token.model';
-import {loginResponse, signupResponse, verifyResponse} from '../../model/auth-model';
+import {loginResponse, signupResponse, statusCodeModel, verifyResponse} from '../../model/auth-model';
 import {Router} from '@angular/router';
+import {Status} from 'tslint/lib/runner';
 
 describe('AuthService', () => {
 
@@ -81,14 +82,18 @@ describe('AuthService', () => {
   }));
 
   it('should fail to login user', fakeAsync(() => {
-    let token: string = ""
+    let token: statusCodeModel = {
+      statusCode: 0
+    };
 
     let newUser = {
       email: "vlado45@gmail.com",
       password: "vukovic"
     }
 
-    const mockUser: string = ""
+    const mockUser: statusCodeModel = {
+      statusCode: 404
+    }
 
     authService.login(JSON.stringify(newUser)).subscribe(data => {
       token = data;
@@ -100,7 +105,7 @@ describe('AuthService', () => {
 
     tick();
 
-    expect(token).toBeFalsy();
+    expect(token.statusCode).toBe(404);
   }));
 
   it('should verify users verification code', fakeAsync(() => {
@@ -134,14 +139,18 @@ describe('AuthService', () => {
   }));
 
   it('should fail verify users verification code', fakeAsync(() => {
-    let verifyRes: string = "";
+    let verifyRes: statusCodeModel = {
+      statusCode: 0
+    };
 
     let verifyDto = {
       "code": "ASDFG4",
       "userEmail": "vlad344o@gmail.com"
     };
 
-    let mockResponse: string = "";
+    let mockResponse: statusCodeModel = {
+      statusCode: 404
+    };
 
     authService.verifyCode(JSON.stringify(verifyDto)).subscribe(data => {
       verifyRes = data;
@@ -153,7 +162,7 @@ describe('AuthService', () => {
 
     tick();
 
-    expect(verifyRes).toBeFalsy();
+    expect(verifyRes.statusCode).toBe(404);
   }));
 
   it('should sign up new user', fakeAsync(() => {
@@ -365,11 +374,15 @@ describe('AuthService', () => {
   }));
 
   it('should fail to send code to user again', fakeAsync(() => {
-    let response: string = "";
+    let response: statusCodeModel = {
+      statusCode: 0
+    };
 
-    let email = "vlado@gmail.com";
+    let email = "vlado333@gmail.com";
 
-    const mockResponse: string = "";
+    const mockResponse: statusCodeModel = {
+      statusCode: 404
+    };
 
     authService.sendCodeAgain(email).subscribe(data => {
       response = data;
@@ -381,6 +394,6 @@ describe('AuthService', () => {
 
     tick();
 
-    expect(response).toBeFalsy();
+    expect(response.statusCode).toBe(404);
   }));
 });
