@@ -97,14 +97,21 @@ public class CulturalOfferController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<CulturalOfferDTO> createOffer(@RequestBody CulturalOfferAddDTO dto) {
 		
-		CulturalOffer ok = this.culturalOfferService.save(dto);
-
-		if(ok != null) {
-			CulturalOfferDTO created = this.mapper.toDto(ok);
-			return new ResponseEntity<>(created, HttpStatus.CREATED);
+		CulturalOffer ok;
+		try {
+			ok = this.culturalOfferService.save(dto);
+			if(ok != null) {
+				CulturalOfferDTO created = this.mapper.toDto(ok);
+				return new ResponseEntity<>(created, HttpStatus.CREATED);
+			}
+		} catch (Exception e) {
+			if(e.getMessage().contentEquals("EXISTS")) {
+				return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+			}else if(e.getMessage().contentEquals("IMGSIZE")) {
+				return new ResponseEntity<>(null, HttpStatus.PAYLOAD_TOO_LARGE);	
+			}
 		}
-		else
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 	}
 	
 	@DeleteMapping(consumes = "application/json")

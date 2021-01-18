@@ -8,6 +8,7 @@ import { CulturalOfferService } from '../../services/culturalOffer.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import Swal from "sweetalert2";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-offer',
@@ -35,6 +36,7 @@ export class AddOfferComponent implements OnInit {
   constructor(private categoryService: CategoryService,
               private offerService: CulturalOfferService,
               private typeService: TypeService,
+              private route: Router,
               private http: HttpClient) {
   }
 
@@ -165,10 +167,19 @@ export class AddOfferComponent implements OnInit {
           icon: 'success',
           confirmButtonText: 'OK'
         });
+        this.route.navigate(['/home-page/']);
+
       }, error => {
+        //console.log(error);
+        let msg = "";
+        if(error.status == 413){  //PAYLOAD_TOO_LARGE
+          msg = "Image size must be less than 64Kb!";
+        }else if(error.status == 400){  //BAD_REQUEST
+          msg = "Cultural offer with that name already exists!";
+        }
         Swal.fire({
           title: 'Error!',
-          text: 'Image size must be less than 64Kb!',
+          text: msg,
           icon: 'error',
           confirmButtonColor: '#DC143C',
           confirmButtonText: 'OK'
