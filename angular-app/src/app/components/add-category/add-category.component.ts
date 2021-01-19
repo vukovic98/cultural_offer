@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CategoryModel } from '../../model/category-model';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from "sweetalert2";
+import { EditCategoryDialogComponent } from '../edit-category-dialog/edit-category-dialog.component';
 
 @Component({
   selector: 'app-add-category',
@@ -13,7 +14,7 @@ import Swal from "sweetalert2";
 })
 export class AddCategoryComponent implements OnInit {
 
-  private categories: Array<CategoryModel> = [];
+  public categories: Array<CategoryModel> = [];
   public pageNum: number = 1;
   public nextBtn: boolean = false;
   public categoryForm: FormGroup;
@@ -21,8 +22,7 @@ export class AddCategoryComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private categoryService: CategoryService,
-    public dialog: MatDialog,
-    private http: HttpClient) {
+    public dialog: MatDialog) {
 
     this.categoryForm = this.fb.group({
       name: new FormControl('', Validators.required)
@@ -53,7 +53,7 @@ export class AddCategoryComponent implements OnInit {
   editCategory(category: CategoryModel) {
     console.log("edit = ");
     console.log(category);
-    const dialogRef = this.dialog.open(EditDialog, {
+    const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
       width: '350px',
       data: { name: category.name, id: category.id }
     });
@@ -68,12 +68,6 @@ export class AddCategoryComponent implements OnInit {
   }
 
   deleteCategory(id: number) {
-    //console.log("delete with id = ");
-    //console.log(id);
-    /*this.categoryService.deleteCategory(id, ()=> {
-      this.categories = this.categories.filter(item => item.id != id);
-    });*/
-
     this.categoryService.deleteCategory(id).subscribe((response: any) => {
       console.log("delete category = ");
       console.log(response);
@@ -174,61 +168,5 @@ export class AddCategoryComponent implements OnInit {
 
   get fbyname() {
     return this.categoryFormByName.controls;
-  }
-}
-
-@Component({
-  selector: 'edit-dialog',
-  templateUrl: 'edit-dialog.html',
-})
-export class EditDialog {
-
-  myForm = new FormGroup({
-    name: new FormControl(this.data.name, Validators.required)
-  });
-
-  constructor(
-    public dialogRef: MatDialogRef<EditDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: CategoryModel,
-    private categoryService: CategoryService) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  save() {
-    this.data.name = this.myForm.value.name;
-
-    this.categoryService.updateCategory(this.data).subscribe(response => {
-      console.log("response = ");
-      console.log(response);
-      this.dialogRef.close({ data: this.data });
-      Swal.fire({
-        title: 'Success!',
-        text: 'Category successfully updated!',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      });
-      return true;
-    }, error => {
-      console.log("update error = ");
-      console.log(error);
-      Swal.fire({
-        title: 'Error!',
-        text: 'Something went wrong! Category name already exists',
-        icon: 'error',
-        confirmButtonColor: '#DC143C',
-        confirmButtonText: 'OK'
-      });
-      return false;
-    });
-  }
-
-  close() {
-    this.dialogRef.close();
-  }
-
-  get f() {
-    return this.myForm.controls;
   }
 }

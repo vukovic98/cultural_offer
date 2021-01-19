@@ -31,7 +31,7 @@ import {PostComponent} from '../../components/post/post.component';
 import {PostListComponent} from '../../components/post-list/post-list.component';
 //import {PostItemComponent} from '../../components/post-item/post-item.component';
 import {HomeComponent} from '../../components/home/home.component';
-import {EditDialog} from '../../components/add-category/add-category.component';
+import { EditCategoryDialogComponent } from '../../components/edit-category-dialog/edit-category-dialog.component';
 import { MapComponent } from 'src/app/components/map/map.component';
 import {TextFieldModule} from '@angular/cdk/text-field';
 
@@ -55,7 +55,7 @@ import {TextFieldModule} from '@angular/cdk/text-field';
     PostListComponent,
     //PostItemComponent,
     HomeComponent,
-    EditDialog,
+    EditCategoryDialogComponent,
     MapComponent
   ],
     imports: [
