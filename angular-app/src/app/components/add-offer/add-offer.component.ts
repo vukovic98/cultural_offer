@@ -36,8 +36,7 @@ export class AddOfferComponent implements OnInit {
   constructor(private categoryService: CategoryService,
     private offerService: CulturalOfferService,
     private typeService: TypeService,
-    private route: Router,
-    private http: HttpClient) {
+    private route: Router) {
   }
 
   ngOnInit() {
@@ -76,9 +75,10 @@ export class AddOfferComponent implements OnInit {
     },
       */
       this.offerService.getLocationName(e.latlng).subscribe((data: any) => {
+        //console.log("getLocationName response = ", data);
         this.placeName = data.address.road + ", " + data.address.city + ", " + data.address.country;
       }, (error: any) => {
-        console.log(error);
+        //console.log("getLocationName error = ", error);
       });
 
       // @ts-ignore
@@ -103,6 +103,7 @@ export class AddOfferComponent implements OnInit {
 
   getCategories() {
     this.categoryService.getCategories().subscribe(data => {
+      console.log("getCategories = ", data);
       this.categories = data;
     }, error => {
       console.log(error);
@@ -141,7 +142,6 @@ export class AddOfferComponent implements OnInit {
   }
 
   submit() {
-
     let locationObj = {
       'place': this.myForm.value.place,
       'latitude': this.myForm.value.location.lat,
@@ -163,7 +163,7 @@ export class AddOfferComponent implements OnInit {
 
     this.offerService.createOffer(obj)
       .subscribe(response => {
-        console.log("RES:" + response);
+        //console.log("createoffer response = ", response);
         Swal.fire({
           title: 'Success!',
           text: 'Cultural offer successfully created!',
@@ -173,7 +173,7 @@ export class AddOfferComponent implements OnInit {
         this.route.navigate(['/home-page/']);
 
       }, error => {
-        //console.log(error);
+        //console.log("createoffer error = ", error);
         let msg = "";
         if (error.status == 413) {  //PAYLOAD_TOO_LARGE
           msg = "Image size must be less than 64Kb!";
