@@ -38,6 +38,63 @@ describe('CategoryService', () => {
         expect(service).toBeTruthy();
     });
 
+    it('getCategories() should return categories', fakeAsync(() => {
+        let res: any;
+
+        let mockResponse = [
+            {
+                "id": 17,
+                "name": "Institution",
+                "types": [
+                    {
+                        "id": 9,
+                        "name": "Parliament",
+                        "categoryId": 17,
+                        "categoryName": "Institution"
+                    },
+                    {
+                        "id": 10,
+                        "name": "Museum",
+                        "categoryId": 17,
+                        "categoryName": "Institution"
+                    },
+                ]
+            },
+            {
+                "id": 18,
+                "name": "Manifestacion",
+                "types": []
+            },
+            {
+                "id": 19,
+                "name": "Landmark",
+                "types": [
+                    {
+                        "id": 11,
+                        "name": "Tower",
+                        "categoryId": 19,
+                        "categoryName": "Landmark"
+                    },
+                    {
+                        "id": 12,
+                        "name": "Stadium",
+                        "categoryId": 19,
+                        "categoryName": "Landmark"
+                    }
+                ]
+            },
+        ];
+
+        service.getCategories().subscribe((data: any) => {
+            res = data;
+            expect(data).toEqual(mockResponse);
+        });
+
+        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-categories/');
+        expect(req.request.method).toBe('GET');
+        req.flush(mockResponse);
+    }))
+
     it('getCategoriesByPage() should return categories', fakeAsync(() => {
         let res: any;
 
@@ -388,12 +445,12 @@ describe('CategoryService', () => {
             "error": null
         }
         service.addCategory(addObj).subscribe((res) => {
-          // Note that we are expecting "transformed" response with "university" property
-          expect(res).toEqual(mockResponse); 
+            // Note that we are expecting "transformed" response with "university" property
+            expect(res).toEqual(mockResponse);
         });
-    
+
         const req = httpMock.expectOne('http://localhost:8080/cultural-offer-categories/');
         expect(req.request.method).toBe('POST');
         req.flush(mockResponse);
-      });
+    });
 });
