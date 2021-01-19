@@ -108,6 +108,7 @@ describe('AddCategoryComponent', () => {
   });
 
   it(`nextBtn has default value`, () => {
+    console.log("ashdgadbjakkjbdas");
     expect(component.nextBtn).toEqual(false);
   });
 
