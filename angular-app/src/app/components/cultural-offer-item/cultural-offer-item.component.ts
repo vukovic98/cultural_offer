@@ -3,9 +3,8 @@ import {AuthService} from '../../services/auth.service';
 import {CulturalOffer} from '../../model/offer-mode';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 import {CulturalOfferService} from '../../services/culturalOffer.service';
-import { Router} from '@angular/router';
-import {map} from 'rxjs/operators';
-import Swal from "sweetalert2";
+import {Router} from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cultural-offer-item',
@@ -15,7 +14,6 @@ import Swal from "sweetalert2";
 export class CulturalOfferItemComponent implements OnInit {
 
   @Input() public offer: any;
-  //offerDescription: string = "";
 
   @Input() public isSubscribed: boolean = false;
   @Output() removeOffer = new EventEmitter<number>();
@@ -31,9 +29,7 @@ export class CulturalOfferItemComponent implements OnInit {
   ngOnInit(): void {
     const regex = /((\s*\S+){25})([\s\S]*)/;
     const subst = `$1...`;
-    const result = this.offer.description.replace(regex, subst);
-    //this.offerDescription = result;
-    this.offer.description = result;
+    this.offer.description = this.offer.description.replace(regex, subst);
   }
 
   deleteOffer(offer_id: number) {

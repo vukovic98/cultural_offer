@@ -168,14 +168,14 @@ export class CulturalOfferService {
 
   }
 
-  deleteComment(commentId: number){
+  deleteComment(commentId: number): Observable<any>{
 
     let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
     return this.http.delete(environment.apiUrl + "comments/"+commentId, { headers: headers })
 
   }
 
-  deletePost(postId : number){
+  deletePost(postId : number): Observable<any>{
 
     let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
     return this.http.delete(environment.apiUrl + "posts/"+postId, { headers: headers })

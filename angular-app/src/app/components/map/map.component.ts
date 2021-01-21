@@ -12,7 +12,8 @@ import { AddPostModel } from '../../model/post-model';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from "sweetalert2";
-//import * as L from 'leaflet';
+// @ts-ignore
+import * as L from 'leaflet';
 @Component({
     selector: 'app-map',
     templateUrl: './map.component.html',
@@ -25,7 +26,6 @@ import Swal from "sweetalert2";
         private auth: AuthService) {
 
     }
-
     ngOnInit() {
       //@ts-ignore
       let mymap = L.map('map').setView([44.787197, 20.457273], 3);
