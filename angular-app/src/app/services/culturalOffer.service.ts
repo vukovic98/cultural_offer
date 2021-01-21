@@ -44,13 +44,12 @@ export class CulturalOfferService {
     return this.http.get(environment.apiUrl + this.postsForOfferEndPoint + offer_id + "/" + page);
   }
 
-  getByPage(page: number): any {
+  getByPage(page: number): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     });
     return this.http.get(environment.apiUrl + this.offersPageEndPoint + page, {headers: headers})
-      .pipe(map((response) => JSON.stringify(response)));
   }
 
   createOffer(offer: any): Observable<any> {
@@ -98,7 +97,7 @@ export class CulturalOfferService {
 
   }
 
-  getSubscribedItems(): any {
+  getSubscribedItems(): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -106,7 +105,6 @@ export class CulturalOfferService {
     });
 
     return this.http.get(environment.apiUrl + this.subscribedItemsEndPoint, { headers: headers })
-      .pipe(map((response) => JSON.stringify(response)));
   }
 
   addPost(postDto: AddPostModel): Observable<any> {
@@ -131,8 +129,7 @@ export class CulturalOfferService {
       .pipe(map((response) => response));
   }
 
-  getByPageFilter(page: number, exp: string, types: string[]):any {
-    console.log(exp,types)
+  getByPageFilter(page: number, exp: string, types: string[]): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept'       : 'application/json'
@@ -141,7 +138,6 @@ export class CulturalOfferService {
     // @ts-ignore
     let params = new HttpParams().set('expression', exp).set('types', types);
     return this.http.get(environment.apiUrl + this.offersPageEndPointFilter + page, {params: params,headers: headers})
-      .pipe(map((response) => JSON.stringify(response)));
   }
 
   gradeOffer(userId: number, offerId: number, value: number): Observable<any> {
