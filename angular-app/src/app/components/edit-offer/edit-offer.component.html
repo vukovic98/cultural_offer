@@ -20,7 +20,7 @@
         </div>
         <div class="form-group">
             <label for="place">Place:</label>
-            <input formControlName="place" disabled [(ngModel)]="placeName" id="place" type="text" class="form-control">
+            <input formControlName="place"  [(ngModel)]="placeName" id="place" type="text" class="form-control">
             <div *ngIf="f.place.touched && f.place.invalid" class="alert alert-danger">
                 <div *ngIf="f.place.errors!.required">Place name is required.</div>
             </div>

@@ -26,43 +26,44 @@ import * as L from 'leaflet';
         private auth: AuthService) {
 
     }
+    ngOnInit() {
+      //@ts-ignore
+      let mymap = L.map('map').setView([44.787197, 20.457273], 3);
+      //@ts-ignore
+      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoiYXNqaGdhc2RqIiwiYSI6ImNraWx4a2x5dTBtNWUyeHBkZjZsOXdxYTYifQ.Xl_z4h3W3xCO1K2Aj-j2Iw'
+      }).addTo(mymap);
+      //@ts-ignore
 
-    // ngOnInit() {
-    //   //@ts-ignore
-    //   let mymap = L.map('map').setView([44.787197, 20.457273], 3);
-    //   //@ts-ignore
-    //   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    //     maxZoom: 18,
-    //     id: 'mapbox/streets-v11',
-    //     tileSize: 512,
-    //     zoomOffset: -1,
-    //     accessToken: 'pk.eyJ1IjoiYXNqaGdhc2RqIiwiYSI6ImNraWx4a2x5dTBtNWUyeHBkZjZsOXdxYTYifQ.Xl_z4h3W3xCO1K2Aj-j2Iw'
-    //   }).addTo(mymap);
-    //   //@ts-ignore
-    //
-    //
-    //
-    //   this.offerService.getByPage(1).subscribe((result: string) => {
-    //     this.offers = JSON.parse(result).content;
-    //     this.offers.forEach(offer => {
-    //         let marker = L.marker([offer.location.latitude, offer.location.longitude]).addTo(mymap);
-    //         marker.on('click', function(e) {
-    //             //open popup;
-    //             var popup = L.popup()
-    //              .setLatLng(marker.getLatLng())
-    //              .setContent(offer.name)
-    //              .openOn(mymap);
-    //           });
-    //     });
-    //
-    //
-    //
-    //   });
-    //
-    //
-    //
-    //
-    //
-    // }
+
+
+      this.offerService.getByPage(1).subscribe((result: string) => {
+        this.offers = JSON.parse(result).content;
+        this.offers.forEach(offer => {
+            //@ts-ignore
+            let marker = L.marker([offer.location.latitude, offer.location.longitude]).addTo(mymap);
+            marker.on('click', function(e: any) {
+                //open popup;
+                //@ts-ignore
+                var popup = L.popup()
+                 .setLatLng(marker.getLatLng())
+                 .setContent(offer.name)
+                 .openOn(mymap);
+              });
+        });
+
+
+
+      });
+
+
+
+
+
+    }
   }

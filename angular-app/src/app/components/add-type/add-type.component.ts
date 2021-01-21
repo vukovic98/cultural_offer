@@ -70,9 +70,11 @@ export class AddTypeComponent implements OnInit {
 
   getTypes() {
     this.typeService.getByPage(this.pageNum).subscribe((data: any) => {
+      //console.log("getByPage = ", data);
       this.types = data.content;
       this.nextBtn = data.last;
     }, (error: any) => {
+      //console.log("error = ", error);
       console.log(error);
     });
   }
@@ -91,9 +93,10 @@ export class AddTypeComponent implements OnInit {
     let dto = new AllTypesModel()
     dto.name = this.typeForm.value.name;
     dto.categoryId = this.typeForm.value.category;
-
+    //console.log("dto = ", dto);
     this.typeService.save(dto)
       .subscribe(response => {
+        //console.log("response = ", response);
         this.getTypes();
         Swal.fire({
           title: 'Success!',
@@ -102,6 +105,7 @@ export class AddTypeComponent implements OnInit {
           confirmButtonText: 'OK'
         });
       }, error => {
+        //console.log("error = ", error);
         Swal.fire({
           title: 'Error!',
           text: 'Something went wrong! Type already exists',
@@ -116,9 +120,12 @@ export class AddTypeComponent implements OnInit {
     if(this.typeFormByName.value.byname == ""){
       this.getTypes();
     }else{
+      //console.log("byname = ", this.typeFormByName.value.byname);
       this.typeService.getByName(this.typeFormByName.value.byname).subscribe((data: AllTypesModel) => {
+        //console.log("response = ", data);
         this.types = [data];
       }, (error: any) => {
+        //console.log("error = ", error);
         Swal.fire({
           title: 'Error!',
           text: 'Type not found',
@@ -139,8 +146,10 @@ export class AddTypeComponent implements OnInit {
   }
 
   deleteType(type: AllTypesModel) {
+    //console.log("deletetype = ", type);
     this.typeService.deleteType(type.id)
       .subscribe(response => {
+        //console.log("response = ", response);
         this.types = this.types.filter(item => item.id != type.id);
         Swal.fire({
           title: 'Success!',
@@ -149,6 +158,7 @@ export class AddTypeComponent implements OnInit {
           confirmButtonText: 'OK'
         });
       }, error => {
+        //console.log("error = ", error);
         Swal.fire({
           title: 'Error!',
           text: 'Something went wrong! ' + error.error,
@@ -185,8 +195,10 @@ export class EditTypeDialog {
 
   save(){
     this.data.name = this.myForm.value.name;
+    //console.log("updateObj = ", this.data);
     this.typeService.updateType(this.data)
       .subscribe(response => {
+        //console.log("response = ", response);
         this.dialogRef.close({data:this.data});
         Swal.fire({
           title: 'Success!',
@@ -195,6 +207,7 @@ export class EditTypeDialog {
           confirmButtonText: 'OK'
         });
       }, error => {
+        //console.log("error = ", error);
         Swal.fire({
           title: 'Error!',
           text: 'Something went wrong! Type name already exists',

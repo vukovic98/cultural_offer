@@ -37,7 +37,7 @@
                 </div>
                 <div class="form-group">
                     <label for="place">Place:</label>
-                    <input formControlName="place" disabled [(ngModel)]="placeName" id="place" type="text" class="form-control">
+                    <input formControlName="place" [(ngModel)]="placeName" id="place" type="text" class="form-control">
                     <div *ngIf="f.place.touched && f.place.invalid" class="text-danger">
                         <div *ngIf="f.place.errors!.required">Place name is required.</div>
                     </div>
@@ -55,7 +55,7 @@
 
                 <div class="form-group">
                     <div *ngFor='let url of images' class="img_wrp">
-                        <img [src]="url" class="imgResponsiveMax" height="50px" width="80px" style="margin: 3px;">
+                        <img [src]="url" id="imagesIdsTest" class="imgResponsiveMax" height="50px" width="80px" style="margin: 3px;">
                         <br />
                         <mat-icon class="close" aria-hidden="false" (click)="remove(url)">close</mat-icon>
                     </div>

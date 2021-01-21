@@ -47,6 +47,15 @@ public class AddTypePage {
 	@FindBy(xpath = "(//input[@id='name'])[2]")
 	private WebElement editNewTypeNameInput;
 			
+	@FindBy(xpath = "//tr[last()]/td[1]")
+	private WebElement lastRow;
+	
+	@FindBy(xpath = "//tr[last()]/td[2]")
+	private WebElement lastRow2Col;
+
+	@FindBy(xpath = "//tr[last()]/td[3]/button[2]/span/mat-icon")
+	private WebElement lastRowDeleteButton;
+	
 	public AddTypePage() {
 		super();
 	}
@@ -58,6 +67,18 @@ public class AddTypePage {
 
 	public WebElement getEditNewTypeNameInput() {
 		return editNewTypeNameInput;
+	}
+	
+	public WebElement getLastRow() {
+		return lastRow;
+	}
+
+	public WebElement getLastRow2Col() {
+		return lastRow2Col;
+	}
+	
+	public WebElement getLastRowDeleteButton() {
+		return lastRowDeleteButton;
 	}
 	
 	public WebElement getEditSaveButton() {
