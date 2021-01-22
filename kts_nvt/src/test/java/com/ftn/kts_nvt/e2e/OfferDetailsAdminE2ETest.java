@@ -60,11 +60,20 @@ public class OfferDetailsAdminE2ETest {
 		driver.get(OFFER_DETAILS_PAGE_PATH);
 		justWait();
 		assertEquals(OFFER_DETAILS_PAGE_PATH, driver.getCurrentUrl());
+		justWait(); justWait();
+		detailsPage.ensureIsNotVisibleAddCommentPanel();
 	}
 	
 	@Test
-	public void a_addPost() {
-		driver.findElement(By.xpath("//mat-card-title/button/span/mat-icon")).click();
+	public void a_addPost() throws InterruptedException {
+		justWait(); justWait();
+		//postItem
+		int postsBefore = driver.findElements(By.id("postItem")).size();
+		//System.out.println("postsbefore = " + postsBefore);
+
+		detailsPage.getAddNewPostButton().click();
+	    //driver.findElement(By.xpath("//mat-card/button/span")).click();
+
 		detailsPage.getTitle().clear();
 		detailsPage.getTitle().sendKeys("newposttitle");
 		detailsPage.getContent().clear();
@@ -74,7 +83,24 @@ public class OfferDetailsAdminE2ETest {
 	    assertTrue(detailsPage.isSwalVisible());
 	    assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
 	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();
+		int postsAfter = driver.findElements(By.id("postItem")).size();
+		//System.out.println("postsAfter = " + postsAfter);
+		assertEquals(postsBefore + 1, postsAfter);
 	}
+	
+	@Test
+	public void b_deletePost() throws InterruptedException {
+		justWait(); justWait();
+
+		int postsBefore = driver.findElements(By.id("postItem")).size();
+		detailsPage.getDeletePostButton().click();
+		justWait(); justWait();
+	    assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
+	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();		
+		int postsAfter = driver.findElements(By.id("postItem")).size();
+		assertEquals(postsBefore - 1, postsAfter);
+	}
+	
 	@After
 	public void tearDown() throws Exception {
 		this.driver.quit();

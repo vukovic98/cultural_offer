@@ -15,7 +15,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Description:</label>
-                    <textarea formControlName="description" id="description" type="text" class="form-control" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+                    <textarea style="resize: none;" formControlName="description" id="description" type="text" class="form-control" rows="5"></textarea>
                     <div *ngIf="f.description.touched && f.description.invalid" class="text-danger">
                         <div *ngIf="f.description.errors!.required">Description is required.</div>
                     </div>
@@ -55,7 +55,7 @@
 
                 <div class="form-group">
                     <div *ngFor='let url of images' class="img_wrp">
-                        <img [src]="url" class="imgResponsiveMax" height="50px" width="80px" style="margin: 3px;">
+                        <img [src]="url" id="imagesIdsTest" class="imgResponsiveMax" height="50px" width="80px" style="margin: 3px;">
                         <br />
                         <mat-icon class="close" aria-hidden="false" (click)="remove(url)">close</mat-icon>
                     </div>

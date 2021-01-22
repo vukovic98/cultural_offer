@@ -77,7 +77,9 @@ public class AddTypeE2ETest {
 	}
 
 	@Test()
-	public void a_addTypeTestSuccess() throws InterruptedException {		
+	public void a_addTypeTestSuccess() throws InterruptedException {	
+		int rowsBefore = driver.findElements(By.cssSelector("tr")).size();
+
 		addTypePage.getTypeName().clear();
 		addTypePage.getTypeName().sendKeys("newtypename");
 
@@ -90,13 +92,19 @@ public class AddTypeE2ETest {
 	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click(); //swal OK click
 		justWait();
 		justWait();
-		//u tabeli su prethodno samo 4 tipa, ovo proverava text petog reda u tabeli nakon dodavanja
-	    assertEquals("newtypename", driver.findElement(By.xpath("//tr[5]/td")).getText());
-	    assertEquals("Institution", driver.findElement(By.xpath("//tr[5]/td[2]")).getText());
+		
+	    assertEquals("newtypename", addTypePage.getLastRow().getText());
+	    assertEquals("Institution", addTypePage.getLastRow2Col().getText());
+	    //assertEquals("newtypename", driver.findElement(By.xpath("//tr[5]/td")).getText());
+	    //assertEquals("Institution", driver.findElement(By.xpath("//tr[5]/td[2]")).getText());
+	    
+	    int rowsAfter = driver.findElements(By.cssSelector("tr")).size();
+	    assertEquals(rowsBefore + 1, rowsAfter);
 	}
 	
 	@Test
 	public void b_addTypeAlreadyExist() {
+		int rowsBefore = driver.findElements(By.cssSelector("tr")).size();
 		addTypePage.getTypeName().clear();
 		addTypePage.getTypeName().sendKeys("Museum");
 		addTypePage.getCategorySelect().click();
@@ -106,25 +114,34 @@ public class AddTypeE2ETest {
 	    addTypePage.ensureIsDisplayedSwal();
 	    assertTrue(addTypePage.isSwalVisible());
 	    assertEquals("Error!", driver.findElement(By.id("swal2-title")).getText());
+	    int rowsAfter = driver.findElements(By.cssSelector("tr")).size();
+	    assertEquals(rowsBefore, rowsAfter);
 	}
 	
 	@Test
 	public void c_deleteType() {
-		driver.findElement(By.xpath("//tr[5]/td[3]/button[2]/span/mat-icon")).click();
+		int rowsBefore = driver.findElements(By.cssSelector("tr")).size();
+
+		addTypePage.getLastRowDeleteButton().click();
 		addTypePage.ensureIsDisplayedSwal();
 	    assertTrue(addTypePage.isSwalVisible());
 	    assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
 	    //driver.findElement(By.xpath("//tr[5]/td")
+	    int rowsAfter = driver.findElements(By.cssSelector("tr")).size();
+	    assertEquals(rowsBefore - 1, rowsAfter);
 	}
 	
 	@Test
 	public void d_deleteTypeFail() {
+		int rowsBefore = driver.findElements(By.cssSelector("tr")).size();
 		//brisanje prvog u tabeli daje gresku jer se on koristi u nekoj od ponuda
 		driver.findElement(By.xpath("//tr[1]/td[3]/button[2]/span/mat-icon")).click();
 		addTypePage.ensureIsDisplayedSwal();
 	    assertTrue(addTypePage.isSwalVisible());
 	    assertEquals("Error!", driver.findElement(By.id("swal2-title")).getText());
 	    //driver.findElement(By.xpath("//tr[5]/td")
+	    int rowsAfter = driver.findElements(By.cssSelector("tr")).size();
+	    assertEquals(rowsBefore, rowsAfter);
 	}
 
 	@Test

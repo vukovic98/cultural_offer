@@ -12,6 +12,7 @@ import { AddPostModel } from '../../model/post-model';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from "sweetalert2";
+// @ts-ignore
 import * as L from 'leaflet';
 import { MapService } from 'src/app/services/map.service';
 import { FilterObject } from 'src/app/model/filter-model';
@@ -33,7 +34,6 @@ import { FilterObject } from 'src/app/model/filter-model';
           this.offers = offers;
       });
     }
-  
     ngOnInit() {
       //@ts-ignore
       this.mymap = L.map('map').setView([44.787197, 20.457273], 6);
@@ -49,7 +49,7 @@ import { FilterObject } from 'src/app/model/filter-model';
       }).addTo(this.mymap);
       //@ts-ignore
 
-      
+
 
 
     }

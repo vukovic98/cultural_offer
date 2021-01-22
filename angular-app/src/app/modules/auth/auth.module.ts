@@ -5,6 +5,7 @@ import {LoginComponent} from '../../components/login/login.component';
 import {SignUpComponent} from '../../components/sign-up/sign-up.component';
 import {UserVerificationComponent} from '../../components/user-verification/user-verification.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     CommonModule,
     AuthRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatIconModule
   ]
 })
 export class AuthModule { }

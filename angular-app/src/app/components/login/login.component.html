@@ -1,5 +1,5 @@
 <div class="backgroundImg">
-  <button class="btn btn-light ml-2 mt-2 btn-sm" routerLink="/"><< Go back</button>
+  <button class="btn btn-light ml-2 mt-2 btn-sm" routerLink="/"><mat-icon>arrow_back</mat-icon></button>
   <div class="container ml-auto mr-auto mt-5 w-25 border pt-5 pl-5 pr-5 pb-0 bg-white shadow-lg rounded">
     <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
 
@@ -23,7 +23,7 @@
       </div>
     </form>
     <div class="text-center pt-3">
-      <p>Don't have an account? <a routerLink="/auth/sign-up" class="signUpLink">Sign Up</a></p>
+      <p>Don't have an account? <a routerLink="/auth/sign-up" class="signUpLink">Sign Up here</a></p>
     </div>
   </div>
 </div>

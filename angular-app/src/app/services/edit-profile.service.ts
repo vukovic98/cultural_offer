@@ -4,6 +4,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {userDto} from "../model/userDto";
 import {Observable} from "rxjs";
+import {statusCodeModel} from "../model/auth-model";
 
 
 @Injectable()
@@ -13,7 +14,7 @@ export class EditProfileService{
 
   constructor(private http: HttpClient) {}
 
-  getUser():Observable<userDto>{
+  getUser():Observable<userDto | any>{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization' : 'Bearer ' + localStorage.getItem("accessToken")
@@ -21,7 +22,7 @@ export class EditProfileService{
     return this.http.get<userDto>(environment.apiUrl + this.getUserPath, {headers: headers});
   }
 
-  editUser(userDto: string, id: number):Observable<userDto>{
+  editUser(userDto: string, id: number):Observable<any | userDto>{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization' : 'Bearer ' + localStorage.getItem("accessToken")

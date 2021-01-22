@@ -60,6 +60,9 @@ public class OfferDetailsRegisteredUserE2ETest {
 		driver.get(OFFER_DETAILS_PAGE_PATH);
 		justWait();
 		assertEquals(OFFER_DETAILS_PAGE_PATH, driver.getCurrentUrl());
+		justWait();justWait();
+		detailsPage.ensureIsNotVisibleAddPostButton();
+		detailsPage.ensureIsNotVisibleDeletePostButton();
 	}
 	
 	@Test
@@ -103,6 +106,24 @@ public class OfferDetailsRegisteredUserE2ETest {
 		driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();
 	    assertEquals("4", driver.findElement(By.xpath("//p")).getText());
 	}
+	
+	/*@Test
+	public void e_comment() {
+		int rowsBefore = driver.findElements(By.id("commentItemId")).size();
+
+		driver.findElement(By.xpath("//mat-expansion-panel-header[@id='mat-expansion-panel-header-0']/span/mat-panel-title")).click();
+	    driver.findElement(By.xpath("//div[@id='cdk-accordion-child-0']/div/div/div/textarea")).click();
+	    driver.findElement(By.xpath("//div[@id='cdk-accordion-child-0']/div/div/div/textarea")).clear();
+	    driver.findElement(By.xpath("//div[@id='cdk-accordion-child-0']/div/div/div/textarea")).sendKeys("asdasdsa");
+	    driver.findElement(By.id("customFile")).click();
+	    driver.findElement(By.id("customFile")).clear();
+	    driver.findElement(By.id("customFile")).sendKeys("C:\\fakepath\\index.jpg");
+	    driver.findElement(By.xpath("//div[@id='cdk-accordion-child-0']/div/div/div[3]/button/span")).click();
+	    assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
+	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();
+		int rowsAfter = driver.findElements(By.id("commentItemId")).size();
+		assertEquals(rowsBefore + 1, rowsAfter);
+	}*/
 	
 	@After
 	public void tearDown() throws Exception {

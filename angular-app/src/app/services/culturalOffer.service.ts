@@ -56,9 +56,7 @@ export class CulturalOfferService {
   createOffer(offer: any): Observable<any> {
     console.log(offer);
     let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
-
     return this.http.post(environment.apiUrl + this.manageOffersEndPoint, offer, { headers: headers })
-
   }
 
   updateOffer(offer: CulturalOffer): Observable<any> {
@@ -72,12 +70,11 @@ export class CulturalOfferService {
   }
 
   deleteOffer(offer_id: number): Observable<any> {
+    console.log("delete offer = " + offer_id);
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
     });
-
     return this.http.delete(environment.apiUrl + this.manageOffersEndPoint + offer_id, { headers: headers })
-
   }
 
   subscribeUser(offer_id: number): Observable<any> {
@@ -171,14 +168,14 @@ export class CulturalOfferService {
 
   }
 
-  deleteComment(commentId: number){
+  deleteComment(commentId: number): Observable<any>{
 
     let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
     return this.http.delete(environment.apiUrl + "comments/"+commentId, { headers: headers })
 
   }
 
-  deletePost(postId : number){
+  deletePost(postId : number): Observable<any>{
 
     let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
     return this.http.delete(environment.apiUrl + "posts/"+postId, { headers: headers })

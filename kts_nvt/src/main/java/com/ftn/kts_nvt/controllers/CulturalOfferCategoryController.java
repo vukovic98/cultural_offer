@@ -173,7 +173,7 @@ public class CulturalOfferCategoryController {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>("OK",HttpStatus.OK);
 	}
 
 }
