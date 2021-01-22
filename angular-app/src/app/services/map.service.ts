@@ -1,25 +1,19 @@
-import { Injectable } from '@angular/core';
-import * as mapboxgl from 'mapbox-gl';
-import { environment } from "../environments/environment";
-@Injectable({
-providedIn: 'root'
-})
+import { Injectable } from "@angular/core";
+import { Observable, Subject } from "rxjs";
+import { FilterObject } from "../model/filter-model";
+import { CulturalOffer } from "../model/offer-mode";
+
+
+@Injectable()
 export class MapService {
-map: mapboxgl.Map;
-style = 'mapbox://styles/mapbox/streets-v11';
-lat = 45.899977;
-lng = 6.172652;
-zoom = 12
-constructor() {
-  mapboxgl.accessToken = environment.mapbox.accessToken;
-}
-buildMap() {
-  this.map = new mapboxgl.Map({
-    container: 'map',
-    style: this.style,
-    zoom: this.zoom,
-    center: [this.lng, this.lat]
-  })
- this.map.addControl(new mapboxgl.NavigationControl());
-}
+    myMethod$: Observable<any>;
+    private myMethodSubject = new Subject<any>();
+
+    constructor() {
+        this.myMethod$ = this.myMethodSubject.asObservable();
+    }
+
+    myMethod(offers: Array<CulturalOffer>) {
+        this.myMethodSubject.next(offers);
+    }
 }

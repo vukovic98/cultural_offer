@@ -3,12 +3,12 @@
     <app-navigation-bar></app-navigation-bar>
   </div>
   <div class="w-100 map bg-light shadow float-left pl-4 pr-4 pb-3">
-    <app-map></app-map>
+    <app-map #map></app-map>
   </div>
   <div class="row col-md-12">
     <div class="col-md-1"></div>
     <div class="jumbotron col-md-10 ml-auto mr-auto bg-light shadow mt-2 float-left pt-3">
-      <app-cultural-offers>
+      <app-cultural-offers (dataChangedEvent)="map.dataChanged()">
 
       </app-cultural-offers>
     </div>

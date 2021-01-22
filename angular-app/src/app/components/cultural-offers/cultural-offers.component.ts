@@ -9,6 +9,7 @@ import {EditOfferComponent} from '../edit-offer/edit-offer.component';
 import {FilterObject} from "../../model/filter-model";
 import {map} from 'rxjs/operators';
 import Swal from "sweetalert2";
+import { MapService } from 'src/app/services/map.service';
 
 @Component({
   selector: 'app-cultural-offers',
@@ -16,7 +17,7 @@ import Swal from "sweetalert2";
   styleUrls: ['./cultural-offers.component.css']
 })
 export class CulturalOffersComponent implements OnInit {
-
+  @Output() dataChangedEvent = new EventEmitter();
   private offers: Array<CulturalOffer> = [];
   private subscribedItems: Array<CulturalOffer> = [];
   private userId: number = -1;
@@ -28,11 +29,14 @@ export class CulturalOffersComponent implements OnInit {
 
   constructor(private service: CulturalOfferService,
               private auth: AuthService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              public mapService: MapService) { }
 
   ngOnInit(): void {
     this.service.getByPage(this.pageNum).subscribe((data: string) => {
       this.offers = JSON.parse(data).content;
+      this.mapService.myMethod(this.offers);
+      this.dataChangedEvent.emit(null);
       this.nextBtn = JSON.parse(data).last;
       this.totalPages = JSON.parse(data).totalPages;
     });
@@ -122,15 +126,20 @@ export class CulturalOffersComponent implements OnInit {
       this.service.getByPage(this.pageNum).subscribe((data: string) => {
         this.offers = JSON.parse(data).content;
         this.nextBtn = JSON.parse(data).last;
+        this.mapService.myMethod(this.offers);
+        this.dataChangedEvent.emit(null);
       });
     } else {
       this.service.getByPageFilter(this.pageNum,this.filterObj.exp,this.filterObj.types).subscribe(
         (offers: string)=>{
           this.offers = JSON.parse(offers).content;
           this.nextBtn = JSON.parse(offers).last;
+          this.mapService.myMethod(this.offers);
+          this.dataChangedEvent.emit(null);
         }
       )
     }
+
   }
 
   nextPage() {
@@ -163,6 +172,8 @@ export class CulturalOffersComponent implements OnInit {
       this.service.getByPage(this.pageNum).subscribe((data: string) => {
         this.offers = JSON.parse(data).content;
         this.nextBtn = JSON.parse(data).last;
+        this.mapService.myMethod(this.offers);
+        this.dataChangedEvent.emit(null);
       });
     }
     else{
@@ -170,9 +181,10 @@ export class CulturalOffersComponent implements OnInit {
         (offers: string)=>{
           this.offers = JSON.parse(offers).content;
           this.nextBtn = JSON.parse(offers).last;
+          this.mapService.myMethod(this.offers);
+          this.dataChangedEvent.emit(null);
         }
       )
     }
-
   }
 }

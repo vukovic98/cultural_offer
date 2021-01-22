@@ -15,13 +15,13 @@ export class AddCommentComponent implements OnInit {
   private userEmail: string = "";
   commentText: string = "";
   offerId: string|null = '';
-  images = [] as any;
+  image: any;
   files: string[] = [];
 
   addForm = new FormGroup({
     commentText: new FormControl('', Validators.required),
-    file: new FormControl('', [Validators.required]),
-    fileSource: new FormControl('', [Validators.required])
+    file: new FormControl('', []),
+    fileSource: new FormControl('', [])
   });
 
   constructor(private route: ActivatedRoute,
@@ -40,6 +40,10 @@ export class AddCommentComponent implements OnInit {
     return this.authService.isLoggedIn();
   }
 
+  get f() {
+    return this.addForm.controls;
+  }
+
   onFileChange(event: any){
 
     console.log("form changed")
@@ -49,13 +53,15 @@ export class AddCommentComponent implements OnInit {
 
     if (event.target.files && event.target.files[0]) {
       const filesAmount = event.target.files.length;
+      console.log(filesAmount);
+      console.log(event.target.files[0]);
       for (let i = 0; i < filesAmount; i++) {
         let reader = new FileReader();
         reader.onload = (event: any) => {
-          if (!this.images.includes(event.target.result)) {
-            this.images.push(event.target.result);
+          if (this.image != event.target.result) {
+            this.image = event.target.result
             this.addForm.patchValue({
-              fileSource: this.images
+              fileSource: this.image
             });
           }
         }
@@ -67,10 +73,12 @@ export class AddCommentComponent implements OnInit {
 
 
   
-  onClickAddComment(): void{
+  submit(): void{
 
-    console.log(this.commentText);
-    this.offerService.addComment(Number(this.offerId),this.commentText,this.images[0].split(',')[1])
+    console.log(this.image);
+    var file = this.image = "" ? "" : this.image.split(',')[1];
+    
+    this.offerService.addComment(Number(this.offerId),this.addForm.value.commentText,file)
     .subscribe(response => {
       Swal.fire({
         title: 'Success!',
