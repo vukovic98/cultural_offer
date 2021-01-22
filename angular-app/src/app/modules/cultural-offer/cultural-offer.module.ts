@@ -32,10 +32,10 @@ import {PostListComponent} from '../../components/post-list/post-list.component'
 //import {PostItemComponent} from '../../components/post-item/post-item.component';
 import {HomeComponent} from '../../components/home/home.component';
 import { EditCategoryDialogComponent } from '../../components/edit-category-dialog/edit-category-dialog.component';
+//import { EditTypeDialogComponent } from '../../components/edit-type-dialog/edit-type-dialog.component';
 import { MapComponent } from 'src/app/components/map/map.component';
 import {TextFieldModule} from '@angular/cdk/text-field';
-
-
+import { LocationDialogComponent } from '../../components/location-dialog/location-dialog.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +56,9 @@ import {TextFieldModule} from '@angular/cdk/text-field';
     //PostItemComponent,
     HomeComponent,
     EditCategoryDialogComponent,
-    MapComponent
+    //EditTypeDialogComponent,
+    MapComponent,
+    LocationDialogComponent
   ],
     imports: [
         CommonModule,

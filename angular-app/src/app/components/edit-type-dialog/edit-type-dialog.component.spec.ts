@@ -1,47 +1,49 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { CategoryService } from '../../services/category.service';
-import { CategoryModel } from '../../model/category-model';
-import { EditCategoryDialogComponent } from './edit-category-dialog.component';
+import { TypeService } from '../../services/type.service';
+import { AllTypesModel } from '../../model/type-model';
+import { EditTypeDialogComponent } from './edit-type-dialog.component';
 import { of } from 'rxjs';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 
-describe('EditCategoryDialogComponent', () => {
-  let component: EditCategoryDialogComponent;
-  let fixture: ComponentFixture<EditCategoryDialogComponent>;
-  let matDialogRef: MatDialogRef<EditCategoryDialogComponent>;
+describe('EditTypeDialogComponent', () => {
+  let component: EditTypeDialogComponent;
+  let fixture: ComponentFixture<EditTypeDialogComponent>;
+  let matDialogRef: MatDialogRef<EditTypeDialogComponent>;
 
-  let categoryService: CategoryService;
-  
+  let typeService: TypeService;
+
   beforeEach(() => {
+
     let matDialogRefMock = {
       close: jasmine.createSpy('close')
     };
 
-    let cateogyrServiceMock = {
-      updateCategory: jasmine.createSpy('updateCategory')
+    let typeServiceMock = {
+      updateType: jasmine.createSpy('updateType')
         .and.returnValue(of({})),
     }
-
     let modelMock = {
-      'id': 5,
-      'name': "asdasd",
-      'types': []
+      'id': 10,
+      'name': "asdf",
+      'categoryId': 15,
+      'categoryName': "Category"
     }
 
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      declarations: [EditCategoryDialogComponent],
+      declarations: [EditTypeDialogComponent],
       providers: [
-        { provide: CategoryService, useValue: cateogyrServiceMock },
+        { provide: TypeService, useValue: typeServiceMock },
         { provide: MAT_DIALOG_DATA, useValue: modelMock },
         { provide: MatDialogRef, useValue: matDialogRefMock }
       ]
-    });
-    fixture = TestBed.createComponent(EditCategoryDialogComponent);
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(EditTypeDialogComponent);
     component = fixture.componentInstance;
 
-    categoryService = TestBed.inject(CategoryService);
+    typeService = TestBed.inject(TypeService);
     matDialogRef = TestBed.inject(MatDialogRef);
     fixture.detectChanges();
   });
@@ -50,16 +52,16 @@ describe('EditCategoryDialogComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should close dialog on click', () => {
+  it('onNoClick should close dialog on button click', () => {
     matDialogRef.close();
     component.onNoClick();
     expect(matDialogRef.close).toHaveBeenCalled();
   });
 
-  it('should update category', () => {
-    component.myForm.value.name = "adadasdsa";
+  it('should save changes', () => {
+    component.myForm.value.name = "asdasd";
     component.save();
-    expect(categoryService.updateCategory).toHaveBeenCalled();
+    expect(typeService.updateType).toHaveBeenCalled();
     expect(matDialogRef.close).toHaveBeenCalled();
   });
 

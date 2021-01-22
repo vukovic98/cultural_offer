@@ -5,9 +5,10 @@ import { CategoryService } from '../../services/category.service';
 import { CategoryModel } from '../../model/category-model';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms'
 import { TypeModel, AllTypesModel } from '../../model/type-model';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from "sweetalert2";
-import {map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { EditTypeDialogComponent } from '../edit-type-dialog/edit-type-dialog.component';
 
 @Component({
   selector: 'app-add-type',
@@ -16,28 +17,22 @@ import {map} from 'rxjs/operators';
 })
 export class AddTypeComponent implements OnInit {
 
-  private types: Array<AllTypesModel> = [];
+  public types: Array<AllTypesModel> = [];
   public pageNum: number = 1;
   public nextBtn: boolean = false;
   public categories: Array<CategoryModel> = [];
-  public typeForm: FormGroup;
-  public typeFormByName: FormGroup;
+  public typeForm: FormGroup = new FormGroup({
+    name: new FormControl('', Validators.required),
+    category: new FormControl('', Validators.required)
+  });
+  public typeFormByName: FormGroup = new FormGroup({
+    byname: new FormControl('')
+  });
+  
 
-  constructor(private fb: FormBuilder,
-    private typeService: TypeService,
+  constructor(private typeService: TypeService,
     private categoryService: CategoryService,
-    public dialog: MatDialog,
-    private http: HttpClient) {
-
-    this.typeForm = this.fb.group({
-      name: new FormControl('', Validators.required),
-      category: new FormControl('', Validators.required),
-    });
-    this.typeFormByName = this.fb.group({
-      byname: new FormControl('')
-    });
-  }
-
+    public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getTypes();
@@ -46,23 +41,26 @@ export class AddTypeComponent implements OnInit {
 
   getCategories() {
     this.categoryService.getCategories().subscribe(data => {
+      console.log("getcategories = ", data);
       this.categories = data;
     }, error => {
       console.log(error);
     });
   }
 
-  editType(type: AllTypesModel){
-    const dialogRef = this.dialog.open(EditTypeDialog, {
+  editType(type: AllTypesModel) {
+    const dialogRef = this.dialog.open(EditTypeDialogComponent, {
       width: '350px',
-      data: {name: type.name,
-            id: type.id,
-            categoryId: type.categoryId,
-            categoryName: type.categoryName}
+      data: {
+        name: type.name,
+        id: type.id,
+        categoryId: type.categoryId,
+        categoryName: type.categoryName
+      }
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      if(data != undefined){
+      if (data != undefined) {
         this.getTypes();
       }
     });
@@ -96,7 +94,7 @@ export class AddTypeComponent implements OnInit {
     //console.log("dto = ", dto);
     this.typeService.save(dto)
       .subscribe(response => {
-        //console.log("response = ", response);
+        //console.log("saveresponse = ", response);
         this.getTypes();
         Swal.fire({
           title: 'Success!',
@@ -117,12 +115,12 @@ export class AddTypeComponent implements OnInit {
   }
 
   onSubmitByName() {
-    if(this.typeFormByName.value.byname == ""){
+    if (this.typeFormByName.value.byname == "") {
       this.getTypes();
-    }else{
+    } else {
       //console.log("byname = ", this.typeFormByName.value.byname);
       this.typeService.getByName(this.typeFormByName.value.byname).subscribe((data: AllTypesModel) => {
-        //console.log("response = ", data);
+        //console.log("getbynameresponse = ", data);
         this.types = [data];
       }, (error: any) => {
         //console.log("error = ", error);
@@ -171,58 +169,5 @@ export class AddTypeComponent implements OnInit {
 
   getAllTypes(): Array<AllTypesModel> {
     return this.types || [];
-  }
-}
-
-@Component({
-  selector: 'edit-dialog',
-  templateUrl: 'edit-dialog.html',
-})
-export class EditTypeDialog {
-
-  myForm = new FormGroup({
-    name: new FormControl(this.data.name, Validators.required)
-  });
-
-  constructor(
-    public dialogRef: MatDialogRef<EditTypeDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: AllTypesModel,
-    private typeService: TypeService) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  save(){
-    this.data.name = this.myForm.value.name;
-    //console.log("updateObj = ", this.data);
-    this.typeService.updateType(this.data)
-      .subscribe(response => {
-        //console.log("response = ", response);
-        this.dialogRef.close({data:this.data});
-        Swal.fire({
-          title: 'Success!',
-          text: 'Type successfully updated!',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        });
-      }, error => {
-        //console.log("error = ", error);
-        Swal.fire({
-          title: 'Error!',
-          text: 'Something went wrong! Type name already exists',
-          icon: 'error',
-          confirmButtonColor: '#DC143C',
-          confirmButtonText: 'OK'
-        });
-      })
-  }
-
-  close(){
-    this.dialogRef.close();
-  }
-
-  get f() {
-    return this.myForm.controls;
   }
 }
