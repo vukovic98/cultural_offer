@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {AddTypeComponent, EditTypeDialog} from '../../components/add-type/add-type.component';
+import {AddTypeComponent} from '../../components/add-type/add-type.component';
+import { EditTypeDialogComponent } from '../../components/edit-type-dialog/edit-type-dialog.component';
 import {TypeRoutingModule} from './type-routing.module';
 import {SharedModule} from '../shared/shared.module';
 import {MatMenuModule} from '@angular/material/menu';
@@ -22,7 +23,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 @NgModule({
   declarations: [
     AddTypeComponent,
-    EditTypeDialog
+    EditTypeDialogComponent
   ],
   imports: [
     CommonModule,
