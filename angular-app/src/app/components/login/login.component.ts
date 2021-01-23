@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
 
     this.service.login(JSON.stringify(loginDto))
       .subscribe(response => {
-        console.log(response);
         if (response.verified){
           localStorage.setItem("accessToken", response.authenticationToken);
           this.route.navigate(['/']);
