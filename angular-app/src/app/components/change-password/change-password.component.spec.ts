@@ -1,20 +1,11 @@
-import {ComponentFixture, fakeAsync, flush, getTestBed, TestBed, tick} from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, flush, TestBed, tick} from '@angular/core/testing';
 import { ChangePasswordComponent } from './change-password.component';
-import {ControlContainer, FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {HttpClient, HttpHandler} from "@angular/common/http";
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
+import {ControlContainer, FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ChangePasswordService} from "../../services/change-password.service";
-import {RouterTestingModule} from "@angular/router/testing";
 import {Router} from "@angular/router";
 import {of} from "rxjs";
 import { By } from '@angular/platform-browser';
 import Swal from "sweetalert2";
-import {TestbedHarnessEnvironment} from "@angular/cdk/testing/testbed";
-import {HarnessLoader} from "@angular/cdk/testing";
-import {passwordDto} from "../../model/password-model";
-import {MatInputHarness} from "@angular/material/input/testing";
-import {NavigationBarComponent} from "../navigation-bar/navigation-bar.component";
-import {AuthService} from "../../services/auth.service";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('ChangePasswordComponent', () => {
@@ -23,7 +14,6 @@ describe('ChangePasswordComponent', () => {
   let changePassService: any;
   let router: any;
   let swal: any;
-  let loader: HarnessLoader;
 
   beforeEach(() => {
     let changePassServiceMock = {
@@ -41,15 +31,7 @@ describe('ChangePasswordComponent', () => {
     };
 
     let swalMock = {
-      fire: jasmine.createSpy('fire').
-      and.returnValue(of({
-        position: 'center',
-        title: 'Password successfully changed',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
-      }))
-    };
+      fire: jasmine.createSpy('fire')};
 
     let routerMock = {
       navigate: jasmine.createSpy('navigate')
@@ -84,7 +66,7 @@ describe('ChangePasswordComponent', () => {
     fixture.detectChanges();
     component.cancel();
 
-    expect(router.navigate).toHaveBeenCalledWith(['/cultural-offer/home-page']);
+    expect(router.navigate).toHaveBeenCalledWith(['/home-page']);
 
   });
 
@@ -105,11 +87,13 @@ describe('ChangePasswordComponent', () => {
     }
 
     component.changePassword();
-    swal.fire({position: 'center',
+    swal.fire({
+      position: 'center',
       title: 'Password successfully changed',
       icon: 'success',
       showConfirmButton: false,
-      timer: 1500});
+      timer: 1500
+    });
 
     expect(swal.fire).toHaveBeenCalledWith({
       position: 'center',
@@ -118,17 +102,13 @@ describe('ChangePasswordComponent', () => {
       showConfirmButton: false,
       timer: 1500
     });
-    tick();
-    //expect(router.navigate).toHaveBeenCalledWith(['/cultural-offer/home-page']);
-
-
-
+    flush();
+    expect(router.navigate).toHaveBeenCalledWith(['/home-page']);
     expect(changePassService.changePassword).toHaveBeenCalledWith(JSON.stringify(passDto));
     tick();
     expect(component.changePasswordForm.value.oldPassword).toEqual('stara123');
     expect(component.changePasswordForm.value.newPassword).toEqual('nova1234');
     expect(component.changePasswordForm.value.confirmPassword).toEqual('nova1234');
-
     flush();
 }));
 });

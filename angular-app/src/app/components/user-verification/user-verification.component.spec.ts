@@ -35,7 +35,6 @@ describe('UserVerificationComponent', () => {
       and.returnValue(of({
         "code": 'CODE123',
         "userEmail": 'test@maildrop.cc',
-
       })),
       sendCodeAgain: jasmine.createSpy('sendCodeAgain').
         and.returnValue(of("CODE123"))
@@ -98,7 +97,6 @@ describe('UserVerificationComponent', () => {
       "userEmail": "test@maildrop.cc",
     };
 
-    const params = Object({  queryParams: Object({  email: 'test@maildrop.cc'}) });
     component.verifyUser();
 
     expect(authService.verifyCode).toHaveBeenCalledWith(JSON.stringify(verifyDto));

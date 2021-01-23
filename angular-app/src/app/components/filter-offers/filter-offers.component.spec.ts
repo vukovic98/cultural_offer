@@ -2,17 +2,10 @@ import {ComponentFixture, fakeAsync, getTestBed, TestBed} from '@angular/core/te
 
 import { FilterOffersComponent } from './filter-offers.component';
 import {FilterOffersService} from "../../services/filter-offers.service";
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {HttpClient} from "@angular/common/http";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {Router} from "@angular/router";
-import {CulturalOfferItemComponent} from "../cultural-offer-item/cultural-offer-item.component";
-import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {CulturalOfferService} from "../../services/culturalOffer.service";
-import {AuthService} from "../../services/auth.service";
 import {of} from "rxjs";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
-import {FilterObject} from "../../model/filter-model";
 
 describe('FilterOffersComponent', () => {
   let component: FilterOffersComponent;

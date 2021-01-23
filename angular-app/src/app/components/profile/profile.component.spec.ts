@@ -26,9 +26,6 @@ describe('ProfileComponent', () => {
       providers: [EditProfileService, HttpClient, HttpHandler]
     })
     .compileComponents();
-
-
-
   });
 
   beforeEach(() => {

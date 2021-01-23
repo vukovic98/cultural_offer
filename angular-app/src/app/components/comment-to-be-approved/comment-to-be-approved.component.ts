@@ -24,7 +24,6 @@ export class CommentToBeApprovedComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    console.log(this.commentToBeApproved);
   }
 
 }
