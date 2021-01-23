@@ -1,7 +1,5 @@
 import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
 import {FilterOffersService} from "../../services/filter-offers.service";
-import {CulturalOfferService} from "../../services/culturalOffer.service";
 import {FilterObject} from "../../model/filter-model";
 import {CulturalOffer} from "../../model/offer-mode";
 
@@ -20,8 +18,6 @@ export class FilterOffersComponent implements OnInit {
   expression = '';
   filteredOffers: Array<CulturalOffer> = [];
 
-
-
   constructor(private service: FilterOffersService) { }
 
   onApplyFilter(){
@@ -29,26 +25,14 @@ export class FilterOffersComponent implements OnInit {
       exp: this.expression,
       types: this.selectedTypes
     };
-
     this.filterEvent.emit(filterParams);
-
-
 }
-
-
-
 
   filterOffers(){
     //this.culturalOfferService.getByPageFilter(1,this.expression,this.selectedTypes);
-
-
   }
 
-
-
-
-
-getTypes():void{
+  getTypes():void{
     this.service.getTypes()
       .subscribe(types => {
         this.types = types;
@@ -57,20 +41,16 @@ getTypes():void{
 
   addType($event: any){
     this.selectedTypes.push($event);
-
   }
 
   removeType($event: any){
-    let index = this.selectedTypes.indexOf($event.value, 0);
+    let index = this.selectedTypes.indexOf($event, 0);
     if (index > -1)
       this.selectedTypes.splice(index, 1);
-
   }
 
   ngOnInit(): void {
     this.getTypes();
-
   }
-
 
 }

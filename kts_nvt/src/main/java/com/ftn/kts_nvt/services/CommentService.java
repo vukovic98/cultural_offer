@@ -114,7 +114,7 @@ public class CommentService {
 			if (image != null) {
 
 				exists.setImage(null);
-			
+
 				imageRepository.delete(image);
 
 			}

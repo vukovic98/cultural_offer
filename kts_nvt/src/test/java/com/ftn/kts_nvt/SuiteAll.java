@@ -90,9 +90,9 @@ import com.ftn.kts_nvt.e2e.VerifyUserE2ETest;
 		//ApprovingCommentsE2ETest.class
 		
 		//E2E SW1
-		AddTypeE2ETest.class,
+		//AddTypeE2ETest.class,
 		//AddOfferE2ETest.class,
-		//OfferDetailsRegisteredUserE2ETest.class,
+		OfferDetailsRegisteredUserE2ETest.class,
 		//OfferDetailsAdminE2ETest.class,
 		//AddCategoryE2ETest.class
 	

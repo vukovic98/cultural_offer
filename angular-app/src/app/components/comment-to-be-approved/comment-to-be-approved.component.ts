@@ -9,7 +9,7 @@ import {CommentToBeApprovedModel} from "../../model/comment-to-be-approved-model
 })
 export class CommentToBeApprovedComponent implements OnInit {
   @Input() public commentToBeApproved: CommentToBeApprovedModel = {id: 0, content:"", commenterName:"",offer:"",image:{id:'1',picByte:""},commenterEmail:""};
-  @Output() denyComment = new EventEmitter<number>(); //promeni any ovde i ispod da salje commentId
+  @Output() denyComment = new EventEmitter<number>();
   @Output() approveComment = new EventEmitter<number>();
   panelOpenState = false;
 

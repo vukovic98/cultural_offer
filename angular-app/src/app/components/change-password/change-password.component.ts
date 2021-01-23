@@ -39,8 +39,8 @@ export class ChangePasswordComponent implements OnInit {
           title: 'Password successfully changed',
           icon: 'success',
           showConfirmButton: false,
-          timer: 15000
-        }).then(() => this.route.navigate(['/home-page']))
+          timer: 1500
+        }).then(() => this.route.navigate(['/cultural-offer/home-page']))
 
       }, error => {
         console.log(error);
@@ -57,4 +57,7 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  cancel() {
+    this.route.navigate(["/cultural-offer/home-page"]);
+  }
 }

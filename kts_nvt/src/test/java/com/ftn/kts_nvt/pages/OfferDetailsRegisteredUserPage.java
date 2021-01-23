@@ -17,6 +17,15 @@ public class OfferDetailsRegisteredUserPage {
 	@FindBy(xpath = "//div[contains(@class, 'swal2-popup')]")
 	private WebElement swalAlert;
 	
+	@FindBy(xpath = "//*[@id=\"deletePostButton\"]")
+	private WebElement deletePostButton;
+	
+	@FindBy(xpath = "//*[@id=\"addPostsButton\"]")
+	private WebElement addPostsButton;
+	
+	@FindBy(xpath = "//*[@id=\"addCommentPanelId\"]")
+	private WebElement addCommentPanel;
+	
 	public OfferDetailsRegisteredUserPage() {
 		super();
 	}
@@ -28,6 +37,25 @@ public class OfferDetailsRegisteredUserPage {
 
 	public WebDriver getDriver() {
 		return driver;
+	}
+
+	public WebElement getAddCommentPanel() {
+		return addCommentPanel;
+	}
+
+	public WebElement getDeletePostButton() {
+		return deletePostButton;
+	}
+	public void ensureIsNotVisibleDeletePostButton() {
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("deletePostButton")));
+	}
+	
+	public WebElement getAddPostsButton() {
+		return addPostsButton;
+	}
+	
+	public void ensureIsNotVisibleAddPostButton() {
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("addPostsButton")));
 	}
 
 	public WebElement getSubscribersCountText() {

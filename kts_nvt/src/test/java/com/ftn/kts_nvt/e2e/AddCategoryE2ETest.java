@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 
@@ -74,6 +75,8 @@ public class AddCategoryE2ETest {
 	
 	@Test
 	public void a_addCategory() throws InterruptedException {
+		int rowsBefore = driver.findElements(By.cssSelector("tr")).size();
+		
 	    addCategoryPage.getName().clear();
 	    addCategoryPage.getName().sendKeys("newcategory");
 	    addCategoryPage.getSubmit().click();
@@ -83,11 +86,17 @@ public class AddCategoryE2ETest {
 	    assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
 	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();
 	    justWait();justWait();
-	    assertEquals("newcategory", driver.findElement(By.xpath("//tr[4]/td")).getText());
+	    
+	    int rowsAfter = driver.findElements(By.cssSelector("tr")).size();
+	    assertEquals(rowsBefore + 1, rowsAfter);
+
+	    assertEquals("newcategory", addCategoryPage.getLastRow().getText());
+	    //assertEquals("newcategory", driver.findElement(By.xpath("//tr[4]/td")).getText());
 	}
 	
 	@Test
 	public void b_changeNameAlreadyExist() {
+		int rowsBefore = driver.findElements(By.cssSelector("tr")).size();
 		driver.findElement(By.xpath("(//button[@id='editButton']/span/mat-icon)[4]")).click();
 		addCategoryPage.getEditNameDialog().clear();
 		addCategoryPage.getEditNameDialog().sendKeys("Institution");
@@ -96,11 +105,14 @@ public class AddCategoryE2ETest {
 	    assertTrue(addCategoryPage.isSwalVisible());
 	    assertEquals("Error!", driver.findElement(By.id("swal2-title")).getText());
 	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();	
+	    int rowsAfter = driver.findElements(By.cssSelector("tr")).size();
+	    assertEquals(rowsBefore, rowsAfter);
 	}
 	
 	@Test
 	public void c_changeNameSuccess() {
-	    assertEquals("newcategory", driver.findElement(By.xpath("//tr[4]/td")).getText());
+	    assertEquals("newcategory", addCategoryPage.getLastRow().getText());
+	    //assertEquals("newcategory", driver.findElement(By.xpath("//tr[4]/td")).getText());
 	    driver.findElement(By.xpath("(//button[@id='editButton']/span/mat-icon)[4]")).click();
 	    addCategoryPage.getEditNameDialog().clear();
 	    addCategoryPage.getEditNameDialog().sendKeys("newcategory2");
@@ -109,25 +121,32 @@ public class AddCategoryE2ETest {
 	    assertTrue(addCategoryPage.isSwalVisible());
 		assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
 		driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();	
-	    assertEquals("newcategory2", driver.findElement(By.xpath("//tr[4]/td")).getText());
+	    assertEquals("newcategory2", addCategoryPage.getLastRow().getText());
+	    //assertEquals("newcategory2", driver.findElement(By.xpath("//tr[4]/td")).getText());
 	}
 	
 	@Test
 	public void d_deleteSuccess() {
+		int rowsBefore = driver.findElements(By.cssSelector("tr")).size();
 		driver.findElement(By.xpath("(//button[@id='deleteButton']/span/mat-icon)[4]")).click();
 		addCategoryPage.ensureIsDisplayedSwal();
 	    assertTrue(addCategoryPage.isSwalVisible());
 		assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
 	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();	
+	    int rowsAfter = driver.findElements(By.cssSelector("tr")).size();
+	    assertEquals(rowsBefore - 1, rowsAfter);
 	}
 	
 	@Test
 	public void e_deleteFail() {
+		int rowsBefore = driver.findElements(By.cssSelector("tr")).size();
 		driver.findElement(By.xpath("//button[@id='deleteButton']/span/mat-icon")).click();
 		addCategoryPage.ensureIsDisplayedSwal();
 	    assertTrue(addCategoryPage.isSwalVisible());
 		assertEquals("Error!", driver.findElement(By.id("swal2-title")).getText());
 	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();	
+	    int rowsAfter = driver.findElements(By.cssSelector("tr")).size();
+	    assertEquals(rowsBefore, rowsAfter);
 	}
 	
 	@Test

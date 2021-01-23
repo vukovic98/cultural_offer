@@ -1,9 +1,9 @@
-<div class="mt-1">
+<div class="mt-1" id="postItem">
   <mat-card class="col-md-12">
     <div class="row">
       <mat-card-title class="float-left col-md-11">{{post.title}}</mat-card-title>
       <span class="col-md-1 pb-3" *ngIf="isAdmin()">
-        <button aria-label="Delete comment" style="border: 1px solid lightgray;" (click)="onClickDeletePost()">
+        <button aria-label="Delete comment" id="deletePostButton" style="border: 1px solid lightgray;" (click)="onClickDeletePost()">
         <mat-icon class="float-right pointer">close</mat-icon>
       </button>
       </span>

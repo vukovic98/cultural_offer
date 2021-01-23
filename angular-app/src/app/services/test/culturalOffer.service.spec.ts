@@ -7,6 +7,8 @@ import {CulturalOfferService} from '../culturalOffer.service';
 import {statusCodeModel} from '../../model/auth-model';
 import {AddPostModel} from '../../model/post-model';
 
+//ng test --karma-config karma.conf.js
+
 describe('CulturalOfferService', () => {
 
   let injector;
@@ -1564,6 +1566,102 @@ describe('CulturalOfferService', () => {
 
     const req = httpMock.expectOne('http://localhost:8080/comments');
     expect(req.request.method).toBe('POST');
+    req.flush(mockResponse);
+
+    tick();
+
+    expect(res).toBeTruthy();
+    expect(res.statusCode).toBe(404);
+
+  }));
+
+  it('should delete comment for given existing id', fakeAsync(() => {
+    let res: statusCodeModel = {
+      statusCode: 0
+    };
+
+    let mockResponse: statusCodeModel = {
+      statusCode: 200
+    };
+
+    offerService.deleteComment(1).subscribe((data) => {
+      res = data;
+    });
+
+    const req = httpMock.expectOne('http://localhost:8080/comments/1');
+    expect(req.request.method).toBe('DELETE');
+    req.flush(mockResponse);
+
+    tick();
+
+    expect(res).toBeTruthy();
+    expect(res.statusCode).toBe(200);
+
+  }));
+
+  it('should not delete comment for given non-existing id', fakeAsync(() => {
+    let res: statusCodeModel = {
+      statusCode: 0
+    };
+
+    let mockResponse: statusCodeModel = {
+      statusCode: 404
+    };
+
+    offerService.deleteComment(19999).subscribe((data) => {
+      res = data;
+    });
+
+    const req = httpMock.expectOne('http://localhost:8080/comments/19999');
+    expect(req.request.method).toBe('DELETE');
+    req.flush(mockResponse);
+
+    tick();
+
+    expect(res).toBeTruthy();
+    expect(res.statusCode).toBe(404);
+
+  }));
+
+  it('should delete post for given existing id', fakeAsync(() => {
+    let res: statusCodeModel = {
+      statusCode: 0
+    };
+
+    let mockResponse: statusCodeModel = {
+      statusCode: 200
+    };
+
+    offerService.deletePost(1).subscribe((data) => {
+      res = data;
+    });
+
+    const req = httpMock.expectOne('http://localhost:8080/posts/1');
+    expect(req.request.method).toBe('DELETE');
+    req.flush(mockResponse);
+
+    tick();
+
+    expect(res).toBeTruthy();
+    expect(res.statusCode).toBe(200);
+
+  }));
+
+  it('should not delete post for given non-existing id', fakeAsync(() => {
+    let res: statusCodeModel = {
+      statusCode: 0
+    };
+
+    let mockResponse: statusCodeModel = {
+      statusCode: 404
+    };
+
+    offerService.deletePost(19999).subscribe((data) => {
+      res = data;
+    });
+
+    const req = httpMock.expectOne('http://localhost:8080/posts/19999');
+    expect(req.request.method).toBe('DELETE');
     req.flush(mockResponse);
 
     tick();

@@ -18,12 +18,12 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCardModule} from '@angular/material/card';
 import {CategoryRoutingModule} from './category-routing.module';
 import {RouterModule} from '@angular/router';
-
-
+//import {EditCategoryDialogComponent} from '../../components/edit-category-dialog/edit-category-dialog.component';
 
 @NgModule({
   declarations: [
-    AddCategoryComponent
+    AddCategoryComponent,
+    //EditCategoryDialogComponent
   ],
   imports: [
     CommonModule,

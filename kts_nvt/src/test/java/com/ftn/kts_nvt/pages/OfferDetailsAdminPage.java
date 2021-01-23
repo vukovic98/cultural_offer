@@ -23,6 +23,18 @@ public class OfferDetailsAdminPage {
 	@FindBy(xpath = "//div[contains(@class, 'swal2-popup')]")
 	private WebElement swalAlert;
 	
+	@FindBy(xpath = "//*[@id=\"deletePostButton\"]")
+	private WebElement deletePostButton;
+	
+	@FindBy(xpath = "//*[@id=\"addPostsButton\"]")
+	private WebElement addPostsButton;
+	
+	@FindBy(xpath = "//*[@id=\"addNewPostButton\"]")
+	private WebElement addNewPostButton;
+	
+	@FindBy(xpath = "//*[@id=\"addCommentPanelId\"]")
+	private WebElement addCommentPanel;
+	
 	public OfferDetailsAdminPage() {
 		super();
 	}
@@ -36,6 +48,18 @@ public class OfferDetailsAdminPage {
 		return driver;
 	}
 
+	public WebElement getDeletePostButton() {
+		return deletePostButton;
+	}
+	
+	public WebElement getAddNewPostButton() {
+		return addNewPostButton;
+	}
+	
+	public WebElement getAddPostsButton() {
+		return addPostsButton;
+	}
+	
 	public WebElement getTitle() {
 		return title;
 	}
@@ -52,6 +76,10 @@ public class OfferDetailsAdminPage {
 		return swalAlert;
 	}
 
+	public void ensureIsNotVisibleAddCommentPanel() {
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("addCommentPanelId")));
+	}
+	
 	public void ensureIsDisplayedSwal() {
 		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.className("swal2-popup")));
 	}
