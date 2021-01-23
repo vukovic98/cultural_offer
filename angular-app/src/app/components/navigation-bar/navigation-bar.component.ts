@@ -9,7 +9,6 @@ import {AuthService} from '../../services/auth.service';
 export class NavigationBarComponent implements OnInit {
 
   private userLoggedIn: boolean = false;
-  private username: string = '';
 
   constructor(private service: AuthService) { }
 

@@ -169,6 +169,10 @@ describe('CulturalOffersComponent', () => {
       afterClosed: jasmine.createSpy('afterClosed')
     }
 
+    let locationMock = {
+      reload: jasmine.createSpy('reload')
+    }
+
     TestBed.configureTestingModule({
       imports: [
         MatDialogModule,
@@ -180,6 +184,7 @@ describe('CulturalOffersComponent', () => {
         { provide: Router, useValue: routerMock } ,
         { provide: MatDialog, useValue: matDialogMock },
         { provide: MatDialogRef, useValue: dialogRefMock },
+        { provide: location, useValue: locationMock },
         { provide: AuthService, useValue: authServiceMock}]
     }).compileComponents();
 
@@ -208,12 +213,12 @@ describe('CulturalOffersComponent', () => {
     expect(authService.isLoggedIn).toHaveBeenCalled();
   });
 
-  // it('should remove offer', () => {
-  //   component.removeOffer(26);
-  //
-  //   expect(offerService.deleteOffer).toHaveBeenCalled();
-  //   expect(offerService.deleteOffer).toHaveBeenCalledWith(26);
-  // })
+  it('should remove offer', () => {
+    component.removeOffer(26);
+
+    expect(offerService.deleteOffer).toHaveBeenCalled();
+    expect(offerService.deleteOffer).toHaveBeenCalledWith(26);
+  })
 
   // it('should edit offer', () => {
   //   component.editOffer({
