@@ -6,8 +6,10 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,7 @@ import com.ftn.kts_nvt.services.RegisteredUserService;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("classpath:test.properties")
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class GradeServiceIntegrationTest {
 
 	@Autowired
@@ -94,7 +97,7 @@ public class GradeServiceIntegrationTest {
 	}
 	
 	@Test
-	public void testCreateAndDelete() throws Exception {
+	public void x_testCreateAndDelete() throws Exception {
 		Grade grade = new Grade();
 		grade.setValue(4);
 		grade.setCulturalOffer(culturalOfferService.findById(4L));

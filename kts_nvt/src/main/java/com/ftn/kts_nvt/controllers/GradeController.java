@@ -120,7 +120,8 @@ public class GradeController {
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-
+		
+		System.out.println("grade created");
 		return new ResponseEntity<>(gradeMapper.toDto(grade), HttpStatus.CREATED);
 	}
 

@@ -148,7 +148,7 @@ public class AuthenticationControllerIntegrationTest {
 	@Test
 	@Transactional
 	public void testChangePassword() {
-		login("a@a", "vukovic");
+		login("a4@a", "vukovic");
 		HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", this.accessToken);
         
@@ -161,7 +161,7 @@ public class AuthenticationControllerIntegrationTest {
         ResponseEntity<?> responseEntity =
         		restTemplate.exchange("/auth/change-password", HttpMethod.POST, new HttpEntity<PasswordChanger>(pc,headers), Object.class);
         
-        RegisteredUser user = registeredUserRepository.findByEmail("a@a");
+        RegisteredUser user = registeredUserRepository.findByEmail("a4@a");
         
         
         BCryptPasswordEncoder enc = new BCryptPasswordEncoder();

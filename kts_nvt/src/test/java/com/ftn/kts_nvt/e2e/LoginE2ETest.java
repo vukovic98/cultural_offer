@@ -65,7 +65,7 @@ public class LoginE2ETest {
 	
 	@Test
 	public void loginTestFailUsername() throws InterruptedException {
-		driver.get("http://localhost:4200/login");
+		driver.get("http://localhost:4200/auth/login");
 		
 		justWait();
 		
@@ -86,7 +86,7 @@ public class LoginE2ETest {
 	
 	@Test
 	public void loginTestFailPassword() throws InterruptedException {
-		driver.get("http://localhost:4200/login");
+		driver.get("http://localhost:4200/auth/login");
 		
 		justWait();
 		

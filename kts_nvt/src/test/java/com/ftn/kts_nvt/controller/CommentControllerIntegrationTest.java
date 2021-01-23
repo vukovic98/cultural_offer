@@ -67,6 +67,8 @@ public class CommentControllerIntegrationTest {
 	
 	@Test
 	public void testFindAllPageable() {
+		login("vlado@gmail.com", "vukovic");
+
 		ResponseEntity<PageImplementation<CommentUserDTO>> responseEntity = this.restTemplate.exchange("/comments/by-page/1",
 				HttpMethod.GET, null, new ParameterizedTypeReference<PageImplementation<CommentUserDTO>>() {
 				});
@@ -80,6 +82,8 @@ public class CommentControllerIntegrationTest {
 
 	@Test
 	public void testFindById() {
+		login("vlado@gmail.com", "vukovic");
+
 		ResponseEntity<CommentDTO> responseEntity = restTemplate.getForEntity("/comments/1", CommentDTO.class);
 
 		CommentDTO dto = responseEntity.getBody();
@@ -90,6 +94,8 @@ public class CommentControllerIntegrationTest {
 
 	@Test
 	public void testFindByIdFail() {
+		login("vlado@gmail.com", "vukovic");
+
 		ResponseEntity<CommentDTO> responseEntity = restTemplate.getForEntity("/comments/222", CommentDTO.class);
 
 		assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());

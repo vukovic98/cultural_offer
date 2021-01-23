@@ -70,7 +70,7 @@ public class CulturalOfferTypeControllerIntegrationTest {
 			
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	     assertEquals(4, types.size());
-	     assertEquals("Festival", types.get(0));
+	     assertEquals("Type1", types.get(0));
 	 }
 	 
 	@Test
@@ -216,7 +216,7 @@ public class CulturalOfferTypeControllerIntegrationTest {
 	 
 	 @Test
 	 public void testDeleteFailRole() {
-		 login("a2@a", "vukovic");
+		 login("a4@a", "vukovic");
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", this.accessToken);
 	     

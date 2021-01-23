@@ -8,8 +8,10 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,7 @@ import com.ftn.kts_nvt.services.CulturalOfferTypeService;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("classpath:test.properties")
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CulturalOfferTypeServiceIntegrationTest {
 
 	@Autowired
@@ -34,13 +37,13 @@ public class CulturalOfferTypeServiceIntegrationTest {
 	private CulturalOfferCategoryService categoryService;
 	 
 	@Test
-	public void testFindAll() {
+	public void a_testFindAll() {
 		List<CulturalOfferType> found = service.findAll();
 		assertEquals(4, found.size());
 	}
 	
 	@Test
-	public void testFindAllByCategoryId() {
+	public void b_testFindAllByCategoryId() {
 		List<CulturalOfferType> found = service.findAll(2L);
 		assertEquals(2, found.size());
 		
@@ -49,46 +52,27 @@ public class CulturalOfferTypeServiceIntegrationTest {
 	}
 	
 	@Test
-    public void testFindAllPageable() {
+    public void c_testFindAllPageable() {
         Pageable pageable = PageRequest.of(0, 5);
         Page<CulturalOfferType> found = service.findAll(pageable);
         assertEquals(4, found.getNumberOfElements());
     }
 	
 	@Test
-	public void testFindById() {
+	public void d_testFindById() {
 		CulturalOfferType found = service.findById(2L);
 	    assertEquals(Long.valueOf(2), found.getId());
 	    assertEquals("Festival", found.getName());
 	}
 	
 	@Test
-	public void testFindByIdFail() {
+	public void e_testFindByIdFail() {
 		CulturalOfferType found = service.findById(10L);
 	    assertEquals(null, found);
 	}
-	
+		
 	@Test
-	public void testCreateAndDelete() throws Exception {
-		CulturalOfferType type = new CulturalOfferType();
-		type.setName("Museum");
-		//INSERT INTO kts_nvt_test.cultural_offer_category VALUES (2,'Institution');
-		type.setCategory(categoryService.findOne(2L));
-		CulturalOfferType created = service.save(type);
-
-	    assertEquals(type.getName(), created.getName());
-	    assertEquals(type.getId(), created.getId());
-	    assertEquals(type, created);
-	    
-	    boolean ok = service.deleteById(created.getId());
-	    CulturalOfferType found = service.findById(created.getId());
-			
-	    assertTrue(ok);
-	    assertEquals(null, found);
-	}
-	
-	@Test
-	public void testCreateNameExist() {
+	public void f_testCreateNameExist() {
 		CulturalOfferType type = new CulturalOfferType();
 		type.setName("Festival");
 		CulturalOfferType created = service.save(type);
@@ -96,7 +80,7 @@ public class CulturalOfferTypeServiceIntegrationTest {
 	}
 	
 	@Test
-	public void testUpdate() throws Exception {
+	public void g_testUpdate() throws Exception {
 		CulturalOfferType type = service.findById(2L);
 		type.setName("Type111");
 		type.setCategory(categoryService.findOne(1L));
@@ -114,4 +98,24 @@ public class CulturalOfferTypeServiceIntegrationTest {
 	    assertEquals(Long.valueOf(1), changed.getCategory().getId());
 	    
 	}
+	
+	@Test
+	public void h_testCreateAndDelete() throws Exception {
+		CulturalOfferType type = new CulturalOfferType();
+		type.setName("Museum");
+		//INSERT INTO kts_nvt_test.cultural_offer_category VALUES (2,'Institution');
+		type.setCategory(categoryService.findOne(2L));
+		CulturalOfferType created = service.save(type);
+
+	    assertEquals(type.getName(), created.getName());
+	    assertEquals(type.getId(), created.getId());
+	    assertEquals(type, created);
+	    
+	    boolean ok = service.deleteById(created.getId());
+	    CulturalOfferType found = service.findById(created.getId());
+			
+	    assertTrue(ok);
+	    assertEquals(null, found);
+	}
+
 }
