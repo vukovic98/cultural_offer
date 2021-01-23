@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {MustMatch} from "../../helper/must-match-validator";
 import {ChangePasswordService} from "../../services/change-password.service";
-import {map} from 'rxjs/operators';
 import Swal from "sweetalert2";
 import {Router} from '@angular/router';
 
@@ -12,6 +11,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./change-password.component.css']
 })
 export class ChangePasswordComponent implements OnInit {
+
 
   changePasswordForm = this.formBuilder.group({
     oldPassword: ['', [Validators.required]],
@@ -53,7 +53,11 @@ export class ChangePasswordComponent implements OnInit {
         })
       })
   }
+
   ngOnInit(): void {
   }
 
+  cancel() {
+    this.route.navigate(["/home-page"]);
+  }
 }

@@ -44,7 +44,7 @@ export class SignUpComponent implements OnInit {
 
     this.service.signUp(JSON.stringify(signUpDto))
       .subscribe(response => {
-        this.route.navigate(['/verify'],{  queryParams: {  email: response.email } })
+        this.route.navigate(['auth/verify'],{  queryParams: {  email: response.email } })
       }, error => {
         Swal.fire({
           title: 'Error!',

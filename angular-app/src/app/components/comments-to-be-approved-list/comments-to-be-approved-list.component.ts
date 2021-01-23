@@ -65,14 +65,14 @@ export class CommentsToBeApprovedListComponent implements OnInit {
       this.nextBtn = JSON.parse(data).last;
     });
   }
-
-  ngOnInit(): void {
+  getCommentsByPage() {
     this.service.getCommentsByPage(this.pageNum).subscribe((data: string) => {
       this.commentsToBeApproved = JSON.parse(data).content;
       this.nextBtn = JSON.parse(data).last;
     });
-
-
+  }
+  ngOnInit(): void {
+    this.getCommentsByPage();
   }
 
 }
