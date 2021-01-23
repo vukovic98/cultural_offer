@@ -42,8 +42,8 @@ import Swal from "sweetalert2";
 
 
 
-      this.offerService.getByPage(1).subscribe((result: string) => {
-        this.offers = JSON.parse(result).content;
+      this.offerService.getByPage(1).subscribe((result) => {
+        this.offers = result.content;
         this.offers.forEach(offer => {
             //@ts-ignore
             let marker = L.marker([offer.location.latitude, offer.location.longitude]).addTo(mymap);
