@@ -13,7 +13,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from "sweetalert2";
 // @ts-ignore
-import * as L from 'leaflet';
+//import * as L from 'leaflet';
 @Component({
     selector: 'app-map',
     templateUrl: './map.component.html',
