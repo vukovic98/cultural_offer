@@ -50,12 +50,8 @@ describe('AddCommentComponent', () => {
       const culturalOfferServiceStub: CulturalOfferService = fixture.debugElement.injector.get(
         CulturalOfferService
       );
-      //const routerStub: Router = fixture.debugElement.injector.get(Router);
-      //spyOn(culturalOfferServiceStub, 'createOffer').and.callThrough();
-      //spyOn(routerStub, 'navigate').and.callThrough();
       component.submit();
       expect(culturalOfferServiceStub.addComment).toHaveBeenCalled();
-      //expect(routerStub.navigate).toHaveBeenCalled();
     });
   });
 
