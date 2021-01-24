@@ -106,7 +106,7 @@ public class RegisteredUserServiceIntegrationTest {
 	@Test
 	public void testFindByEmail() {
 		
-		String email = "a@a";
+		String email = "a4@a";
 		
 		RegisteredUser found = this.registeredUserService.findOneByEmail(email);
 		

@@ -8,8 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.Instant;
 import java.util.List;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -26,6 +28,7 @@ import com.ftn.kts_nvt.services.PostService;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("classpath:test.properties")
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PostServiceIntegrationTest {
 
 	@Autowired
@@ -35,7 +38,7 @@ public class PostServiceIntegrationTest {
 	private CulturalOfferRepository offerRepository;
 
 	@Test
-	public void testCreateAndDeleteEntity() throws Exception {
+	public void x_testCreateAndDeleteEntity() throws Exception {
 		Post post = new Post("Post7", "This is post.", Instant.now());
 		post.setPostId(7L);
 		CulturalOffer offer = this.offerRepository.getOne(1L);
@@ -87,7 +90,7 @@ public class PostServiceIntegrationTest {
 	
 	
 	@Test
-	public void testUpdate() throws Exception {
+	public void x_testUpdate() throws Exception {
 		Post post = new Post("Post7", "This is post.", Instant.now());
 		post.setPostId(7L);
 		CulturalOffer offer = this.offerRepository.getOne(1L);

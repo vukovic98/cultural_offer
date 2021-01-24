@@ -72,15 +72,16 @@ public class CulturalOfferCategoryService implements ServiceInterface<CulturalOf
 	public void delete(Long id) throws Exception {	
 		CulturalOfferCategory existingCategory = repository.findById(id).orElse(null);
 		if (existingCategory == null) {
+			System.out.println("CulturalOfferCategory with given id doesn't exist");
 			throw new Exception("CulturalOfferCategory with given id doesn't exist");
 		}
 		ArrayList<CulturalOfferType> list = culturalOfferRepository.findByCategoryId(id);
 		if(list.size() != 0) {
+			System.out.println("CulturalOfferCategory is used in CulturalOfferType");
 			throw new Exception("CulturalOfferCategory is used in CulturalOfferType");
 		}
+		System.out.println("repository.delete");
 		repository.delete(existingCategory);
 	}
-	
-
 	
 }

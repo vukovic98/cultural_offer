@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.Post;
+import com.ftn.kts_nvt.dto.AddPostDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferCategoryDTO;
 import com.ftn.kts_nvt.dto.CulturalOfferDTO;
 import com.ftn.kts_nvt.dto.PostDTO;
@@ -133,6 +134,7 @@ public class PostControllerIntegrationTest {
 		assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
 	}
 
+	//OVAJ TEST JE PADAO JER SE SLAO PostDTO A KONTROLER PRIMA AddPostDTO
 	@Test
 	@Transactional
 	public void testCreateAndDelete() {
@@ -141,16 +143,21 @@ public class PostControllerIntegrationTest {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", this.accessToken);
 		long id = 1;
-		PostDTO post = new PostDTO(1L, "New post", "Content", Instant.now());
+		AddPostDTO addPost = new AddPostDTO();
+		addPost.setId(1L);
+		addPost.setTitle("New post");
+		addPost.setContent("Content");
+		
+		//PostDTO post = new PostDTO(1L, "New post", "Content", Instant.now());
 		CulturalOfferMapper offerMapper = new CulturalOfferMapper();
 		CulturalOffer o = this.offerService.findById(id);
 		if (o != null) {
 			CulturalOfferDTO offer = offerMapper.toDto(o);
-			post.setOffer(offer);
+			addPost.setCulturalOfferId(offer.getId());
 		} else
-			post.setOffer(null);
+			addPost.setCulturalOfferId(null);
 
-		HttpEntity<PostDTO> httpEntity = new HttpEntity<PostDTO>(post, headers);
+		HttpEntity<AddPostDTO> httpEntity = new HttpEntity<AddPostDTO>(addPost, headers);
 
 		ResponseEntity<PostDTO> responseEntity = restTemplate.exchange("/posts", HttpMethod.POST, httpEntity,
 				PostDTO.class);

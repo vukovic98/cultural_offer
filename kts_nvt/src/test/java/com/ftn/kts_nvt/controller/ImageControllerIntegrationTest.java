@@ -60,7 +60,7 @@ public class ImageControllerIntegrationTest {
 	 
 	 @Test
 	 public void testFindById() {
-		 login("a@a", "vukovic");
+		 login("a3@a", "vukovic");
 		 HttpHeaders headers = new HttpHeaders();
 		 headers.add("Authorization", this.accessToken);
 		 HttpEntity<Object> httpEntity = new HttpEntity<>(headers);
@@ -122,7 +122,7 @@ public class ImageControllerIntegrationTest {
 	 
 	 @Test
 	 public void testDeleteFail() {
-		 login("a@a", "vukovic");	//ROLE_USER
+		 login("a3@a", "vukovic");	//ROLE_USER
 		 HttpHeaders headers = new HttpHeaders();
 		 headers.add("Authorization", this.accessToken);
 		 HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);

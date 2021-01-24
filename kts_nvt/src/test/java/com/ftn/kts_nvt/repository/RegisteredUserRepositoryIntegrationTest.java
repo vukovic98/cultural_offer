@@ -26,7 +26,7 @@ public class RegisteredUserRepositoryIntegrationTest {
 	@Test
 	public void testFindByEmail() {
 		
-		String email = "a@a";
+		String email = "a4@a";
 		RegisteredUser user = this.registeredUserRepository.findByEmail(email);
 		
 		assertEquals(user.getEmail(), email);

@@ -120,7 +120,8 @@ public class GradeController {
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-
+		
+		System.out.println("grade created");
 		return new ResponseEntity<>(gradeMapper.toDto(grade), HttpStatus.CREATED);
 	}
 
@@ -154,14 +155,14 @@ public class GradeController {
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<Void> deleteGrade(@PathVariable Long id) {
+	public ResponseEntity<String> deleteGrade(@PathVariable Long id) {
 		try {
 			gradeService.delete(id);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>("OK", HttpStatus.OK);
 	}
 
 }
