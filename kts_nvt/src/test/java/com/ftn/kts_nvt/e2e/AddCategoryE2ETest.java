@@ -13,6 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 
 import com.ftn.kts_nvt.pages.AddCategoryPage;
@@ -31,9 +32,9 @@ public class AddCategoryE2ETest {
 
 	private static String ADMIN_USERNAME = "admin@gmail.com";
 	private static String ADMIN_PASSWORD = "vukovic";
-	private static String HOME_PAGE_PATH = "http://localhost:4200/home-page";
-	private static String CATEGORY_PAGE_PATH = "http://localhost:4200/category";
-	private static String LOGIN_PAGE_PATH = "http://localhost:4200/auth/login";
+	private static String HOME_PAGE_PATH = "https://localhost:4200/home-page";
+	private static String CATEGORY_PAGE_PATH = "https://localhost:4200/category";
+	private static String LOGIN_PAGE_PATH = "https://localhost:4200/auth/login";
 	
 	/* U TABELI SU
 	 * Name--------------------Types
@@ -48,8 +49,12 @@ public class AddCategoryE2ETest {
 	
 	@Before
 	public void setup() throws InterruptedException {
+		
+		ChromeOptions option= new ChromeOptions();
+        option.addArguments("ignore-certificate-errors");
+		
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-		this.driver = new ChromeDriver();
+		this.driver = new ChromeDriver(option);
 
 		this.driver.manage().window().maximize();
 		this.loginPage = PageFactory.initElements(driver, LoginPage.class);

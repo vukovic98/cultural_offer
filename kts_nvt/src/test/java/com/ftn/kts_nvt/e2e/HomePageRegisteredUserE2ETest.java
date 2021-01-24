@@ -12,6 +12,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 
 import com.ftn.kts_nvt.pages.HomePageRegisteredUser;
@@ -19,7 +20,7 @@ import com.ftn.kts_nvt.pages.LoginPage;
 
 public class HomePageRegisteredUserE2ETest {
 
-	public static final String HOME_PAGE = "http://localhost:4200/";
+	public static final String HOME_PAGE = "https://localhost:4200/";
 
 	private WebDriver driver;
 
@@ -30,8 +31,11 @@ public class HomePageRegisteredUserE2ETest {
 	@Before
 	public void setup() throws InterruptedException {
 
+		ChromeOptions option= new ChromeOptions();
+        option.addArguments("ignore-certificate-errors");
+		
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-		this.driver = new ChromeDriver();
+		this.driver = new ChromeDriver(option);
 
 		this.driver.manage().window().maximize();
 		this.homePage = PageFactory.initElements(this.driver, HomePageRegisteredUser.class);
@@ -108,7 +112,7 @@ public class HomePageRegisteredUserE2ETest {
 		
 		this.homePage.getSubscribedItemsLink().click();
 		
-		assertEquals("http://localhost:4200/cultural-offer/subscribed-items", this.driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/cultural-offer/subscribed-items", this.driver.getCurrentUrl());
 	}
 	
 	@Test
@@ -390,7 +394,7 @@ public class HomePageRegisteredUserE2ETest {
 		this.homePage.getMarkerLink().click();
 		
 		
-		assertEquals("http://localhost:4200/cultural-offer/offer-details/1", this.driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/cultural-offer/offer-details/1", this.driver.getCurrentUrl());
 		
 		
 	}
@@ -409,7 +413,7 @@ public class HomePageRegisteredUserE2ETest {
 		
 		justWait();
 		
-		assertEquals("http://localhost:4200/cultural-offer/offer-details/1", this.driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/cultural-offer/offer-details/1", this.driver.getCurrentUrl());
 	}
 
 	@Test
