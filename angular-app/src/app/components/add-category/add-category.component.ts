@@ -64,8 +64,10 @@ export class AddCategoryComponent implements OnInit {
   }
 
   deleteCategory(id: number) {
+    console.log("callservicedelete");
     this.categoryService.deleteCategory(id).subscribe((response) => {
       this.categories = this.categories.filter(item => item.id != id);
+      console.log("success = ", response);
       Swal.fire({
         title: 'Success!',
         text: 'Category successfully deleted!',
@@ -74,6 +76,7 @@ export class AddCategoryComponent implements OnInit {
       });
       return true;
     }, error => {
+      console.log("error = ", error);
       Swal.fire({
         title: 'Error!',
         text: 'Something went wrong! ' + error.error,
