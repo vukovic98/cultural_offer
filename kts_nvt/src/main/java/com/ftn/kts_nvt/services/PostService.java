@@ -17,6 +17,8 @@ import com.ftn.kts_nvt.beans.Comment;
 import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.Post;
 import com.ftn.kts_nvt.beans.RegisteredUser;
+import com.ftn.kts_nvt.beans.User;
+import com.ftn.kts_nvt.beans.VerificationCode;
 import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
 import com.ftn.kts_nvt.repositories.PostRepository;
 
@@ -58,6 +60,17 @@ public class PostService implements ServiceInterface<Post>{
         
 	}
 	
+	public String createMailBody(RegisteredUser u, CulturalOffer c, String title) {
+		
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append("<h2>" + u.getFirstName() + ", new post for offer you are subscribed to has arrived!</h2><br><br>");
+		sb.append("<h3>" + title + "</h3> <br><br>");
+		sb.append("<h4>Go check it out <a href='http://localhost:4200/offer-details/" + c.getId() + "'>here!</a></h4>");
+		
+		return sb.toString();
+	}
+	
 	@Async
 	public void sendMailToSubscribedUsers(CulturalOffer c, String title) {
 		try {
@@ -68,13 +81,7 @@ public class PostService implements ServiceInterface<Post>{
 				helper.setTo(u.getEmail());
 				helper.setSubject(c.getName() + " : New post is here!");
 	
-				StringBuffer sb = new StringBuffer();
-	
-				sb.append("<h2>" + u.getFirstName() + ", new post for offer you are subscribed to has arrived!</h2><br><br>");
-				sb.append("<h3>" + title + "</h3> <br><br>");
-				sb.append("<h4>Go check it out <a href='http://localhost:4200/offer-details/" + c.getId() + "'>here!</a></h4>");
-	
-				helper.setText(sb.toString(), true);
+				helper.setText(createMailBody(u, c, title), true);
 				this.javaMailSender.send(msg);
 	
 				System.out.println("SENT ACCEPTED MAIL!");

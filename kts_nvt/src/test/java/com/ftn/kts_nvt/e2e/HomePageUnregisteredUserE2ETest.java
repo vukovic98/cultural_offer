@@ -76,7 +76,7 @@ public class HomePageUnregisteredUserE2ETest {
 		
 		justWait();
 		
-		assertEquals("http://localhost:4200/login", this.driver.getCurrentUrl());
+		assertEquals("http://localhost:4200/auth/login", this.driver.getCurrentUrl());
 	}
 	
 	@Test
@@ -93,7 +93,7 @@ public class HomePageUnregisteredUserE2ETest {
 		
 		justWait();
 		
-		assertEquals("http://localhost:4200/sign-up", this.driver.getCurrentUrl());
+		assertEquals("http://localhost:4200/auth/sign-up", this.driver.getCurrentUrl());
 	}
 	
 	@Test
@@ -119,7 +119,7 @@ public class HomePageUnregisteredUserE2ETest {
 		
 		assertEquals(1, this.homePage.getOffers().size());
 		
-		int markersAfter = driver.findElements(By.xpath("//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")).size();
+		int markersAfter = this.homePage.getMarkers().size();
 		assertEquals(markersAfter, 1);
 	}
 	
@@ -146,7 +146,7 @@ public class HomePageUnregisteredUserE2ETest {
 		
 		assertTrue(this.homePage.getNoOffersDiv().isDisplayed());
 		
-		int markersAfter = driver.findElements(By.xpath("//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")).size();
+		int markersAfter = this.homePage.getMarkers().size();
 		assertEquals(markersAfter, 0);
 	}
 	
@@ -180,7 +180,7 @@ public class HomePageUnregisteredUserE2ETest {
 		
 		assertTrue(this.homePage.getOffers().size() > 0);
 		
-		int markersAfter = driver.findElements(By.xpath("//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")).size();
+		int markersAfter = this.homePage.getMarkers().size();
 		assertTrue(markersAfter > 0);
 		
 	}
@@ -219,7 +219,7 @@ public class HomePageUnregisteredUserE2ETest {
 		
 		assertEquals(1, this.homePage.getOffers().size());
 		
-		int markersAfter = driver.findElements(By.xpath("//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")).size();
+		int markersAfter = this.homePage.getMarkers().size();
 		assertEquals(markersAfter, 1);
 	}
 	
@@ -257,7 +257,7 @@ public class HomePageUnregisteredUserE2ETest {
 		
 		assertTrue(this.homePage.getNoOffersDiv().isDisplayed());
 		
-		int markersAfter = driver.findElements(By.xpath("//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")).size();
+		int markersAfter = this.homePage.getMarkers().size();
 		assertEquals(markersAfter, 0);
 	}
 	
@@ -275,7 +275,7 @@ public class HomePageUnregisteredUserE2ETest {
 		
 		justWait();
 		
-		assertEquals("http://localhost:4200/offer-details/1", this.driver.getCurrentUrl());
+		assertEquals("http://localhost:4200/cultural-offer/offer-details/1", this.driver.getCurrentUrl());
 	}
 	
 	@Test
@@ -291,6 +291,8 @@ public class HomePageUnregisteredUserE2ETest {
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
 		assertTrue(this.homePage.getTypeSelect().isDisplayed());
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
+		
+		justWait();
 		
 		int markersBefore = this.homePage.getMarkers().size();
 		assertEquals(8,markersBefore);
@@ -311,15 +313,14 @@ public class HomePageUnregisteredUserE2ETest {
 		
 		justWait();
 		
-		WebElement marker = driver.findElement(By.xpath("//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]"));
 		
-		marker.click();
+		this.homePage.getMarker().click();
 		justWait();justWait();
 		
-		WebElement markerLink = driver.findElement(By.xpath("//a[contains(text(), 'Sonsing')]"));
+		this.homePage.ensureIsMarkerLinkDisplayed();
 				
-		markerLink.click();
-		assertEquals("http://localhost:4200/cultural-offer/offer-details/12", this.driver.getCurrentUrl());
+		this.homePage.getMarkerLink().click();
+		assertEquals("http://localhost:4200/cultural-offer/offer-details/1", this.driver.getCurrentUrl());
 		
 		
 	}

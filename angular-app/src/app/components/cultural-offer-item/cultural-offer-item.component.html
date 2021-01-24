@@ -15,7 +15,7 @@
       <h3 class="float-left"><span class="badge badge-light float-left" title="Average grade"><i class="fa fa-star-o mr-2" aria-hidden="true"></i>{{offer.avgGrade}}</span></h3>
       <div class="float-right" *ngIf="isUser()">
         <small class="float-left mr-2">Subscribe</small>
-        <mat-slide-toggle id="toggleId" class="float-right mr-2" color="primary" (change)="subscribeToggle($event, offer.id)" [checked]="isSubscribed" title="(Un)Subscribe"></mat-slide-toggle>
+        <mat-slide-toggle class="float-right mr-2" color="primary" (change)="subscribeToggle($event, offer.id)" [checked]="isSubscribed" title="(Un)Subscribe"></mat-slide-toggle>
       </div>
       <div class="float-right" *ngIf="isAdmin()">
         <button mat-mini-fab color="warn" class="mr-2 mb-2" (click)=deleteOffer(offer.id) style="outline: none">
