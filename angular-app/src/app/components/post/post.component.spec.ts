@@ -12,7 +12,7 @@ describe('PostComponent', () => {
   let fixture: ComponentFixture<PostComponent>;
   let offerService: CulturalOfferService;
 
-  beforeEach(async () => {
+  beforeEach( () => {
     let offerServiceMock = {
       deletePost: jasmine.createSpy('deletePost')
         .and.returnValue(of({body: {statusCode: 200}}))
