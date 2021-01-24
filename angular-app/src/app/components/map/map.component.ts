@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { CulturalOffer } from '../../model/offer-mode';
 // @ts-ignore
-import * as L from 'leaflet';
+//import * as L from 'leaflet';
 import { MapService } from 'src/app/services/map.service';
 
 @Component({
@@ -13,6 +13,7 @@ export class MapComponent {
   offers: Array<CulturalOffer> = [];
   private pageNum = 1;
   private mymap: any;
+  //@ts-ignore
   markers = new L.LayerGroup;
 
   constructor(public mapService: MapService) {
@@ -52,10 +53,11 @@ export class MapComponent {
       let htmlData: string = "<div class='row'>" + imageStr +
         "<a class='btn btn-light m-auto w-100' id='offerMarkerLink"+offer.id+"' href='https://localhost:4200/cultural-offer/offer-details/"+offer.id+"'>"+offer.name+"</a>" +
         "</div>";
-
+    //@ts-ignore
       let marker = L.marker([offer.location.latitude, offer.location.longitude]).addTo(this.markers);
       marker.on('click', (e: any) => {
         //open popup;
+        //@ts-ignore
         var popup = L.popup()
           .setLatLng(marker.getLatLng())
           .setContent(htmlData)

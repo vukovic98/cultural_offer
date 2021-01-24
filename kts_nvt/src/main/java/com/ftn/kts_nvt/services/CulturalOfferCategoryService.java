@@ -80,8 +80,9 @@ public class CulturalOfferCategoryService implements ServiceInterface<CulturalOf
 			System.out.println("CulturalOfferCategory is used in CulturalOfferType");
 			throw new Exception("CulturalOfferCategory is used in CulturalOfferType");
 		}
-		System.out.println("repository.delete");
-		repository.delete(existingCategory);
+		//System.out.println("repository.delete");
+		//repository.delete(existingCategory);
+		repository.deleteById(id);
 	}
 	
 }

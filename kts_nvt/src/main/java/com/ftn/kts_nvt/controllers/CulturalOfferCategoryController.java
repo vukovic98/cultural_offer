@@ -166,14 +166,15 @@ public class CulturalOfferCategoryController {
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<String> deleteCategory(@PathVariable Long id) {
+	public ResponseEntity<HttpStatus> deleteCategory(@PathVariable Long id) {
 		try {
 			service.delete(id);
 		} catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+			System.out.println("error = " + e.getMessage());
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		System.out.println("deletedcategory");
-		return new ResponseEntity<>("OK", HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }
