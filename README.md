@@ -13,3 +13,6 @@
 
 #### Angular App
     Open app in one environments (WebStorm, Visual Code ..) and run it with command -> ng serve --ssl
+
+#### Injecting the data
+    In your MySql Workbench: Server -> Data Import, and select file database_script/script.sql
