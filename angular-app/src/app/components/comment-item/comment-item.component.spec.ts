@@ -8,9 +8,6 @@ import {AuthService} from '../../services/auth.service';
 import {HttpClient} from '@angular/common/http';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
-import {async} from '@angular/core/testing';
-import {DebugElement} from '@angular/core';
-import {By} from '@angular/platform-browser';
 
 describe('CommentItemComponent', () => {
   let component: CommentItemComponent;

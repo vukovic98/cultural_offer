@@ -13,8 +13,8 @@ export class SubscribedItemsComponent implements OnInit {
   constructor(private service: CulturalOfferService) { }
 
   ngOnInit(): void {
-    this.service.getSubscribedItems().subscribe((data: string) => {
-      this.offers = JSON.parse(data);
+    this.service.getSubscribedItems().subscribe((data) => {
+      this.offers = data;
     });
   }
 

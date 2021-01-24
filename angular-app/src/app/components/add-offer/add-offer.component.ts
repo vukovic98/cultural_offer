@@ -142,6 +142,7 @@ export class AddOfferComponent implements OnInit {
   }
 
   submit() {
+    console.log("submit = ", this.myForm.value);
     let locationObj = {
       'place': this.myForm.value.place,
       'latitude': this.myForm.value.location.lat,

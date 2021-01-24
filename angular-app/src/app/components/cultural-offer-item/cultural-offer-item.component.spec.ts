@@ -13,36 +13,58 @@ import {Location} from '../../model/offer-mode';
 import {MatSlideToggle, MatSlideToggleChange, MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {By} from '@angular/platform-browser';
 import {by} from 'protractor';
+import {HarnessLoader} from '@angular/cdk/testing';
+import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatSlideToggleHarness} from '@angular/material/slide-toggle/testing';
 
 describe('CulturalOfferItemComponent', () => {
   let component: CulturalOfferItemComponent;
   let fixture: ComponentFixture<CulturalOfferItemComponent>;
-  let offerService: any;
-  let router: any;
-  let httpClient: any;
+  let authService: AuthService;
+  let offerService: CulturalOfferService;
+  let router: Router;
+  let loader: HarnessLoader;
 
-  beforeEach(async () => {
+
+  beforeEach( () => {
     let offerServiceMock = {
       subscribeUser: jasmine.createSpy('subscribeUser')
-        .and.returnValue(of({body: {statusCode: 200}}))
+        .and.returnValue(of({})),
+      unsubscribeUser: jasmine.createSpy('unsubscribeUser')
+        .and.returnValue(of({}))
     }
 
     let routerMock = {
       navigate: jasmine.createSpy('navigate')
     };
 
+    let authMock = {
+      isUser: jasmine.createSpy('isUser')
+        .and.returnValue(true),
+      isAdmin: jasmine.createSpy('isAdmin')
+        .and.returnValue(true)
+    };
+
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule, MatSlideToggleModule],
-      declarations: [ CommentItemComponent ],
-      providers:    [ {provide: CulturalOfferService, useValue: offerServiceMock },
-        { provide: Router, useValue: routerMock } , AuthService, HttpClient, MatSlideToggle]
-    });
+      imports: [
+        MatSlideToggleModule,
+        BrowserAnimationsModule
+      ],
+      declarations: [ CulturalOfferItemComponent ],
+      providers:    [
+          { provide: CulturalOfferService, useValue: offerServiceMock },
+          { provide: Router, useValue: routerMock },
+          { provide: AuthService, useValue: authMock }
+        ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CulturalOfferItemComponent);
     component    = fixture.componentInstance;
     offerService = TestBed.inject(CulturalOfferService);
     router = TestBed.inject(Router);
-    httpClient = TestBed.inject(HttpClient);
+    authService = TestBed.inject(AuthService);
+    loader = TestbedHarnessEnvironment.loader(fixture);
 
     component.offer = {
       "id": 26,
@@ -54,10 +76,20 @@ describe('CulturalOfferItemComponent', () => {
         "longitude": 33.33,
         "place": "Beograd"
       },
-      "description": "This is offer",
+      "description": "Lorem Ipsum is simply dummy text of the printing " +
+        "and typesetting industry. Lorem Ipsum has been the industry's standard dummy " +
+        "text ever since the 1500s, when an unknown printer took a galley of type and " +
+        "scrambled it to make a type specimen book. It has survived not only five centuries," +
+        " but also the leap into electronic typesetting, remaining essentially unchanged. " +
+        "It was popularised in the 1960s with the release of Letraset sheets containing Lorem" +
+        " Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker" +
+        " including versions of Lorem Ipsum.",
       "avgGrade": 5,
       "subscribersCount": 5
     };
+
+    spyOn(component.removeOffer, 'emit');
+    spyOn(component.editOffer, 'emit');
 
     component.isSubscribed = false;
 
@@ -66,58 +98,73 @@ describe('CulturalOfferItemComponent', () => {
   });
 
 
-  it('should create', () => {
+  it('should bre created', () => {
     expect(component).toBeTruthy();
     expect(component.offer).toBeTruthy();
     expect(component.offer.id).toBe(26);
   });
 
-  it('should subscribe user to existing offer', fakeAsync(() => {
-    localStorage.setItem("accessToken", "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJLdWx0dXJhIG5hIERsYW51Iiwic3ViIjoidmxhZGltaXJ2dWtvdmljOThAbWFpbGRyb3AuY2MiLCJhdWQiOiJ3ZWIiLCJpYXQiOjE2MTA5NzA3ODcsImV4cCI6MTYxMDk3MjU4NywidXNlcl9maXJzdE5hbWUiOiJWbGFkaW1pciIsInVzZXJfbGFzdE5hbWUiOiJWdWtvdmljIiwidXNlcl9pZCI6IjEiLCJhdXRob3JpdHkiOlt7ImlkIjoxLCJuYW1lIjoiUk9MRV9VU0VSIiwiYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dfQ.XDy0eWTBv-RDcC7mc7rBpxePMx0kZQr8kPyvBn6y2_72mQ2igaRYLjOgqjGozcD0VVfEfdauB6XjjKqxrq2joA");
+  it('should emit delete offer event', () => {
+    component.deleteOffer(26);
 
-    fixture.detectChanges();
+    expect(component.removeOffer.emit).toHaveBeenCalledWith(26);
+  });
 
-    expect(component.isUser()).toBeTrue();
+  it('should emit edit offer event', () => {
+    component.edit(component.offer);
 
-    const slider = fixture.debugElement.query(By.css('#toggleId')).nativeElement;
+    expect(component.editOffer.emit).toHaveBeenCalledWith(component.offer);
+  });
 
-    fixture.detectChanges();
-    console.log(slider);
+  it('should subscribe user to existing offer', async() => {
+
+    const sliderHarness = await loader.getHarness(MatSlideToggleHarness);
+
+    expect(sliderHarness).toBeTruthy();
+
+    component.isSubscribed = false;
+
+    await sliderHarness.check();
+
+    const slider = fixture.debugElement.query(By.directive(MatSlideToggle)).nativeElement;
 
     expect(slider).toBeTruthy();
-    //component.subscribeToggle()
-  }));
+
+    component.subscribeToggle(new MatSlideToggleChange(slider, true), 26 );
+
+    expect(offerService.subscribeUser).toHaveBeenCalledWith(26);
+  });
+
+  it('should unsubscribe user from existing offer', async() => {
+
+    const sliderHarness = await loader.getHarness(MatSlideToggleHarness);
+
+    expect(sliderHarness).toBeTruthy();
+
+    component.isSubscribed = true;
+
+    await sliderHarness.uncheck();
+
+    const slider = fixture.debugElement.query(By.directive(MatSlideToggle)).nativeElement;
+
+    expect(slider).toBeTruthy();
+
+    component.subscribeToggle(new MatSlideToggleChange(slider, false), 26 );
+
+    expect(offerService.unsubscribeUser).toHaveBeenCalledWith(26);
+  });
 
   it('should determine if user is registered user', () => {
-    localStorage.setItem("accessToken", "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJLdWx0dXJhIG5hIERsYW51Iiwic3ViIjoidmxhZGltaXJ2dWtvdmljOThAbWFpbGRyb3AuY2MiLCJhdWQiOiJ3ZWIiLCJpYXQiOjE2MTA5NzA3ODcsImV4cCI6MTYxMDk3MjU4NywidXNlcl9maXJzdE5hbWUiOiJWbGFkaW1pciIsInVzZXJfbGFzdE5hbWUiOiJWdWtvdmljIiwidXNlcl9pZCI6IjEiLCJhdXRob3JpdHkiOlt7ImlkIjoxLCJuYW1lIjoiUk9MRV9VU0VSIiwiYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dfQ.XDy0eWTBv-RDcC7mc7rBpxePMx0kZQr8kPyvBn6y2_72mQ2igaRYLjOgqjGozcD0VVfEfdauB6XjjKqxrq2joA");
 
     let isUser: boolean = component.isUser();
 
     expect(isUser).toBeTrue();
-  });
-
-  it('should determine if user is registered user (fail)', () => {
-    localStorage.removeItem("accessToken");
-
-    let isUser: boolean = component.isUser();
-
-    expect(isUser).toBeFalse();
   });
 
   it('should determine if user is admin', () => {
-    localStorage.setItem("accessToken", "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJLdWx0dXJhIG5hIERsYW51Iiwic3ViIjoidmxhZG9AZ21haWwuY29tIiwiYXVkIjoid2ViIiwiaWF0IjoxNjEwOTcxMzI4LCJleHAiOjE2MTA5NzMxMjgsInVzZXJfZmlyc3ROYW1lIjoiVmxhZGltaXIiLCJ1c2VyX2xhc3ROYW1lIjoiVnVrb3ZpYyIsInVzZXJfaWQiOiIyIiwiYXV0aG9yaXR5IjpbeyJpZCI6MiwibmFtZSI6IlJPTEVfQURNSU4iLCJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dfQ.NP-mNaoVyNoKCYTDt6yIWbyPN9v3W1y2aKw4HRSu_84tR2lTyuQZWALRnMyHs4vefT7V6CBUvbcrcDiZ5Wdsew");
-
     let isUser: boolean = component.isAdmin();
 
     expect(isUser).toBeTrue();
-  });
-
-  it('should determine if user is admin (fail)', () => {
-    localStorage.removeItem("accessToken");
-
-    let isUser: boolean = component.isAdmin();
-
-    expect(isUser).toBeFalse();
   });
 
   it('should navigate to details page', () => {

@@ -12,7 +12,11 @@ import { AddPostModel } from '../../model/post-model';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from "sweetalert2";
+<<<<<<< HEAD
 import { MapService } from 'src/app/services/map.service';
+=======
+import { LocationDialogComponent } from '../location-dialog/location-dialog.component';
+>>>>>>> dc484f6486cfdced60074faccf8e0d84f17be6e7
 
 @Component({
   selector: 'app-offer-details',
@@ -37,6 +41,7 @@ export class OfferDetailsComponent implements OnInit{
   ngOnInit() {
     if (this.authService.isUser()) {
       this.service.getSubscribedItems().subscribe((data: string) => {
+        console.log("getSubscribedItems = ", data);
         this.subscribedItems = JSON.parse(data);
       })
     }
@@ -47,6 +52,7 @@ export class OfferDetailsComponent implements OnInit{
 
   getOffer(): void {
     this.service.getOffer(this.id).subscribe((data: OfferDetailsModel) => {
+      console.log("getOffer = ", data);
       this.offer = data;
 
       let token = this.authService.getToken();
@@ -71,6 +77,7 @@ export class OfferDetailsComponent implements OnInit{
     let offerId = this.offer.id;
     this.service.gradeOffer(parseInt(userId), parseInt(offerId), this.selectedValue)
       .subscribe(response => {
+        console.log("gradeOffer = ", response);
         Swal.fire({
           title: 'Success!',
           text: 'We marked you grade! ' ,
@@ -102,6 +109,7 @@ export class OfferDetailsComponent implements OnInit{
     if (event.checked) { // subscribe to offer
       this.service.subscribeUser(id)
         .subscribe(response => {
+          console.log("subscribeUser = ", response);
           Swal.fire({
             title: 'Success!',
             text: 'Successfully subscribed to offer! Now you will get all the latest updates!',
@@ -122,6 +130,7 @@ export class OfferDetailsComponent implements OnInit{
     else {//unsubscribe from offer
       this.service.unsubscribeUser(id)
         .subscribe(response => {
+          console.log("unsubscribeUser = ", response);
           Swal.fire({
             title: 'Success!',
             text: 'Successfully unsubscribed from offer!',
@@ -150,6 +159,7 @@ export class OfferDetailsComponent implements OnInit{
   }
 
   isSubscribed(offer: OfferDetailsModel): boolean {
+    console.log("isSubscribed = ", offer);
     if (this.authService.isLoggedIn()) {
       for (let i of this.subscribedItems) {
         if (i.id === Number(offer.id))
@@ -160,44 +170,10 @@ export class OfferDetailsComponent implements OnInit{
   }
 
   showLocation(location: Location) {
-    const dialogRef = this.locationDialog.open(LocationDialog, {
+    const dialogRef = this.locationDialog.open(LocationDialogComponent, {
       width: '450px',
       height: '450px',
       data: location
     });
-
-  }
-}
-
-@Component({
-  selector: 'location-dialog',
-  templateUrl: 'location-dialog.html',
-})
-export class LocationDialog {
-  constructor(
-    public dialogRef: MatDialogRef<LocationDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: Location) {
-    console.log("dialog data = ", data);
-
-  }
-
-  ngOnInit() {
-    //@ts-ignore
-    let mymap = L.map('mapid').setView([this.data.latitude, this.data.longitude], 13);
-    //@ts-ignore
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      maxZoom: 18,
-      id: 'mapbox/streets-v11',
-      tileSize: 512,
-      zoomOffset: -1,
-      accessToken: 'pk.eyJ1IjoiYXNqaGdhc2RqIiwiYSI6ImNraWx4a2x5dTBtNWUyeHBkZjZsOXdxYTYifQ.Xl_z4h3W3xCO1K2Aj-j2Iw'
-    }).addTo(mymap);
-    //@ts-ignore
-    let marker = L.marker([this.data.latitude, this.data.longitude]).addTo(mymap);
-  }
-
-  close() {
-    this.dialogRef.close();
   }
 }

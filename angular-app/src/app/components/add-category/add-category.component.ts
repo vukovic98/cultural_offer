@@ -17,19 +17,28 @@ export class AddCategoryComponent implements OnInit {
   public categories: Array<CategoryModel> = [];
   public pageNum: number = 1;
   public nextBtn: boolean = false;
-  public categoryForm: FormGroup;
-  public categoryFormByName: FormGroup;
+  public categoryForm: FormGroup = new FormGroup({
+    name: new FormControl('', Validators.required)
+  });
 
-  constructor(private fb: FormBuilder,
+  /* addPostForm = new FormGroup({
+    "title": new FormControl('', [Validators.required]),
+    "content": new FormControl('', Validators.required)
+  }); */
+  public categoryFormByName: FormGroup = new FormGroup({
+    byname: new FormControl('')
+  });
+
+  constructor(/*private fb: FormBuilder,*/
     private categoryService: CategoryService,
     public dialog: MatDialog) {
 
-    this.categoryForm = this.fb.group({
+    /*this.categoryForm = this.fb.group({
       name: new FormControl('', Validators.required)
     });
     this.categoryFormByName = this.fb.group({
       byname: new FormControl('')
-    });
+    });*/
   }
 
   ngOnInit(): void {
@@ -45,7 +54,7 @@ export class AddCategoryComponent implements OnInit {
   }
 
   newType(): FormGroup {
-    return this.fb.group({
+    return new FormGroup({
       name: new FormControl('', Validators.required)
     })
   }
@@ -94,6 +103,7 @@ export class AddCategoryComponent implements OnInit {
   }
 
   getCategories() {
+    //console.log("getcategories");
     this.categoryService.getCategoriesByPage(this.pageNum).subscribe((data: any) => {
       //console.log("getcategoriesbypage = ");
       //console.log(data);
@@ -141,13 +151,13 @@ export class AddCategoryComponent implements OnInit {
   }
 
   onSubmitByName() {
-    console.log(this.categoryFormByName.value);
+    //console.log(this.categoryFormByName.value);
     if (this.categoryFormByName.value.byname == "") {
       this.getCategories();
     } else {
       this.categoryService.getByName(this.categoryFormByName.value.byname).subscribe((data: CategoryModel) => {
-        //console.log("getbyname = ");
-        //console.log(data);
+        console.log("getbyname = ");
+        console.log(data);
         this.categories = [data];
       }, (error: any) => {
         //console.log(error);
