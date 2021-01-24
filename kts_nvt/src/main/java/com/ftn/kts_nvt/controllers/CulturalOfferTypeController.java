@@ -110,8 +110,7 @@ public class CulturalOfferTypeController {
 
 	// DELETE http://localhost:8080/culturalOfferType/1
 	@DeleteMapping(path = "/{id}")
-	//TODO
-	//@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") long id) {
 		boolean deleted;
 		try {

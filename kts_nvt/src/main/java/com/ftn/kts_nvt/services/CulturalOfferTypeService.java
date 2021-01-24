@@ -95,7 +95,7 @@ public class CulturalOfferTypeService {
 			System.out.println("exist == null");
 			System.out.println("id = " + culturalOfferType.getCategory().getId());
 			CulturalOfferCategory category = culturalOfferCategoryRepository.findById(culturalOfferType.getCategory().getId()).orElse(null);
-			System.out.println("found category = " + category.getName() + " " + category.getTypes().size());
+			System.out.println("found category = " + category.getName());
 			category.getTypes().add(addedType);
 			System.out.println("size =  " + category.getTypes().size());
 			culturalOfferCategoryRepository.save(category);

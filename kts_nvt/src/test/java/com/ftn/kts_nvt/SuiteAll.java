@@ -65,59 +65,55 @@ import com.ftn.kts_nvt.e2e.SignUpE2ETest;
 @SuiteClasses({
 	
 		//controller I
-		//CulturalOfferCategoryControllerIntegrationTest.class,
-		//PostControllerIntegrationTest.class,
-		//GeoLocationControllerIntegrationTest.class,
-	    //CommentControllerIntegrationTest.class,
-	    //------testFindByIdFail, testFindAllPageable, testFindById
-	    //CulturalOfferControllerIntegrationTest.class,
-	    //GradeControllerIntegrationTest.class,
-	    //------testCreateAndDelete
-	    //ImageControllerIntegrationTest.class,
-	    //CulturalOfferTypeControllerIntegrationTest.class,
-	    //------testFindAllPageable, testDeleteFailRole
-	    //AdminControllerIntegrationTest.class,
-	    //AuthenticationControllerIntegrationTest.class,
-	    //------testChangePassword
-	    //RegisteredUserControllerIntegrationTest.class,
-	    //------testSubscribeUnsubscribe, testFindByEmail
+		/*CulturalOfferCategoryControllerIntegrationTest.class,
+		PostControllerIntegrationTest.class,
+		GeoLocationControllerIntegrationTest.class,
+	    CommentControllerIntegrationTest.class,
+	    CulturalOfferControllerIntegrationTest.class,
+	    GradeControllerIntegrationTest.class,
+	    ImageControllerIntegrationTest.class,
+	    CulturalOfferTypeControllerIntegrationTest.class,
+	    AdminControllerIntegrationTest.class,
+	    AuthenticationControllerIntegrationTest.class,
+	    RegisteredUserControllerIntegrationTest.class,*/
 	    
 	    //service U
-		//CulturalOfferServiceUnitTest.class,
-		//CommentServiceUnitTest.class,
-	    //CulturalOfferCategoryServiceUnitTest.class,
-	    //GeoLocationServiceUnitTest.class,
-	    //ImageServiceUnitTest.class,
-	    //PostServiceUnitTest.class,
-	    //GradeServiceUnitTest.class,
+		/*CulturalOfferServiceUnitTest.class,
+		CommentServiceUnitTest.class,
+	    CulturalOfferCategoryServiceUnitTest.class,
+	    GeoLocationServiceUnitTest.class,
+	    ImageServiceUnitTest.class,
+	    PostServiceUnitTest.class,
+	    GradeServiceUnitTest.class,*/
 	    
 	    //service I
-	    //CommentServiceIntegrationTest.class,
-	    //CulturalOfferServiceIntegrationTest.class,
-	    //CulturalOfferCategoryServiceIntegrationTest.class,
-	    //CulturalOfferTypeServiceIntegrationTest.class,
-	    //------h_testCreateAndDelete
-	    //GeoLocationServiceIntegrationTest.class,
-	    //GradeServiceIntegrationTest.class,
-	    //------x_testCreateAndDelete
-	    //ImageServiceIntegrationTest.class,
+	    /*CommentServiceIntegrationTest.class,
+	    CulturalOfferServiceIntegrationTest.class,
+	    CulturalOfferCategoryServiceIntegrationTest.class,
+	    GeoLocationServiceIntegrationTest.class,
+	    ImageServiceIntegrationTest.class, 
+	    AdminServiceIntegrationTest.class,
+	    RegisteredUserServiceIntegrationTest.class,
+	    VerificationCodeServiceIntegrationTest.class,*/
+	    
 	    //PostServiceIntegrationTest.class,
 	    //------x_testCreateAndDeleteEntity, x_testUpdate
-	    //AdminServiceIntegrationTest.class,
-	    //RegisteredUserServiceIntegrationTest.class,
-	    //VerificationCodeServiceIntegrationTest.class,
-     
+		//GradeServiceIntegrationTest.class,
+	    //------x_testCreateAndDelete
+		//CulturalOfferTypeServiceIntegrationTest.class,
+		//------h_testCreateAndDelete
+
 	    //repository I
-		//CulturalOfferCategoryRepositoryIntegrationTest.class,
-		//CulturalOfferTypeRepositoryIntegrationTest.class,
-		//PostRepositoryIntegrationTest.class,
-		//GradeRepositoryIntegrationTest.class,
-		//CulturalOfferRepositoryIntegrationTest.class,
-		//CommentRepositoryIntegrationTest.class, 
-		//GradeRepositoryIntegrationTest.class,
-		//AdminRepositoryIntegrationTest.class,
-		//RegisteredUserRepositoryIntegrationTest.class,
-		//VerificationCodeRepositoryIntegrationTest.class,
+		CulturalOfferCategoryRepositoryIntegrationTest.class,
+		CulturalOfferTypeRepositoryIntegrationTest.class,
+		PostRepositoryIntegrationTest.class,
+		GradeRepositoryIntegrationTest.class,
+		CulturalOfferRepositoryIntegrationTest.class,
+		CommentRepositoryIntegrationTest.class, 
+		GradeRepositoryIntegrationTest.class,
+		AdminRepositoryIntegrationTest.class,
+		RegisteredUserRepositoryIntegrationTest.class,
+		VerificationCodeRepositoryIntegrationTest.class,
 	
 		//E2E SW3
 		//LoginE2ETest.class,
