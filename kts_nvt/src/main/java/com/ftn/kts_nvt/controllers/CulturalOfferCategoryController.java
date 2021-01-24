@@ -172,8 +172,8 @@ public class CulturalOfferCategoryController {
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
-
-		return new ResponseEntity<>("OK",HttpStatus.OK);
+		System.out.println("deletedcategory");
+		return new ResponseEntity<>("OK", HttpStatus.OK);
 	}
 
 }

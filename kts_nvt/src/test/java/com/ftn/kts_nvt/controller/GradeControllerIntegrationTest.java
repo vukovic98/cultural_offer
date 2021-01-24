@@ -7,8 +7,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -37,6 +39,7 @@ import com.ftn.kts_nvt.services.RegisteredUserService;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("classpath:test.properties")
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class GradeControllerIntegrationTest {
 
 	@Autowired
@@ -63,8 +66,8 @@ public class GradeControllerIntegrationTest {
 	}
 	
 	@Test
-	public void testFindAll() {
-		login("a2@a", "vukovic");		//ROLE_USER
+	public void a_testFindAll() {
+		login("a3@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -82,8 +85,8 @@ public class GradeControllerIntegrationTest {
 	}
 	
 	@Test
-	public void testFindAllPageable() {
-		login("a2@a", "vukovic");		//ROLE_USER
+	public void b_testFindAllPageable() {
+		login("a3@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 	    
@@ -102,7 +105,7 @@ public class GradeControllerIntegrationTest {
 	}
 	
 	@Test
-	public void testFindById() {		
+	public void c_testFindById() {		
 		ResponseEntity<GradeDTO> responseEntity =
                 restTemplate.exchange("/grades/1",
                 						HttpMethod.GET,
@@ -110,7 +113,7 @@ public class GradeControllerIntegrationTest {
                 						GradeDTO.class);
 		assertEquals(HttpStatus.UNAUTHORIZED, responseEntity.getStatusCode());
 
-		login("a2@a", "vukovic");		//ROLE_USER
+		login("a3@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -133,8 +136,8 @@ public class GradeControllerIntegrationTest {
 	}
 	
 	@Test
-	public void testGetGradeForUser() {
-		login("a2@a", "vukovic");		//ROLE_USER
+	public void d_testGetGradeForUser() {
+		login("a3@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -155,8 +158,8 @@ public class GradeControllerIntegrationTest {
 	}
 	
 	@Test
-	public void testGetGradeForOffer() {
-		login("a2@a", "vukovic");		//ROLE_USER
+	public void e_testGetGradeForOffer() {
+		login("a3@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -177,53 +180,8 @@ public class GradeControllerIntegrationTest {
 	}
 	
 	@Test
-	public void testCreateAndDelete() {
-		int sizeBefore = service.findAll().size();
-		login("a2@a", "vukovic");		//ROLE_USER
-		HttpHeaders headers = new HttpHeaders();
-	    headers.add("Authorization", this.accessToken); 
-		
-		RegisteredUser user = this.userService.findOne(4L);
-		
-		CulturalOfferDTO offer = new CulturalOfferDTO();
-		offer.setId(1L);
-		GradeDTO grade = new GradeDTO();
-		grade.setValue(5);
-		grade.setUser(new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),
-				user.getPassword()));
-		grade.setCulturalOffer(offer);
-		
-		HttpEntity<GradeDTO> httpEntity = new HttpEntity<>(grade, headers);
-        
-		ResponseEntity<GradeDTO> responseEntity =
-                restTemplate.postForEntity("/grades",
-                							httpEntity, 
-                							GradeDTO.class);
-		GradeDTO createdGrade = responseEntity.getBody();
-		assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-		assertNotNull(createdGrade);
-		assertEquals(5, createdGrade.getValue());
-		int sizeAfter = service.findAll().size();
-		assertEquals(sizeBefore+1, sizeAfter);
-		
-		HttpEntity<Object> httpEntityDelete = new HttpEntity<Object>(headers);
-	    ResponseEntity<?> responseEntityDelete =
-	                restTemplate.exchange("/grades/"+createdGrade.getId(),
-	                						HttpMethod.DELETE,
-	                						httpEntityDelete,
-	                						Object.class);
-	    
-	    assertEquals(HttpStatus.OK, responseEntityDelete.getStatusCode());
-	    int sizeAfterDelete = service.findAll().size();
-	    assertEquals(sizeBefore, sizeAfterDelete);
-	     
-	    Grade d = service.findOne(createdGrade.getId());
-	    assertNull(d);
-	}
-	
-	@Test
-	public void testUpdate() {
-		login("a2@a", "vukovic");		//ROLE_USER
+	public void f_testUpdate() {
+		login("a3@a", "vukovic");		//ROLE_USER
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", this.accessToken); 
 	    
@@ -266,7 +224,57 @@ public class GradeControllerIntegrationTest {
                 						httpEntity,
                 						GradeDTO.class);
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-
-		
 	}
+	
+	
+	@Test
+	public void x_testCreateAndDelete() {
+		int sizeBefore = service.findAll().size();
+		System.out.println("sizebefore = " + sizeBefore);
+		login("a3@a", "vukovic");		//ROLE_USER
+		HttpHeaders headers = new HttpHeaders();
+	    headers.add("Authorization", this.accessToken); 
+		
+		RegisteredUser user = this.userService.findOne(4L);
+		
+		CulturalOfferDTO offer = new CulturalOfferDTO();
+		offer.setId(2L);
+		GradeDTO grade = new GradeDTO();
+		grade.setValue(5);
+		grade.setUser(new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),
+				user.getPassword()));
+		grade.setCulturalOffer(offer);
+		
+		HttpEntity<GradeDTO> httpEntity = new HttpEntity<>(grade, headers);
+        
+		ResponseEntity<GradeDTO> responseEntity =
+                restTemplate.postForEntity("/grades",
+                							httpEntity, 
+                							GradeDTO.class);
+		GradeDTO createdGrade = responseEntity.getBody();
+		System.out.println("cretedGrade id = " + createdGrade.getId());
+		
+		assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+		assertNotNull(createdGrade);
+		assertEquals(5, createdGrade.getValue());
+		int sizeAfter = service.findAll().size();
+		System.out.println("sizeAfter = " + sizeAfter);
+		assertEquals(sizeBefore+1, sizeAfter);
+		
+		HttpEntity<Object> httpEntityDelete = new HttpEntity<Object>(headers);
+	    ResponseEntity<String> responseEntityDelete =
+	                restTemplate.exchange("/grades/"+createdGrade.getId(),
+	                						HttpMethod.DELETE,
+	                						httpEntityDelete,
+	                						String.class);
+	    
+	    assertEquals(HttpStatus.OK, responseEntityDelete.getStatusCode());
+	    int sizeAfterDelete = service.findAll().size();
+	    assertEquals(sizeBefore, sizeAfterDelete);
+	     
+	    Grade d = service.findOne(createdGrade.getId());
+	    assertNull(d);
+	}
+	
+	
 }

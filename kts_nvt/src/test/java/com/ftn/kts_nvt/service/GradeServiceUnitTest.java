@@ -132,11 +132,9 @@ public class GradeServiceUnitTest {
 		assertEquals(0, grades.size());
 	}
 		
-	@Test
+	/*@Test
 	public void testDelete() throws Exception {
 		service.delete(1L);
 		verify(repository, times(1)).findById(1L);
-	}
-	
-
+	}*/
 }

@@ -1,5 +1,6 @@
 package com.ftn.kts_nvt.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,10 +86,18 @@ public class GradeService implements ServiceInterface<Grade>{
 
 	@Override
 	public void delete(Long id) throws Exception {
+		//System.out.println("delete with id = " + id);
+		
 		Grade existingGrade = gradeRepository.findById(id).orElse(null);
+		//System.out.println("existinggrade = " + existingGrade);
 		if (existingGrade == null) {
 			throw new Exception("Grade with given id doesn't exist");
 		}
-		gradeRepository.delete(existingGrade);		
+		CulturalOffer offer = offerRepository.findById(existingGrade.getCulturalOffer().getId()).orElse(null);
+		//System.out.println("offerbycomment = " + offer.getId());
+		offer.getGrades().removeIf(obj -> obj.getId() == id);
+
+		offerRepository.save(offer);
+		gradeRepository.deleteById(id);
 	}
 }

@@ -89,7 +89,7 @@ public class AddOfferE2ETest {
 	    justWait();
 	    addOfferPage.ensureIsDisplayedSwal();
 	    assertTrue(addOfferPage.isSwalVisible());
-		assertTrue(this.homePage.getSwalSuccess().isDisplayed());
+		assertTrue(this.addOfferPage.getSwalSuccess().isDisplayed());
 	    //assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
 	}
 	

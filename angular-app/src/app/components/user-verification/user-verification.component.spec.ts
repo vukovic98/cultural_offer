@@ -20,16 +20,8 @@ describe('UserVerificationComponent', () => {
   let activateRouter: any;
   let swal: any;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ UserVerificationComponent],
-      providers: [AuthService, HttpClient, HttpHandler]
+  beforeEach( () => {
 
-    })
-    .compileComponents();
-  });
-
-  beforeEach(() => {
     let authServiceMock = {
       verifyCode: jasmine.createSpy('verifyCode').
       and.returnValue(of({
@@ -52,7 +44,6 @@ describe('UserVerificationComponent', () => {
 
 
     TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA],
       declarations: [UserVerificationComponent],
       imports: [RouterTestingModule],
       providers:[

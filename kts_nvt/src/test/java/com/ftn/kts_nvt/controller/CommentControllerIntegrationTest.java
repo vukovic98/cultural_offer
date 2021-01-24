@@ -67,6 +67,8 @@ public class CommentControllerIntegrationTest {
 	
 	@Test
 	public void testFindAllPageable() {
+		login("vlado@gmail.com", "vukovic");
+
 		ResponseEntity<PageImplementation<CommentUserDTO>> responseEntity = this.restTemplate.exchange("/comments/by-page/1",
 				HttpMethod.GET, null, new ParameterizedTypeReference<PageImplementation<CommentUserDTO>>() {
 				});
@@ -80,6 +82,8 @@ public class CommentControllerIntegrationTest {
 
 	@Test
 	public void testFindById() {
+		login("vlado@gmail.com", "vukovic");
+
 		ResponseEntity<CommentDTO> responseEntity = restTemplate.getForEntity("/comments/1", CommentDTO.class);
 
 		CommentDTO dto = responseEntity.getBody();
@@ -90,6 +94,8 @@ public class CommentControllerIntegrationTest {
 
 	@Test
 	public void testFindByIdFail() {
+		login("vlado@gmail.com", "vukovic");
+
 		ResponseEntity<CommentDTO> responseEntity = restTemplate.getForEntity("/comments/222", CommentDTO.class);
 
 		assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
@@ -99,7 +105,7 @@ public class CommentControllerIntegrationTest {
 	@Test
 	@Transactional
 	public void testCreateAndDelete() {
-		login("a@a", "vukovic");
+		login("a3@a", "vukovic");
 
 		NewCommentDTO dto = new NewCommentDTO(1L, "Brand new comment", null);
 
@@ -130,7 +136,7 @@ public class CommentControllerIntegrationTest {
 	public void testUpdate() {
 		login("vlado@gmail.com", "vukovic");
 
-		CommentUserDTO dto = new CommentUserDTO(1L, "a@a", "Vladimir", "This is changed comment", null, "Name1");
+		CommentUserDTO dto = new CommentUserDTO(1L, "a3@a", "Vladimir", "This is changed comment", null, "Name1");
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", this.accessToken);
@@ -145,7 +151,7 @@ public class CommentControllerIntegrationTest {
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertTrue(updated.getContent().equalsIgnoreCase("This is changed comment"));
 
-		dto = new CommentUserDTO(1L, "a@a", "Vladimir", "This is comment", null, "Name1");
+		dto = new CommentUserDTO(1L, "a3@a", "Vladimir", "This is comment", null, "Name1");
 
 		httpEntity = new HttpEntity<>(dto, headers);
 
