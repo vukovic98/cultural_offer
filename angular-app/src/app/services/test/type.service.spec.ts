@@ -171,7 +171,7 @@ describe('TypeService', () => {
         req.flush(mockResponse);
     });
 
-    it('deleteType() should delete type', () => {
+    it('deleteType() should delete type', fakeAsync(() => {
         let deleteObj = {
             "id": 46,
             "name": "asdsasasa",
@@ -179,14 +179,20 @@ describe('TypeService', () => {
             "categoryName": "Institution"
         };
         let mockResponse = null;
+        let res: any;
 
-        service.deleteType(deleteObj.id).subscribe((res: any) => {
-            expect(res.status).toEqual(200);
-        });
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-types/' + deleteObj.id);
+        res = service.deleteType(deleteObj.id).subscribe((data) => {
+          res = data;
+        })
+
+        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-types/46');
         expect(req.request.method).toBe('DELETE');
         req.flush(mockResponse);
-    });
+
+        tick();
+
+        expect(res).toBeNull();
+    }));
 
     it('deleteType() should not delete used type', () => {
         let deleteObj = {

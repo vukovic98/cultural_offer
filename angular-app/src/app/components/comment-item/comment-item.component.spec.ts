@@ -16,7 +16,7 @@ describe('CommentItemComponent', () => {
   let router: any;
   let httpClient: any;
 
-  beforeEach(async () => {
+  beforeEach( () => {
     let offerServiceMock = {
       deleteComment: jasmine.createSpy('deleteComment')
         .and.returnValue(of({body: {statusCode: 200}}))

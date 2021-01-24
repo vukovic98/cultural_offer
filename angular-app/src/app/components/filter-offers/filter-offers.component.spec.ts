@@ -14,16 +14,8 @@ describe('FilterOffersComponent', () => {
   let router: Router;
 
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      declarations: [ FilterOffersComponent ],
-      providers: [FilterOffersService]
-    })
-    .compileComponents();
-  });
+  beforeEach( () => {
 
-  beforeEach(() => {
     let filterServiceMock = {
       getTypes: jasmine.createSpy('getTypes').and
         .returnValue(of(
@@ -36,7 +28,6 @@ describe('FilterOffersComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA],
       declarations: [ FilterOffersComponent ],
       providers:    [
         { provide: FilterOffersService, useValue: filterServiceMock },

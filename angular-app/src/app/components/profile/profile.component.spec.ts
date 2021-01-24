@@ -20,15 +20,8 @@ describe('ProfileComponent', () => {
   let router: any;
   let swal: any;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ ProfileComponent ],
-      providers: [EditProfileService, HttpClient, HttpHandler]
-    })
-    .compileComponents();
-  });
+  beforeEach( () => {
 
-  beforeEach(() => {
     let editProfileServiceMock = {
       editUser: jasmine.createSpy('editUser').
         and.returnValue(of({})),
@@ -57,7 +50,6 @@ describe('ProfileComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA],
       declarations: [SignUpComponent],
       providers:[
         {provide: EditProfileService, useValue: editProfileServiceMock},
