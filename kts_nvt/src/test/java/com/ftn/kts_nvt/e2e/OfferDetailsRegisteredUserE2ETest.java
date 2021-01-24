@@ -106,8 +106,8 @@ public class OfferDetailsRegisteredUserE2ETest {
 		driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();
 	    assertEquals("4", driver.findElement(By.xpath("//p")).getText());
 	}
-	
-	/*@Test
+	/*
+	@Test
 	public void e_comment() {
 		int rowsBefore = driver.findElements(By.id("commentItemId")).size();
 
@@ -124,6 +124,21 @@ public class OfferDetailsRegisteredUserE2ETest {
 		int rowsAfter = driver.findElements(By.id("commentItemId")).size();
 		assertEquals(rowsBefore + 1, rowsAfter);
 	}*/
+	@Test
+	public void e_comment() throws InterruptedException {
+
+		driver.findElement(By.xpath("//mat-expansion-panel-header[@id='mat-expansion-panel-header-0']/span/mat-panel-title")).click();
+		justWait();
+	    driver.findElement(By.id("commentText")).click();
+	    driver.findElement(By.id("commentText")).clear();
+	    driver.findElement(By.id("commentText")).sendKeys("test_comment");
+	    driver.findElement(By.id("file")).sendKeys("D:\\mem\\snake.jpg");
+	    driver.findElement(By.id("submit")).click();
+	    justWait();
+	    assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
+	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();
+		
+	}
 	
 	@After
 	public void tearDown() throws Exception {

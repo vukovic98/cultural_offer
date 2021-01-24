@@ -69,6 +69,9 @@ public class HomePageRegisteredUser {
 
 	@FindBy(xpath = "//button[contains(@class, 'swal2-confirm')]")
 	private WebElement swalBtn;
+	
+	@FindBy(xpath = "//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")
+	private List<WebElement> markers;
 
 	public HomePageRegisteredUser() {
 		super();
@@ -262,6 +265,10 @@ public class HomePageRegisteredUser {
 
 	public void setUserMenuBtn(WebElement userMenuBtn) {
 		this.userMenuBtn = userMenuBtn;
+	}
+
+	public List<WebElement> getMarkers() {
+		return markers;
 	}
 
 }

@@ -63,7 +63,6 @@ public class OfferDetailsAdminE2ETest {
 		justWait(); justWait();
 		detailsPage.ensureIsNotVisibleAddCommentPanel();
 	}
-	
 	@Test
 	public void a_addPost() throws InterruptedException {
 		justWait(); justWait();
@@ -99,6 +98,17 @@ public class OfferDetailsAdminE2ETest {
 	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();		
 		int postsAfter = driver.findElements(By.id("postItem")).size();
 		assertEquals(postsBefore - 1, postsAfter);
+	}
+	@Test
+	public void c_deleteComment() throws InterruptedException {
+		
+		int commentsBefore = driver.findElements(By.id("commentItemId")).size();
+		detailsPage.getDeleteCommentButton().click();
+		justWait();justWait();
+		assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
+	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();		
+	    int commentsAfter = driver.findElements(By.id("commentItemId")).size();
+		assertEquals(commentsBefore - 1, commentsAfter);
 	}
 	
 	@After

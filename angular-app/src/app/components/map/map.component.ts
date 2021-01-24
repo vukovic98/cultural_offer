@@ -22,14 +22,12 @@ import { FilterObject } from 'src/app/model/filter-model';
     styleUrls: ['./map.component.css']
   })
   export class MapComponent {
-    private offers: Array<CulturalOffer> = [];
+    offers: Array<CulturalOffer> = [];
     private pageNum = 1;
     private mymap: any;
-    private markers = new L.LayerGroup;
+    markers = new L.LayerGroup;
 
-    constructor(private offerService: CulturalOfferService,
-        private auth: AuthService,
-        public mapService: MapService) {
+    constructor(public mapService: MapService) {
       this.mapService.myMethod$.subscribe((offers) =>{
           this.offers = offers;
       });
@@ -49,9 +47,6 @@ import { FilterObject } from 'src/app/model/filter-model';
       }).addTo(this.mymap);
       //@ts-ignore
 
-
-
-
     }
 
     dataChanged(){
@@ -65,7 +60,7 @@ import { FilterObject } from 'src/app/model/filter-model';
                 //open popup;
               var popup = L.popup()
                 .setLatLng(marker.getLatLng()) 
-                .setContent("<a href='http://localhost:4200/cultural-offer/offer-details/"+offer.id+"'>"+offer.name+"</a>")
+                .setContent("<a id='offerMarkerLink"+offer.id+"' href='http://localhost:4200/cultural-offer/offer-details/"+offer.id+"'>"+offer.name+"</a>")
                 .openOn(this.mymap);
             });
       });

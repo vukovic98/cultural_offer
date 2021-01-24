@@ -76,8 +76,15 @@ export class AddCommentComponent implements OnInit {
   submit(): void{
 
     console.log(this.image);
-    var file = this.image = "" ? "" : this.image.split(',')[1];
+
+    var file;
     
+    if(this.image == null){
+      file = "";
+    }else{
+      file = this.image.split(',')[1];
+    }
+
     this.offerService.addComment(Number(this.offerId),this.addForm.value.commentText,file)
     .subscribe(response => {
       Swal.fire({
