@@ -95,7 +95,6 @@ import com.ftn.kts_nvt.e2e.SignUpE2ETest;
 	    AdminServiceIntegrationTest.class,
 	    RegisteredUserServiceIntegrationTest.class,
 	    VerificationCodeServiceIntegrationTest.class,*/
-	    
 	    //PostServiceIntegrationTest.class,
 	    //------x_testCreateAndDeleteEntity, x_testUpdate
 		//GradeServiceIntegrationTest.class,
@@ -104,7 +103,7 @@ import com.ftn.kts_nvt.e2e.SignUpE2ETest;
 		//------h_testCreateAndDelete
 
 	    //repository I
-		CulturalOfferCategoryRepositoryIntegrationTest.class,
+		/*CulturalOfferCategoryRepositoryIntegrationTest.class,
 		CulturalOfferTypeRepositoryIntegrationTest.class,
 		PostRepositoryIntegrationTest.class,
 		GradeRepositoryIntegrationTest.class,
@@ -113,7 +112,7 @@ import com.ftn.kts_nvt.e2e.SignUpE2ETest;
 		GradeRepositoryIntegrationTest.class,
 		AdminRepositoryIntegrationTest.class,
 		RegisteredUserRepositoryIntegrationTest.class,
-		VerificationCodeRepositoryIntegrationTest.class,
+		VerificationCodeRepositoryIntegrationTest.class,*/
 	
 		//E2E SW3
 		//LoginE2ETest.class,
