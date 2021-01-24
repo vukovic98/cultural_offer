@@ -17,17 +17,10 @@ import { MapService } from 'src/app/services/map.service';
   styleUrls: ['./cultural-offers.component.css']
 })
 export class CulturalOffersComponent implements OnInit {
-<<<<<<< HEAD
   @Output() dataChangedEvent = new EventEmitter();
   private offers: Array<CulturalOffer> = [];
   private subscribedItems: Array<CulturalOffer> = [];
   private userId: number = -1;
-=======
-
-  public offers: Array<CulturalOffer> = [];
-  public subscribedItems: Array<CulturalOffer> = [];
-  public userId: number = -1;
->>>>>>> dc484f6486cfdced60074faccf8e0d84f17be6e7
   public pageNum: number = 1;
   public nextBtn: boolean = false;
   public isFilter: boolean = false;
@@ -40,19 +33,12 @@ export class CulturalOffersComponent implements OnInit {
               public mapService: MapService) { }
 
   ngOnInit(): void {
-<<<<<<< HEAD
-    this.service.getByPage(this.pageNum).subscribe((data: string) => {
-      this.offers = JSON.parse(data).content;
-      this.mapService.myMethod(this.offers);
-      this.dataChangedEvent.emit(null);
-      this.nextBtn = JSON.parse(data).last;
-      this.totalPages = JSON.parse(data).totalPages;
-=======
     this.service.getByPage(this.pageNum).subscribe((data) => {
       this.offers = data.content;
+      this.mapService.myMethod(this.offers);
+      this.dataChangedEvent.emit(null);
       this.nextBtn = data.last;
       this.totalPages = data.totalPages;
->>>>>>> dc484f6486cfdced60074faccf8e0d84f17be6e7
     });
 
     if(this.auth.isUser()) {
@@ -138,31 +124,19 @@ export class CulturalOffersComponent implements OnInit {
 
   retrieveOffers() {
     if(!this.isFilter) {
-<<<<<<< HEAD
-      this.service.getByPage(this.pageNum).subscribe((data: string) => {
-        this.offers = JSON.parse(data).content;
-        this.nextBtn = JSON.parse(data).last;
+      this.service.getByPage(this.pageNum).subscribe((data) => {
+        this.offers = data.content;
+        this.nextBtn = data.last;
         this.mapService.myMethod(this.offers);
         this.dataChangedEvent.emit(null);
       });
     } else {
       this.service.getByPageFilter(this.pageNum,this.filterObj.exp,this.filterObj.types).subscribe(
-        (offers: string)=>{
-          this.offers = JSON.parse(offers).content;
-          this.nextBtn = JSON.parse(offers).last;
-          this.mapService.myMethod(this.offers);
-          this.dataChangedEvent.emit(null);
-=======
-      this.service.getByPage(this.pageNum).subscribe((data) => {
-        this.offers = data.content;
-        this.nextBtn = data.last;
-      });
-    } else {
-      this.service.getByPageFilter(this.pageNum,this.filterObj.exp,this.filterObj.types)
-        .subscribe((offers) => {
+        (offers)=>{
           this.offers = offers.content;
           this.nextBtn = offers.last;
->>>>>>> dc484f6486cfdced60074faccf8e0d84f17be6e7
+          this.mapService.myMethod(this.offers);
+          this.dataChangedEvent.emit(null);
         }
       )
     }
@@ -196,32 +170,20 @@ export class CulturalOffersComponent implements OnInit {
 
     if(data.exp==="" && data.types.length === 0){
       this.isFilter = false;
-<<<<<<< HEAD
-      this.service.getByPage(this.pageNum).subscribe((data: string) => {
-        this.offers = JSON.parse(data).content;
-        this.nextBtn = JSON.parse(data).last;
-        this.mapService.myMethod(this.offers);
-        this.dataChangedEvent.emit(null);
-=======
       this.service.getByPage(this.pageNum).subscribe((data) => {
         this.offers = data.content;
         this.nextBtn = data.last;
->>>>>>> dc484f6486cfdced60074faccf8e0d84f17be6e7
+        this.mapService.myMethod(this.offers);
+        this.dataChangedEvent.emit(null);
       });
     }
     else{
       this.service.getByPageFilter(this.pageNum,data.exp,data.types).subscribe(
-<<<<<<< HEAD
-        (offers: string)=>{
-          this.offers = JSON.parse(offers).content;
-          this.nextBtn = JSON.parse(offers).last;
-          this.mapService.myMethod(this.offers);
-          this.dataChangedEvent.emit(null);
-=======
         (offers)=>{
           this.offers = offers.content;
           this.nextBtn = offers.last;
->>>>>>> dc484f6486cfdced60074faccf8e0d84f17be6e7
+          this.mapService.myMethod(this.offers);
+          this.dataChangedEvent.emit(null);
         }
       )
     }

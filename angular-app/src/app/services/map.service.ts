@@ -13,7 +13,7 @@ export class MapService {
         this.myMethod$ = this.myMethodSubject.asObservable();
     }
 
-    myMethod(offers: Array<CulturalOffer>) {
+    myMethod(offers: Array<CulturalOffer>): void {
         this.myMethodSubject.next(offers);
     }
 }

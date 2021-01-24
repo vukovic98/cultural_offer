@@ -12,11 +12,8 @@ import { AddPostModel } from '../../model/post-model';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from "sweetalert2";
-<<<<<<< HEAD
 import { MapService } from 'src/app/services/map.service';
-=======
 import { LocationDialogComponent } from '../location-dialog/location-dialog.component';
->>>>>>> dc484f6486cfdced60074faccf8e0d84f17be6e7
 
 @Component({
   selector: 'app-offer-details',
