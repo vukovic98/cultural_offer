@@ -30,9 +30,6 @@ describe('NavigationBarComponent', () => {
       ]
     }).compileComponents();
 
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(NavigationBarComponent);
     component = fixture.componentInstance;
     authService = TestBed.inject(AuthService);

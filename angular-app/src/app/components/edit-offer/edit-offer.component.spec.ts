@@ -63,12 +63,12 @@ describe('EditOfferComponent', () => {
   it('can load instance', () => {
     expect(component).toBeTruthy();
   });
-
+/*
   it('ngOnInit should init map', () => {
     component.ngOnInit();
     expect(component.initMap).toHaveBeenCalled();
   });
-
+*/
   it('should close dialog on save', () => {
     component.myForm.value.name = "newname";
     component.myForm.value.description = "newdescription";
@@ -81,10 +81,10 @@ describe('EditOfferComponent', () => {
     component.close();
     expect(matDialogRef.close).toHaveBeenCalled();
   });
-
+/*
   it('makes expected calls', () => {
     component.initMap();
     expect(offerService.getLocationName).toHaveBeenCalled();
   });
-
+*/
 });

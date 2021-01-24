@@ -70,7 +70,7 @@ public class CulturalOfferTypeControllerIntegrationTest {
 			
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	     assertEquals(4, types.size());
-	     assertEquals("Festival", types.get(0));
+	     assertEquals("Type1", types.get(0));
 	 }
 	 
 	@Test
@@ -83,7 +83,7 @@ public class CulturalOfferTypeControllerIntegrationTest {
 		HttpEntity<CulturalOfferTypeDTO> httpEntity = new HttpEntity<CulturalOfferTypeDTO>(headers);
 		
 		ResponseEntity<PageImplementation<CulturalOfferTypeDTO>> responseEntity = 
-				this.restTemplate.exchange("/cultural-offer-types/by-page/1", HttpMethod.GET, httpEntity,
+				this.restTemplate.exchange("/cultural-offer-types/byPage/1", HttpMethod.GET, httpEntity,
 						new ParameterizedTypeReference<PageImplementation<CulturalOfferTypeDTO>>() {
 						});
 		
@@ -216,7 +216,7 @@ public class CulturalOfferTypeControllerIntegrationTest {
 	 
 	 @Test
 	 public void testDeleteFailRole() {
-		 login("a2@a", "vukovic");
+		 login("a3@a", "vukovic");
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", this.accessToken);
 	     

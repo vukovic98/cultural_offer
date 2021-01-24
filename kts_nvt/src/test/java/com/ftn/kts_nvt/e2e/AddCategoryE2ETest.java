@@ -126,9 +126,10 @@ public class AddCategoryE2ETest {
 	}
 	
 	@Test
-	public void d_deleteSuccess() {
+	public void d_deleteSuccess() throws InterruptedException {
 		int rowsBefore = driver.findElements(By.cssSelector("tr")).size();
 		driver.findElement(By.xpath("(//button[@id='deleteButton']/span/mat-icon)[4]")).click();
+		justWait(); justWait();
 		addCategoryPage.ensureIsDisplayedSwal();
 	    assertTrue(addCategoryPage.isSwalVisible());
 		assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());

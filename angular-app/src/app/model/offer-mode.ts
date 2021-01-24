@@ -37,7 +37,7 @@ export interface OfferType{
 export interface CulturalOffer{
   "id": number,
   "name": string,
-  "images": Array<object>,
+  "images": Array<Image>,
   "location": Location,
   "description": string,
   "avgGrade": number,

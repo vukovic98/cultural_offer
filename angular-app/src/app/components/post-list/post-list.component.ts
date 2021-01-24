@@ -83,7 +83,7 @@ export class PostListComponent implements OnInit {
 
   retrievePosts() {
     this.offerService.getPostsForOffer(Number(this.offer_id), this.pageNum)
-      .subscribe((data: any) => {
+      .subscribe((data) => {
         this.posts = data.content;
         this.nextBtn = data.last;
       })

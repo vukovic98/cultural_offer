@@ -1,13 +1,14 @@
 package com.ftn.kts_nvt.e2e;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -36,7 +37,7 @@ public class HomePageAdminE2ETest {
 		this.homePage = PageFactory.initElements(this.driver, HomePageAdminPage.class);
 		this.loginPage = PageFactory.initElements(driver, LoginPage.class);
 
-		driver.get(HOME_PAGE + "login");
+		driver.get(HOME_PAGE + "auth/login");
 
 		this.loginPage.getEmail().sendKeys("vlado@gmail.com");
 		this.loginPage.getPassword().sendKeys("vukovic");
@@ -108,7 +109,7 @@ public class HomePageAdminE2ETest {
 
 		justWait();
 
-		assertEquals(HOME_PAGE + "profile", this.driver.getCurrentUrl());
+		assertEquals(HOME_PAGE + "user/profile", this.driver.getCurrentUrl());
 	}
 
 	@Test
@@ -131,7 +132,7 @@ public class HomePageAdminE2ETest {
 
 		justWait();
 
-		assertEquals(HOME_PAGE + "change-password", this.driver.getCurrentUrl());
+		assertEquals(HOME_PAGE + "user/change-password", this.driver.getCurrentUrl());
 	}
 
 	@Test
@@ -171,12 +172,20 @@ public class HomePageAdminE2ETest {
 		assertTrue(this.homePage.getNameInput().isDisplayed());
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
 
+		justWait();justWait();
+		
+		int markersBefore = this.homePage.getMarkers().size();
+		assertEquals(8,markersBefore);
+		
 		this.homePage.getNameInput().sendKeys("Sonsing");
 		this.homePage.getApplyFilterBtn().click();
 
 		justWait();
 
 		assertEquals(1, this.homePage.getOffers().size());
+		
+		int markersAfter = this.homePage.getMarkers().size();
+		assertEquals(markersAfter, 1);
 	}
 
 	@Test
@@ -189,6 +198,11 @@ public class HomePageAdminE2ETest {
 
 		assertTrue(this.homePage.getNameInput().isDisplayed());
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
+		
+		justWait();justWait();
+		
+		int markersBefore = this.homePage.getMarkers().size();
+		assertEquals(8,markersBefore);
 
 		this.homePage.getNameInput().sendKeys("Non existing name");
 		this.homePage.getApplyFilterBtn().click();
@@ -196,6 +210,9 @@ public class HomePageAdminE2ETest {
 		justWait();
 
 		assertTrue(this.homePage.getNoOffersDiv().isDisplayed());
+		
+		int markersAfter = this.homePage.getMarkers().size();
+		assertEquals(markersAfter, 0);
 	}
 
 	@Test
@@ -209,6 +226,9 @@ public class HomePageAdminE2ETest {
 		assertTrue(this.homePage.getTypeSelect().isDisplayed());
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
 
+		int markersBefore = this.homePage.getMarkers().size();
+		assertEquals(8,markersBefore);
+		
 		this.homePage.getTypeSelect().click();
 		List<WebElement> options = this.homePage.getTypeOptions();
 
@@ -224,6 +244,9 @@ public class HomePageAdminE2ETest {
 		justWait();
 
 		assertTrue(this.homePage.getOffers().size() > 0);
+		
+		int markersAfter = this.homePage.getMarkers().size();
+		assertTrue(markersAfter > 0);
 	}
 
 	@Test
@@ -238,6 +261,9 @@ public class HomePageAdminE2ETest {
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
 		assertTrue(this.homePage.getTypeSelect().isDisplayed());
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
+		
+		int markersBefore = this.homePage.getMarkers().size();
+		assertEquals(8,markersBefore);
 
 		this.homePage.getNameInput().sendKeys("Sonsing");
 
@@ -256,6 +282,9 @@ public class HomePageAdminE2ETest {
 		justWait();
 
 		assertEquals(1, this.homePage.getOffers().size());
+		
+		int markersAfter = this.homePage.getMarkers().size();
+		assertEquals(markersAfter, 1);
 	}
 
 	@Test
@@ -271,6 +300,9 @@ public class HomePageAdminE2ETest {
 		assertTrue(this.homePage.getTypeSelect().isDisplayed());
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
 
+		int markersBefore = this.homePage.getMarkers().size();
+		assertEquals(8,markersBefore);
+		
 		this.homePage.getNameInput().sendKeys("Non existing name");
 
 		this.homePage.getApplyFilterBtn().click();
@@ -286,6 +318,9 @@ public class HomePageAdminE2ETest {
 		this.homePage.getApplyFilterBtn().click();
 
 		justWait();
+		
+		int markersAfter = this.homePage.getMarkers().size();
+		assertEquals(markersAfter, 0);
 
 		assertTrue(this.homePage.getNoOffersDiv().isDisplayed());
 	}
@@ -304,7 +339,53 @@ public class HomePageAdminE2ETest {
 
 		justWait();
 
-		assertEquals("http://localhost:4200/offer-details/1", this.driver.getCurrentUrl());
+		assertEquals("http://localhost:4200/cultural-offer/offer-details/1", this.driver.getCurrentUrl());
+	}
+	
+	@Test
+	public void testOpenOfferDetailsFromMarker() throws InterruptedException {
+		
+		driver.get(HOME_PAGE);
+		
+		justWait();
+		
+		this.homePage.ensureIsPageDisplayed();
+		
+		assertTrue(this.homePage.getNameInput().isDisplayed());
+		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
+		assertTrue(this.homePage.getTypeSelect().isDisplayed());
+		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
+		
+		int markersBefore = this.homePage.getMarkers().size();
+		assertEquals(8,markersBefore);
+		
+		this.homePage.getNameInput().sendKeys("Sonsing");
+		
+		this.homePage.getApplyFilterBtn().click();
+		List<WebElement> options = this.homePage.getTypeOptions();
+		
+		for (WebElement el : options) {
+			if(el.getText().equalsIgnoreCase("Cultural centre"))
+				el.click();
+		}
+		
+		justWait();
+		
+		this.homePage.getApplyFilterBtn().click();
+		
+		justWait();
+		
+		this.homePage.getMarker().click();
+		justWait();justWait();
+		
+		this.homePage.ensureIsMarkerLinkDisplayed();
+		
+		this.homePage.getMarkerLink().click();
+		
+		
+		assertEquals("http://localhost:4200/cultural-offer/offer-details/1", this.driver.getCurrentUrl());
+		
+		
 	}
 
 	@Test
@@ -321,7 +402,7 @@ public class HomePageAdminE2ETest {
 		
 		justWait();
 
-		assertEquals(HOME_PAGE + "add-offer", driver.getCurrentUrl());
+		assertEquals(HOME_PAGE + "cultural-offer/add-offer", driver.getCurrentUrl());
 	}
 
 	@Test
@@ -372,7 +453,7 @@ public class HomePageAdminE2ETest {
 		
 		justWait();
 		
-		assertEquals(HOME_PAGE + "approving-comments", this.driver.getCurrentUrl());
+		assertEquals(HOME_PAGE + "comment/approving-comments", this.driver.getCurrentUrl());
 	}
 
 	@Test

@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CulturalOffersComponent } from './cultural-offers.component';
 import {Observable, of} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -16,17 +15,25 @@ import {Overlay} from '@angular/cdk/overlay';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Role} from '../../model/token.model';
 import {EditOfferComponent} from '../edit-offer/edit-offer.component';
-
+import { MapService } from 'src/app/services/map.service';
+import { HttpResponse } from '@angular/common/http';
+import {AddPostComponent} from '../add-post/add-post.component';
 describe('CulturalOffersComponent', () => {
   let component: CulturalOffersComponent;
   let fixture: ComponentFixture<CulturalOffersComponent>;
   let offerService: CulturalOfferService;
+  let mapService: MapService;
   let router: Router;
   let authService: AuthService;
   let matDialog: MatDialog;
   let dialogRef: MatDialogRef<EditOfferComponent>;
 
   beforeEach( () => {
+
+
+    let mapServiceMock = {
+      myMethod: jasmine.createSpy('myMethod')
+    }
 
     let offerServiceMock = {
       getByPage: jasmine.createSpy('getByPage')
@@ -163,14 +170,11 @@ describe('CulturalOffersComponent', () => {
 
     let matDialogMock = {
       open: jasmine.createSpy('open')
+        .and.returnValue(dialogRef)
     };
 
     let dialogRefMock = {
       afterClosed: jasmine.createSpy('afterClosed')
-    }
-
-    let locationMock = {
-      reload: jasmine.createSpy('reload')
     }
 
     TestBed.configureTestingModule({
@@ -184,14 +188,15 @@ describe('CulturalOffersComponent', () => {
         { provide: Router, useValue: routerMock } ,
         { provide: MatDialog, useValue: matDialogMock },
         { provide: MatDialogRef, useValue: dialogRefMock },
-        { provide: location, useValue: locationMock },
-        { provide: AuthService, useValue: authServiceMock}]
+        { provide: AuthService, useValue: authServiceMock},
+        { provide: MapService, useValue: mapServiceMock}]
     }).compileComponents();
 
     fixture = TestBed.createComponent(CulturalOffersComponent);
     component    = fixture.componentInstance;
     offerService = TestBed.inject(CulturalOfferService);
     authService = TestBed.inject(AuthService);
+    mapService = TestBed.inject(MapService);
     router = TestBed.inject(Router);
     matDialog = TestBed.inject(MatDialog);
     dialogRef = TestBed.inject(MatDialogRef);
@@ -200,6 +205,7 @@ describe('CulturalOffersComponent', () => {
     component.isFilter = false;
 
     spyOn(component, 'retrieveOffers');
+
 
     fixture.detectChanges();
   });
@@ -219,32 +225,6 @@ describe('CulturalOffersComponent', () => {
     expect(offerService.deleteOffer).toHaveBeenCalled();
     expect(offerService.deleteOffer).toHaveBeenCalledWith(26);
   })
-
-  // it('should edit offer', () => {
-  //   component.editOffer({
-  //     "id": 26,
-  //     "name": "Sonsing",
-  //     "images": [],
-  //     "location": {
-  //       "locationId": 2,
-  //       "latitude": 33.33,
-  //       "longitude": 33.33,
-  //       "place": "Beograd"
-  //     },
-  //     "description": "Lorem Ipsum is simply dummy text of the printing " +
-  //       "and typesetting industry. Lorem Ipsum has been the industry's standard dummy " +
-  //       "text ever since the 1500s, when an unknown printer took a galley of type and " +
-  //       "scrambled it to make a type specimen book. It has survived not only five centuries," +
-  //       " but also the leap into electronic typesetting, remaining essentially unchanged. " +
-  //       "It was popularised in the 1960s with the release of Letraset sheets containing Lorem" +
-  //       " Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker" +
-  //       " including versions of Lorem Ipsum.",
-  //     "avgGrade": 5,
-  //     "subscribersCount": 5
-  //   });
-  //
-  //   expect(matDialog.open).toHaveBeenCalled();
-  // });
 
   it('should return offers', () => {
     let of = component.getAllOffers();

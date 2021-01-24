@@ -12,16 +12,8 @@ describe('CommentsToBeApprovedListComponent', () => {
   let service: CommentsToBeApprovedService;
 
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule],
-      declarations: [ CommentsToBeApprovedListComponent ],
-      providers: [CommentsToBeApprovedService]
-    })
-    .compileComponents();
-  });
+  beforeEach( () => {
 
-  beforeEach(() => {
     let commentToBeApprovedServiceMock = {
       getCommentsByPage: jasmine.createSpy('getCommentsByPage').
         and.returnValue(of(JSON.stringify({
@@ -65,7 +57,6 @@ describe('CommentsToBeApprovedListComponent', () => {
       }))
     }
     TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA],
       declarations: [ CommentsToBeApprovedListComponent ],
       providers:    [
         { provide: CommentsToBeApprovedService, useValue: commentToBeApprovedServiceMock },

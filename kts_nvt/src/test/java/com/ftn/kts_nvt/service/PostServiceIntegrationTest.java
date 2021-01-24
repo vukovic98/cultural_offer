@@ -8,8 +8,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.Instant;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.transaction.Transactional;
+
+import org.junit.FixMethodOrder;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -20,12 +27,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ftn.kts_nvt.beans.CulturalOffer;
 import com.ftn.kts_nvt.beans.Post;
+import com.ftn.kts_nvt.beans.RegisteredUser;
 import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
+import com.ftn.kts_nvt.repositories.PostRepository;
+import com.ftn.kts_nvt.repositories.RegisteredUserRepository;
 import com.ftn.kts_nvt.services.PostService;
+import com.icegreen.greenmail.junit.GreenMailRule;
+import com.icegreen.greenmail.util.GreenMailUtil;
+import com.icegreen.greenmail.util.ServerSetupTest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("classpath:test.properties")
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PostServiceIntegrationTest {
 
 	@Autowired
@@ -33,9 +47,19 @@ public class PostServiceIntegrationTest {
 
 	@Autowired
 	private CulturalOfferRepository offerRepository;
+	
+	@Autowired
+	private RegisteredUserRepository userRepository;
+	
+	@Autowired
+	private PostRepository postRepository;
+	
+	@Rule
+	public final GreenMailRule greenMail = new GreenMailRule(ServerSetupTest.ALL);
 
 	@Test
-	public void testCreateAndDeleteEntity() throws Exception {
+	@Transactional
+	public void x_testCreateAndDeleteEntity() throws Exception {
 		Post post = new Post("Post7", "This is post.", Instant.now());
 		post.setPostId(7L);
 		CulturalOffer offer = this.offerRepository.getOne(1L);
@@ -87,7 +111,8 @@ public class PostServiceIntegrationTest {
 	
 	
 	@Test
-	public void testUpdate() throws Exception {
+	@Transactional
+	public void x_testUpdate() throws Exception {
 		Post post = new Post("Post7", "This is post.", Instant.now());
 		post.setPostId(7L);
 		CulturalOffer offer = this.offerRepository.getOne(1L);
@@ -107,6 +132,24 @@ public class PostServiceIntegrationTest {
 		this.postService.delete(saved.getPostId());
 		Post deleted = this.postService.findOne(saved.getPostId());
 		assertNull(deleted);
+	}
+	
+	@Test
+	public void testSendMailToSubscribed() throws MessagingException {
+		
+		long id = 1L;
+		RegisteredUser user = userRepository.findById(id).orElse(null);
+		CulturalOffer offer = this.offerRepository.findById(1L).orElse(null);
+		Post post = this.postRepository.findById(1L).orElse(null);
+		
+	    GreenMailUtil.sendTextEmailTest(user.getEmail(), "mrs.isa2020@gmail.com", offer.getName() + " : New post is here!", postService.createMailBody(user, offer, post.getTitle()));
+	    MimeMessage[] emails = greenMail.getReceivedMessages();
+	    
+	    assertEquals(1, emails.length);
+	    assertEquals("Name1 : New post is here!", emails[0].getSubject());
+	    assertEquals("<h2>Vladimir, new post for offer you are subscribed to has arrived!</h2><br><br><h3>This is post</h3> <br><br><h4>Go check it out <a href='http://localhost:4200/offer-details/1'>here!</a></h4>", GreenMailUtil.getBody(emails[0]));
+	    
+	    
 	}
 
 }

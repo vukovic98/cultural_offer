@@ -69,6 +69,15 @@ public class HomePageRegisteredUser {
 
 	@FindBy(xpath = "//button[contains(@class, 'swal2-confirm')]")
 	private WebElement swalBtn;
+	
+	@FindBy(xpath = "//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")
+	private List<WebElement> markers;
+	
+	@FindBy(xpath = "//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")
+	private WebElement marker;
+	
+	@FindBy(xpath = "//a[contains(text(), 'Sonsing')]")
+	private WebElement markerLink;
 
 	public HomePageRegisteredUser() {
 		super();
@@ -252,6 +261,10 @@ public class HomePageRegisteredUser {
 		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.className("swal2-popup")));
 	}
 
+	public void ensureIsMarkerLinkDisplayed() {
+		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(), 'Sonsing')]")));
+	}
+	
 	public List<WebElement> getTypeOptions() {
 		return this.typeSelect.findElements(By.tagName("option"));
 	}
@@ -262,6 +275,18 @@ public class HomePageRegisteredUser {
 
 	public void setUserMenuBtn(WebElement userMenuBtn) {
 		this.userMenuBtn = userMenuBtn;
+	}
+
+	public List<WebElement> getMarkers() {
+		return markers;
+	}
+
+	public WebElement getMarker() {
+		return marker;
+	}
+
+	public WebElement getMarkerLink() {
+		return markerLink;
 	}
 
 }

@@ -6,8 +6,8 @@ describe('SubscribedItemsListComponent', () => {
   let component: SubscribedItemsListComponent;
   let fixture: ComponentFixture<SubscribedItemsListComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach( () => {
+    TestBed.configureTestingModule({
       declarations: [ SubscribedItemsListComponent ]
     })
     .compileComponents();
