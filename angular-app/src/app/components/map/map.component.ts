@@ -53,10 +53,11 @@ import { FilterObject } from 'src/app/model/filter-model';
       this.markers.clearLayers();
       console.log("Data changed");
 
-      this.offers.forEach(offer => {
+        this.offers.forEach(offer => 
         console.log(offer.name);
           let marker = L.marker([offer.location.latitude, offer.location.longitude]).addTo(this.markers);
           marker.on('click', (e) => {
+
                 //open popup;
               var popup = L.popup()
                 .setLatLng(marker.getLatLng()) 

@@ -221,14 +221,13 @@ describe('CulturalOffersComponent', () => {
     expect(authService.isUser).toHaveBeenCalled();
     expect(authService.isLoggedIn).toHaveBeenCalled();
   });
-/*
-  it('should remove offer', () => {
-    component.removeOffer(26);
 
-    expect(offerService.deleteOffer).toHaveBeenCalled();
-    expect(offerService.deleteOffer).toHaveBeenCalledWith(26);
-  })
-*/
+  // it('should remove offer', () => {
+  //   component.removeOffer(26);
+  //
+  //   expect(offerService.deleteOffer).toHaveBeenCalled();
+  //   expect(offerService.deleteOffer).toHaveBeenCalledWith(26);
+  // })
   // it('should edit offer', () => {
   //   component.editOffer({
   //     "id": 26,
