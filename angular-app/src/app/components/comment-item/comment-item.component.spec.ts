@@ -1,4 +1,4 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, TestBed, tick, flush} from '@angular/core/testing';
 
 import { CommentItemComponent } from './comment-item.component';
 import {of} from 'rxjs';
@@ -16,7 +16,7 @@ describe('CommentItemComponent', () => {
   let router: any;
   let httpClient: any;
 
-  beforeEach( () => {
+  beforeEach(() => {
     let offerServiceMock = {
       deleteComment: jasmine.createSpy('deleteComment')
         .and.returnValue(of({body: {statusCode: 200}}))
@@ -60,6 +60,6 @@ describe('CommentItemComponent', () => {
     component.onClickDeleteComment();
 
     expect(offerService.deleteComment).toHaveBeenCalledWith(55);
-
+    flush();
   }));
 });
