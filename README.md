@@ -1,3 +1,5 @@
+<img src="https://i.imgur.com/U8eNCq4.jpg" width="50%" height="200px">
+
 # Culture On The Palm
  Application for viewing cultural offerings in Serbia.
  
