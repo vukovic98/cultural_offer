@@ -56,9 +56,7 @@ describe('SubscribedItemsComponent', () => {
       ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(SubscribedItemsComponent);
     component = fixture.componentInstance;
     offerService = TestBed.inject(CulturalOfferService);

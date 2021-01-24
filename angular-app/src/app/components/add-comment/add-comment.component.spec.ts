@@ -10,7 +10,7 @@ describe('AddCommentComponent', () => {
   let component: AddCommentComponent;
   let fixture: ComponentFixture<AddCommentComponent>;
 
-  beforeEach(async () => {
+  beforeEach( () => {
 
     const culturalOfferServiceStub = () => ({
       addComment: jasmine.createSpy('addComment')
@@ -26,8 +26,8 @@ describe('AddCommentComponent', () => {
 
       }))
     });
-    
-    await TestBed.configureTestingModule({
+
+    TestBed.configureTestingModule({
       declarations: [AddCommentComponent],
       providers: [
         { provide: CulturalOfferService, useFactory: culturalOfferServiceStub }, AuthService
@@ -35,11 +35,7 @@ describe('AddCommentComponent', () => {
       imports:[RouterTestingModule, HttpClientTestingModule]
     })
     .compileComponents();
-  });
 
-
-  beforeEach(() => {
-    
     fixture = TestBed.createComponent(AddCommentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

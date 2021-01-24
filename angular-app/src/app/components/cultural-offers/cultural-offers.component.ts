@@ -3,11 +3,9 @@ import {CulturalOfferService} from '../../services/culturalOffer.service';
 import {AuthService} from '../../services/auth.service';
 import {CulturalOffer} from '../../model/offer-mode';
 import {TokenModel} from '../../model/token.model';
-import {of} from 'rxjs';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {EditOfferComponent} from '../edit-offer/edit-offer.component';
 import {FilterObject} from "../../model/filter-model";
-import {map} from 'rxjs/operators';
 import Swal from "sweetalert2";
 import { MapService } from 'src/app/services/map.service';
 
@@ -75,8 +73,6 @@ export class CulturalOffersComponent implements OnInit {
         });
       })
     this.offers = this.offers.filter(item => item.id != id);
-
-    location.reload();
   }
 
   editOffer(offer: CulturalOffer){

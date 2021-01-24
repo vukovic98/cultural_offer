@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '../../model/offer-mode';
- 
+
 @Component({
   selector: 'app-location-dialog',
   templateUrl: './location-dialog.component.html',
@@ -12,7 +12,7 @@ export class LocationDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<LocationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Location) {
-    //console.log("dialog data = ", data);
+
   }
 
   ngOnInit() {

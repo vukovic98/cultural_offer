@@ -18,15 +18,7 @@ describe('SignUpComponent', () => {
   let router: any;
   let swal: any;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ SignUpComponent ],
-      providers: [AuthService, HttpClient, HttpHandler, RouterTestingModule, Router]
-    })
-    .compileComponents();
-  });
-
-  beforeEach(() => {
+  beforeEach( () => {
     let authServiceMock = {
       signUp: jasmine.createSpy('signUp').
         and.returnValue(of({
@@ -50,8 +42,8 @@ describe('SignUpComponent', () => {
         confirmButtonText: 'OK'
       }))
     };
+
     TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA],
       declarations: [SignUpComponent],
       providers:[
         {provide: AuthService, useValue: authServiceMock},

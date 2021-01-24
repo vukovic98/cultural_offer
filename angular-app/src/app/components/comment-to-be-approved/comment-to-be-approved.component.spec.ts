@@ -7,15 +7,13 @@ describe('CommentToBeApprovedComponent', () => {
   let component: CommentToBeApprovedComponent;
   let fixture: ComponentFixture<CommentToBeApprovedComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach( () => {
+    TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       declarations: [ CommentToBeApprovedComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(CommentToBeApprovedComponent);
     component = fixture.componentInstance;
     spyOn(component.denyComment,'emit');
