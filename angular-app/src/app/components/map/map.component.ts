@@ -39,16 +39,26 @@ export class MapComponent {
 
   dataChanged(){
     this.markers.clearLayers();
-    console.log("Data changed");
 
     this.offers.forEach(offer => {
-      console.log(offer.name);
+      let imageStr: string;
+
+      if(offer.images.length != 0) {
+        imageStr = "<img class='float-left' style='width: 100%; height: 100px; min-width: 100px;' src='data:image/png;base64,"+offer.images[0].picByte+"' alt=''>";
+      } else {
+        imageStr = "<img class=\"float-left\" style=\"height: 100px; width: 100%;\" [alt]=\"offer.name\" *ngIf=\"!offer.images\" src=\"https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg\">";
+      }
+
+      let htmlData: string = "<div class='row'>" + imageStr +
+        "<a class='btn btn-light m-auto w-100' id='offerMarkerLink"+offer.id+"' href='https://localhost:4200/cultural-offer/offer-details/"+offer.id+"'>"+offer.name+"</a>" +
+        "</div>";
+
       let marker = L.marker([offer.location.latitude, offer.location.longitude]).addTo(this.markers);
       marker.on('click', (e: any) => {
         //open popup;
         var popup = L.popup()
           .setLatLng(marker.getLatLng())
-          .setContent("<a id='offerMarkerLink"+offer.id+"' href='http://localhost:4200/cultural-offer/offer-details/"+offer.id+"'>"+offer.name+"</a>")
+          .setContent(htmlData)
           .openOn(this.mymap);
       });
     });
