@@ -26,6 +26,9 @@ public class OfferDetailsAdminPage {
 	@FindBy(xpath = "//*[@id=\"deletePostButton\"]")
 	private WebElement deletePostButton;
 	
+	@FindBy(xpath = "//*[@id=\"deleteCommentButton\"]")
+	private WebElement deleteCommentButton;
+	
 	@FindBy(xpath = "//*[@id=\"addPostsButton\"]")
 	private WebElement addPostsButton;
 	
@@ -52,6 +55,12 @@ public class OfferDetailsAdminPage {
 		return deletePostButton;
 	}
 	
+	
+	
+	public WebElement getDeleteCommentButton() {
+		return deleteCommentButton;
+	}
+
 	public WebElement getAddNewPostButton() {
 		return addNewPostButton;
 	}

@@ -335,5 +335,6 @@ public class HomePageAdminPage {
 	public List<WebElement> getTypeOptions() {
 		return this.typeSelect.findElements(By.tagName("option"));
 	}
-
+	
+	
 }

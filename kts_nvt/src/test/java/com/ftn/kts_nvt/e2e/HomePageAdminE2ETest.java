@@ -1,13 +1,14 @@
 package com.ftn.kts_nvt.e2e;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -171,12 +172,20 @@ public class HomePageAdminE2ETest {
 		assertTrue(this.homePage.getNameInput().isDisplayed());
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
 
+		justWait();justWait();
+		
+		int markersBefore = driver.findElements(By.xpath("//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")).size();
+		assertEquals(8,markersBefore);
+		
 		this.homePage.getNameInput().sendKeys("Sonsing");
 		this.homePage.getApplyFilterBtn().click();
 
 		justWait();
 
 		assertEquals(1, this.homePage.getOffers().size());
+		
+		int markersAfter = driver.findElements(By.xpath("//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")).size();
+		assertEquals(markersAfter, 1);
 	}
 
 	@Test
@@ -189,6 +198,11 @@ public class HomePageAdminE2ETest {
 
 		assertTrue(this.homePage.getNameInput().isDisplayed());
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
+		
+		justWait();justWait();
+		
+		int markersBefore = driver.findElements(By.xpath("//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")).size();
+		assertEquals(8,markersBefore);
 
 		this.homePage.getNameInput().sendKeys("Non existing name");
 		this.homePage.getApplyFilterBtn().click();
@@ -196,6 +210,9 @@ public class HomePageAdminE2ETest {
 		justWait();
 
 		assertTrue(this.homePage.getNoOffersDiv().isDisplayed());
+		
+		int markersAfter = driver.findElements(By.xpath("//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")).size();
+		assertEquals(markersAfter, 0);
 	}
 
 	@Test
@@ -209,6 +226,9 @@ public class HomePageAdminE2ETest {
 		assertTrue(this.homePage.getTypeSelect().isDisplayed());
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
 
+		int markersBefore = driver.findElements(By.xpath("//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")).size();
+		assertEquals(8,markersBefore);
+		
 		this.homePage.getTypeSelect().click();
 		List<WebElement> options = this.homePage.getTypeOptions();
 
@@ -224,6 +244,9 @@ public class HomePageAdminE2ETest {
 		justWait();
 
 		assertTrue(this.homePage.getOffers().size() > 0);
+		
+		int markersAfter = driver.findElements(By.xpath("//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")).size();
+		assertTrue(markersAfter > 0);
 	}
 
 	@Test
@@ -238,6 +261,9 @@ public class HomePageAdminE2ETest {
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
 		assertTrue(this.homePage.getTypeSelect().isDisplayed());
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
+		
+		int markersBefore = driver.findElements(By.xpath("//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")).size();
+		assertEquals(8,markersBefore);
 
 		this.homePage.getNameInput().sendKeys("Sonsing");
 
@@ -256,6 +282,9 @@ public class HomePageAdminE2ETest {
 		justWait();
 
 		assertEquals(1, this.homePage.getOffers().size());
+		
+		int markersAfter = driver.findElements(By.xpath("//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")).size();
+		assertEquals(markersAfter, 1);
 	}
 
 	@Test

@@ -1,19 +1,45 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { Router, RouterModule } from '@angular/router';
 import { AddCommentComponent } from './add-comment.component';
-
+import { of } from 'rxjs';
+import { CulturalOfferService } from 'src/app/services/culturalOffer.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AuthService } from 'src/app/services/auth.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 describe('AddCommentComponent', () => {
   let component: AddCommentComponent;
   let fixture: ComponentFixture<AddCommentComponent>;
 
   beforeEach(async () => {
+
+    const culturalOfferServiceStub = () => ({
+      addComment: jasmine.createSpy('addComment')
+      .and.returnValue(of({
+
+        body:{
+          "id": 20,
+          "commenterEmail": "test@maildrop.com",
+          "commenterName": "Marko",
+          "content": "Content test comment",
+          "offer": "1"
+        }
+
+      }))
+    });
+    
     await TestBed.configureTestingModule({
-      declarations: [ AddCommentComponent ]
+      declarations: [AddCommentComponent],
+      providers: [
+        { provide: CulturalOfferService, useFactory: culturalOfferServiceStub }, AuthService
+      ],
+      imports:[RouterTestingModule, HttpClientTestingModule]
     })
     .compileComponents();
   });
 
+
   beforeEach(() => {
+    
     fixture = TestBed.createComponent(AddCommentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -22,4 +48,20 @@ describe('AddCommentComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('submit', () => {
+    it('makes expected calls', () => {
+      const culturalOfferServiceStub: CulturalOfferService = fixture.debugElement.injector.get(
+        CulturalOfferService
+      );
+      //const routerStub: Router = fixture.debugElement.injector.get(Router);
+      //spyOn(culturalOfferServiceStub, 'createOffer').and.callThrough();
+      //spyOn(routerStub, 'navigate').and.callThrough();
+      component.submit();
+      expect(culturalOfferServiceStub.addComment).toHaveBeenCalled();
+      //expect(routerStub.navigate).toHaveBeenCalled();
+    });
+  });
+
+
 });

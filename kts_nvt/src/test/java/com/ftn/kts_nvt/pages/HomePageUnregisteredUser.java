@@ -43,6 +43,9 @@ public class HomePageUnregisteredUser {
 	@FindBy(xpath = "//*[@id=\"offersListDiv\"]/child::*")
 	private List<WebElement> offers;
 	
+	@FindBy(xpath = "//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")
+	private List<WebElement> markers;
+	
 
 	public HomePageUnregisteredUser() {
 		super();
@@ -149,4 +152,14 @@ public class HomePageUnregisteredUser {
 		return this.typeSelect.findElements(By.tagName("option"));
 	}
 
+	public List<WebElement> getMarkers() {
+		return markers;
+	}
+
+	public void setMarkers(List<WebElement> markers) {
+		this.markers = markers;
+	}
+
+	
+	
 }
