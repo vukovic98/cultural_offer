@@ -131,7 +131,7 @@ public class CulturalOfferService {
 
 			List<CulturalOffer> nameFound = this.culturalOfferRepository.findByName(changedOffer.getName());
 
-			if (nameFound.isEmpty()) {
+			if (nameFound.isEmpty() || found.getName().contentEquals(changedOffer.getName())) {
 				found.setName(changedOffer.getName());
 				found.setDescription(changedOffer.getDescription());
 				GeoLocation lc = location.findById(found.getLocation().getLocationId());
