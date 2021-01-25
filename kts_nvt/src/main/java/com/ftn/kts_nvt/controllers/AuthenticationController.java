@@ -83,6 +83,7 @@ public class AuthenticationController {
 					authenticationRequest.getEmail(), authenticationRequest.getPassword()));
 
 			// Ubaci korisnika u trenutni security kontekst
+			System.out.println(authentication.getName());
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 
 			// Kreiraj token za tog korisnika

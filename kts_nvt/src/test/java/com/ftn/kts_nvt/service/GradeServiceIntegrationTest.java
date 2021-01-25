@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ftn.kts_nvt.beans.Grade;
 import com.ftn.kts_nvt.services.CulturalOfferService;
@@ -96,6 +97,7 @@ public class GradeServiceIntegrationTest {
 		assertEquals(0, grades.size());
 	}
 	
+	@Transactional
 	@Test
 	public void x_testCreateAndDelete() throws Exception {
 		Grade grade = new Grade();

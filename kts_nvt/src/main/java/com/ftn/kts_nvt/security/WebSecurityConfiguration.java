@@ -127,6 +127,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers(HttpMethod.GET, "/cultural-offer-types/byPage/**");
 
 		web.ignoring().antMatchers(HttpMethod.GET, "/cultural-offer-types/byCategory/**");
+
 		
 		web.ignoring().antMatchers(HttpMethod.GET, "/image");
 		

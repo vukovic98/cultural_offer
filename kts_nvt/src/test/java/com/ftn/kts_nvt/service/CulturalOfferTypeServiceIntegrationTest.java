@@ -99,14 +99,13 @@ public class CulturalOfferTypeServiceIntegrationTest {
 	    
 	}
 	
+	@org.springframework.transaction.annotation.Transactional
 	@Test
 	public void h_testCreateAndDelete() throws Exception {
 		CulturalOfferType type = new CulturalOfferType();
 		type.setName("Museum");
-		//INSERT INTO kts_nvt_test.cultural_offer_category VALUES (2,'Institution');
 		type.setCategory(categoryService.findOne(2L));
 		CulturalOfferType created = service.save(type);
-		System.out.println("created = " + created.getId());
 		
 	    assertEquals(type.getName(), created.getName());
 	    assertEquals(type.getId(), created.getId());

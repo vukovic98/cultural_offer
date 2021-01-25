@@ -72,16 +72,14 @@ export class AddCategoryComponent implements OnInit {
         icon: 'success',
         confirmButtonText: 'OK'
       });
-      return true;
     }, error => {
       Swal.fire({
         title: 'Error!',
-        text: 'Something went wrong! ' + error.error,
+        text: 'Something went wrong! Can not remove category.',
         icon: 'error',
         confirmButtonColor: '#DC143C',
         confirmButtonText: 'OK'
       });
-      return false;
     })
   }
 
