@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 
 import com.ftn.kts_nvt.pages.HomePageAdminPage;
@@ -17,7 +18,7 @@ import com.ftn.kts_nvt.pages.SubscribedItemsPage;
 
 public class SubscribedItemsE2ETest {
 	
-	public static final String HOME_PAGE = "http://localhost:4200/";
+	public static final String HOME_PAGE = "https://localhost:4200/";
 
 	private WebDriver driver;
 	
@@ -30,8 +31,11 @@ public class SubscribedItemsE2ETest {
 	@Before
 	public void setup() throws InterruptedException {
 
+		ChromeOptions option= new ChromeOptions();
+        option.addArguments("ignore-certificate-errors");
+		
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-		this.driver = new ChromeDriver();
+		this.driver = new ChromeDriver(option);
 
 		this.driver.manage().window().maximize();
 		this.itemsPage = PageFactory.initElements(this.driver, SubscribedItemsPage.class);

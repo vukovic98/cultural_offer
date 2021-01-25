@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -27,8 +28,11 @@ public class LoginE2ETest {
 	@Before
 	public void setup() {
 
+		ChromeOptions option= new ChromeOptions();
+        option.addArguments("ignore-certificate-errors");
+		
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-		this.driver = new ChromeDriver();
+		this.driver = new ChromeDriver(option);
 
 		this.driver.manage().window().maximize();
 		this.loginPage = PageFactory.initElements(driver, LoginPage.class);
@@ -42,7 +46,7 @@ public class LoginE2ETest {
 	
 	@Test
 	public void loginTestSuccess() throws InterruptedException {
-		driver.get("http://localhost:4200/login");
+		driver.get("https://localhost:4200/login");
 		
 		justWait();
 		
@@ -60,12 +64,12 @@ public class LoginE2ETest {
         
         loginPage.ensureIsNotVisibleButton();
 
-        assertEquals("http://localhost:4200/home-page", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/home-page", driver.getCurrentUrl());
 	}
 	
 	@Test
 	public void loginTestFailUsername() throws InterruptedException {
-		driver.get("http://localhost:4200/auth/login");
+		driver.get("https://localhost:4200/auth/login");
 		
 		justWait();
 		
@@ -77,7 +81,7 @@ public class LoginE2ETest {
 
         loginPage.getLoginBtn().click();
 
-        assertEquals("http://localhost:4200/login", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/login", driver.getCurrentUrl());
         
         loginPage.ensureIsDisplayedSwal();
         
@@ -86,7 +90,7 @@ public class LoginE2ETest {
 	
 	@Test
 	public void loginTestFailPassword() throws InterruptedException {
-		driver.get("http://localhost:4200/auth/login");
+		driver.get("https://localhost:4200/auth/login");
 		
 		justWait();
 		

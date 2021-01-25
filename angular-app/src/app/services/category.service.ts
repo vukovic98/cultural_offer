@@ -35,10 +35,10 @@ export class CategoryService{
     return this.http.get<CategoryModel>(environment.apiUrl + this.manageCategoriesEndPointByName + name, { headers: headers})
   }
 
-  deleteCategory(id: number): Observable<any>{
+  deleteCategory(id: number): Observable<string>{
     console.log("deletecategorycall");
     let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
-    return this.http.delete(environment.apiUrl + this.manageCategoriesEndPoint + id , { headers: headers })
+    return this.http.delete<string>(environment.apiUrl + this.manageCategoriesEndPoint + id , { headers: headers });
   }
 
   updateCategory(category: CategoryModel): Observable<any>{

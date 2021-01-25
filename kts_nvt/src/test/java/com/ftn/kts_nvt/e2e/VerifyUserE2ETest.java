@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 
 import com.ftn.kts_nvt.pages.VerifyPage;
@@ -24,8 +25,11 @@ public class VerifyUserE2ETest {
 	@Before
 	public void setup() {
 
+		ChromeOptions option= new ChromeOptions();
+        option.addArguments("ignore-certificate-errors");
+		
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-		this.driver = new ChromeDriver();
+		this.driver = new ChromeDriver(option);
 
 		this.driver.manage().window().maximize();
 		this.verifyPage = PageFactory.initElements(driver, VerifyPage.class);
@@ -39,7 +43,7 @@ public class VerifyUserE2ETest {
 	
 	@Test
 	public void VerifyTestSuccess() throws InterruptedException {
-		driver.get("http://localhost:4200/verify?email=luna@maildrop.cc");
+		driver.get("https://localhost:4200/verify?email=luna@maildrop.cc");
 		
 		justWait();
 		
@@ -50,7 +54,7 @@ public class VerifyUserE2ETest {
 		verifyPage.ensureGoToLoginButtonIsVisible();
 		verifyPage.getGoToLoginPageBtn().click();
 		
-		assertEquals("http://localhost:4200/login", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/login", driver.getCurrentUrl());
 		
 	}
 

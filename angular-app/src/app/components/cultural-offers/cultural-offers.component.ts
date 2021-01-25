@@ -23,7 +23,7 @@ export class CulturalOffersComponent implements OnInit {
   public nextBtn: boolean = false;
   public isFilter: boolean = false;
   public totalPages: number = 1;
-  public filterObj: FilterObject = {exp: '', types: []};
+  public filterObj: FilterObject = { exp: '', types: [] };
 
   constructor(private service: CulturalOfferService,
               private auth: AuthService,
@@ -39,13 +39,13 @@ export class CulturalOffersComponent implements OnInit {
       this.totalPages = data.totalPages;
     });
 
-    if(this.auth.isUser()) {
+    if (this.auth.isUser()) {
       this.service.getSubscribedItems().subscribe((data) => {
         this.subscribedItems = data;
       })
     }
 
-    if(this.auth.isLoggedIn()) {
+    if (this.auth.isLoggedIn()) {
       let token = this.auth.getToken();
       let userData: TokenModel | null = this.auth.decodeToken(token);
       this.userId = Number(userData?.user_id);
@@ -75,14 +75,15 @@ export class CulturalOffersComponent implements OnInit {
     this.offers = this.offers.filter(item => item.id != id);
   }
 
-  editOffer(offer: CulturalOffer){
+  editOffer(offer: CulturalOffer) {
     const dialogRef = this.dialog.open(EditOfferComponent, {
       width: '500px',
       data: offer
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result != undefined){
+      if (result != undefined) {
         offer = result.data;
+        console.log("offer = ", offer);
         this.service.updateOffer(offer)
           .subscribe(response => {
             Swal.fire({
@@ -94,7 +95,7 @@ export class CulturalOffersComponent implements OnInit {
           }, error => {
             Swal.fire({
               title: 'Error!',
-              text: 'Something went wrong!',
+              text: 'Something went wrong! Offer with that name already exists',
               icon: 'error',
               confirmButtonColor: '#DC143C',
               confirmButtonText: 'OK'
@@ -119,7 +120,7 @@ export class CulturalOffersComponent implements OnInit {
   }
 
   retrieveOffers() {
-    if(!this.isFilter) {
+    if (!this.isFilter) {
       this.service.getByPage(this.pageNum).subscribe((data) => {
         this.offers = data.content;
         this.nextBtn = data.last;
@@ -134,7 +135,7 @@ export class CulturalOffersComponent implements OnInit {
           this.mapService.myMethod(this.offers);
           this.dataChangedEvent.emit(null);
         }
-      )
+        )
     }
 
   }
@@ -150,7 +151,7 @@ export class CulturalOffersComponent implements OnInit {
   }
 
   isSubscribed(offer: CulturalOffer): boolean {
-    if(this.auth.isLoggedIn()) {
+    if (this.auth.isLoggedIn()) {
       for (let i of this.subscribedItems) {
         if (i.id === offer.id)
           return true;
@@ -159,12 +160,12 @@ export class CulturalOffersComponent implements OnInit {
     return false;
   }
 
-  filterOffers(data: FilterObject){
+  filterOffers(data: FilterObject) {
     this.isFilter = true;
     this.pageNum = 1;
     this.filterObj = data;
 
-    if(data.exp==="" && data.types.length === 0){
+    if (data.exp === "" && data.types.length === 0) {
       this.isFilter = false;
       this.service.getByPage(this.pageNum).subscribe((data) => {
         this.offers = data.content;
@@ -173,9 +174,9 @@ export class CulturalOffersComponent implements OnInit {
         this.dataChangedEvent.emit(null);
       });
     }
-    else{
-      this.service.getByPageFilter(this.pageNum,data.exp,data.types).subscribe(
-        (offers)=>{
+    else {
+      this.service.getByPageFilter(this.pageNum, data.exp, data.types).subscribe(
+        (offers) => {
           this.offers = offers.content;
           this.nextBtn = offers.last;
           this.mapService.myMethod(this.offers);
