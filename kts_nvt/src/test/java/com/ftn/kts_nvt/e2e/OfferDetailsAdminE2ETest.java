@@ -12,6 +12,7 @@ import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 
 import com.ftn.kts_nvt.pages.HomePageAdminPage;
@@ -32,12 +33,15 @@ public class OfferDetailsAdminE2ETest {
 	private static String REGISTERED_USER_PASSWORD = "vukovic";
 	private static String HOME_PAGE_PATH = "http://localhost:4200/home-page";
 	private static String LOGIN_PAGE_PATH = "http://localhost:4200/auth/login";
-	private static String OFFER_DETAILS_PAGE_PATH = "http://localhost:4200/cultural-offer/offer-details/1";
+	private static String OFFER_DETAILS_PAGE_PATH = "https://localhost:4200/cultural-offer/offer-details/1";
 	
 	@Before
 	public void setup() throws InterruptedException {
+		ChromeOptions option= new ChromeOptions();
+        option.addArguments("ignore-certificate-errors");
+		
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-		this.driver = new ChromeDriver();
+		this.driver = new ChromeDriver(option);
 
 		this.driver.manage().window().maximize();
 		this.loginPage = PageFactory.initElements(driver, LoginPage.class);
@@ -63,7 +67,6 @@ public class OfferDetailsAdminE2ETest {
 		justWait(); justWait();
 		detailsPage.ensureIsNotVisibleAddCommentPanel();
 	}
-	
 	@Test
 	public void a_addPost() throws InterruptedException {
 		justWait(); justWait();
@@ -99,6 +102,17 @@ public class OfferDetailsAdminE2ETest {
 	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();		
 		int postsAfter = driver.findElements(By.id("postItem")).size();
 		assertEquals(postsBefore - 1, postsAfter);
+	}
+	@Test
+	public void c_deleteComment() throws InterruptedException {
+		
+		int commentsBefore = driver.findElements(By.id("commentItemId")).size();
+		detailsPage.getDeleteCommentButton().click();
+		justWait();justWait();
+		assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
+	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();		
+	    int commentsAfter = driver.findElements(By.id("commentItemId")).size();
+		assertEquals(commentsBefore - 1, commentsAfter);
 	}
 	
 	@After

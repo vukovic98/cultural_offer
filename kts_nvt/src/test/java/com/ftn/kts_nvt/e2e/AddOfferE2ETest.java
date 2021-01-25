@@ -12,6 +12,7 @@ import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
@@ -31,14 +32,17 @@ public class AddOfferE2ETest {
 
 	private static String ADMIN_USERNAME = "admin@gmail.com";
 	private static String ADMIN_PASSWORD = "vukovic";
-	private static String HOME_PAGE_PATH = "http://localhost:4200/home-page";
-	private static String ADD_OFFER_PAGE_PATH = "http://localhost:4200/cultural-offer/add-offer";
-	private static String LOGIN_PAGE_PATH = "http://localhost:4200/auth/login";
+	private static String HOME_PAGE_PATH = "https://localhost:4200/home-page";
+	private static String ADD_OFFER_PAGE_PATH = "https://localhost:4200/cultural-offer/add-offer";
+	private static String LOGIN_PAGE_PATH = "https://localhost:4200/auth/login";
 	
 	@Before
 	public void setup() throws InterruptedException {
+		ChromeOptions option= new ChromeOptions();
+        option.addArguments("ignore-certificate-errors");
+		
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-		this.driver = new ChromeDriver();
+		this.driver = new ChromeDriver(option);
 
 		this.driver.manage().window().maximize();
 		this.loginPage = PageFactory.initElements(driver, LoginPage.class);

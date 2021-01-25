@@ -574,8 +574,8 @@ describe('CulturalOfferService', () => {
       "pageSize": 8
     };
 
-    offerService.getByPage(1).subscribe((data: any) => {
-      res = JSON.parse(data);
+    offerService.getByPage(1).subscribe((data) => {
+      res = data;
     });
 
     const req = httpMock.expectOne('http://localhost:8080/culturalOffers/by-page/1');
@@ -608,8 +608,8 @@ describe('CulturalOfferService', () => {
       "pageSize": 8
     };
 
-    offerService.getByPage(1999).subscribe((data: any) => {
-      res = JSON.parse(data);
+    offerService.getByPage(1999).subscribe((data) => {
+      res = data;
     });
 
     const req = httpMock.expectOne('http://localhost:8080/culturalOffers/by-page/1999');
@@ -1392,8 +1392,8 @@ describe('CulturalOfferService', () => {
       "pageSize": 8
     };
 
-    offerService.getByPageFilter(1, "exit", ["Archeological site"]).subscribe((data: any) => {
-      res = JSON.parse(data);
+    offerService.getByPageFilter(1, "exit", ["Archeological site"]).subscribe((data) => {
+      res = data;
     });
 
     const req = httpMock.expectOne("http://localhost:8080/culturalOffers/filter/1?expression=exit&types=Archeological%20site");
@@ -1426,8 +1426,8 @@ describe('CulturalOfferService', () => {
       "pageSize": 8
     };
 
-    offerService.getByPageFilter(1, "ext", ["Archeological sitea"]).subscribe((data: any) => {
-      res = JSON.parse(data);
+    offerService.getByPageFilter(1, "ext", ["Archeological sitea"]).subscribe((data) => {
+      res = data;
     });
 
     const req = httpMock.expectOne("http://localhost:8080/culturalOffers/filter/1?expression=ext&types=Archeological%20sitea");

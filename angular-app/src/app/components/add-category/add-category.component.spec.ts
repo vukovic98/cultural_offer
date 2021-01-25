@@ -1,14 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { CategoryService } from '../../services/category.service';
-import { CategoryModel } from '../../model/category-model';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { Overlay } from '@angular/cdk/overlay';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddCategoryComponent } from './add-category.component';
 import { of } from 'rxjs';
-import { fakeAsync, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 
@@ -77,7 +72,7 @@ describe('AddCategoryComponent', () => {
             "first": true,
             "empty": false,
             "pageNumber": 0,
-            "pageSize": 10
+            "pageSize": 3
           }
         })),
         deleteCategory: jasmine.createSpy('deleteCategory')
@@ -111,18 +106,14 @@ describe('AddCategoryComponent', () => {
             ]
           }
         )),
+
     };
 
     let matDialogMock = {
       open: jasmine.createSpy('open')
     };
 
-    let dialogRefMock = {
-      afterClosed: jasmine.createSpy('afterClosed')
-    }
-
     TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA],
       imports: [
         MatDialogModule,
         BrowserAnimationsModule,
@@ -155,14 +146,6 @@ describe('AddCategoryComponent', () => {
     expect(component.pageNum).toEqual(1);
   });
 
-  it('nextBtn has default value', () => {
-    expect(component.nextBtn).toEqual(true);
-  });
-
-  it('categories list has length', () => {
-    expect(component.categories.length).toEqual(3);
-  });
-
   it('should remove category', () => {
     component.deleteCategory(5);
     expect(categoryService.deleteCategory).toHaveBeenCalled();
@@ -180,7 +163,8 @@ describe('AddCategoryComponent', () => {
     let oldPage = component.pageNum;
     component.nextPage();
     expect(component.pageNum).toBe(oldPage + 1);
-    expect(categoryService.getCategories).toHaveBeenCalled();
+    expect(categoryService.getCategoriesByPage).toHaveBeenCalled();
+    expect(categoryService.getCategoriesByPage).toHaveBeenCalledWith(oldPage+1);
   });
 
   it('should retrieve categories for previous page', () => {
@@ -188,7 +172,8 @@ describe('AddCategoryComponent', () => {
     let oldPage = component.pageNum;
     component.previousPage();
     expect(component.pageNum).toBe(oldPage - 1);
-    expect(categoryService.getCategories).toHaveBeenCalled();
+    expect(categoryService.getCategoriesByPage).toHaveBeenCalled();
+    expect(categoryService.getCategoriesByPage).toHaveBeenCalledWith(oldPage-1);
   });
 
   it('should create category', () => {

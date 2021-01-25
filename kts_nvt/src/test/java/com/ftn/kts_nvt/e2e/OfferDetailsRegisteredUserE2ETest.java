@@ -12,6 +12,7 @@ import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 
 import com.ftn.kts_nvt.pages.AddOfferPage;
@@ -30,14 +31,17 @@ public class OfferDetailsRegisteredUserE2ETest {
 
 	private static String REGISTERED_USER_USERNAME = "a@gmail.com";
 	private static String REGISTERED_USER_PASSWORD = "vukovic";
-	private static String HOME_PAGE_PATH = "http://localhost:4200/home-page";
-	private static String LOGIN_PAGE_PATH = "http://localhost:4200/auth/login";
-	private static String OFFER_DETAILS_PAGE_PATH = "http://localhost:4200/cultural-offer/offer-details/1";
+	private static String HOME_PAGE_PATH = "https://localhost:4200/home-page";
+	private static String LOGIN_PAGE_PATH = "https://localhost:4200/auth/login";
+	private static String OFFER_DETAILS_PAGE_PATH = "https://localhost:4200/cultural-offer/offer-details/1";
 	
 	@Before
 	public void setup() throws InterruptedException {
+		ChromeOptions option= new ChromeOptions();
+        option.addArguments("ignore-certificate-errors");
+		
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-		this.driver = new ChromeDriver();
+		this.driver = new ChromeDriver(option);
 
 		this.driver.manage().window().maximize();
 		this.loginPage = PageFactory.initElements(driver, LoginPage.class);
@@ -106,8 +110,8 @@ public class OfferDetailsRegisteredUserE2ETest {
 		driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();
 	    assertEquals("4", driver.findElement(By.xpath("//p")).getText());
 	}
-	
-	/*@Test
+	/*
+	@Test
 	public void e_comment() {
 		int rowsBefore = driver.findElements(By.id("commentItemId")).size();
 
@@ -124,6 +128,21 @@ public class OfferDetailsRegisteredUserE2ETest {
 		int rowsAfter = driver.findElements(By.id("commentItemId")).size();
 		assertEquals(rowsBefore + 1, rowsAfter);
 	}*/
+	@Test
+	public void e_comment() throws InterruptedException {
+
+		driver.findElement(By.xpath("//mat-expansion-panel-header[@id='mat-expansion-panel-header-0']/span/mat-panel-title")).click();
+		justWait();
+	    driver.findElement(By.id("commentText")).click();
+	    driver.findElement(By.id("commentText")).clear();
+	    driver.findElement(By.id("commentText")).sendKeys("test_comment");
+	    driver.findElement(By.id("file")).sendKeys("D:\\mem\\snake.jpg");
+	    driver.findElement(By.id("submit")).click();
+	    justWait();
+	    assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
+	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();
+		
+	}
 	
 	@After
 	public void tearDown() throws Exception {

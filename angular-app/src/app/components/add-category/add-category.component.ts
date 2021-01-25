@@ -17,28 +17,18 @@ export class AddCategoryComponent implements OnInit {
   public categories: Array<CategoryModel> = [];
   public pageNum: number = 1;
   public nextBtn: boolean = false;
+
   public categoryForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required)
   });
 
-  /* addPostForm = new FormGroup({
-    "title": new FormControl('', [Validators.required]),
-    "content": new FormControl('', Validators.required)
-  }); */
   public categoryFormByName: FormGroup = new FormGroup({
     byname: new FormControl('')
   });
 
-  constructor(/*private fb: FormBuilder,*/
+  constructor(
     private categoryService: CategoryService,
     public dialog: MatDialog) {
-
-    /*this.categoryForm = this.fb.group({
-      name: new FormControl('', Validators.required)
-    });
-    this.categoryFormByName = this.fb.group({
-      byname: new FormControl('')
-    });*/
   }
 
   ngOnInit(): void {
@@ -60,16 +50,13 @@ export class AddCategoryComponent implements OnInit {
   }
 
   editCategory(category: CategoryModel) {
-    console.log("edit = ");
-    console.log(category);
     const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
       width: '350px',
       data: { name: category.name, id: category.id }
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      //console.log('The dialog was closed');
-      //console.log(data);
+
       if (data != undefined) {
         this.getCategories();
       }
@@ -77,10 +64,10 @@ export class AddCategoryComponent implements OnInit {
   }
 
   deleteCategory(id: number) {
-    this.categoryService.deleteCategory(id).subscribe((response: any) => {
-      console.log("delete category = ");
-      console.log(response);
+    console.log("callservicedelete");
+    this.categoryService.deleteCategory(id).subscribe((response) => {
       this.categories = this.categories.filter(item => item.id != id);
+      console.log("success = ", response);
       Swal.fire({
         title: 'Success!',
         text: 'Category successfully deleted!',
@@ -89,8 +76,7 @@ export class AddCategoryComponent implements OnInit {
       });
       return true;
     }, error => {
-      console.log("delete category error = ");
-      console.log(error);
+      console.log("error = ", error);
       Swal.fire({
         title: 'Error!',
         text: 'Something went wrong! ' + error.error,
@@ -103,13 +89,9 @@ export class AddCategoryComponent implements OnInit {
   }
 
   getCategories() {
-    //console.log("getcategories");
-    this.categoryService.getCategoriesByPage(this.pageNum).subscribe((data: any) => {
-      //console.log("getcategoriesbypage = ");
-      //console.log(data);
+    this.categoryService.getCategoriesByPage(this.pageNum).subscribe((data) => {
       this.categories = data.content;
       this.nextBtn = data.last;
-      console.log(this.categories);
     }, error => {
       console.log(error);
     });
@@ -126,9 +108,7 @@ export class AddCategoryComponent implements OnInit {
   }
 
   onSubmit() {
-    //console.log(this.categoryForm.value);
     this.categoryService.addCategory(this.categoryForm.value).subscribe(response => {
-      console.log("addcategory response = ", response);
       this.getCategories();
       Swal.fire({
         title: 'Success!',
@@ -136,9 +116,7 @@ export class AddCategoryComponent implements OnInit {
         icon: 'success',
         confirmButtonText: 'OK'
       });
-      return true;
     }, error => {
-      console.log("addcategory error = ", error);
       Swal.fire({
         title: 'Error!',
         text: 'Something went wrong! Category already exist',
@@ -146,21 +124,16 @@ export class AddCategoryComponent implements OnInit {
         confirmButtonColor: '#DC143C',
         confirmButtonText: 'OK'
       });
-      return false;
     });
   }
 
   onSubmitByName() {
-    //console.log(this.categoryFormByName.value);
     if (this.categoryFormByName.value.byname == "") {
       this.getCategories();
     } else {
       this.categoryService.getByName(this.categoryFormByName.value.byname).subscribe((data: CategoryModel) => {
-        console.log("getbyname = ");
-        console.log(data);
         this.categories = [data];
       }, (error: any) => {
-        //console.log(error);
         Swal.fire({
           title: 'Error!',
           text: 'Category not found',

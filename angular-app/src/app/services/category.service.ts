@@ -24,7 +24,7 @@ export class CategoryService{
                                                 {headers: headers});
   }
 
-  getCategoriesByPage(page: number): Observable<Array<CategoryModel>>{
+  getCategoriesByPage(page: number): Observable<any>{
     const headers = new HttpHeaders({'Authorization' : 'Bearer ' + localStorage.getItem("accessToken")});
     return this.http.get<Array<CategoryModel>>(environment.apiUrl + this.manageCategoriesEndPoint + 'by-page/'+page, {headers: headers});
   }
@@ -33,28 +33,25 @@ export class CategoryService{
     const headers = new HttpHeaders({'Content-Type': 'application/json','Accept': 'application/json'});
 
     return this.http.get<CategoryModel>(environment.apiUrl + this.manageCategoriesEndPointByName + name, { headers: headers})
-    .pipe(map(response => response));
   }
 
-  deleteCategory(id: number): Observable<any>{
+  deleteCategory(id: number): Observable<string>{
     console.log("deletecategorycall");
     let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
-    return this.http.delete(environment.apiUrl + this.manageCategoriesEndPoint + id , { headers: headers })
-      .pipe(map(response => response));
+    return this.http.delete<string>(environment.apiUrl + this.manageCategoriesEndPoint + id , { headers: headers });
   }
 
   updateCategory(category: CategoryModel): Observable<any>{
     console.log("update category = ");
     console.log(category);
-    var headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
+    let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
     return this.http.put(environment.apiUrl + this.manageCategoriesEndPoint + category.id, category, { headers: headers })
                 .pipe(map(response => response));
   }
 
   addCategory(category: CategoryModel): Observable<any>{
     console.log("add catgegory = ", category);
-    var headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
+    let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
     return this.http.post(environment.apiUrl + this.manageCategoriesEndPoint, category, { headers: headers })
-      .pipe(map(response => response));
   }
 }

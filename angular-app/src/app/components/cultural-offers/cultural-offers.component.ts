@@ -1,14 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CulturalOfferService } from '../../services/culturalOffer.service';
-import { AuthService } from '../../services/auth.service';
-import { CulturalOffer } from '../../model/offer-mode';
-import { TokenModel } from '../../model/token.model';
-import { of } from 'rxjs';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { EditOfferComponent } from '../edit-offer/edit-offer.component';
-import { FilterObject } from "../../model/filter-model";
-import { map } from 'rxjs/operators';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {CulturalOfferService} from '../../services/culturalOffer.service';
+import {AuthService} from '../../services/auth.service';
+import {CulturalOffer} from '../../model/offer-mode';
+import {TokenModel} from '../../model/token.model';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {EditOfferComponent} from '../edit-offer/edit-offer.component';
+import {FilterObject} from "../../model/filter-model";
 import Swal from "sweetalert2";
+import { MapService } from 'src/app/services/map.service';
 
 @Component({
   selector: 'app-cultural-offers',
@@ -16,10 +15,10 @@ import Swal from "sweetalert2";
   styleUrls: ['./cultural-offers.component.css']
 })
 export class CulturalOffersComponent implements OnInit {
-
-  public offers: Array<CulturalOffer> = [];
-  public subscribedItems: Array<CulturalOffer> = [];
-  public userId: number = -1;
+  @Output() dataChangedEvent = new EventEmitter();
+  private offers: Array<CulturalOffer> = [];
+  private subscribedItems: Array<CulturalOffer> = [];
+  private userId: number = -1;
   public pageNum: number = 1;
   public nextBtn: boolean = false;
   public isFilter: boolean = false;
@@ -27,12 +26,15 @@ export class CulturalOffersComponent implements OnInit {
   public filterObj: FilterObject = { exp: '', types: [] };
 
   constructor(private service: CulturalOfferService,
-    private auth: AuthService,
-    public dialog: MatDialog) { }
+              private auth: AuthService,
+              public dialog: MatDialog,
+              public mapService: MapService) { }
 
   ngOnInit(): void {
     this.service.getByPage(this.pageNum).subscribe((data) => {
       this.offers = data.content;
+      this.mapService.myMethod(this.offers);
+      this.dataChangedEvent.emit(null);
       this.nextBtn = data.last;
       this.totalPages = data.totalPages;
     });
@@ -71,8 +73,6 @@ export class CulturalOffersComponent implements OnInit {
         });
       })
     this.offers = this.offers.filter(item => item.id != id);
-
-    location.reload();
   }
 
   editOffer(offer: CulturalOffer) {
@@ -124,15 +124,20 @@ export class CulturalOffersComponent implements OnInit {
       this.service.getByPage(this.pageNum).subscribe((data) => {
         this.offers = data.content;
         this.nextBtn = data.last;
+        this.mapService.myMethod(this.offers);
+        this.dataChangedEvent.emit(null);
       });
     } else {
-      this.service.getByPageFilter(this.pageNum, this.filterObj.exp, this.filterObj.types)
-        .subscribe((offers) => {
+      this.service.getByPageFilter(this.pageNum,this.filterObj.exp,this.filterObj.types).subscribe(
+        (offers)=>{
           this.offers = offers.content;
           this.nextBtn = offers.last;
+          this.mapService.myMethod(this.offers);
+          this.dataChangedEvent.emit(null);
         }
         )
     }
+
   }
 
   nextPage() {
@@ -165,6 +170,8 @@ export class CulturalOffersComponent implements OnInit {
       this.service.getByPage(this.pageNum).subscribe((data) => {
         this.offers = data.content;
         this.nextBtn = data.last;
+        this.mapService.myMethod(this.offers);
+        this.dataChangedEvent.emit(null);
       });
     }
     else {
@@ -172,9 +179,10 @@ export class CulturalOffersComponent implements OnInit {
         (offers) => {
           this.offers = offers.content;
           this.nextBtn = offers.last;
+          this.mapService.myMethod(this.offers);
+          this.dataChangedEvent.emit(null);
         }
       )
     }
-
   }
 }

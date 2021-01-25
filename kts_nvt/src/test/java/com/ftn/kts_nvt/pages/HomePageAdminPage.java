@@ -93,6 +93,15 @@ public class HomePageAdminPage {
 
 	@FindBy(xpath = "//div[@id='offersListDiv']/app-cultural-offer-item[8]/div/div/div[1]/div/div/h3")
 	private WebElement deleteOfferTitle;
+	
+	@FindBy(xpath = "//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")
+	private List<WebElement> markers;
+	
+	@FindBy(xpath = "//*[contains(concat(' ', @class, ' '), ' leaflet-marker-icon ')]")
+	private WebElement marker;
+	
+	@FindBy(xpath = "//a[contains(text(), 'Sonsing')]")
+	private WebElement markerLink;
 
 	public HomePageAdminPage() {
 		super();
@@ -331,9 +340,26 @@ public class HomePageAdminPage {
 	public void ensureSwalIsDisplayed() {
 		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.className("swal2-popup")));
 	}
+	
+	public void ensureIsMarkerLinkDisplayed() {
+		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(), 'Sonsing')]")));
+	}
 
 	public List<WebElement> getTypeOptions() {
 		return this.typeSelect.findElements(By.tagName("option"));
 	}
 
+	public WebElement getMarker() {
+		return marker;
+	}
+
+	public WebElement getMarkerLink() {
+		return markerLink;
+	}
+
+	public List<WebElement> getMarkers() {
+		return markers;
+	}
+	
+	
 }

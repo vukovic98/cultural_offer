@@ -12,6 +12,7 @@ import { AddPostModel } from '../../model/post-model';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from "sweetalert2";
+import { MapService } from 'src/app/services/map.service';
 import { LocationDialogComponent } from '../location-dialog/location-dialog.component';
 
 @Component({
@@ -31,14 +32,12 @@ export class OfferDetailsComponent implements OnInit{
   constructor(private route: ActivatedRoute,
     private service: CulturalOfferService,
     private authService: AuthService,
-    public locationDialog: MatDialog/*,
-    private dialog: MatDialog*/) { }
+    public locationDialog: MatDialog) { }
 
   ngOnInit() {
     if (this.authService.isUser()) {
-      this.service.getSubscribedItems().subscribe((data: string) => {
-        console.log("getSubscribedItems = ", data);
-        this.subscribedItems = JSON.parse(data);
+      this.service.getSubscribedItems().subscribe((data) => {
+        this.subscribedItems = data;
       })
     }
     //@ts-ignore
@@ -48,7 +47,6 @@ export class OfferDetailsComponent implements OnInit{
 
   getOffer(): void {
     this.service.getOffer(this.id).subscribe((data: OfferDetailsModel) => {
-      console.log("getOffer = ", data);
       this.offer = data;
 
       let token = this.authService.getToken();

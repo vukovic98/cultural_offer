@@ -8,7 +8,6 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
 import { Overlay } from '@angular/cdk/overlay';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
-import { fakeAsync, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AddTypeComponent } from './add-type.component';
@@ -216,7 +215,7 @@ describe('AddTypeComponent', () => {
     fixture.whenStable()
       .then(() => {
         expect(component.types.length).toBe(5); // mock studentService returned 3 empty objects
-        fixture.detectChanges(); // synchronize HTML with component data        
+        fixture.detectChanges(); // synchronize HTML with component data
       });
   });
 

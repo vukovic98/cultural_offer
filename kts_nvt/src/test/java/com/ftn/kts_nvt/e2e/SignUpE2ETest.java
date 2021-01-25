@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 
 
@@ -26,8 +27,11 @@ public class SignUpE2ETest {
 	@Before
 	public void setup() {
 
+		ChromeOptions option= new ChromeOptions();
+        option.addArguments("ignore-certificate-errors");
+		
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-		this.driver = new ChromeDriver();
+		this.driver = new ChromeDriver(option);
 
 		this.driver.manage().window().maximize();
 		this.signUpPage = PageFactory.initElements(driver, SignUpPage.class);
@@ -43,7 +47,7 @@ public class SignUpE2ETest {
 	@Test
 	public void signUpTestSuccess() throws Exception {
 		
-		driver.get("http://localhost:4200/sign-up");
+		driver.get("https://localhost:4200/sign-up");
 		justWait();
 		assertTrue(!signUpPage.getSignUpBtn().isEnabled());
 
@@ -61,7 +65,7 @@ public class SignUpE2ETest {
 		
 		verifyPage.ensureButtonIsVisible();
 
-		assertEquals("http://localhost:4200/verify?email=" + email, driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/verify?email=" + email, driver.getCurrentUrl());
 	
 	}
 

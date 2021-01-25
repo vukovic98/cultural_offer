@@ -3,16 +3,14 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CulturalOfferService } from '../../services/culturalOffer.service';
 import { OfferDetailsModel } from '../../model/offer-mode';
 import { Location } from '../../model/offer-mode';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, convertToParamMap} from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { OfferDetailsComponent } from './offer-details.component';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-fdescribe('OfferDetailsComponent', () => {
+describe('OfferDetailsComponent', () => {
   let component: OfferDetailsComponent;
   let fixture: ComponentFixture<OfferDetailsComponent>;
 
@@ -26,10 +24,6 @@ fdescribe('OfferDetailsComponent', () => {
     let matDialogMock = {
       open: jasmine.createSpy('open')
     };
-
-    let dialogRefMock = {
-      afterClosed: jasmine.createSpy('afterClosed')
-    }
 
     let offerServiceMock = {
       getSubscribedItems: jasmine.createSpy('getSubscribedItems').and.returnValue(of([])),
@@ -167,10 +161,6 @@ fdescribe('OfferDetailsComponent', () => {
       unsubscribeUser: jasmine.createSpy('unsubscribeUser').and.returnValue(of()),
     };
 
-    let activatedRouteMock = {
-      snapshot: jasmine.createSpy('snapshot').and.returnValue(of()),
-    }
-
     let authServiceMock = {
       isUser: jasmine.createSpy('isUser')
         .and.returnValue(true),
@@ -195,14 +185,19 @@ fdescribe('OfferDetailsComponent', () => {
     }
 
     TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA],
       declarations: [OfferDetailsComponent],
       imports: [
-        MatDialogModule, BrowserAnimationsModule, ReactiveFormsModule, FormsModule
+        MatDialogModule,
+        BrowserAnimationsModule
       ],
       providers: [
         { provide: CulturalOfferService, useValue: offerServiceMock },
-        { provide: ActivatedRoute, useValue: activatedRouteMock },
+        { provide: ActivatedRoute, useValue: {
+          snapshot: {
+              paramMap: convertToParamMap({id: 1})
+            }
+          }
+        },
         { provide: AuthService, useValue: authServiceMock },
         { provide: MatDialog, useValue: matDialogMock },
       ]
@@ -210,10 +205,10 @@ fdescribe('OfferDetailsComponent', () => {
 
     fixture = TestBed.createComponent(OfferDetailsComponent);
     component = fixture.componentInstance;
-    
+
     offerService = TestBed.inject(CulturalOfferService);
     activatedRoute = TestBed.inject(ActivatedRoute);
-    authService = TestBed.inject(AuthService);    
+    authService = TestBed.inject(AuthService);
     matDialog = TestBed.inject(MatDialog);
     fixture.detectChanges();
   });
@@ -221,18 +216,6 @@ fdescribe('OfferDetailsComponent', () => {
   it('can load instance', () => {
     expect(component).toBeTruthy();
   });
-
-  /*it(`stars has default value`, () => {
-    expect(component.stars).toEqual([1, 2, 3, 4, 5]);
-  });
-
-  it(`selectedValue has default value`, () => {
-    expect(component.selectedValue).toEqual(0);
-  });
-
-  it(`timer has default value`, () => {
-    expect(component.timer).toEqual(0);
-  });*/
 
   it('isSubscribed makes expected calls', () => {
     let offerDetailsModel: OfferDetailsModel = {
@@ -276,11 +259,11 @@ fdescribe('OfferDetailsComponent', () => {
 
   it('ngOnInit makes expected calls', () => {
     component.ngOnInit();
-    expect(component.getOffer).toHaveBeenCalled();
+    expect(offerService.getOffer).toHaveBeenCalled();
     expect(offerService.getSubscribedItems).toHaveBeenCalled();
     expect(authService.isUser).toHaveBeenCalled();
   });
-  
+
   it('getOffer makes expected calls', () => {
     component.getOffer();
     expect(offerService.getOffer).toHaveBeenCalled();

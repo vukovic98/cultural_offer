@@ -176,37 +176,13 @@ describe('AddOfferComponent', () => {
     expect(component.files).toEqual([]);
   });
 
-  describe('ngOnInit', () => {
-    it('makes expected calls', () => {
-      const culturalOfferServiceStub: CulturalOfferService = fixture.debugElement.injector.get(
-        CulturalOfferService
-      );
-      //spyOn(component, 'getCategories').and.callThrough();
-      //spyOn(culturalOfferServiceStub, 'getLocationName').and.callThrough();
-      component.ngOnInit();
-      expect(component.getCategories).toHaveBeenCalled();
-      //expect(culturalOfferServiceStub.getLocationName).toHaveBeenCalled();
-      expect(component.categories.length).toBe(3);
-      expect(component.categories[0].id).toBe(17);
-      expect(component.categories[0].name).toBe("Institution");
-      expect(component.categories[0].name).toBe("Institution");
-      expect(component.categories[0].types.length).toBe(2);
-    });
-  });
-
   describe('getCategories', () => {
     it('makes expected calls', () => {
       const categoryServiceStub: CategoryService = fixture.debugElement.injector.get(
         CategoryService
       );
-      //spyOn(categoryServiceStub, 'getCategories').and.callThrough();
       component.getCategories();
       expect(categoryServiceStub.getCategories).toHaveBeenCalled();
-      /*expect(component.categories.length).toBe(3);
-      expect(component.categories[0].id).toBe(17);
-      expect(component.categories[0].name).toBe("Institution");
-      expect(component.categories[0].name).toBe("Institution");
-      expect(component.categories[0].types.length).toBe(2);*/
     });
   });
 

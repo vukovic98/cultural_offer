@@ -27,6 +27,7 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { MatCardModule } from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {SharedModule} from './modules/shared/shared.module';
+import { MapService } from './services/map.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import {SharedModule} from './modules/shared/shared.module';
     EditProfileService,
     ChangePasswordService,
     FilterOffersService,
-    CommentsToBeApprovedService
+    CommentsToBeApprovedService,
+    MapService
   ],
   bootstrap: [AppComponent]
 })
