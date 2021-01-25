@@ -62,7 +62,7 @@ public class CommentControllerIntegrationTest {
 
 		assertNotNull(comments);
 		assertTrue(!comments.isEmpty());
-		assertEquals(2, comments.size());
+		assertEquals(3, comments.size());
 	}
 	
 	@Test
@@ -77,7 +77,7 @@ public class CommentControllerIntegrationTest {
 		
 		assertNotNull(comments);
 		assertTrue(!comments.isEmpty());
-		assertEquals(2, comments.getNumberOfElements());
+		assertEquals(3, comments.getNumberOfElements());
 	}
 
 	@Test
@@ -105,7 +105,7 @@ public class CommentControllerIntegrationTest {
 	@Test
 	@Transactional
 	public void testCreateAndDelete() {
-		login("a3@a", "vukovic");
+		login("vladimirvukovic98@maildrop.cc", "vukovic");
 
 		NewCommentDTO dto = new NewCommentDTO(1L, "Brand new comment", null);
 
@@ -123,6 +123,11 @@ public class CommentControllerIntegrationTest {
 
 		assertTrue("Brand new comment".equalsIgnoreCase(created.getContent()));
 
+		login("vlado@gmail.com", "vukovic");
+		
+		headers = new HttpHeaders();
+		headers.add("Authorization", this.accessToken);
+		
 		HttpEntity<Object> httpEntityDelete = new HttpEntity<Object>(headers);
 
 		ResponseEntity<?> responseEntityDelete = restTemplate.exchange("/comments/" + created.getId(),
