@@ -25,6 +25,7 @@ export class EditOfferComponent implements OnInit {
 
     this.placeName = data.location.place;
     //console.log("old location = ", data.location);
+    console.log("olddata = ", data);
   }
 
   ngOnInit(): void {
@@ -36,6 +37,7 @@ export class EditOfferComponent implements OnInit {
     this.data.name = this.myForm.value.name;
     this.data.description = this.myForm.value.description;
     this.data.location.place = this.placeName;
+    console.log("save = ", this.data);
     this.dialogRef.close({data:this.data});
   }
 
