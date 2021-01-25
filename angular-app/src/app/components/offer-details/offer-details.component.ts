@@ -35,6 +35,15 @@ export class OfferDetailsComponent implements OnInit{
     public locationDialog: MatDialog) { }
 
   ngOnInit() {
+    Swal.fire({
+      title: 'It will take just a second!',
+      allowOutsideClick: false,
+      showCancelButton: false,
+      showConfirmButton: false,
+      onBeforeOpen: () => {
+        Swal.showLoading()
+      },
+    });
     if (this.authService.isUser()) {
       this.service.getSubscribedItems().subscribe((data) => {
         this.subscribedItems = data;
@@ -57,6 +66,7 @@ export class OfferDetailsComponent implements OnInit{
           this.selectedValue = p.value;
         }
       }
+      Swal.close();
     }, (error: any) => {
       console.log(error);
     });

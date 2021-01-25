@@ -39,7 +39,7 @@ describe('FilterOfferService', () => {
 
     service.getTypes().subscribe(res => offerTypes = res);
 
-    const req = httpMock.expectOne('http://localhost:8080/cultural-offer-types/getAll');
+    const req = httpMock.expectOne('https://localhost:8080/cultural-offer-types/getAll');
     expect(req.request.method).toBe('GET');
     req.flush(mockTypes);
 
@@ -61,7 +61,7 @@ describe('FilterOfferService', () => {
 
     service.getTypes().subscribe(res => code = res);
 
-    const req = httpMock.expectOne('http://localhost:8080/cultural-offer-types/getAll');
+    const req = httpMock.expectOne('https://localhost:8080/cultural-offer-types/getAll');
     expect(req.request.method).toBe('GET');
     req.flush(mockCode);
 

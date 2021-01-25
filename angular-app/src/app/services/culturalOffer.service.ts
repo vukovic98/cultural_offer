@@ -53,7 +53,6 @@ export class CulturalOfferService {
   }
 
   createOffer(offer: any): Observable<any> {
-    console.log(offer);
     let headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
     return this.http.post(environment.apiUrl + this.manageOffersEndPoint, offer, { headers: headers })
   }

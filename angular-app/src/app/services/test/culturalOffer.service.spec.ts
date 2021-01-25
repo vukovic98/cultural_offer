@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {CulturalOfferService} from '../culturalOffer.service';
 import {statusCodeModel} from '../../model/auth-model';
 import {AddPostModel} from '../../model/post-model';
+import {Image} from '../../model/offer-mode';
 
 //ng test --karma-config karma.conf.js
 
@@ -176,7 +177,7 @@ describe('CulturalOfferService', () => {
         res = data;
       })
 
-    const req = httpMock.expectOne(  "http://localhost:8080/comments/for-offer/26/1");
+    const req = httpMock.expectOne(  "https://localhost:8080/comments/for-offer/26/1");
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
 
@@ -212,7 +213,7 @@ describe('CulturalOfferService', () => {
         res = data;
       })
 
-    const req = httpMock.expectOne(  "http://localhost:8080/comments/for-offer/155555/1");
+    const req = httpMock.expectOne(  "https://localhost:8080/comments/for-offer/155555/1");
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
 
@@ -394,7 +395,7 @@ describe('CulturalOfferService', () => {
         res = data;
       })
 
-    const req = httpMock.expectOne(  "http://localhost:8080/posts/for-offer/26/1");
+    const req = httpMock.expectOne(  "https://localhost:8080/posts/for-offer/26/1");
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
 
@@ -430,7 +431,7 @@ describe('CulturalOfferService', () => {
         res = data;
       })
 
-    const req = httpMock.expectOne(  "http://localhost:8080/posts/for-offer/155555/1");
+    const req = httpMock.expectOne(  "https://localhost:8080/posts/for-offer/155555/1");
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
 
@@ -578,7 +579,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/culturalOffers/by-page/1');
+    const req = httpMock.expectOne('https://localhost:8080/culturalOffers/by-page/1');
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
 
@@ -612,7 +613,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/culturalOffers/by-page/1999');
+    const req = httpMock.expectOne('https://localhost:8080/culturalOffers/by-page/1999');
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
 
@@ -648,7 +649,7 @@ describe('CulturalOfferService', () => {
       res = data;
     })
 
-    const req = httpMock.expectOne('http://localhost:8080/culturalOffers/');
+    const req = httpMock.expectOne('https://localhost:8080/culturalOffers/');
     expect(req.request.body).toBe(newOffer);
     expect(req.request.method).toBe('POST');
     req.flush(mockResponse);
@@ -681,7 +682,7 @@ describe('CulturalOfferService', () => {
       res = data;
     })
 
-    const req = httpMock.expectOne('http://localhost:8080/culturalOffers/');
+    const req = httpMock.expectOne('https://localhost:8080/culturalOffers/');
     expect(req.request.body).toBe(newOffer);
     expect(req.request.method).toBe('POST');
     req.flush(mockResponse);
@@ -703,11 +704,15 @@ describe('CulturalOfferService', () => {
       "name": "TestTestTest23"
     };
 
+    let img: Array<Image> = new Array<Image>();
+
+    img.push({id: "0", picByte:""});
+
     let newOffer =
       {
         "id": 26,
         "name": "TestTestTest23",
-        "images": [{}],
+        "images": img,
         "location": {locationId: 1, place: "Greek Street, London, United Kingdom", latitude: 51.51317021885231, longitude: -0.12966778213685307},
         "description": "TestEttt",
         "avgGrade": 5,
@@ -718,7 +723,7 @@ describe('CulturalOfferService', () => {
       res = data;
     })
 
-    const req = httpMock.expectOne('http://localhost:8080/culturalOffers/26');
+    const req = httpMock.expectOne('https://localhost:8080/culturalOffers/26');
     expect(req.request.body).toBe(newOffer);
     expect(req.request.method).toBe('PUT');
     req.flush(mockResponse);
@@ -739,11 +744,15 @@ describe('CulturalOfferService', () => {
       statusCode: 400
     };
 
+    let img: Array<Image> = new Array<Image>();
+
+    img.push({id: "0", picByte:""});
+
     let newOffer =
       {
         "id": 26,
         "name": "TestTestTest23",
-        "images": [{}],
+        "images": img,
         "location": {locationId: 1, place: "Greek Street, London, United Kingdom", latitude: 51.51317021885231, longitude: -0.12966778213685307},
         "description": "TestEttt",
         "avgGrade": 5,
@@ -754,7 +763,7 @@ describe('CulturalOfferService', () => {
       res = data;
     })
 
-    const req = httpMock.expectOne('http://localhost:8080/culturalOffers/26');
+    const req = httpMock.expectOne('https://localhost:8080/culturalOffers/26');
     expect(req.request.body).toBe(newOffer);
     expect(req.request.method).toBe('PUT');
     req.flush(mockResponse);
@@ -778,7 +787,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/culturalOffers/26');
+    const req = httpMock.expectOne('https://localhost:8080/culturalOffers/26');
     expect(req.request.method).toBe('DELETE');
     req.flush(mockResponse);
 
@@ -802,7 +811,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/culturalOffers/2666');
+    const req = httpMock.expectOne('https://localhost:8080/culturalOffers/2666');
     expect(req.request.method).toBe('DELETE');
     req.flush(mockResponse);
 
@@ -826,7 +835,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/registeredUser/subscribe?offer_id=26');
+    const req = httpMock.expectOne('https://localhost:8080/registeredUser/subscribe?offer_id=26');
     expect(req.request.method).toBe('POST');
     req.flush(mockResponse);
 
@@ -850,7 +859,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/registeredUser/subscribe?offer_id=2666');
+    const req = httpMock.expectOne('https://localhost:8080/registeredUser/subscribe?offer_id=2666');
     expect(req.request.method).toBe('POST');
     req.flush(mockResponse);
 
@@ -874,7 +883,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/registeredUser/unsubscribe?offer_id=26');
+    const req = httpMock.expectOne('https://localhost:8080/registeredUser/unsubscribe?offer_id=26');
     expect(req.request.method).toBe('DELETE');
     req.flush(mockResponse);
 
@@ -898,7 +907,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/registeredUser/unsubscribe?offer_id=2666');
+    const req = httpMock.expectOne('https://localhost:8080/registeredUser/unsubscribe?offer_id=2666');
     expect(req.request.method).toBe('DELETE');
     req.flush(mockResponse);
 
@@ -961,7 +970,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/registeredUser/subscribedItems');
+    const req = httpMock.expectOne('https://localhost:8080/registeredUser/subscribedItems');
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
 
@@ -991,7 +1000,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/posts/');
+    const req = httpMock.expectOne('https://localhost:8080/posts/');
     expect(req.request.method).toBe('POST');
     req.flush(mockResponse);
 
@@ -1023,7 +1032,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/posts/');
+    const req = httpMock.expectOne('https://localhost:8080/posts/');
     expect(req.request.method).toBe('POST');
     req.flush(mockResponse);
 
@@ -1324,7 +1333,7 @@ describe('CulturalOfferService', () => {
     });
 
 
-    const req = httpMock.expectOne('http://localhost:8080/culturalOffers/detail/1');
+    const req = httpMock.expectOne('https://localhost:8080/culturalOffers/detail/1');
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
 
@@ -1349,7 +1358,7 @@ describe('CulturalOfferService', () => {
     });
 
 
-    const req = httpMock.expectOne('http://localhost:8080/culturalOffers/detail/1999');
+    const req = httpMock.expectOne('https://localhost:8080/culturalOffers/detail/1999');
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
 
@@ -1396,7 +1405,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne("http://localhost:8080/culturalOffers/filter/1?expression=exit&types=Archeological%20site");
+    const req = httpMock.expectOne("https://localhost:8080/culturalOffers/filter/1?expression=exit&types=Archeological%20site");
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
 
@@ -1430,7 +1439,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne("http://localhost:8080/culturalOffers/filter/1?expression=ext&types=Archeological%20sitea");
+    const req = httpMock.expectOne("https://localhost:8080/culturalOffers/filter/1?expression=ext&types=Archeological%20sitea");
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
 
@@ -1476,7 +1485,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/grades');
+    const req = httpMock.expectOne('https://localhost:8080/grades');
     expect(req.request.method).toBe('POST');
     req.flush(mockResponse);
 
@@ -1502,7 +1511,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/grades');
+    const req = httpMock.expectOne('https://localhost:8080/grades');
     expect(req.request.method).toBe('POST');
     req.flush(mockResponse);
 
@@ -1532,7 +1541,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/comments');
+    const req = httpMock.expectOne('https://localhost:8080/comments');
     expect(req.request.method).toBe('POST');
     req.flush(mockResponse);
 
@@ -1564,7 +1573,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/comments');
+    const req = httpMock.expectOne('https://localhost:8080/comments');
     expect(req.request.method).toBe('POST');
     req.flush(mockResponse);
 
@@ -1588,7 +1597,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/comments/1');
+    const req = httpMock.expectOne('https://localhost:8080/comments/1');
     expect(req.request.method).toBe('DELETE');
     req.flush(mockResponse);
 
@@ -1612,7 +1621,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/comments/19999');
+    const req = httpMock.expectOne('https://localhost:8080/comments/19999');
     expect(req.request.method).toBe('DELETE');
     req.flush(mockResponse);
 
@@ -1636,7 +1645,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/posts/1');
+    const req = httpMock.expectOne('https://localhost:8080/posts/1');
     expect(req.request.method).toBe('DELETE');
     req.flush(mockResponse);
 
@@ -1660,7 +1669,7 @@ describe('CulturalOfferService', () => {
       res = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/posts/19999');
+    const req = httpMock.expectOne('https://localhost:8080/posts/19999');
     expect(req.request.method).toBe('DELETE');
     req.flush(mockResponse);
 

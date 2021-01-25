@@ -8,7 +8,7 @@
     <div *ngIf="isLoggedIn()">
       <form [formGroup]="addForm" (ngSubmit)="submit()">
         <div class="form-group">
-          <textarea placeholder="Enter comment" formControlName="commentText" id="commentText" type="text" class="form-control" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+          <textarea placeholder="Enter comment" formControlName="commentText" id="commentText" type="text" class="form-control" style="resize: none;"></textarea>
           <div *ngIf="f.commentText.touched && f.commentText.invalid" class="text-danger">
               <div *ngIf="f.commentText.errors!.required">Comment text is required.</div>
           </div>

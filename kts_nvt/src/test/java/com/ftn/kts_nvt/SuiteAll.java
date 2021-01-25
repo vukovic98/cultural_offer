@@ -65,18 +65,6 @@ import com.ftn.kts_nvt.e2e.SignUpE2ETest;
 @SuiteClasses({
 	
 		//controller I
-		
-		  CulturalOfferCategoryControllerIntegrationTest.class,
-//		  PostControllerIntegrationTest.class,
-//		  GeoLocationControllerIntegrationTest.class,
-//		  CommentControllerIntegrationTest.class,
-//		  CulturalOfferControllerIntegrationTest.class,
-//		  GradeControllerIntegrationTest.class, ImageControllerIntegrationTest.class,
-//		  CulturalOfferTypeControllerIntegrationTest.class,
-//		  AdminControllerIntegrationTest.class,
-//		  AuthenticationControllerIntegrationTest.class,
-//		  RegisteredUserControllerIntegrationTest.class,
-		 
 	    
 	    //service U
 //		CulturalOfferServiceUnitTest.class,

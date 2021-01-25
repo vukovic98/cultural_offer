@@ -70,7 +70,7 @@ describe('AuthService', () => {
       token = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/auth/log-in');
+    const req = httpMock.expectOne('https://localhost:8080/auth/log-in');
     expect(req.request.method).toBe('POST');
     req.flush(mockUser);
 
@@ -99,7 +99,7 @@ describe('AuthService', () => {
       token = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/auth/log-in');
+    const req = httpMock.expectOne('https://localhost:8080/auth/log-in');
     expect(req.request.method).toBe('POST');
     req.flush(mockUser);
 
@@ -128,7 +128,7 @@ describe('AuthService', () => {
       verifyRes = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/auth/verify');
+    const req = httpMock.expectOne('https://localhost:8080/auth/verify');
     expect(req.request.method).toBe('POST');
     req.flush(mockResponse);
 
@@ -156,7 +156,7 @@ describe('AuthService', () => {
       verifyRes = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/auth/verify');
+    const req = httpMock.expectOne('https://localhost:8080/auth/verify');
     expect(req.request.method).toBe('POST');
     req.flush(mockResponse);
 
@@ -194,7 +194,7 @@ describe('AuthService', () => {
       signUpRes = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/auth/sign-up');
+    const req = httpMock.expectOne('https://localhost:8080/auth/sign-up');
     expect(req.request.method).toBe('POST');
     req.flush(mockResponse);
 
@@ -224,7 +224,7 @@ describe('AuthService', () => {
       signUpRes = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/auth/sign-up');
+    const req = httpMock.expectOne('https://localhost:8080/auth/sign-up');
     expect(req.request.method).toBe('POST');
     req.flush(mockResponse);
 
@@ -366,7 +366,7 @@ describe('AuthService', () => {
       response = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/auth/sendCodeAgain');
+    const req = httpMock.expectOne('https://localhost:8080/auth/sendCodeAgain');
     expect(req.request.method).toBe('POST');
     req.flush(mockResponse);
 
@@ -388,7 +388,7 @@ describe('AuthService', () => {
       response = data;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/auth/sendCodeAgain');
+    const req = httpMock.expectOne('https://localhost:8080/auth/sendCodeAgain');
     expect(req.request.method).toBe('POST');
     req.flush(mockResponse);
 

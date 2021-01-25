@@ -24,6 +24,7 @@ export class CulturalOffersComponent implements OnInit {
   public isFilter: boolean = false;
   public totalPages: number = 1;
   public filterObj: FilterObject = { exp: '', types: [] };
+  public isLoading: boolean = false;
 
   constructor(private service: CulturalOfferService,
               private auth: AuthService,
@@ -31,12 +32,15 @@ export class CulturalOffersComponent implements OnInit {
               public mapService: MapService) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
+
     this.service.getByPage(this.pageNum).subscribe((data) => {
       this.offers = data.content;
       this.mapService.myMethod(this.offers);
       this.dataChangedEvent.emit(null);
       this.nextBtn = data.last;
       this.totalPages = data.totalPages;
+      this.isLoading = false;
     });
 
     if (this.auth.isUser()) {
@@ -120,12 +124,14 @@ export class CulturalOffersComponent implements OnInit {
   }
 
   retrieveOffers() {
+    this.isLoading = true;
     if (!this.isFilter) {
       this.service.getByPage(this.pageNum).subscribe((data) => {
         this.offers = data.content;
         this.nextBtn = data.last;
         this.mapService.myMethod(this.offers);
         this.dataChangedEvent.emit(null);
+        this.isLoading = false;
       });
     } else {
       this.service.getByPageFilter(this.pageNum,this.filterObj.exp,this.filterObj.types).subscribe(
@@ -134,6 +140,7 @@ export class CulturalOffersComponent implements OnInit {
           this.nextBtn = offers.last;
           this.mapService.myMethod(this.offers);
           this.dataChangedEvent.emit(null);
+          this.isLoading = false;
         }
         )
     }
@@ -161,6 +168,7 @@ export class CulturalOffersComponent implements OnInit {
   }
 
   filterOffers(data: FilterObject) {
+    this.isLoading = true;
     this.isFilter = true;
     this.pageNum = 1;
     this.filterObj = data;
@@ -172,6 +180,7 @@ export class CulturalOffersComponent implements OnInit {
         this.nextBtn = data.last;
         this.mapService.myMethod(this.offers);
         this.dataChangedEvent.emit(null);
+        this.isLoading = false;
       });
     }
     else {
@@ -181,6 +190,7 @@ export class CulturalOffersComponent implements OnInit {
           this.nextBtn = offers.last;
           this.mapService.myMethod(this.offers);
           this.dataChangedEvent.emit(null);
+          this.isLoading = false;
         }
       )
     }

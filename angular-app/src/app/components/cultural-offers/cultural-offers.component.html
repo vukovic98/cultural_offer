@@ -1,9 +1,13 @@
 <div class="row col-md-12 pl-5 pr-0">
-  <div class="col-md-12 mt-4">
+  <div *ngIf="!isLoading" class="col-md-12 mt-4">
     <h2><mat-icon>filter_list</mat-icon> Filter offers</h2>
     <app-filter-offers (filterEvent)="filterOffers($event)" ></app-filter-offers>
   </div>
-  <div id="offersListDiv" class="row col-md-12 w-100 pt-1 pl-auto pr-auto">
+  <div *ngIf="isLoading" id="offersListDivLoading" class="row col-md-12 w-100 pt-1 mt-4 pl-auto pr-auto text-center">
+    <mat-spinner class="m-auto"></mat-spinner>
+    <h2 class="w-100 mt-2"><p>Please wait while we get the data!</p></h2>
+  </div>
+  <div *ngIf="!isLoading" id="offersListDiv" class="row col-md-12 w-100 pt-1 pl-auto pr-auto">
     <app-cultural-offer-item class="col-md-3" (removeOffer)="removeOffer($event)" (editOffer)="editOffer($event)" [isSubscribed]="isSubscribed(offer)" *ngFor="let offer of getAllOffers()"
       [offer]="offer"
     >

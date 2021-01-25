@@ -59,7 +59,7 @@ describe('ChangePasswordService', () => {
 
     service.changePassword(JSON.stringify(passDto)).subscribe(res => user = res);
 
-    const req = httpMock.expectOne('http://localhost:8080/users/changePassword');
+    const req = httpMock.expectOne('https://localhost:8080/users/changePassword');
     expect(req.request.method).toBe('PUT');
     req.flush(mockUserDto);
 
@@ -93,7 +93,7 @@ describe('ChangePasswordService', () => {
       statusCode = res;
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/users/changePassword');
+    const req = httpMock.expectOne('https://localhost:8080/users/changePassword');
     expect(req.request.method).toBe('PUT');
     req.flush(mockCode);
 

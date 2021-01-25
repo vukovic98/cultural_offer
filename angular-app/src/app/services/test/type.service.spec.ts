@@ -56,7 +56,7 @@ describe('TypeService', () => {
             expect(res).toEqual(mockResponse);
         });
 
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-types/');
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-types/');
         expect(req.request.method).toBe('POST');
         req.flush(mockResponse);
     });
@@ -77,17 +77,17 @@ describe('TypeService', () => {
             },
             "status": 400,
             "statusText": "OK",
-            "url": "http://localhost:8080/cultural-offer-types/",
+            "url": "https://localhost:8080/cultural-offer-types/",
             "ok": false,
             "name": "HttpErrorResponse",
-            "message": "Http failure response for http://localhost:8080/cultural-offer-types/: 400 OK",
+            "message": "Http failure response for https://localhost:8080/cultural-offer-types/: 400 OK",
             "error": null
         }
         service.save(addObj).subscribe((res) => {
             expect(res).toEqual(mockResponse);
         });
 
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-types/');
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-types/');
         expect(req.request.method).toBe('POST');
         req.flush(mockResponse);
     });
@@ -135,7 +135,7 @@ describe('TypeService', () => {
         service.getByPage(1).subscribe((res: any) => {
             expect(res).toEqual(mockResponse);
         });
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-types/byPage/1');
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-types/byPage/1');
         expect(req.request.method).toBe('GET');
         req.flush(mockResponse);
     });
@@ -166,7 +166,7 @@ describe('TypeService', () => {
           service.getTypesForCategory(typesObj).subscribe((res: any) => {
             expect(res).toEqual(mockResponse);
         });
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-types/byCategory/'+typesObj);
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-types/byCategory/'+typesObj);
         expect(req.request.method).toBe('GET');
         req.flush(mockResponse);
     });
@@ -185,7 +185,7 @@ describe('TypeService', () => {
           res = data;
         })
 
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-types/46');
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-types/46');
         expect(req.request.method).toBe('DELETE');
         req.flush(mockResponse);
 
@@ -210,17 +210,17 @@ describe('TypeService', () => {
             },
             "status": 400,
             "statusText": "OK",
-            "url": "http://localhost:8080/cultural-offer-types/10",
+            "url": "https://localhost:8080/cultural-offer-types/10",
             "ok": false,
             "name": "HttpErrorResponse",
-            "message": "Http failure response for http://localhost:8080/cultural-offer-types/10: 400 OK",
+            "message": "Http failure response for https://localhost:8080/cultural-offer-types/10: 400 OK",
             "error": null
         }
 
         service.deleteType(deleteObj.id).subscribe((res: any) => {
             expect(res).toEqual(mockResponse);
         });
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-types/' + deleteObj.id);
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-types/' + deleteObj.id);
         expect(req.request.method).toBe('DELETE');
         req.flush(mockResponse);
     });
@@ -237,7 +237,7 @@ describe('TypeService', () => {
         service.getByName(searchObj).subscribe((res: any) => {
             expect(res).toEqual(mockResponse);
         });
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-types/name/' + searchObj);
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-types/name/' + searchObj);
         expect(req.request.method).toBe('GET');
         req.flush(mockResponse);
     });
@@ -252,16 +252,16 @@ describe('TypeService', () => {
             },
             "status": 404,
             "statusText": "OK",
-            "url": "http://localhost:8080/cultural-offer-types/name/asdas",
+            "url": "https://localhost:8080/cultural-offer-types/name/asdas",
             "ok": false,
             "name": "HttpErrorResponse",
-            "message": "Http failure response for http://localhost:8080/cultural-offer-types/name/asdas: 404 OK",
+            "message": "Http failure response for https://localhost:8080/cultural-offer-types/name/asdas: 404 OK",
             "error": null
         };
         service.getByName(searchObj).subscribe((res: any) => {
             expect(res).toEqual(mockResponse);
         });
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-types/name/' + searchObj);
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-types/name/' + searchObj);
         expect(req.request.method).toBe('GET');
         req.flush(mockResponse);
     });
@@ -284,7 +284,7 @@ describe('TypeService', () => {
         service.updateType(updateObj).subscribe((res: any) => {
             expect(res).toEqual(mockResponse);
         });
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-types/' + updateObj.id);
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-types/' + updateObj.id);
         expect(req.request.method).toBe('PUT');
         req.flush(mockResponse);
     });
@@ -304,17 +304,17 @@ describe('TypeService', () => {
             },
             "status": 400,
             "statusText": "OK",
-            "url": "http://localhost:8080/cultural-offer-types/47",
+            "url": "https://localhost:8080/cultural-offer-types/47",
             "ok": false,
             "name": "HttpErrorResponse",
-            "message": "Http failure response for http://localhost:8080/cultural-offer-types/47: 400 OK",
+            "message": "Http failure response for https://localhost:8080/cultural-offer-types/47: 400 OK",
             "error": null
           };
 
         service.updateType(updateObj).subscribe((res: any) => {
             expect(res).toEqual(mockResponse);
         });
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-types/' + updateObj.id);
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-types/' + updateObj.id);
         expect(req.request.method).toBe('PUT');
         req.flush(mockResponse);
     });

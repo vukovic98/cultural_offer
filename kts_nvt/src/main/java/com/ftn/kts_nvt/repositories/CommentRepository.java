@@ -17,19 +17,20 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 	Page<Comment> findAllPendingComments(Pageable pagable);
 	
 	@Query(
-			value="SELECT comment_id, approved, content, commenter_id, image_id FROM (kts_nvt_test.cultural_offer c inner join cultural_offer_comment com on c.cultural_offer_id = com.cultural_offer_id) inner join comment cm on cm.comment_id = com.comments_comment_id where c.cultural_offer_id = ?1",
+			value="SELECT comment_id, approved, content, commenter_id, image_id FROM (cultural_offer c inner join cultural_offer_comment com on c.cultural_offer_id = com.cultural_offer_id) inner join comment cm on cm.comment_id = com.comments_comment_id where c.cultural_offer_id = ?1",
 			nativeQuery = true
 			)
 	ArrayList<Comment> findCommentsForOffer(long offer_id);
 	
 	@Query(
-			value="SELECT comment_id, approved, content, commenter_id, image_id FROM (kts_nvt.cultural_offer c inner join kts_nvt.cultural_offer_comment com on c.cultural_offer_id = com.cultural_offer_id) inner join comment cm on cm.comment_id = com.comments_comment_id where c.cultural_offer_id = ?1 and cm.approved = true",
+			value="SELECT comment_id, approved, content, commenter_id, image_id FROM (cultural_offer c inner join cultural_offer_comment com on c.cultural_offer_id = com.cultural_offer_id) inner join comment cm on cm.comment_id = com.comments_comment_id where c.cultural_offer_id = ?1 and cm.approved = true",
 			nativeQuery = true
 			)
 	Page<Comment> findCommentsForOffer(long offer_id, Pageable pageable);
 
 	@Query(
-			value="SELECT comment_id, approved, content, commenter_id, image_id FROM (kts_nvt_test.cultural_offer c inner join cultural_offer_comment com on c.cultural_offer_id = com.cultural_offer_id) inner join comment cm on cm.comment_id = com.comments_comment_id where cm.commenter_id = ?1",
+			//value="SELECT comment_id, approved, content, commenter_id, image_id FROM (kts_nvt_test.cultural_offer c inner join cultural_offer_comment com on c.cultural_offer_id = com.cultural_offer_id) inner join comment cm on cm.comment_id = com.comments_comment_id where cm.commenter_id = ?1",
+			value="SELECT * FROM comment where comment_id in (select comments_comment_id from registered_user_comments where user_id=?1);",
 			nativeQuery = true
 			)
 	ArrayList<Comment> findCommentsForUser(long user_id);

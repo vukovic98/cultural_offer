@@ -70,7 +70,7 @@ describe('CommentsToBeApprovedService', () => {
     service.getCommentsByPage(1).subscribe((response: any) => pendingCommentsPage = response);
 
 
-    const req = httpMock.expectOne('http://localhost:8080/comments/pendingComments/1');
+    const req = httpMock.expectOne('https://localhost:8080/comments/pendingComments/1');
     expect(req.request.method).toBe('GET');
     req.flush(mockComments);
 
@@ -118,7 +118,7 @@ describe('CommentsToBeApprovedService', () => {
     service.getCommentsByPage(1111).subscribe(response => pendingCommentsPage = response);
 
 
-    const req = httpMock.expectOne('http://localhost:8080/comments/pendingComments/1111');
+    const req = httpMock.expectOne('https://localhost:8080/comments/pendingComments/1111');
     expect(req.request.method).toBe('GET');
     req.flush(mockComments);
 
@@ -161,7 +161,7 @@ describe('CommentsToBeApprovedService', () => {
     };
 
     service.approveComment(1).subscribe(res => approvedComment = res);
-    const req = httpMock.expectOne("http://localhost:8080/comments/approve/1")
+    const req = httpMock.expectOne("https://localhost:8080/comments/approve/1")
     expect(req.request.method).toBe('PUT');
     req.flush(mockComment);
 
@@ -185,7 +185,7 @@ describe('CommentsToBeApprovedService', () => {
     }
 
     service.approveComment(1).subscribe(res => code = res);
-    const req = httpMock.expectOne("http://localhost:8080/comments/approve/1")
+    const req = httpMock.expectOne("https://localhost:8080/comments/approve/1")
     expect(req.request.method).toBe('PUT');
     req.flush(mockCode);
 
@@ -206,7 +206,7 @@ describe('CommentsToBeApprovedService', () => {
     service.denyComment(1).subscribe(res=> responseStatus = res.body);
 
 
-    const req = httpMock.expectOne("http://localhost:8080/comments/1")
+    const req = httpMock.expectOne("https://localhost:8080/comments/1")
     expect(req.request.method).toBe('DELETE');
     req.flush(mockCode);
     expect(responseStatus.statusCode).toEqual(200);
@@ -222,7 +222,7 @@ describe('CommentsToBeApprovedService', () => {
     service.denyComment(125).subscribe(res=> responseStatus = res.body);
 
 
-    const req = httpMock.expectOne("http://localhost:8080/comments/125")
+    const req = httpMock.expectOne("https://localhost:8080/comments/125")
     expect(req.request.method).toBe('DELETE');
     req.flush(mockCode);
     expect(responseStatus.statusCode).toEqual(404);

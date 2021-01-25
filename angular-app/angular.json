@@ -68,7 +68,7 @@
           }
         },
         "serve": {
-          "sslKey": "./baeldung.p12",
+          "sslKey": "./keystore.p12",
           "sslCert": "./myCertificate.crt",
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {

@@ -10,11 +10,11 @@
           <div id="carouselExampleControls" class="carousel slide" style="height: 350px;" data-ride="carousel">
             <div class="carousel-inner h-100">
               <div class="carousel-item active">
-                <img class="d-block w-100" *ngIf="offer.images.length > 0" [src]="'data:image/png;base64,'+offer.images[0].picByte" [alt]="offer.name"/>
+                              <img class="d-block w-100" *ngIf="offer.images.length > 0" [src]="'data:image/png;base64,'+offer.images[0].picByte" [alt]="offer.name"/>
                 <img  class="d-block w-100" *ngIf="offer.images.length === 0" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg" [alt]="offer.name">
-              </div>
+               </div>
               <div class="carousel-item" *ngFor="let i of offer.images.slice(1, offer.images.length)">
-                <img class="d-block w-100" [src]="'data:image/png;base64,'+i.picByte" alt="Second slide">
+                <img class="d-block w-100 h-100" [src]="'data:image/png;base64,'+i.picByte" alt="Second slide">
               </div>
             </div>
             <a *ngIf="offer.images.length > 1" class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -90,7 +90,7 @@
             <mat-grid-tile>
               <div class="col-md-12 pl-0 mb-0 pb-2">
                 <button mat-raised-button title="See location" (click)="showLocation(offer.location)" class="mb-1">
-                    <mat-icon> location_on</mat-icon> {{offer.location.place}}
+                    <mat-icon> location_on</mat-icon> {{offer.location.place.includes(",")? offer.location.place.split(",")[2]: offer.location.place}}
                 </button>
              </div>
             </mat-grid-tile>

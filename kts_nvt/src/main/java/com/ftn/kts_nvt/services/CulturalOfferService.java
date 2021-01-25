@@ -54,11 +54,8 @@ public class CulturalOfferService {
 
 			if (dto.getImages() != null) {
 				for (byte[] a : dto.getImages()) {
-					//System.out.println("img size = " + a.length);
-					if(a.length > 64000) {
+					if(a.length > 4000000)
 						throw new Exception("IMGSIZE");
-					}
-					System.out.println(a);
 					Image i = new Image(a);
 					this.imageService.save(i);
 					images.add(i);

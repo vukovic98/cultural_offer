@@ -54,7 +54,7 @@ describe('EditProfileService', () => {
 
     service.editUser(JSON.stringify(user), user.id).subscribe(res => user = res);
 
-    const req = httpMock.expectOne('http://localhost:8080/users/editProfile/'+user.id);
+    const req = httpMock.expectOne('https://localhost:8080/users/editProfile/'+user.id);
     expect(req.request.method).toBe('PUT');
     req.flush(mockUser);
 
@@ -87,7 +87,7 @@ describe('EditProfileService', () => {
 
     service.editUser(JSON.stringify(user), user.id).subscribe(res => statusCode = res);
 
-    const req = httpMock.expectOne('http://localhost:8080/users/editProfile/'+user.id);
+    const req = httpMock.expectOne('https://localhost:8080/users/editProfile/'+user.id);
     expect(req.request.method).toBe('PUT');
     req.flush(mockCode);
 
@@ -117,7 +117,7 @@ describe('EditProfileService', () => {
 
     service.getUser().subscribe(res => loggedUser = res);
 
-    const req = httpMock.expectOne('http://localhost:8080/users/loggedInUser');
+    const req = httpMock.expectOne('https://localhost:8080/users/loggedInUser');
     expect(req.request.method).toBe('GET');
     req.flush(mockUser);
 
@@ -142,7 +142,7 @@ describe('EditProfileService', () => {
 
     service.getUser().subscribe(res => statusCode = res);
 
-    const req = httpMock.expectOne('http://localhost:8080/users/loggedInUser');
+    const req = httpMock.expectOne('https://localhost:8080/users/loggedInUser');
     expect(req.request.method).toBe('GET');
     req.flush(mockCode);
 

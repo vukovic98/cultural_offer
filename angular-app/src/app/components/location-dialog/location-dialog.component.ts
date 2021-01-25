@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '../../model/offer-mode';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-location-dialog',

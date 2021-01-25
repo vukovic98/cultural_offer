@@ -60,25 +60,9 @@ export class AddOfferComponent implements OnInit {
         location: e.latlng
       });
 
-      /*
-      "address": {
-        "museum": "Louvre Museum",
-        "road": "Rue Saint-Honoré",
-        "suburb": "Quartier du Palais Royal",
-        "city_district": "1st Arrondissement",
-        "city": "Paris",
-        "county": "Paris",
-        "state": "Ile-de-France",
-        "country": "France",
-        "postcode": "75001",
-        "country_code": "fr"
-    },
-      */
       this.offerService.getLocationName(e.latlng).subscribe((data: any) => {
-        //console.log("getLocationName response = ", data);
         this.placeName = data.address.road + ", " + data.address.city + ", " + data.address.country;
       }, (error: any) => {
-        //console.log("getLocationName error = ", error);
       });
 
       // @ts-ignore
@@ -90,14 +74,10 @@ export class AddOfferComponent implements OnInit {
   }
 
   onChange(event: any): void {
-    console.log("gettypes = ", event);
     this.typeService.getTypesForCategory(event).subscribe(data => {
-      console.log("data = ", data);
       this.types = data;
     }, error => {
-      console.log("error = ", error);
       this.types = []
-      console.log(error);
     });
   }
 
@@ -142,7 +122,15 @@ export class AddOfferComponent implements OnInit {
   }
 
   submit() {
-    console.log("submit = ", this.myForm.value);
+    Swal.fire({
+      title: 'It will take just a second to upload images!',
+      allowOutsideClick: false,
+      showCancelButton: false,
+      showConfirmButton: false,
+      onBeforeOpen: () => {
+        Swal.showLoading()
+      },
+    });
     let locationObj = {
       'place': this.myForm.value.place,
       'latitude': this.myForm.value.location.lat,
@@ -164,7 +152,7 @@ export class AddOfferComponent implements OnInit {
 
     this.offerService.createOffer(obj)
       .subscribe(response => {
-        //console.log("createoffer response = ", response);
+        Swal.close();
         Swal.fire({
           title: 'Success!',
           text: 'Cultural offer successfully created!',
@@ -174,7 +162,6 @@ export class AddOfferComponent implements OnInit {
         this.route.navigate(['/home-page/']);
 
       }, error => {
-        //console.log("createoffer error = ", error);
         let msg = "";
         if (error.status == 413) {  //PAYLOAD_TOO_LARGE
           msg = "Image size must be less than 64Kb!";

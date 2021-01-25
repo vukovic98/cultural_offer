@@ -108,32 +108,36 @@ public class CommentService {
 	public boolean deleteById(long id) {
 		try {
 			Comment exists = this.commentRepository.findById(id).orElse(null);
-			System.out.println("prodje1");
+			System.out.println(exists.getContent());
 			Image image = exists.getImage();
 
 			if (image != null) {
 
-				exists.setImage(null);
-
-				imageRepository.delete(image);
+//				exists.setImage(null);
+//				
+//				this.commentRepository.save(exists);
+//
+//				imageRepository.delete(image);
 
 			}
 			System.out.println("prodje2");
 			CulturalOffer offer = this.culturalOfferRepository.getOfferByComment(exists.getCommentId());
+			System.out.println(offer.getName());
 			System.out.println("prodje3" + offer);
 
 			List<Comment> comments = this.commentRepository.findCommentsForOffer(offer.getId());
+			System.out.println(comments.get(comments.indexOf(exists)).getContent());
 			comments.remove(exists);
 			offer.setComments(comments);
 			
-			
-		
 			this.culturalOfferRepository.save(offer);
 			System.out.println("prodje4");
 
 			RegisteredUser user = this.registeredUserService.findOne(exists.getCommenter().getId());
+			System.out.println(user.getEmail());
 			
 			List<Comment> userComments = this.commentRepository.findCommentsForUser(exists.getCommenter().getId());
+			System.out.println(userComments.get(userComments.indexOf(exists)).getContent());
 			userComments.remove(exists);
 			user.setComments(userComments);
 			

@@ -36,6 +36,7 @@ import { EditCategoryDialogComponent } from '../../components/edit-category-dial
 import { MapComponent } from 'src/app/components/map/map.component';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import { LocationDialogComponent } from '../../components/location-dialog/location-dialog.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,7 @@ import { LocationDialogComponent } from '../../components/location-dialog/locati
         MatListModule,
         MatExpansionModule,
         MatCardModule,
-        RouterModule, TextFieldModule
+        RouterModule, TextFieldModule, MatProgressSpinnerModule
     ]
 })
 export class CulturalOfferModule { }

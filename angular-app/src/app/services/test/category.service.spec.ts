@@ -90,7 +90,7 @@ describe('CategoryService', () => {
             expect(data).toEqual(mockResponse);
         });
 
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-categories/');
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-categories/');
         expect(req.request.method).toBe('GET');
         req.flush(mockResponse);
     }))
@@ -159,7 +159,7 @@ describe('CategoryService', () => {
             expect(data).toEqual(mockResponse);
         });
 
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-categories/by-page/1');
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-categories/by-page/1');
         expect(req.request.method).toBe('GET');
         req.flush(mockResponse);
 
@@ -197,7 +197,7 @@ describe('CategoryService', () => {
             expect(data).toEqual(mockResponse);
         });
 
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-categories/name/Institution');
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-categories/name/Institution');
         expect(req.request.method).toBe('GET');
         req.flush(mockResponse);
 
@@ -222,7 +222,7 @@ describe('CategoryService', () => {
             res = data;
         });
 
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-categories/name/asdf');
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-categories/name/asdf');
         expect(req.request.method).toBe('GET');
         req.flush(mockResponse);
 
@@ -240,7 +240,7 @@ describe('CategoryService', () => {
             res = data;
         });
 
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-categories/10');
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-categories/10');
         expect(req.request.method).toBe('DELETE');
         req.flush(mockResponse);
         //tick();
@@ -257,17 +257,17 @@ describe('CategoryService', () => {
             },
             "status": 404,
             "statusText": "OK",
-            "url": "http://localhost:8080/cultural-offer-categories/17",
+            "url": "https://localhost:8080/cultural-offer-categories/17",
             "ok": false,
             "name": "HttpErrorResponse",
-            "message": "Http failure response for http://localhost:8080/cultural-offer-categories/17: 404 OK",
+            "message": "Http failure response for https://localhost:8080/cultural-offer-categories/17: 404 OK",
             "error": "CulturalOfferCategory is used in CulturalOfferType"
         };
         service.deleteCategory(17).subscribe((data) => {
             //@ts-ignore
             res = data;
         });
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-categories/17');
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-categories/17');
         expect(req.request.method).toBe('DELETE');
         req.flush(mockResponse);
         tick();
@@ -295,7 +295,7 @@ describe('CategoryService', () => {
             res = data;
         });
 
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-categories/32');
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-categories/32');
         expect(req.request.method).toBe('PUT');
         req.flush(mockResponse);
         tick();
@@ -318,10 +318,10 @@ describe('CategoryService', () => {
             },
             "status": 400,
             "statusText": "OK",
-            "url": "http://localhost:8080/cultural-offer-categories/32",
+            "url": "https://localhost:8080/cultural-offer-categories/32",
             "ok": false,
             "name": "HttpErrorResponse",
-            "message": "Http failure response for http://localhost:8080/cultural-offer-categories/32: 400 OK",
+            "message": "Http failure response for https://localhost:8080/cultural-offer-categories/32: 400 OK",
             "error": null
         };
 
@@ -331,7 +331,7 @@ describe('CategoryService', () => {
             res = data;
         });
 
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-categories/32');
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-categories/32');
         expect(req.request.method).toBe('PUT');
         req.flush(mockResponse);
         tick();
@@ -359,7 +359,7 @@ describe('CategoryService', () => {
             res = data;
         });
 
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-categories/');
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-categories/');
         expect(req.request.method).toBe('POST');
         req.flush(mockResponse);
         tick();
@@ -382,10 +382,10 @@ describe('CategoryService', () => {
             },
             "status": 400,
             "statusText": "OK",
-            "url": "http://localhost:8080/cultural-offer-categories/",
+            "url": "https://localhost:8080/cultural-offer-categories/",
             "ok": false,
             "name": "HttpErrorResponse",
-            "message": "Http failure response for http://localhost:8080/cultural-offer-categories/: 400 OK",
+            "message": "Http failure response for https://localhost:8080/cultural-offer-categories/: 400 OK",
             "error": null
         }
 
@@ -395,7 +395,7 @@ describe('CategoryService', () => {
             res = data;
         });
 
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-categories/');
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-categories/');
         expect(req.request.method).toBe('POST');
         req.flush(mockResponse);
         tick();
@@ -420,7 +420,7 @@ describe('CategoryService', () => {
             expect(res).toEqual(mockResponse);
         });
 
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-categories/');
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-categories/');
         expect(req.request.method).toBe('POST');
         req.flush(mockResponse);
     });
@@ -438,10 +438,10 @@ describe('CategoryService', () => {
             },
             "status": 400,
             "statusText": "OK",
-            "url": "http://localhost:8080/cultural-offer-categories/",
+            "url": "https://localhost:8080/cultural-offer-categories/",
             "ok": false,
             "name": "HttpErrorResponse",
-            "message": "Http failure response for http://localhost:8080/cultural-offer-categories/: 400 OK",
+            "message": "Http failure response for https://localhost:8080/cultural-offer-categories/: 400 OK",
             "error": null
         }
         service.addCategory(addObj).subscribe((res) => {
@@ -449,7 +449,7 @@ describe('CategoryService', () => {
             expect(res).toEqual(mockResponse);
         });
 
-        const req = httpMock.expectOne('http://localhost:8080/cultural-offer-categories/');
+        const req = httpMock.expectOne('https://localhost:8080/cultural-offer-categories/');
         expect(req.request.method).toBe('POST');
         req.flush(mockResponse);
     });

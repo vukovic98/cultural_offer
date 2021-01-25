@@ -144,7 +144,7 @@ public class CommentController {
 
 	// DELETE http://localhost:8080/comments/{id}
 	@DeleteMapping(path = "/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN,ROLE_USER')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") long id) {
 		boolean ok = this.commentService.deleteById(id);
 
