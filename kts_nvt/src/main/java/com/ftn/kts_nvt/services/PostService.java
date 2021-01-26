@@ -66,7 +66,7 @@ public class PostService implements ServiceInterface<Post>{
 		
 		sb.append("<h2>" + u.getFirstName() + ", new post for offer you are subscribed to has arrived!</h2><br><br>");
 		sb.append("<h3>" + title + "</h3> <br><br>");
-		sb.append("<h4>Go check it out <a href='http://localhost:4200/offer-details/" + c.getId() + "'>here!</a></h4>");
+		sb.append("<h4>Go check it out <a href='https://localhost:4200/cultural-offer/offer-details/" + c.getId() + "'>here!</a></h4>");
 		
 		return sb.toString();
 	}
