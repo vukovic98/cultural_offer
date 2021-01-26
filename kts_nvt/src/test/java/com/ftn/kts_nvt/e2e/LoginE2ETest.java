@@ -46,7 +46,7 @@ public class LoginE2ETest {
 	
 	@Test
 	public void loginTestSuccess() throws InterruptedException {
-		driver.get("https://localhost:4200/login");
+		driver.get("https://localhost:4200/auth/login");
 		
 		justWait();
 		
@@ -81,7 +81,7 @@ public class LoginE2ETest {
 
         loginPage.getLoginBtn().click();
 
-        assertEquals("https://localhost:4200/login", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/auth/login", driver.getCurrentUrl());
         
         loginPage.ensureIsDisplayedSwal();
         
@@ -102,7 +102,7 @@ public class LoginE2ETest {
 
         loginPage.getLoginBtn().click();
 
-        assertEquals("http://localhost:4200/login", driver.getCurrentUrl());
+        assertEquals("http://localhost:4200/auth/login", driver.getCurrentUrl());
         
         loginPage.ensureIsDisplayedSwal();
         

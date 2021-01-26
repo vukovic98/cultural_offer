@@ -71,7 +71,7 @@ public class SignUpE2ETest {
 
 	
 	  @Test public void signUpTestFail() throws InterruptedException {
-	  driver.get("http://localhost:4200/sign-up");
+	  driver.get("https://localhost:4200/sign-up");
 	  
 	  justWait();
 	  

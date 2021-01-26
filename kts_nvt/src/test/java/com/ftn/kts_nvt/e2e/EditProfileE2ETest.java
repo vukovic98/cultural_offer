@@ -42,7 +42,7 @@ public class EditProfileE2ETest {
 		this.loginPage = PageFactory.initElements(driver, LoginPage.class);
 		this.homePage = PageFactory.initElements(driver, HomePageRegisteredUser.class);
 
-		driver.get("https://localhost:4200/login");
+		driver.get("https://localhost:4200/auth/login");
 
 		justWait();
 
@@ -69,12 +69,12 @@ public class EditProfileE2ETest {
 	@Test
 	public void editProfileTestSuccess() throws InterruptedException {
 
-		assertEquals("http://localhost:4200/home-page", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/home-page", driver.getCurrentUrl());
 
 		homePage.getUserBtn().click();
 		homePage.getProfileLink().click();
 		justWait();
-		assertEquals("http://localhost:4200/profile", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/user/profile", driver.getCurrentUrl());
 
 		// Edit profile
 		editProfilePage.getFirstName().clear();
@@ -83,7 +83,7 @@ public class EditProfileE2ETest {
 		editProfilePage.getLastName().sendKeys("Test");
 		editProfilePage.getEditProfileBtn().click();
 
-		driver.get("http://localhost:4200/profile");
+		driver.get("https://localhost:4200/user/profile");
 
 		assertEquals(editProfilePage.getFirstName().getAttribute("value"), "Test");
 		assertEquals(editProfilePage.getLastName().getAttribute("value"), "Test");
@@ -105,7 +105,7 @@ public class EditProfileE2ETest {
 		homePage.getUserBtn().click();
 		homePage.getProfileLink().click();
 		justWait();
-		assertEquals("https://localhost:4200/profile", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/user/profile", driver.getCurrentUrl());
 
 		editProfilePage.getCancelEditProfileBtn().click();
 		assertEquals("https://localhost:4200/home-page", driver.getCurrentUrl());
@@ -119,7 +119,7 @@ public class EditProfileE2ETest {
 		homePage.getUserBtn().click();
 		homePage.getProfileLink().click();
 		justWait();
-		assertEquals("https://localhost:4200/profile", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/user/profile", driver.getCurrentUrl());
 
 		editProfilePage.getChangePassLink().click();
 		assertEquals("https://localhost:4200/change-password", driver.getCurrentUrl());

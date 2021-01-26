@@ -39,7 +39,7 @@ public class ApprovingCommentsE2ETest {
 		this.homePageAdmin = PageFactory.initElements(driver, HomePageAdminPage.class);
 		this.approvingCommentsPage = PageFactory.initElements(driver, ApprovingCommentsPage.class);
 
-		driver.get("https://localhost:4200/login");
+		driver.get("https://localhost:4200/auth/login");
 
 		justWait();
 

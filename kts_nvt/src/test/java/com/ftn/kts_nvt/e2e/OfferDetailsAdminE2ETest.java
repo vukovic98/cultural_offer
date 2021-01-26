@@ -31,8 +31,8 @@ public class OfferDetailsAdminE2ETest {
 
 	private static String REGISTERED_USER_USERNAME = "admin@gmail.com";
 	private static String REGISTERED_USER_PASSWORD = "vukovic";
-	private static String HOME_PAGE_PATH = "http://localhost:4200/home-page";
-	private static String LOGIN_PAGE_PATH = "http://localhost:4200/auth/login";
+	private static String HOME_PAGE_PATH = "https://localhost:4200/home-page";
+	private static String LOGIN_PAGE_PATH = "https://localhost:4200/auth/login";
 	private static String OFFER_DETAILS_PAGE_PATH = "https://localhost:4200/cultural-offer/offer-details/1";
 	
 	@Before
