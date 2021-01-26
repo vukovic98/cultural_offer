@@ -28,17 +28,17 @@ public class CommentRepositoryIntegrationTest {
 	
 	@Test
 	public void testFindUnapprovedCommentsPageable() {
-		Pageable pageable = PageRequest.of(0, 2);
+		Pageable pageable = PageRequest.of(0, 5);
 		Page<Comment> comments = this.commentRepository.findAllPendingComments(pageable);
 		
-		assertEquals(1, comments.getNumberOfElements());
+		assertEquals(2, comments.getNumberOfElements());
 	}
 	
 	@Test
 	public void testFindCommentsForOffer() {
 		ArrayList<Comment> list = this.commentRepository.findCommentsForOffer(1L);
 		
-		assertEquals(2, list.size());
+		assertEquals(3, list.size());
 	}
 	
 	

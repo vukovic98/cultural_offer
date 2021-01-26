@@ -21,7 +21,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.RestTemplate;
 
 import com.ftn.kts_nvt.SSLUtils;
 import com.ftn.kts_nvt.beans.Admin;
@@ -31,7 +30,6 @@ import com.ftn.kts_nvt.dto.UserTokenStateDTO;
 import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
 import com.ftn.kts_nvt.services.AdminService;
 
-import sun.net.www.http.HttpClient;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

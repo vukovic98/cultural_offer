@@ -44,7 +44,7 @@ public class CommentServiceIntegrationTest {
 		ArrayList<Comment> list = this.commentService.findAll();
 
 		assertNotNull(list);
-		assertEquals(2, list.size());
+		assertEquals(3, list.size());
 	}
 
 	@Test
@@ -53,7 +53,7 @@ public class CommentServiceIntegrationTest {
 
 		Page<Comment> commentsPage = this.commentService.findAll(pageable);
 
-		assertEquals(2, commentsPage.getNumberOfElements());
+		assertEquals(3, commentsPage.getNumberOfElements());
 		assertTrue(commentsPage.isLast());
 	}
 
@@ -100,7 +100,7 @@ public class CommentServiceIntegrationTest {
 			assertNotEquals(-1, offerComments.indexOf(saved));
 
 			boolean ok = this.commentService.deleteById(saved.getCommentId());
-
+			//boolean ok = this.commentService.delete(saved);
 			assertTrue(ok);
 			assertNull(this.commentService.findById(saved.getCommentId()));
 
@@ -132,7 +132,7 @@ public class CommentServiceIntegrationTest {
 
 		Page<Comment> commentsPage = this.commentService.findAllPendingComments(pageable);
 
-		assertEquals(1, commentsPage.getNumberOfElements());
+		assertEquals(2, commentsPage.getNumberOfElements());
 		assertTrue(commentsPage.isLast());
 	}
 
