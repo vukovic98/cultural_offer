@@ -42,7 +42,7 @@ public class SubscribedItemsE2ETest {
 		this.loginPage = PageFactory.initElements(driver, LoginPage.class);
 		this.homePage = PageFactory.initElements(driver, HomePageRegisteredUser.class);
 
-		driver.get(HOME_PAGE + "login");
+		driver.get(HOME_PAGE + "auth/login");
 
 		this.loginPage.getEmail().sendKeys("vladimirvukovic98@maildrop.cc");
 		this.loginPage.getPassword().sendKeys("vukovic");
@@ -55,19 +55,19 @@ public class SubscribedItemsE2ETest {
 	
 	@Test
 	public void testShowSubscribedItemsPage() throws InterruptedException {
-		driver.get(HOME_PAGE + "subscribed-items");
+		driver.get(HOME_PAGE + "cultural-offer/subscribed-items");
 		
 		justWait();
 		
 		this.itemsPage.ensureIsPageDisplayed();
 		
 		assertTrue(this.itemsPage.getTableBody().isDisplayed());
-		assertEquals(HOME_PAGE + "subscribed-items", this.driver.getCurrentUrl());
+		assertEquals(HOME_PAGE + "cultural-offer/subscribed-items", this.driver.getCurrentUrl());
 	}
 	
 	@Test
 	public void testUnsubscribeFromOffer() throws InterruptedException {
-		driver.get(HOME_PAGE + "subscribed-items");
+		driver.get(HOME_PAGE + "cultural-offer/subscribed-items");
 		
 		justWait();
 		

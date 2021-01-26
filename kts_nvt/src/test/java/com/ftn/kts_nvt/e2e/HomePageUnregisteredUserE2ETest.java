@@ -97,7 +97,7 @@ public class HomePageUnregisteredUserE2ETest {
 		
 		justWait();
 		
-		assertEquals("http://localhost:4200/auth/sign-up", this.driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/auth/sign-up", this.driver.getCurrentUrl());
 	}
 	
 	@Test

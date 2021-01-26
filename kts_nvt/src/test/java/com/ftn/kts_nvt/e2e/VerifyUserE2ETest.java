@@ -54,7 +54,7 @@ public class VerifyUserE2ETest {
 		verifyPage.ensureGoToLoginButtonIsVisible();
 		verifyPage.getGoToLoginPageBtn().click();
 		
-		assertEquals("https://localhost:4200/login", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/auth/login", driver.getCurrentUrl());
 		
 	}
 

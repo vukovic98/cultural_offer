@@ -45,7 +45,7 @@ public class ChangePasswordE2ETest {
 		this.changePasswordPage = PageFactory.initElements(driver, ChangePasswordPage.class);
 		this.homePageUnregistered = PageFactory.initElements(driver, HomePageUnregisteredUser.class);
 
-		driver.get("https://localhost:4200/login");
+		driver.get("https://localhost:4200/auth/login");
 
 		justWait();
 
@@ -78,7 +78,7 @@ public class ChangePasswordE2ETest {
 		homePage.getChangePasswordLink().click();
 		changePasswordPage.ensureIsPageDisplayed();
 
-		assertEquals("https://localhost:4200/change-password", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/user/change-password", driver.getCurrentUrl());
 
 		changePasswordPage.getOldPassword().sendKeys("123456789b");
 		changePasswordPage.getNewPassword().sendKeys("novaLozinka1");
@@ -107,7 +107,7 @@ public class ChangePasswordE2ETest {
 		homePage.getChangePasswordLink().click();
 
 		changePasswordPage.ensureIsPageDisplayed();
-		assertEquals("https://localhost:4200/change-password", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/user/change-password", driver.getCurrentUrl());
 
 		changePasswordPage.getOldPassword().sendKeys("novaLozinka1");
 		changePasswordPage.getNewPassword().sendKeys("123456789b");
@@ -123,7 +123,7 @@ public class ChangePasswordE2ETest {
 		homePage.getLoginBtn().click();
 		justWait();
 
-		assertEquals("https://localhost:4200/login", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/auth/login", driver.getCurrentUrl());
 
 		loginPage.getEmail().sendKeys("haha@maildrop.cc");
 		loginPage.getPassword().sendKeys("123456789b");
@@ -139,7 +139,7 @@ public class ChangePasswordE2ETest {
 		homePage.getUserBtn().click();
 		homePage.getChangePasswordLink().click();
 		changePasswordPage.ensureIsPageDisplayed();
-		assertEquals("https://localhost:4200/change-password", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/user/change-password", driver.getCurrentUrl());
 		
 		changePasswordPage.getCancelChangesBtn().click();
 		homePage.ensureIsPageDisplayed();

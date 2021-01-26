@@ -31,8 +31,6 @@ import com.ftn.kts_nvt.dto.UserTokenStateDTO;
 import com.ftn.kts_nvt.repositories.CulturalOfferRepository;
 import com.ftn.kts_nvt.services.AdminService;
 
-import sun.net.www.http.HttpClient;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("classpath:test.properties")
