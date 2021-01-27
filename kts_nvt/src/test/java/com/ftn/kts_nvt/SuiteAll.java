@@ -49,6 +49,7 @@ import com.ftn.kts_nvt.service.CulturalOfferCategoryServiceUnitTest;
 import com.ftn.kts_nvt.service.CulturalOfferServiceIntegrationTest;
 import com.ftn.kts_nvt.service.CulturalOfferServiceUnitTest;
 import com.ftn.kts_nvt.service.CulturalOfferTypeServiceIntegrationTest;
+import com.ftn.kts_nvt.service.CulturalOfferTypeServiceUnitTest;
 import com.ftn.kts_nvt.service.GeoLocationServiceIntegrationTest;
 import com.ftn.kts_nvt.service.GeoLocationServiceUnitTest;
 import com.ftn.kts_nvt.service.GradeServiceIntegrationTest;
@@ -82,6 +83,7 @@ import com.ftn.kts_nvt.service.VerificationCodeServiceIntegrationTest;
 		CulturalOfferServiceUnitTest.class,
 		CommentServiceUnitTest.class,
 	    CulturalOfferCategoryServiceUnitTest.class,
+	    CulturalOfferTypeServiceUnitTest.class,
 	    GeoLocationServiceUnitTest.class,
 	    ImageServiceUnitTest.class,
 	    PostServiceUnitTest.class,
