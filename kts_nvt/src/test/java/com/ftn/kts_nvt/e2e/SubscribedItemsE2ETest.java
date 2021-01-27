@@ -85,12 +85,7 @@ public class SubscribedItemsE2ETest {
 		
 		justWait();
 		
-		assertTrue(this.itemsPage.getSwalSuccess().isDisplayed());
-		assertTrue(this.itemsPage.getSwalBtn().isDisplayed());
-		
 		this.itemsPage.getSwalBtn().click();
-		
-		justWait();
 		
 		int reducedNumberOfOffers = this.itemsPage.getTableRows().size();
 		
@@ -103,6 +98,7 @@ public class SubscribedItemsE2ETest {
 		justWait();
 		
 		this.homePage.ensureIsPageDisplayed();
+		this.homePage.ensurePageisLoaded();
 		
 		assertTrue(this.homePage.getSonsingSubscribeToggle().isDisplayed());
 		

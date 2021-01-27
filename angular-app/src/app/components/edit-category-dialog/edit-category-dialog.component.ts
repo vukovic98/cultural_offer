@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms'
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CategoryService } from '../../services/category.service';
 import { CategoryModel } from '../../model/category-model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -28,8 +28,6 @@ export class EditCategoryDialogComponent {
     this.data.name = this.myForm.value.name;
 
     this.categoryService.updateCategory(this.data).subscribe(response => {
-      console.log("response = ");
-      console.log(response);
       this.dialogRef.close({ data: this.data });
       Swal.fire({
         title: 'Success!',
@@ -37,7 +35,6 @@ export class EditCategoryDialogComponent {
         icon: 'success',
         confirmButtonText: 'OK'
       });
-      return true;
     }, error => {
       console.log("update error = ");
       console.log(error);
@@ -48,7 +45,6 @@ export class EditCategoryDialogComponent {
         confirmButtonColor: '#DC143C',
         confirmButtonText: 'OK'
       });
-      return false;
     });
   }
 

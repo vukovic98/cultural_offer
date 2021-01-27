@@ -14,7 +14,7 @@ export class UserVerificationComponent implements OnInit {
   email: string = '';
 
   verifyForm = new FormGroup({
-    "code": new FormControl('',Validators.required)
+    "code": new FormControl('', Validators.required)
   });
 
   constructor(
@@ -24,7 +24,7 @@ export class UserVerificationComponent implements OnInit {
     ) { }
 
   verifyUser(){
-    let verifyDto = {
+    const verifyDto = {
       "code": this.verifyForm.value.code,
       "userEmail": this.email,
 
@@ -38,10 +38,10 @@ export class UserVerificationComponent implements OnInit {
           confirmButtonColor: '#287507',
           confirmButtonText: 'Go to login page'
         }).then((result) => {
-          if(result.isConfirmed){
-            this.router.navigate(['/login']);
+          if(result.isConfirmed) {
+            this.router.navigate(['/auth/login']);
           }
-        })
+        });
       }, error => {
         Swal.fire({
           title: 'Error!',
@@ -49,8 +49,8 @@ export class UserVerificationComponent implements OnInit {
           icon: 'error',
           confirmButtonColor: '#DC143C',
           confirmButtonText: 'OK'
-        })
-      })
+        });
+      });
   }
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -68,6 +68,6 @@ export class UserVerificationComponent implements OnInit {
           showConfirmButton: false,
           timer: 2100
         });
-      })
+      });
   }
 }

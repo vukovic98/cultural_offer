@@ -2,6 +2,8 @@ package com.ftn.kts_nvt.repository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 
 import java.util.List;
 
@@ -37,6 +39,12 @@ public class GradeRepositoryIntegrationTest {
 	public void findByUserIdFail() {
 		List<Grade> grades = repository.findGradesByUser_Id(10L);
 		assertEquals(0, grades.size());
+	}
+	
+	@Test
+	public void testFindByUserAndCulturalOfferFail() {
+		Grade found = repository.findGradeByUser_IdAndCulturalOffer_Id(100L, 140L).orElse(null);
+		assertNull(found);
 	}
 	
 	@Test

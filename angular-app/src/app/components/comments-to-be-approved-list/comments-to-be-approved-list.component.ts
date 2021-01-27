@@ -24,51 +24,51 @@ export class CommentsToBeApprovedListComponent implements OnInit {
   approveComment(commentId: number){
 
       this.service.approveComment(commentId)
-        .subscribe(response =>{
+        .subscribe(response => {
           Swal.fire({
             text: 'Comment approved!',
             icon: "success",
             showConfirmButton: false,
             timer: 1200
-          })
+          });
         });
 
-      this.commentsToBeApproved = this.commentsToBeApproved.filter(item => item.id != commentId);
+      this.commentsToBeApproved = this.commentsToBeApproved.filter(item => item.id !== commentId);
   }
 
   denyComment(commentId: number){
     this.service.denyComment(commentId)
-      .subscribe(response =>{
+      .subscribe(response => {
         Swal.fire({
           text: 'Comment successfully denied!',
           icon: "success",
           showConfirmButton: false,
           timer: 1200
-        })
+        });
       });
-    this.commentsToBeApproved = this.commentsToBeApproved.filter(item => item.id != commentId);
+    this.commentsToBeApproved = this.commentsToBeApproved.filter(item => item.id !== commentId);
 
   }
 
   nextPage() {
     this.pageNum += 1;
-    this.service.getCommentsByPage(this.pageNum).subscribe((data: string) => {
-      this.commentsToBeApproved = JSON.parse(data).content;
-      this.nextBtn = JSON.parse(data).last;
+    this.service.getCommentsByPage(this.pageNum).subscribe((data) => {
+      this.commentsToBeApproved = data.content;
+      this.nextBtn = data.last;
     });
   }
 
   previousPage() {
     this.pageNum -= 1;
-    this.service.getCommentsByPage(this.pageNum).subscribe((data: string) => {
-      this.commentsToBeApproved = JSON.parse(data).content;
-      this.nextBtn = JSON.parse(data).last;
+    this.service.getCommentsByPage(this.pageNum).subscribe((data) => {
+      this.commentsToBeApproved = data.content;
+      this.nextBtn = data.last;
     });
   }
   getCommentsByPage() {
-    this.service.getCommentsByPage(this.pageNum).subscribe((data: string) => {
-      this.commentsToBeApproved = JSON.parse(data).content;
-      this.nextBtn = JSON.parse(data).last;
+    this.service.getCommentsByPage(this.pageNum).subscribe((data) => {
+      this.commentsToBeApproved = data.content;
+      this.nextBtn = data.last;
     });
   }
   ngOnInit(): void {

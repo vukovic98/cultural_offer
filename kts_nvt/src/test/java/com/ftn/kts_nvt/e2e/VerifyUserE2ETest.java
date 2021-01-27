@@ -43,16 +43,18 @@ public class VerifyUserE2ETest {
 	
 	@Test
 	public void VerifyTestSuccess() throws InterruptedException {
-		driver.get("https://localhost:4200/verify?email=luna@maildrop.cc");
+		driver.get("https://localhost:4200/auth/verify?email=e2etest@maildrop.cc");
 		
 		justWait();
 		
 		assertTrue(!verifyPage.getVerifyBtn().isEnabled());
 		
-		verifyPage.getCode().sendKeys("enobH824pm");
+		verifyPage.getCode().sendKeys("jvjS1DefyK");
 		verifyPage.getVerifyBtn().click();
 		verifyPage.ensureGoToLoginButtonIsVisible();
 		verifyPage.getGoToLoginPageBtn().click();
+		
+		justWait();
 		
 		assertEquals("https://localhost:4200/auth/login", driver.getCurrentUrl());
 		

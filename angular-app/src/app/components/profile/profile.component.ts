@@ -26,23 +26,23 @@ export class ProfileComponent implements OnInit {
   ];
 
   editProfileForm = new FormGroup({
-    "firstName": new FormControl('',Validators.required),
-    "lastName": new FormControl('',Validators.required),
-    "email": new FormControl({value:'', disabled: true},Validators.required)
+    "firstName": new FormControl('', Validators.required),
+    "lastName": new FormControl('', Validators.required),
+    "email": new FormControl({value: '', disabled: true}, Validators.required)
   });
 
   constructor(private service: EditProfileService) { }
 
   editProfile():void{
-    let userDto = {
+    const userDto = {
       "firstName": this.editProfileForm.value.firstName,
       "lastName": this.editProfileForm.value.lastName,
       "email": this.editProfileForm.value.email,
       "id": this.id,
-      "password":this.password
-    }
+      "password": this.password
+    };
 
-    this.service.editUser(JSON.stringify(userDto),this.id)
+    this.service.editUser(JSON.stringify(userDto), this.id)
       .subscribe(token => {
         Swal.fire({
           position: 'center',
@@ -50,7 +50,7 @@ export class ProfileComponent implements OnInit {
           icon: 'success',
           showConfirmButton: false,
           timer: 1500
-        })
+        });
       }, error => {
         Swal.fire({
           title: 'Error!',
@@ -58,15 +58,15 @@ export class ProfileComponent implements OnInit {
           icon: 'error',
           confirmButtonColor: '#DC143C',
           confirmButtonText: 'OK'
-        })
-      })
+        });
+      });
 
     this.initials = userDto.firstName.charAt(0).toUpperCase() + userDto.lastName.charAt(0).toUpperCase();
     this.firstName = userDto.firstName;
     this.lastName = userDto.lastName;
   }
 
-  getUser():void{
+  getUser(): void {
     this.service.getUser().subscribe((user: userDto) => {
      this.firstName = user.firstName;
      this.lastName = user.lastName;

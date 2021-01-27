@@ -13,11 +13,11 @@ describe('LocationDialogComponent', () => {
 
   beforeEach( () => {
 
-    let matDialogRefMock = {
+    const matDialogRefMock = {
       close: jasmine.createSpy('close')
     };
 
-    let dialogDataMock = {
+    const dialogDataMock = {
       "locationId": 0,
       "latitude": 33.33,
       "longitude": 33.33,

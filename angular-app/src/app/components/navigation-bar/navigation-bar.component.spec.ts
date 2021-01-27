@@ -10,7 +10,7 @@ describe('NavigationBarComponent', () => {
   let fixture: ComponentFixture<NavigationBarComponent>;
   let authService: AuthService;
 
-  let authServiceMock = {
+  const authServiceMock = {
     isUser: jasmine.createSpy('isUser')
       .and.returnValue(true),
     isAdmin: jasmine.createSpy('isAdmin')
@@ -42,14 +42,14 @@ describe('NavigationBarComponent', () => {
   });
 
   it('should determine if user is registered user', () => {
-    let is = component.isUser();
+    const is = component.isUser();
 
     expect(authService.isUser).toHaveBeenCalled();
     expect(is).toBeTrue();
   });
 
   it('should determine if user is admin', () => {
-    let is = component.isUserAdmin();
+    const is = component.isUserAdmin();
 
     expect(authService.isAdmin).toHaveBeenCalled();
     expect(is).toBeTrue();

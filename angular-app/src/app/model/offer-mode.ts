@@ -34,6 +34,7 @@ export interface OfferType{
   "name": string,
   "categoryName": string
 }
+
 export interface CulturalOffer{
   "id": number,
   "name": string,
@@ -56,4 +57,18 @@ export interface GradeModel{
   "id": number,
   "value": number,
   "user": userDto
+}
+
+export interface PageObject<T> {
+  content: Array<T>,
+  totalElements: number,
+  last: boolean,
+  totalPages: number,
+  size: number,
+  number: number,
+  numberOfElements: number,
+  first: boolean,
+  empty: boolean,
+  pageNumber: number,
+  pageSize: number
 }

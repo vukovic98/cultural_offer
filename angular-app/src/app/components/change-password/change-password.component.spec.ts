@@ -16,7 +16,7 @@ describe('ChangePasswordComponent', () => {
   let swal: any;
 
   beforeEach(() => {
-    let changePassServiceMock = {
+    const changePassServiceMock = {
       changePassword: jasmine.createSpy('changePassword')
         .and.returnValue(of(
           {
@@ -30,17 +30,17 @@ describe('ChangePasswordComponent', () => {
 
     };
 
-    let swalMock = {
+    const swalMock = {
       fire: jasmine.createSpy('fire')};
 
-    let routerMock = {
+    const routerMock = {
       navigate: jasmine.createSpy('navigate')
     };
 
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       declarations: [ChangePasswordComponent],
-      providers:[
+      providers: [
         FormBuilder,
         FormsModule,
         ReactiveFormsModule,
@@ -62,7 +62,7 @@ describe('ChangePasswordComponent', () => {
   });
 
   it('should cancel ', () => {
-    fixture.debugElement.query(By.css("#cancelBtn")).nativeElement.click;
+    fixture.debugElement.query(By.css("#cancelBtn")).nativeElement.click();
     fixture.detectChanges();
     component.cancel();
 
@@ -84,7 +84,7 @@ describe('ChangePasswordComponent', () => {
     const passDto = {
       oldPassword: 'stara123',
       newPassword: 'nova1234'
-    }
+    };
 
     component.changePassword();
     swal.fire({

@@ -29,11 +29,11 @@ public class OfferDetailsAdminE2ETest {
 	
 	private WebDriver driver;
 
-	private static String REGISTERED_USER_USERNAME = "admin@gmail.com";
+	private static String REGISTERED_USER_USERNAME = "vlado@gmail.com";
 	private static String REGISTERED_USER_PASSWORD = "vukovic";
 	private static String HOME_PAGE_PATH = "https://localhost:4200/home-page";
 	private static String LOGIN_PAGE_PATH = "https://localhost:4200/auth/login";
-	private static String OFFER_DETAILS_PAGE_PATH = "https://localhost:4200/cultural-offer/offer-details/1";
+	private static String OFFER_DETAILS_PAGE_PATH = "https://localhost:4200/cultural-offer/offer-details/40";
 	
 	@Before
 	public void setup() throws InterruptedException {
@@ -60,8 +60,9 @@ public class OfferDetailsAdminE2ETest {
 		justWait();
 		loginPage.ensureIsNotVisibleButton();
 		assertEquals(HOME_PAGE_PATH, driver.getCurrentUrl());
-		//homePage.getOffers().get(0).click();
+		
 		driver.get(OFFER_DETAILS_PAGE_PATH);
+		this.detailsPage.ensureIsLoadedPage();
 		justWait();
 		assertEquals(OFFER_DETAILS_PAGE_PATH, driver.getCurrentUrl());
 		justWait(); justWait();
@@ -69,50 +70,42 @@ public class OfferDetailsAdminE2ETest {
 	}
 	@Test
 	public void a_addPost() throws InterruptedException {
-		justWait(); justWait();
-		//postItem
-		int postsBefore = driver.findElements(By.id("postItem")).size();
-		System.out.println("postsbefore = " + postsBefore);
+		justWait(); 	
 
 		detailsPage.getAddNewPostButton().click();
-	    //driver.findElement(By.xpath("//mat-card/button/span")).click();
 
 		detailsPage.getTitle().clear();
 		detailsPage.getTitle().sendKeys("newposttitle");
 		detailsPage.getContent().clear();
-		detailsPage.getContent().sendKeys("newpostcontent");		
-	    driver.findElement(By.xpath("//mat-dialog-container[@id='mat-dialog-0']/app-add-post/mat-dialog-content/form/div[3]/button")).click();
+		detailsPage.getContent().sendKeys("newpostcontent");	
+		
+	    this.detailsPage.getAddPostSubmitBtn().click();
+	   
 	    detailsPage.ensureIsDisplayedSwal();
 	    assertTrue(detailsPage.isSwalVisible());
+	    
 	    assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
-	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();
-		int postsAfter = driver.findElements(By.id("postItem")).size();
-		System.out.println("postsAfter = " + postsAfter);
-		assertEquals(postsBefore + 1, postsAfter);
+	    
+	    this.detailsPage.getSwalButton().click();
 	}
 	
 	@Test
 	public void b_deletePost() throws InterruptedException {
 		justWait(); justWait();
 
-		int postsBefore = driver.findElements(By.id("postItem")).size();
 		detailsPage.getDeletePostButton().click();
 		justWait(); justWait();
 	    assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
-	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();		
-		int postsAfter = driver.findElements(By.id("postItem")).size();
-		assertEquals(postsBefore - 1, postsAfter);
+	    this.detailsPage.getSwalButton().click();	
 	}
 	@Test
 	public void c_deleteComment() throws InterruptedException {
 		
-		int commentsBefore = driver.findElements(By.id("commentItemId")).size();
 		detailsPage.getDeleteCommentButton().click();
 		justWait();justWait();
 		assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
-	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();		
-	    int commentsAfter = driver.findElements(By.id("commentItemId")).size();
-		assertEquals(commentsBefore - 1, commentsAfter);
+	    this.detailsPage.getSwalButton().click();		
+	    justWait();
 	}
 	
 	@After

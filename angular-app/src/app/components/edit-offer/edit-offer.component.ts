@@ -24,8 +24,6 @@ export class EditOfferComponent implements OnInit {
     public service: CulturalOfferService) {
 
     this.placeName = data.location.place;
-    //console.log("old location = ", data.location);
-    console.log("olddata = ", data);
   }
 
   ngOnInit(): void {
@@ -37,8 +35,7 @@ export class EditOfferComponent implements OnInit {
     this.data.name = this.myForm.value.name;
     this.data.description = this.myForm.value.description;
     this.data.location.place = this.placeName;
-    console.log("save = ", this.data);
-    this.dialogRef.close({data:this.data});
+    this.dialogRef.close({data: this.data});
   }
 
   close(){
@@ -64,16 +61,16 @@ export class EditOfferComponent implements OnInit {
     let marker = L.marker([this.data.location.latitude, this.data.location.longitude]).addTo(mymap);
     mymap.on('click', (e: any) => {
       if (marker !== undefined) {
-        mymap.removeLayer(marker)
+        mymap.removeLayer(marker);
       }
       this.myForm.patchValue({
         location: e.latlng
       });
       this.data.location.latitude = e.latlng.lat;
       this.data.location.longitude = e.latlng.lng;
-      this.service.getLocationName(e.latlng).subscribe((data:any) => {
-        this.placeName = data.address.road+", "+data.address.city+", "+data.address.country;
-      }, (error:any) => {
+      this.service.getLocationName(e.latlng).subscribe((data: any) => {
+        this.placeName = data.address.road + ", " + data.address.city + ", " + data.address.country;
+      }, (error: any) => {
         console.log(error);
       });
 

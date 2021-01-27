@@ -153,6 +153,14 @@ public class HomePageUnregisteredUser {
 		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("homeDiv")));
 	}
 	
+	public void ensurePageisLoaded() {
+		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("offersListDiv")));
+	}
+	
+	public void ensureFilterisLoaded() {
+		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("filterDiv")));
+	}
+	
 	public List<WebElement> getTypeOptions() {
 		return this.typeSelect.findElements(By.tagName("option"));
 	}

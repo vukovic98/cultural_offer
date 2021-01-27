@@ -15,7 +15,7 @@ describe('LoginComponent', () => {
   let authService: AuthService;
   let router: Router;
 
-  let authServiceMock = {
+  const authServiceMock = {
     login: jasmine.createSpy('login')
       .and.returnValues(of({
         "authenticationToken": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJLdWx0dXJhIG5hIERsYW" +
@@ -41,7 +41,7 @@ describe('LoginComponent', () => {
         }))
   };
 
-  let routerMock = {
+  const routerMock = {
     navigate: jasmine.createSpy('navigate')
   };
 
@@ -73,7 +73,7 @@ describe('LoginComponent', () => {
     component.loginForm.controls['email'].setValue('vladimirvukovic98@maildrop.cc');
     component.loginForm.controls['password'].setValue('vukovic');
 
-    let loginDto = {
+    const loginDto = {
       "email": 'vladimirvukovic98@maildrop.cc',
       "password": 'vukovic'
     };

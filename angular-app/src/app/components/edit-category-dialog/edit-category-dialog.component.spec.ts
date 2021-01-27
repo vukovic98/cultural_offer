@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
-import { CategoryModel } from '../../model/category-model';
 import { EditCategoryDialogComponent } from './edit-category-dialog.component';
 import { of } from 'rxjs';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
@@ -10,24 +9,23 @@ describe('EditCategoryDialogComponent', () => {
   let component: EditCategoryDialogComponent;
   let fixture: ComponentFixture<EditCategoryDialogComponent>;
   let matDialogRef: MatDialogRef<EditCategoryDialogComponent>;
-
   let categoryService: CategoryService;
-  
+
   beforeEach(() => {
-    let matDialogRefMock = {
+    const matDialogRefMock = {
       close: jasmine.createSpy('close')
     };
 
-    let cateogyrServiceMock = {
+    const cateogyrServiceMock = {
       updateCategory: jasmine.createSpy('updateCategory')
         .and.returnValue(of({})),
-    }
+    };
 
-    let modelMock = {
+    const modelMock = {
       'id': 5,
       'name': "asdasd",
       'types': []
-    }
+    };
 
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],

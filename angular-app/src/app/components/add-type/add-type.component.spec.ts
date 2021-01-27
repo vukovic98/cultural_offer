@@ -23,7 +23,7 @@ describe('AddTypeComponent', () => {
 
   beforeEach(() => {
 
-    let categoryServiceMock = {
+    const categoryServiceMock = {
       getCategories: jasmine.createSpy('getCategories')
         .and.returnValue(of(
           [
@@ -104,10 +104,9 @@ describe('AddTypeComponent', () => {
         )),
     };
 
-    let typeServiceMock = {
+    const typeServiceMock = {
       getByPage: jasmine.createSpy('getByPage')
         .and.returnValue(of({
-          body: {
             "content": [
               {
                 "id": 9,
@@ -151,7 +150,7 @@ describe('AddTypeComponent', () => {
             "pageNumber": 0,
             "pageSize": 10
           }
-        })),
+        )),
       save: jasmine.createSpy('save')
         .and.returnValue(of(
           {
@@ -174,13 +173,13 @@ describe('AddTypeComponent', () => {
         .and.returnValue(of({})),
     };
 
-    let matDialogMock = {
+    const matDialogMock = {
       open: jasmine.createSpy('open')
     };
 
-    let dialogRefMock = {
+    const dialogRefMock = {
       afterClosed: jasmine.createSpy('afterClosed')
-    }
+    };
 
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
@@ -220,18 +219,19 @@ describe('AddTypeComponent', () => {
   });
 
   it('should remove type', () => {
-    let obj: AllTypesModel = {
+    const obj: AllTypesModel = {
       'id': 5,
       'name': "Empty",
       'categoryId': -1,
       'categoryName': "Empty",
-    }
+    };
+
     component.deleteType(obj);
     expect(typeService.deleteType).toHaveBeenCalled();
-  })
+  });
 
   it('should retrieve types for next page', () => {
-    let oldPage = component.pageNum;
+    const oldPage = component.pageNum;
     component.nextPage();
     expect(component.pageNum).toBe(oldPage + 1);
     expect(typeService.getByPage).toHaveBeenCalled();
@@ -239,7 +239,7 @@ describe('AddTypeComponent', () => {
 
   it('should retrieve types for previous page', () => {
     component.pageNum = 10;
-    let oldPage = component.pageNum;
+    const oldPage = component.pageNum;
     component.previousPage();
     expect(component.pageNum).toBe(oldPage - 1);
     expect(typeService.getByPage).toHaveBeenCalled();

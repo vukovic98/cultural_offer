@@ -1,5 +1,5 @@
 <div class="row col-md-12 pl-5 pr-0">
-  <div *ngIf="!isLoading" class="col-md-12 mt-4">
+  <div id="filterDiv" *ngIf="!isLoading" class="col-md-12 mt-4">
     <h2><mat-icon>filter_list</mat-icon> Filter offers</h2>
     <app-filter-offers (filterEvent)="filterOffers($event)" ></app-filter-offers>
   </div>

@@ -33,10 +33,12 @@ export class AddOfferComponent implements OnInit {
     fileSource: new FormControl('', [Validators.required])
   });
 
-  constructor(private categoryService: CategoryService,
+  constructor(
+    private categoryService: CategoryService,
     private offerService: CulturalOfferService,
     private typeService: TypeService,
-    private route: Router) {
+    private route: Router
+  ) {
   }
 
   ngOnInit() {
@@ -54,7 +56,7 @@ export class AddOfferComponent implements OnInit {
     let marker: any;
     mymap.on('click', (e: any) => {
       if (marker !== undefined) {
-        mymap.removeLayer(marker)
+        mymap.removeLayer(marker);
       }
       this.myForm.patchValue({
         location: e.latlng
@@ -77,7 +79,7 @@ export class AddOfferComponent implements OnInit {
     this.typeService.getTypesForCategory(event).subscribe(data => {
       this.types = data;
     }, error => {
-      this.types = []
+      this.types = [];
     });
   }
 
@@ -99,7 +101,6 @@ export class AddOfferComponent implements OnInit {
   }
 
   onFileChange(event: any) {
-    console.log("form changed")
     for (let i = 0; i < event.target.files.length; i++) {
       this.files.push(event.target.files[i]);
     }
@@ -115,7 +116,7 @@ export class AddOfferComponent implements OnInit {
               fileSource: this.images
             });
           }
-        }
+        };
         reader.readAsDataURL(event.target.files[i]);
       }
     }
@@ -128,27 +129,29 @@ export class AddOfferComponent implements OnInit {
       showCancelButton: false,
       showConfirmButton: false,
       onBeforeOpen: () => {
-        Swal.showLoading()
+        Swal.showLoading();
       },
     });
-    let locationObj = {
+
+    const locationObj = {
       'place': this.myForm.value.place,
       'latitude': this.myForm.value.location.lat,
       'longitude': this.myForm.value.location.lng
-    }
-    let images_copy: any = [];
+    };
+
+    let imagesCopy: any = [];
 
     for (let p of this.images) {
-      images_copy.push(p.split(',')[1]);
+      imagesCopy.push(p.split(',')[1]);
     }
 
-    let obj = {
+    const obj = {
       'name': this.myForm.value.name,
       'description': this.myForm.value.description,
       'type': this.myForm.value.type,
-      'images': images_copy,
+      'images': imagesCopy,
       'location': locationObj
-    }
+    };
 
     this.offerService.createOffer(obj)
       .subscribe(response => {
@@ -163,9 +166,9 @@ export class AddOfferComponent implements OnInit {
 
       }, error => {
         let msg = "";
-        if (error.status == 413) {  //PAYLOAD_TOO_LARGE
+        if (error.status === 413) {  // PAYLOAD_TOO_LARGE
           msg = "Image size must be less than 64Kb!";
-        } else if (error.status == 400) {  //BAD_REQUEST
+        } else if (error.status === 400) {  // BAD_REQUEST
           msg = "Cultural offer with that name already exists!";
         }
         Swal.fire({
@@ -175,6 +178,6 @@ export class AddOfferComponent implements OnInit {
           confirmButtonColor: '#DC143C',
           confirmButtonText: 'OK'
         });
-      })
+      });
   }
 }

@@ -8,7 +8,7 @@ import {CommentToBeApprovedModel} from "../../model/comment-to-be-approved-model
   styleUrls: ['./comment-to-be-approved.component.css']
 })
 export class CommentToBeApprovedComponent implements OnInit {
-  @Input() public commentToBeApproved: CommentToBeApprovedModel = {id: 0, content:"", commenterName:"",offer:"",image:{id:'1',picByte:""},commenterEmail:""};
+  @Input() public commentToBeApproved: CommentToBeApprovedModel = {id: 0, content: "", commenterName: "",offer: "",image: {id: '1',picByte: ""},commenterEmail: ""};
   @Output() denyComment = new EventEmitter<number>();
   @Output() approveComment = new EventEmitter<number>();
   panelOpenState = false;

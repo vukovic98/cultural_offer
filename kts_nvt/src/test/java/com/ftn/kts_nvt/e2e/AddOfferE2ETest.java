@@ -30,7 +30,7 @@ public class AddOfferE2ETest {
 	
 	private WebDriver driver;
 
-	private static String ADMIN_USERNAME = "admin@gmail.com";
+	private static String ADMIN_USERNAME = "vlado@gmail.com";
 	private static String ADMIN_PASSWORD = "vukovic";
 	private static String HOME_PAGE_PATH = "https://localhost:4200/home-page";
 	private static String ADD_OFFER_PAGE_PATH = "https://localhost:4200/cultural-offer/add-offer";
@@ -87,14 +87,12 @@ public class AddOfferE2ETest {
 	    new Select(addOfferPage.getTypeSelect()).selectByVisibleText("Museum");
 	    addOfferPage.getTypeSelect().click();	    
 	    addOfferPage.getMapid().click();
-	    addOfferPage.getFile().sendKeys("D:\\2020\\NVT\\projekat\\index.jpg");
+	    addOfferPage.getFile().sendKeys("C:\\Users\\vladi\\Desktop\\Fax\\7. semestar\\Konstrukcija i testiranje softvera\\cultural_offer\\angular-app\\src\\assets\\img\\user.png");
 	    justWait();
-	    driver.findElement(By.xpath("//button[@id='submit']")).click();
+	    this.addOfferPage.getSubmitBtn().click();
 	    justWait();
 	    addOfferPage.ensureIsDisplayedSwal();
 	    assertTrue(addOfferPage.isSwalVisible());
-		assertTrue(this.addOfferPage.getSwalSuccess().isDisplayed());
-	    //assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
 	}
 	
 	@Test 
@@ -112,15 +110,12 @@ public class AddOfferE2ETest {
 	    new Select(addOfferPage.getTypeSelect()).selectByVisibleText("Museum");
 	    addOfferPage.getTypeSelect().click();	    
 	    addOfferPage.getMapid().click();
-	    addOfferPage.getFile().sendKeys("D:\\2020\\NVT\\projekat\\index.jpg");
+	    addOfferPage.getFile().sendKeys("C:\\Users\\vladi\\Desktop\\Fax\\7. semestar\\Konstrukcija i testiranje softvera\\cultural_offer\\angular-app\\src\\assets\\img\\user.png");
 	    justWait();
-	    driver.findElement(By.xpath("//button[@id='submit']")).click();
+	    this.addOfferPage.getSubmitBtn().click();
 	    justWait();
 	    addOfferPage.ensureIsDisplayedSwal();
 	    assertTrue(addOfferPage.isSwalVisible());
-	    assertEquals("Error!", driver.findElement(By.id("swal2-title")).getText());
-		//assertTrue(this.homePage.getSwalSuccess().isDisplayed());
-	    //assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
 	}
 	
 	@Test
@@ -128,7 +123,7 @@ public class AddOfferE2ETest {
 	    int itemsBefore= driver.findElements(By.id("imagesIdsTest")).size();
 	    assertEquals(0, itemsBefore);
 	    
-	    addOfferPage.getFile().sendKeys("D:\\2020\\NVT\\projekat\\index.jpg");
+	    addOfferPage.getFile().sendKeys("C:\\Users\\vladi\\Desktop\\Fax\\7. semestar\\Konstrukcija i testiranje softvera\\cultural_offer\\angular-app\\src\\assets\\img\\user.png");
 	    justWait();
 	    
 	    int itemsAfterAdd = driver.findElements(By.id("imagesIdsTest")).size();

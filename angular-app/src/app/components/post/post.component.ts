@@ -13,8 +13,10 @@ export class PostComponent implements OnInit {
 
   @Input() post: PostModel = {} as PostModel;
 
-  constructor(private offerService: CulturalOfferService,
-    private service: AuthService) { }
+  constructor(
+    private offerService: CulturalOfferService,
+    private service: AuthService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -43,7 +45,7 @@ export class PostComponent implements OnInit {
         confirmButtonColor: '#DC143C',
         confirmButtonText: 'OK'
       });
-    })
+    });
 
   }
 

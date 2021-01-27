@@ -90,9 +90,9 @@ public class EditProfileE2ETest {
 
 		// rollback
 		editProfilePage.getFirstName().clear();
-		editProfilePage.getFirstName().sendKeys("Ana");
+		editProfilePage.getFirstName().sendKeys("Ivana");
 		editProfilePage.getLastName().clear();
-		editProfilePage.getLastName().sendKeys("Maric");
+		editProfilePage.getLastName().sendKeys("Vlaisavljevic");
 		editProfilePage.getEditProfileBtn().click();
 
 	}
@@ -122,7 +122,7 @@ public class EditProfileE2ETest {
 		assertEquals("https://localhost:4200/user/profile", driver.getCurrentUrl());
 
 		editProfilePage.getChangePassLink().click();
-		assertEquals("https://localhost:4200/change-password", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/user/change-password", driver.getCurrentUrl());
 
 	}
 

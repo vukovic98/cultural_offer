@@ -30,21 +30,12 @@ public class AddTypeE2ETest {
 	
 	private WebDriver driver;
 
-	private static String ADMIN_USERNAME = "admin@gmail.com";
+	private static String ADMIN_USERNAME = "vlado@gmail.com";
 	private static String ADMIN_PASSWORD = "vukovic";
 	private static String HOME_PAGE_PATH = "https://localhost:4200/home-page";
 	private static String TYPE_PAGE_PATH = "https://localhost:4200/type";
 	private static String LOGIN_PAGE_PATH = "https://localhost:4200/auth/login";
-	
-	/* U TABELI SU
-	 * TYPE ----------- CATEGORY
-	 * Parliament-------Institution
-	 * Museum-----------Institution
-	 * Tower------------Landmark
-	 * Stadium----------Landmark
-	 * 
-	 * */
-	
+
 	@Before
 	public void setup() throws InterruptedException {
 		ChromeOptions option= new ChromeOptions();
@@ -82,7 +73,6 @@ public class AddTypeE2ETest {
 
 	@Test()
 	public void a_addTypeTestSuccess() throws InterruptedException {	
-		int rowsBefore = driver.findElements(By.cssSelector("tr")).size();
 
 		addTypePage.getTypeName().clear();
 		addTypePage.getTypeName().sendKeys("newtypename");
@@ -93,22 +83,20 @@ public class AddTypeE2ETest {
 	    addTypePage.getSubmitButton().click();
 	    addTypePage.ensureIsDisplayedSwal();
 	    assertTrue(addTypePage.isSwalVisible());
-	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click(); //swal OK click
+	    this.addTypePage.getSwalBtn().click(); //swal OK click
 		justWait();
 		justWait();
 		
+		while(this.addTypePage.getNextPageBtn().isEnabled())
+			this.addTypePage.getNextPageBtn().click();
+		
 	    assertEquals("newtypename", addTypePage.getLastRow().getText());
 	    assertEquals("Institution", addTypePage.getLastRow2Col().getText());
-	    //assertEquals("newtypename", driver.findElement(By.xpath("//tr[5]/td")).getText());
-	    //assertEquals("Institution", driver.findElement(By.xpath("//tr[5]/td[2]")).getText());
 	    
-	    int rowsAfter = driver.findElements(By.cssSelector("tr")).size();
-	    assertEquals(rowsBefore + 1, rowsAfter);
 	}
 	
 	@Test
 	public void b_addTypeAlreadyExist() {
-		int rowsBefore = driver.findElements(By.cssSelector("tr")).size();
 		addTypePage.getTypeName().clear();
 		addTypePage.getTypeName().sendKeys("Museum");
 		addTypePage.getCategorySelect().click();
@@ -118,34 +106,25 @@ public class AddTypeE2ETest {
 	    addTypePage.ensureIsDisplayedSwal();
 	    assertTrue(addTypePage.isSwalVisible());
 	    assertEquals("Error!", driver.findElement(By.id("swal2-title")).getText());
-	    int rowsAfter = driver.findElements(By.cssSelector("tr")).size();
-	    assertEquals(rowsBefore, rowsAfter);
 	}
 	
 	@Test
 	public void c_deleteType() {
-		int rowsBefore = driver.findElements(By.cssSelector("tr")).size();
-
+		while(this.addTypePage.getNextPageBtn().isEnabled())
+			this.addTypePage.getNextPageBtn().click();
+		
 		addTypePage.getLastRowDeleteButton().click();
 		addTypePage.ensureIsDisplayedSwal();
 	    assertTrue(addTypePage.isSwalVisible());
 	    assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
-	    //driver.findElement(By.xpath("//tr[5]/td")
-	    int rowsAfter = driver.findElements(By.cssSelector("tr")).size();
-	    assertEquals(rowsBefore - 1, rowsAfter);
 	}
 	
 	@Test
 	public void d_deleteTypeFail() {
-		int rowsBefore = driver.findElements(By.cssSelector("tr")).size();
-		//brisanje prvog u tabeli daje gresku jer se on koristi u nekoj od ponuda
-		driver.findElement(By.xpath("//tr[1]/td[3]/button[2]/span/mat-icon")).click();
+		this.addTypePage.getDeleteTypeBtn().click();
 		addTypePage.ensureIsDisplayedSwal();
 	    assertTrue(addTypePage.isSwalVisible());
 	    assertEquals("Error!", driver.findElement(By.id("swal2-title")).getText());
-	    //driver.findElement(By.xpath("//tr[5]/td")
-	    int rowsAfter = driver.findElements(By.cssSelector("tr")).size();
-	    assertEquals(rowsBefore, rowsAfter);
 	}
 
 	@Test
@@ -156,13 +135,13 @@ public class AddTypeE2ETest {
 	    addTypePage.getEditSaveButton().click();//driver.findElement(By.id("save")).click();	    
 	    addTypePage.ensureIsDisplayedSwal();
 	    assertTrue(addTypePage.isSwalVisible());
-	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();
+	    this.addTypePage.getSwalBtn().click();
 	    assertEquals("Parliament2", driver.findElement(By.xpath("//td")).getText());
 	    
 	    //rollback
 	    driver.findElement(By.xpath("//mat-icon")).click();
 	    addTypePage.getEditNewTypeNameInput().clear();//driver.findElement(By.xpath("(//input[@id='name'])[2]")).clear();
-	    addTypePage.getEditNewTypeNameInput().sendKeys("Parliament");//driver.findElement(By.xpath("(//input[@id='name'])[2]")).sendKeys("Parliament2");
+	    addTypePage.getEditNewTypeNameInput().sendKeys("Museum");//driver.findElement(By.xpath("(//input[@id='name'])[2]")).sendKeys("Parliament2");
 	    addTypePage.getEditSaveButton().click();//driver.findElement(By.id("save")).click();	   
 	}
 	
@@ -170,12 +149,12 @@ public class AddTypeE2ETest {
 	public void f_editTypeNameExistFail() {
 	    driver.findElement(By.xpath("//mat-icon")).click();
 	    addTypePage.getEditNewTypeNameInput().clear();//driver.findElement(By.xpath("(//input[@id='name'])[2]")).clear();
-	    addTypePage.getEditNewTypeNameInput().sendKeys("Museum");//driver.findElement(By.xpath("(//input[@id='name'])[2]")).sendKeys("Parliament2");
+	    addTypePage.getEditNewTypeNameInput().sendKeys("Library");//driver.findElement(By.xpath("(//input[@id='name'])[2]")).sendKeys("Parliament2");
 	    addTypePage.getEditSaveButton().click();//driver.findElement(By.id("save")).click();	    
 	    addTypePage.ensureIsDisplayedSwal();
 	    assertTrue(addTypePage.isSwalVisible());
-	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();
-	    assertEquals("Parliament", driver.findElement(By.xpath("//td")).getText());
+	    this.addTypePage.getSwalBtn().click();
+	    assertEquals("Museum", driver.findElement(By.xpath("//td")).getText());
 	}
 	
 	@Test
@@ -198,7 +177,7 @@ public class AddTypeE2ETest {
 	    assertTrue(addTypePage.isSwalVisible());
 	    assertEquals("Error!", driver.findElement(By.id("swal2-title")).getText());
 	    assertEquals("Type not found", driver.findElement(By.id("swal2-content")).getText());
-	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();
+	    this.addTypePage.getSwalBtn().click();
 	}
 	
 	private void justWait() throws InterruptedException {

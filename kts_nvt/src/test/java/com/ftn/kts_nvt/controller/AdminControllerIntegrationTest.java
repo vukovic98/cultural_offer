@@ -22,7 +22,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.ftn.kts_nvt.SSLUtils;
 import com.ftn.kts_nvt.beans.Admin;
 import com.ftn.kts_nvt.dto.UserDTO;
 import com.ftn.kts_nvt.dto.UserLoginDTO;
@@ -51,32 +50,6 @@ public class AdminControllerIntegrationTest {
 				UserTokenStateDTO.class);
 
 		accessToken = "Bearer " + responseEntity.getBody().getAuthenticationToken();
-	}
-
-	@BeforeAll
-	public void turnOffSSL() {
-		try {
-			SSLUtils.turnOffSslChecking();
-		} catch (KeyManagementException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@AfterAll
-	public void turnOnSSL() {
-		try {
-			SSLUtils.turnOnSslChecking();
-		} catch (KeyManagementException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	@Test

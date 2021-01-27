@@ -140,8 +140,8 @@ describe('AddOfferComponent', () => {
           }
         ))
     });
-    //const routerStub = () => ({ /*navigate: array => ({})*/ });
-    let routerMock = {
+
+    const routerMock = {
       navigate: jasmine.createSpy('navigate')
     };
 
@@ -191,9 +191,6 @@ describe('AddOfferComponent', () => {
       const culturalOfferServiceStub: CulturalOfferService = fixture.debugElement.injector.get(
         CulturalOfferService
       );
-      //const routerStub: Router = fixture.debugElement.injector.get(Router);
-      //spyOn(culturalOfferServiceStub, 'createOffer').and.callThrough();
-      //spyOn(routerStub, 'navigate').and.callThrough();
       component.myForm.value.name = "dasdadada";
       component.myForm.value.description = "adasdasd";
       component.myForm.value.category = "17";
@@ -211,7 +208,6 @@ describe('AddOfferComponent', () => {
       component.submit();
 
       expect(culturalOfferServiceStub.createOffer).toHaveBeenCalled();
-      //expect(routerStub.navigate).toHaveBeenCalled();
     });
   });
 });

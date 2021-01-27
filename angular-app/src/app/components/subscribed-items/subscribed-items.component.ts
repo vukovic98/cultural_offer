@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CulturalOfferService} from '../../services/culturalOffer.service';
 import {CulturalOffer} from '../../model/offer-mode';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-subscribed-items',
@@ -19,16 +20,31 @@ export class SubscribedItemsComponent implements OnInit {
   }
 
   removeOffer(id: number) {
-   this.service.unsubscribeUser(id);
-   this.offers = this.offers.filter(item => item.id != id);
+   this.service.unsubscribeUser(id).subscribe((data) => {
+     Swal.fire({
+       title: 'Success!',
+       text: 'Successfully unsubscribed from offer!',
+       icon: 'success',
+       confirmButtonText: 'OK'
+     });
+   }, error => {
+     Swal.fire({
+       title: 'Error!',
+       text: 'Something went wrong!',
+       icon: 'error',
+       confirmButtonColor: '#DC143C',
+       confirmButtonText: 'OK'
+     });
+   });
+   this.offers = this.offers.filter(item => item.id !== id);
   }
 
-  getSubscribedItems(): any {
+  getSubscribedItems(): Array<CulturalOffer> {
     return this.offers;
   }
 
   getUserName(): any {
-    let token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem("accessToken");
     let payload: string = '';
     if (token) {
       payload = token.split(".")[1];

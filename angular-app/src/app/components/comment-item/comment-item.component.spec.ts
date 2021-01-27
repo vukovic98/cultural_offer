@@ -17,12 +17,12 @@ describe('CommentItemComponent', () => {
   let httpClient: any;
 
   beforeEach(() => {
-    let offerServiceMock = {
+    const offerServiceMock = {
       deleteComment: jasmine.createSpy('deleteComment')
         .and.returnValue(of({body: {statusCode: 200}}))
-    }
+    };
 
-    let routerMock = {
+    const routerMock = {
       navigate: jasmine.createSpy('navigate')
     };
 

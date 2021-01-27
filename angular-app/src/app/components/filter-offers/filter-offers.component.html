@@ -1,5 +1,5 @@
  <div>
-    <form class="row col-md-12" ngForm="filterForm" (ngSubmit)="filterOffers()">
+    <form class="row col-md-12" ngForm="filterForm" (ngSubmit)="onApplyFilter()">
       <div class="form-group col-md-5">
         <div>
           <ng-select
@@ -24,7 +24,7 @@
       </div>
       <div class="form-group col-md-2">
         <div>
-          <button mat-raised-button color="primary" id="applyFilter" class="btn-block" (click)="onApplyFilter()">Apply filter</button>
+          <button mat-raised-button color="primary" id="applyFilter" class="btn-block">Apply filter</button>
         </div>
       </div>
     </form>

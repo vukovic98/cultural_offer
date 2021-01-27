@@ -44,21 +44,20 @@ export class MapComponent {
     this.offers.forEach(offer => {
       let imageStr: string;
 
-      if(offer.images.length != 0) {
-        imageStr = "<img class='float-left' style='width: 100%; height: 100px; min-width: 100px;' src='data:image/png;base64,"+offer.images[0].picByte+"' alt=''>";
+      if(offer.images.length !== 0) {
+        imageStr = "<img class='float-left' style='width: 100%; height: 100px; min-width: 100px;' src='data:image/png;base64," + offer.images[0].picByte + "' alt=''>";
       } else {
         imageStr = "<img class=\"float-left\" style=\"height: 100px; width: 100%;\" [alt]=\"offer.name\" *ngIf=\"!offer.images\" src=\"https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg\">";
       }
 
       let htmlData: string = "<div class='row'>" + imageStr +
-        "<a class='btn btn-light m-auto w-100' id='offerMarkerLink"+offer.id+"' href='https://localhost:4200/cultural-offer/offer-details/"+offer.id+"'>"+offer.name+"</a>" +
+        "<a class='btn btn-light m-auto w-100' id='offerMarkerLink" + offer.id + "' href='https://localhost:4200/cultural-offer/offer-details/" + offer.id + "'>" + offer.name + "</a>" +
         "</div>";
     //@ts-ignore
       let marker = L.marker([offer.location.latitude, offer.location.longitude]).addTo(this.markers);
       marker.on('click', (e: any) => {
-        //open popup;
         //@ts-ignore
-        var popup = L.popup()
+        let popup = L.popup()
           .setLatLng(marker.getLatLng())
           .setContent(htmlData)
           .openOn(this.mymap);

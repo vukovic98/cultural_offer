@@ -46,19 +46,18 @@ export class CulturalOffersComponent implements OnInit {
     if (this.auth.isUser()) {
       this.service.getSubscribedItems().subscribe((data) => {
         this.subscribedItems = data;
-      })
+      });
     }
 
     if (this.auth.isLoggedIn()) {
-      let token = this.auth.getToken();
-      let userData: TokenModel | null = this.auth.decodeToken(token);
+      const token = this.auth.getToken();
+      const userData: TokenModel | null = this.auth.decodeToken(token);
       this.userId = Number(userData?.user_id);
     }
 
   }
 
   removeOffer(id: number) {
-    console.log("remove offer = " + id);
     this.service.deleteOffer(id)
       .subscribe(response => {
         Swal.fire({
@@ -75,20 +74,19 @@ export class CulturalOffersComponent implements OnInit {
           confirmButtonColor: '#DC143C',
           confirmButtonText: 'OK'
         });
-      })
+      });
     this.offers = this.offers.filter(item => item.id != id);
   }
 
   editOffer(offer: CulturalOffer) {
+    const data_copy = JSON.parse(JSON.stringify(offer));
     const dialogRef = this.dialog.open(EditOfferComponent, {
       width: '500px',
-      data: offer
+      data: data_copy
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
-        offer = result.data;
-        console.log("offer = ", offer);
-        this.service.updateOffer(offer)
+        this.service.updateOffer(result.data)
           .subscribe(response => {
             Swal.fire({
               title: 'Success!',
@@ -96,6 +94,7 @@ export class CulturalOffersComponent implements OnInit {
               icon: 'success',
               confirmButtonText: 'OK'
             });
+            offer = result.data;
           }, error => {
             Swal.fire({
               title: 'Error!',
@@ -104,7 +103,7 @@ export class CulturalOffersComponent implements OnInit {
               confirmButtonColor: '#DC143C',
               confirmButtonText: 'OK'
             });
-          })
+          });
       }
     });
   }
@@ -134,15 +133,15 @@ export class CulturalOffersComponent implements OnInit {
         this.isLoading = false;
       });
     } else {
-      this.service.getByPageFilter(this.pageNum,this.filterObj.exp,this.filterObj.types).subscribe(
-        (offers)=>{
+      this.service.getByPageFilter(this.pageNum, this.filterObj.exp, this.filterObj.types).subscribe(
+        (offers) => {
           this.offers = offers.content;
           this.nextBtn = offers.last;
           this.mapService.myMethod(this.offers);
           this.dataChangedEvent.emit(null);
           this.isLoading = false;
         }
-        )
+        );
     }
 
   }
@@ -175,9 +174,9 @@ export class CulturalOffersComponent implements OnInit {
 
     if (data.exp === "" && data.types.length === 0) {
       this.isFilter = false;
-      this.service.getByPage(this.pageNum).subscribe((data) => {
-        this.offers = data.content;
-        this.nextBtn = data.last;
+      this.service.getByPage(this.pageNum).subscribe((response) => {
+        this.offers = response.content;
+        this.nextBtn = response.last;
         this.mapService.myMethod(this.offers);
         this.dataChangedEvent.emit(null);
         this.isLoading = false;
@@ -192,7 +191,7 @@ export class CulturalOffersComponent implements OnInit {
           this.dataChangedEvent.emit(null);
           this.isLoading = false;
         }
-      )
+      );
     }
   }
 }

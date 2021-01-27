@@ -22,7 +22,7 @@ describe('ProfileComponent', () => {
 
   beforeEach( () => {
 
-    let editProfileServiceMock = {
+    const editProfileServiceMock = {
       editUser: jasmine.createSpy('editUser').
         and.returnValue(of({})),
       getUser: jasmine.createSpy('getUser').
@@ -31,14 +31,14 @@ describe('ProfileComponent', () => {
         "lastName": "Test",
         "email": "test@maildrop.cc",
         "id": 1,
-        "password":'123456da'
+        "password": '123456da'
       }))
     };
-    let routerMock = {
+    const routerMock = {
       navigate: jasmine.createSpy('navigate'),
       queryParams: jasmine.createSpy('queryParams')
     };
-    let swalMock = {
+    const swalMock = {
       fire: jasmine.createSpy('fire').
       and.returnValue(of({
         position: 'center',
@@ -51,7 +51,7 @@ describe('ProfileComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [SignUpComponent],
-      providers:[
+      providers: [
         {provide: EditProfileService, useValue: editProfileServiceMock},
         {provide: Router, useValue: routerMock},
         { provide: Swal, useValue: swalMock},
@@ -63,7 +63,7 @@ describe('ProfileComponent', () => {
 
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
-    editProfileService= TestBed.inject(EditProfileService);
+    editProfileService = TestBed.inject(EditProfileService);
     router = TestBed.inject(Router);
     // @ts-ignore
     swal = TestBed.inject(Swal);
@@ -85,11 +85,11 @@ describe('ProfileComponent', () => {
   }));
 
   it('should successfully edit user', fakeAsync(() => {
-    let userMock = {
+    const userMock = {
       "firstName": "Izmena",
       "lastName": "Izmena",
       "id": 1,
-      "password":'123456da'
+      "password": '123456da'
     };
     swal.fire({
       position: 'center',
@@ -106,7 +106,7 @@ describe('ProfileComponent', () => {
     component.password = "123456da";
     component.editProfile();
 
-    expect(editProfileService.editUser).toHaveBeenCalledWith(JSON.stringify(userMock),1);
+    expect(editProfileService.editUser).toHaveBeenCalledWith(JSON.stringify(userMock), 1);
     expect(swal.fire).toHaveBeenCalledWith({
       position: 'center',
       title: 'Changes saved!',

@@ -31,11 +31,11 @@ describe('CulturalOffersComponent', () => {
   beforeEach( () => {
 
 
-    let mapServiceMock = {
+    const mapServiceMock = {
       myMethod: jasmine.createSpy('myMethod')
-    }
+    };
 
-    let offerServiceMock = {
+    const offerServiceMock = {
       getByPage: jasmine.createSpy('getByPage')
         .and.returnValue(of({
           "content": [
@@ -143,7 +143,7 @@ describe('CulturalOffersComponent', () => {
         }))
     };
 
-    let authServiceMock = {
+    const authServiceMock = {
       isUser: jasmine.createSpy('isUser')
         .and.returnValue(true),
       isLoggedIn: jasmine.createSpy('isLoggedIn')
@@ -164,18 +164,18 @@ describe('CulturalOffersComponent', () => {
         })
     };
 
-    let routerMock = {
+    const routerMock = {
       navigate: jasmine.createSpy('navigate')
     };
 
-    let matDialogMock = {
+    const matDialogMock = {
       open: jasmine.createSpy('open')
         .and.returnValue(dialogRef)
     };
 
-    let dialogRefMock = {
+    const dialogRefMock = {
       afterClosed: jasmine.createSpy('afterClosed')
-    }
+    };
 
     TestBed.configureTestingModule({
       imports: [
@@ -224,12 +224,12 @@ describe('CulturalOffersComponent', () => {
 
     expect(offerService.deleteOffer).toHaveBeenCalled();
     expect(offerService.deleteOffer).toHaveBeenCalledWith(26);
-  })
+  });
 
   it('should return offers', () => {
-    let of = component.getAllOffers();
+    const offrs = component.getAllOffers();
 
-    expect(of.length).toBe(2);
+    expect(offrs.length).toBe(2);
   });
 
   it('should retrieve offers for first page', () => {
@@ -247,18 +247,18 @@ describe('CulturalOffersComponent', () => {
   });
 
   it('should retrieve offers for next page', () => {
-    let oldPage = component.pageNum;
+    const oldPage = component.pageNum;
 
     component.nextPage();
 
-    expect(component.pageNum).toBe(oldPage+1);
+    expect(component.pageNum).toBe(oldPage + 1);
     expect(component.retrieveOffers).toHaveBeenCalled();
   });
 
   it('should retrieve offers for previous page', () => {
     component.pageNum = 10;
 
-    let oldPage = component.pageNum;
+    const oldPage = component.pageNum;
 
     component.previousPage();
 
@@ -289,7 +289,7 @@ describe('CulturalOffersComponent', () => {
   });
 
   it('should determine if user is subscribed to offer', () => {
-    let is: boolean = component.isSubscribed({
+    const is: boolean = component.isSubscribed({
       "id": 1,
       "name": "Sonsing",
       "images": [],

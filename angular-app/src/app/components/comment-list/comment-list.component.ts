@@ -25,13 +25,11 @@ export class CommentListComponent implements OnInit {
   ngOnInit(): void {
     this.offerService.getCommentsForOffer(Number(this.offer_id), this.pageNum)
       .subscribe((data: any) => {
-        console.log(data.content);
         this.comments = data.content;
         this.totalPages = data.totalPages;
         this.nextBtn = data.last;
-        console.log(this.nextBtn);
         this.totalElements = data.totalElements;
-      })
+      });
   }
 
   isAdmin() {
@@ -43,7 +41,7 @@ export class CommentListComponent implements OnInit {
       .subscribe((data: any) => {
         this.comments = data.content;
         this.nextBtn = data.last;
-      })
+      });
   }
 
   nextPage() {

@@ -18,7 +18,7 @@ export class ChangePasswordComponent implements OnInit {
     newPassword: ['', [Validators.required, Validators.pattern("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$")]],
     confirmPassword: ['', [Validators.required]]
   },{
-      validators:MustMatch('newPassword','confirmPassword')
+      validators: MustMatch('newPassword','confirmPassword')
   });
 
   constructor(
@@ -28,10 +28,10 @@ export class ChangePasswordComponent implements OnInit {
     ) { }
 
   changePassword(){
-    let passDto = {
+    const passDto = {
         "oldPassword": this.changePasswordForm.value.oldPassword,
       "newPassword":this.changePasswordForm.value.newPassword
-    }
+    };
     this.service.changePassword(JSON.stringify(passDto))
       .subscribe(token => {
         Swal.fire({
@@ -40,7 +40,7 @@ export class ChangePasswordComponent implements OnInit {
           icon: 'success',
           showConfirmButton: false,
           timer: 1500
-        }).then(() => this.route.navigate(['/home-page']))
+        }).then(() => this.route.navigate(['/home-page']));
 
       }, error => {
         console.log(error);
@@ -50,8 +50,8 @@ export class ChangePasswordComponent implements OnInit {
           icon: 'error',
           confirmButtonColor: '#DC143C',
           confirmButtonText: 'OK'
-        })
-      })
+        });
+      });
   }
 
   ngOnInit(): void {

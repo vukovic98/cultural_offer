@@ -22,7 +22,7 @@ describe('UserVerificationComponent', () => {
 
   beforeEach( () => {
 
-    let authServiceMock = {
+    const authServiceMock = {
       verifyCode: jasmine.createSpy('verifyCode').
       and.returnValue(of({
         "code": 'CODE123',
@@ -30,14 +30,14 @@ describe('UserVerificationComponent', () => {
       })),
       sendCodeAgain: jasmine.createSpy('sendCodeAgain').
         and.returnValue(of("CODE123"))
-    }
+    };
 
-    let routerMock = {
+    const routerMock = {
       navigate: jasmine.createSpy('navigate')
     };
 
 
-    let swalMock = {
+    const swalMock = {
       fire: jasmine.createSpy('fire').
       and.returnValue(of({}))
     };
@@ -46,7 +46,7 @@ describe('UserVerificationComponent', () => {
     TestBed.configureTestingModule({
       declarations: [UserVerificationComponent],
       imports: [RouterTestingModule],
-      providers:[
+      providers: [
         {provide: AuthService, useValue: authServiceMock},
         {provide: Router, useValue: routerMock},
         { provide: Swal, useValue: swalMock},
@@ -107,7 +107,8 @@ describe('UserVerificationComponent', () => {
         confirmButtonColor: '#287507',
         confirmButtonText: 'Go to login page'
     });
-  flush();
+
+    flush();
   }));
 
   it('should send code again', fakeAsync(() => {
