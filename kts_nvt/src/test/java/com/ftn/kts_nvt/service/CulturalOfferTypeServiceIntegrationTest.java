@@ -2,6 +2,7 @@ package com.ftn.kts_nvt.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -118,4 +119,12 @@ public class CulturalOfferTypeServiceIntegrationTest {
 	    assertEquals(null, found);
 	}
 
+	@Test
+	public void y_testUpdateFail() throws Exception {
+		CulturalOfferType type = service.findById(2L);
+		type.setName("Festival");
+		type.setCategory(categoryService.findOne(1L));
+		CulturalOfferType changed = service.update(type, 2L);
+		assertNull(changed); 
+	}
 }

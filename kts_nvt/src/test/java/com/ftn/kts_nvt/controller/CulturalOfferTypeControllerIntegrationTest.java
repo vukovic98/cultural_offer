@@ -245,4 +245,56 @@ public class CulturalOfferTypeControllerIntegrationTest {
 			
 	     assertEquals(HttpStatus.BAD_REQUEST, responseEntityDelete.getStatusCode());
 	 }
+	 
+	 @Test
+	 public void testCreateFail() {
+		 int sizeBefore = service.findAll().size();
+		 login("vlado@gmail.com", "vukovic");
+		 CulturalOfferCategory category = categoryRepository.findById(2L).orElse(null);
+		 
+		 CulturalOfferTypeDTO typeDTO = new CulturalOfferTypeDTO();
+		 typeDTO.setName("Stadium");
+		 typeDTO.setCategoryId(category.getId());
+		 typeDTO.setCategoryName(category.getName());
+		 
+		 HttpHeaders headers = new HttpHeaders();
+	     headers.add("Authorization", this.accessToken);
+	     HttpEntity<CulturalOfferTypeDTO> httpEntity = new HttpEntity<>(typeDTO, headers);
+	     
+	     ResponseEntity<CulturalOfferType> responseEntity =
+	                restTemplate.postForEntity("/cultural-offer-types",
+	                							httpEntity, 
+	                							CulturalOfferType.class);
+		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+
+	     int sizeAfter = service.findAll().size();
+	     assertEquals(sizeBefore, sizeAfter);
+	 }
+	 
+	 @Test
+	 public void testUpdateFail() {
+		login("vlado@gmail.com", "vukovic");
+		CulturalOfferCategory category = categoryRepository.findById(1L).orElse(null);
+		 
+		CulturalOfferTypeDTO typeDTO = new CulturalOfferTypeDTO();
+		typeDTO.setId(2L);
+		typeDTO.setName("Festival");
+		typeDTO.setCategoryId(category.getId());
+		typeDTO.setCategoryName(category.getName());
+		 
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", this.accessToken);
+	        
+	    HttpEntity<CulturalOfferTypeDTO> httpEntity = new HttpEntity<>(typeDTO, headers);
+	        
+		ResponseEntity<CulturalOfferTypeDTO> responseEntity =
+	                restTemplate.exchange("/cultural-offer-types/"+typeDTO.getId(),
+	                						HttpMethod.PUT,
+	                						httpEntity,
+	                						CulturalOfferTypeDTO.class);
+		
+		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+
+	 }
 }

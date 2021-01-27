@@ -2,6 +2,7 @@ package com.ftn.kts_nvt.repository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
@@ -59,5 +60,11 @@ public class GradeRepositoryIntegrationTest {
 		Grade found = repository.findGradeByUser_IdAndCulturalOffer_Id(1L, 1L).orElse(null);
 		assertNotNull(found);
 		assertEquals(5, found.getValue());
+	}
+	
+	@Test
+	public void testFindByUserAndCulturalOfferFail() {
+		Grade found = repository.findGradeByUser_IdAndCulturalOffer_Id(100L, 140L).orElse(null);
+		assertNull(found);
 	}
 }
