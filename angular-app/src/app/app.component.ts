@@ -6,6 +6,6 @@ import {Component, HostListener} from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angular-app';
+  title = 'Culture on the palm';
 
 }

@@ -7,6 +7,8 @@ import Swal from "sweetalert2";
 import { CulturalOffer } from '../model/offer-mode';
 import {AddPostModel} from '../model/post-model';
 import { ImageModel } from '../model/comment-model';
+import {DomEvent} from 'leaflet';
+import off = DomEvent.off;
 
 @Injectable()
 export class CulturalOfferService {

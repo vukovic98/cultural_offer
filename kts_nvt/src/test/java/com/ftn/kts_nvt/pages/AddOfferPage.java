@@ -8,11 +8,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AddOfferPage {
-	
+
 	private WebDriver driver;
 
 	@FindBy(xpath = "//*[@id=\"name\"]")
 	private WebElement offerName;
+
+	@FindBy(xpath = "//button[@id='submit']")
+	private WebElement submitBtn;
 
 	@FindBy(xpath = "//*[@id=\"description\"]")
 	private WebElement offerDescription;
@@ -31,13 +34,10 @@ public class AddOfferPage {
 
 	@FindBy(xpath = "button[@id='submit']/span")
 	private WebElement submit;
-	
+
 	@FindBy(xpath = "//div[contains(@class, 'swal2-popup')]")
 	private WebElement swalAlert;
-	
-	@FindBy(xpath = "//div[contains(@class, 'swal2-icon-success')]")
-	private WebElement swalSuccess;
-	
+
 	public AddOfferPage() {
 		super();
 	}
@@ -51,14 +51,50 @@ public class AddOfferPage {
 		return driver;
 	}
 
-	public WebElement getSwalSuccess() {
-		return swalSuccess;
+	public WebElement getSubmitBtn() {
+		return submitBtn;
+	}
+
+	public void setSubmitBtn(WebElement submitBtn) {
+		this.submitBtn = submitBtn;
+	}
+
+	public void setOfferName(WebElement offerName) {
+		this.offerName = offerName;
+	}
+
+	public void setOfferDescription(WebElement offerDescription) {
+		this.offerDescription = offerDescription;
+	}
+
+	public void setCategorySelect(WebElement categorySelect) {
+		this.categorySelect = categorySelect;
+	}
+
+	public void setTypeSelect(WebElement typeSelect) {
+		this.typeSelect = typeSelect;
+	}
+
+	public void setMapid(WebElement mapid) {
+		this.mapid = mapid;
+	}
+
+	public void setFile(WebElement file) {
+		this.file = file;
+	}
+
+	public void setSubmit(WebElement submit) {
+		this.submit = submit;
+	}
+
+	public void setSwalAlert(WebElement swalAlert) {
+		this.swalAlert = swalAlert;
 	}
 
 	public WebElement getSubmit() {
 		return submit;
 	}
-	
+
 	public WebElement getOfferName() {
 		return offerName;
 	}

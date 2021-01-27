@@ -39,7 +39,7 @@ export class UserVerificationComponent implements OnInit {
           confirmButtonText: 'Go to login page'
         }).then((result) => {
           if(result.isConfirmed){
-            this.router.navigate(['/login']);
+            this.router.navigate(['/auth/login']);
           }
         })
       }, error => {

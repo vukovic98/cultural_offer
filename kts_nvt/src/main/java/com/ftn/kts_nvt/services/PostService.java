@@ -84,7 +84,6 @@ public class PostService implements ServiceInterface<Post>{
 				helper.setText(createMailBody(u, c, title), true);
 				this.javaMailSender.send(msg);
 	
-				System.out.println("SENT ACCEPTED MAIL!");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

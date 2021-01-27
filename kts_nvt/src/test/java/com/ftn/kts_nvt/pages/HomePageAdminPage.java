@@ -344,9 +344,17 @@ public class HomePageAdminPage {
 	public void ensureIsMarkerLinkDisplayed() {
 		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(), 'Sonsing')]")));
 	}
+	
+	public void ensurePageisLoaded() {
+		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("offersListDiv")));
+	}
+	
+	public void ensureFilterisLoaded() {
+		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("filterDiv")));
+	}
 
 	public List<WebElement> getTypeOptions() {
-		return this.typeSelect.findElements(By.tagName("option"));
+		return this.typeSelect.findElements(By.className("ng-option"));
 	}
 
 	public WebElement getMarker() {

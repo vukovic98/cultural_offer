@@ -1,4 +1,5 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {CulturalOffer} from '../../model/offer-mode';
 
 @Component({
   selector: 'app-subscribed-items-list',
@@ -7,7 +8,7 @@ import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 })
 export class SubscribedItemsListComponent implements OnInit {
 
-  @Input() public offers: any;
+  @Input() public offers: Array<CulturalOffer> = [];
   @Output() removeOffer = new EventEmitter<number>();
 
   constructor() { }

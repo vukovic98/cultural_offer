@@ -102,7 +102,7 @@ public class LoginE2ETest {
 
         loginPage.getLoginBtn().click();
 
-        assertEquals("http://localhost:4200/auth/login", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/auth/login", driver.getCurrentUrl());
         
         loginPage.ensureIsDisplayedSwal();
         

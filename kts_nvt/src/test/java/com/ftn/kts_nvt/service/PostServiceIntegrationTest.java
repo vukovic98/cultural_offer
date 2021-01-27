@@ -147,7 +147,7 @@ public class PostServiceIntegrationTest {
 	    
 	    assertEquals(1, emails.length);
 	    assertEquals("Name1 : New post is here!", emails[0].getSubject());
-	    assertEquals("<h2>Vladimir, new post for offer you are subscribed to has arrived!</h2><br><br><h3>This is post</h3> <br><br><h4>Go check it out <a href='http://localhost:4200/offer-details/1'>here!</a></h4>", GreenMailUtil.getBody(emails[0]));
+	    assertEquals("<h2>Vladimir, new post for offer you are subscribed to has arrived!</h2><br><br><h3>This is post</h3> <br><br><h4>Go check it out <a href='https://localhost:4200/cultural-offer/offer-details/1'>here!</a></h4>", GreenMailUtil.getBody(emails[0]));
 	    
 	    
 	}

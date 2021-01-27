@@ -58,7 +58,6 @@ export class CulturalOffersComponent implements OnInit {
   }
 
   removeOffer(id: number) {
-    console.log("remove offer = " + id);
     this.service.deleteOffer(id)
       .subscribe(response => {
         Swal.fire({

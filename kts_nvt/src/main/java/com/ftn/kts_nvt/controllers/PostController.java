@@ -80,10 +80,7 @@ public class PostController {
 		Page<Post> page = postService.findPostsForOffer(offerId, pageable);
 
 		List<PostDTO> postDTOS = postMapper.listToDto(page.toList());
-		System.out.println("postlength = " + postDTOS.size());
-		for(PostDTO post : postDTOS) {
-			System.out.println("post = " + post.getTitle());
-		}
+
 		Page<PostDTO> pagePostDTOS = new PageImpl<>(postDTOS , page.getPageable(), page.getTotalElements());
 
 		PageImplMapper<PostDTO> pageMapper = new PageImplMapper<>();

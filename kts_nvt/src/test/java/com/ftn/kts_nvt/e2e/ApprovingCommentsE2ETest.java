@@ -45,9 +45,9 @@ public class ApprovingCommentsE2ETest {
 
 		assertFalse(loginPage.getLoginBtn().isEnabled());
 
-		loginPage.getEmail().sendKeys("adminko@maildrop.cc");
+		loginPage.getEmail().sendKeys("vlado@gmail.com");
 
-		loginPage.getPassword().sendKeys("123456");
+		loginPage.getPassword().sendKeys("vukovic");
 
 		loginPage.ensureIsButtonEnabled();
 
@@ -91,7 +91,7 @@ public class ApprovingCommentsE2ETest {
 		justWait();
 		approvingCommentsPage.getRejectBtn().click();
 		justWait();
-		assertEquals("Comment sucessfully denied!", approvingCommentsPage.getSwalSuccessContent().getText());
+		assertEquals("Comment successfully denied!", approvingCommentsPage.getSwalSuccessContent().getText());
 		approvingCommentsPage.ensureIsPageDisplayed();
 		
 	}

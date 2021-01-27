@@ -47,12 +47,12 @@ public class SignUpE2ETest {
 	@Test
 	public void signUpTestSuccess() throws Exception {
 		
-		driver.get("https://localhost:4200/sign-up");
+		driver.get("https://localhost:4200/auth/sign-up");
 		justWait();
 		assertTrue(!signUpPage.getSignUpBtn().isEnabled());
 
 		
-		String email = "e2etest@maildrop.cc";
+		String email = "e2etest3@maildrop.cc";
 
 		signUpPage.getFirstName().sendKeys("Ivana");
 		signUpPage.getLastName().sendKeys("Vlaisavljevic");
@@ -65,13 +65,13 @@ public class SignUpE2ETest {
 		
 		verifyPage.ensureButtonIsVisible();
 
-		assertEquals("https://localhost:4200/verify?email=" + email, driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/auth/verify?email=" + email, driver.getCurrentUrl());
 	
 	}
 
 	
 	  @Test public void signUpTestFail() throws InterruptedException {
-	  driver.get("https://localhost:4200/sign-up");
+	  driver.get("https://localhost:4200/auth/sign-up");
 	  
 	  justWait();
 	  

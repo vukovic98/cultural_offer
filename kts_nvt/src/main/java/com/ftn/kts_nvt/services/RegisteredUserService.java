@@ -59,7 +59,7 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser> {
 	
 	public boolean unsubscribe(RegisteredUser u, Long offer_id) {
 		for(CulturalOffer c : u.getCulturalOffers()) {
-			if(c.getId() == offer_id) {
+			if(c.getId().equals(offer_id)) {
 				u.getCulturalOffers().remove(c);
 				this.registeredUserRepository.save(u);
 				

@@ -66,6 +66,8 @@ public class HomePageRegisteredUserE2ETest {
 		justWait();
 
 		this.homePage.ensureIsPageDisplayed();
+		this.homePage.ensurePageisLoaded();
+		this.homePage.ensureFilterisLoaded();
 
 		assertEquals(HOME_PAGE + "home-page", this.driver.getCurrentUrl());
 
@@ -111,6 +113,8 @@ public class HomePageRegisteredUserE2ETest {
 		assertTrue(this.homePage.getSubscribedItemsLink().isDisplayed());
 		
 		this.homePage.getSubscribedItemsLink().click();
+		
+		justWait();
 		
 		assertEquals("https://localhost:4200/cultural-offer/subscribed-items", this.driver.getCurrentUrl());
 	}
@@ -194,6 +198,8 @@ public class HomePageRegisteredUserE2ETest {
 		justWait();
 		
 		this.homePage.ensureIsPageDisplayed();
+		this.homePage.ensurePageisLoaded();
+		this.homePage.ensureFilterisLoaded();
 		
 		assertTrue(this.homePage.getNameInput().isDisplayed());
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
@@ -221,6 +227,7 @@ public class HomePageRegisteredUserE2ETest {
 		justWait();
 		
 		this.homePage.ensureIsPageDisplayed();
+		this.homePage.ensurePageisLoaded();
 		
 		assertTrue(this.homePage.getNameInput().isDisplayed());
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
@@ -248,6 +255,8 @@ public class HomePageRegisteredUserE2ETest {
 		justWait();
 		
 		this.homePage.ensureIsPageDisplayed();
+		this.homePage.ensurePageisLoaded();
+		this.homePage.ensureFilterisLoaded();
 		
 		assertTrue(this.homePage.getTypeSelect().isDisplayed());
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
@@ -269,7 +278,7 @@ public class HomePageRegisteredUserE2ETest {
 		
 		this.homePage.getApplyFilterBtn().click();
 		
-		justWait();
+		this.homePage.ensurePageisLoaded();
 		
 		assertTrue(this.homePage.getOffers().size() > 0);
 		
@@ -284,6 +293,8 @@ public class HomePageRegisteredUserE2ETest {
 		justWait();
 		
 		this.homePage.ensureIsPageDisplayed();
+		this.homePage.ensurePageisLoaded();
+		this.homePage.ensureFilterisLoaded();
 		
 		assertTrue(this.homePage.getNameInput().isDisplayed());
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
@@ -294,16 +305,6 @@ public class HomePageRegisteredUserE2ETest {
 		assertEquals(8,markersBefore);
 		
 		this.homePage.getNameInput().sendKeys("Sonsing");
-		
-		this.homePage.getApplyFilterBtn().click();
-		List<WebElement> options = this.homePage.getTypeOptions();
-		
-		for (WebElement el : options) {
-			if(el.getText().equalsIgnoreCase("Cultural centre"))
-				el.click();
-		}
-		
-		justWait();
 		
 		this.homePage.getApplyFilterBtn().click();
 		
@@ -322,6 +323,8 @@ public class HomePageRegisteredUserE2ETest {
 		justWait();
 		
 		this.homePage.ensureIsPageDisplayed();
+		this.homePage.ensurePageisLoaded();
+		this.homePage.ensureFilterisLoaded();
 		
 		assertTrue(this.homePage.getNameInput().isDisplayed());
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
@@ -332,16 +335,6 @@ public class HomePageRegisteredUserE2ETest {
 		assertEquals(8,markersBefore);
 		
 		this.homePage.getNameInput().sendKeys("Non existing name");
-		
-		this.homePage.getApplyFilterBtn().click();
-		List<WebElement> options = this.homePage.getTypeOptions();
-		
-		for (WebElement el : options) {
-			if(el.getText().equalsIgnoreCase("Cultural centre"))
-				el.click();
-		}
-		
-		justWait();
 		
 		this.homePage.getApplyFilterBtn().click();
 		
@@ -361,6 +354,7 @@ public class HomePageRegisteredUserE2ETest {
 		justWait();
 		
 		this.homePage.ensureIsPageDisplayed();
+		this.homePage.ensurePageisLoaded();
 		
 		assertTrue(this.homePage.getNameInput().isDisplayed());
 		assertTrue(this.homePage.getApplyFilterBtn().isDisplayed());
@@ -371,16 +365,6 @@ public class HomePageRegisteredUserE2ETest {
 		assertEquals(8,markersBefore);
 		
 		this.homePage.getNameInput().sendKeys("Sonsing");
-		
-		this.homePage.getApplyFilterBtn().click();
-		List<WebElement> options = this.homePage.getTypeOptions();
-		
-		for (WebElement el : options) {
-			if(el.getText().equalsIgnoreCase("Cultural centre"))
-				el.click();
-		}
-		
-		justWait();
 		
 		this.homePage.getApplyFilterBtn().click();
 		
@@ -406,6 +390,7 @@ public class HomePageRegisteredUserE2ETest {
 		justWait();
 		
 		this.homePage.ensureIsPageDisplayed();
+		this.homePage.ensurePageisLoaded();
 		
 		assertEquals(this.homePage.getOffers().size(), 8);
 		
@@ -423,7 +408,8 @@ public class HomePageRegisteredUserE2ETest {
 		justWait();
 
 		this.homePage.ensureIsPageDisplayed();
-
+		this.homePage.ensurePageisLoaded();
+		
 		assertTrue(this.homePage.getSubscribeToggle().isDisplayed());
 
 		//Subscribe

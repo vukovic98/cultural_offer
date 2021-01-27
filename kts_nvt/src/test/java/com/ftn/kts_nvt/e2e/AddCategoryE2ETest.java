@@ -30,7 +30,7 @@ public class AddCategoryE2ETest {
 	
 	private WebDriver driver;
 
-	private static String ADMIN_USERNAME = "admin@gmail.com";
+	private static String ADMIN_USERNAME = "vlado@gmail.com";
 	private static String ADMIN_PASSWORD = "vukovic";
 	private static String HOME_PAGE_PATH = "https://localhost:4200/home-page";
 	private static String CATEGORY_PAGE_PATH = "https://localhost:4200/category";
@@ -115,7 +115,7 @@ public class AddCategoryE2ETest {
 	}
 	
 	@Test
-	public void c_changeNameSuccess() {
+	public void c_changeNameSuccess() throws Exception {
 	    assertEquals("newcategory", addCategoryPage.getLastRow().getText());
 	    //assertEquals("newcategory", driver.findElement(By.xpath("//tr[4]/td")).getText());
 	    driver.findElement(By.xpath("(//button[@id='editButton']/span/mat-icon)[4]")).click();
@@ -125,7 +125,9 @@ public class AddCategoryE2ETest {
 		addCategoryPage.ensureIsDisplayedSwal();
 	    assertTrue(addCategoryPage.isSwalVisible());
 		assertEquals("Success!", driver.findElement(By.id("swal2-title")).getText());
-		driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();	
+		justWait();
+		driver.findElement(By.xpath("(//button[contains(@class, 'swal2-confirm')])")).click();
+		justWait();
 	    assertEquals("newcategory2", addCategoryPage.getLastRow().getText());
 	    //assertEquals("newcategory2", driver.findElement(By.xpath("//tr[4]/td")).getText());
 	}
@@ -156,20 +158,22 @@ public class AddCategoryE2ETest {
 	}
 	
 	@Test
-	public void f_search() {
+	public void f_search() throws Exception {
 		addCategoryPage.getByname().click();
 		addCategoryPage.getByname().clear();
 		addCategoryPage.getByname().sendKeys("Institution");
 	    driver.findElement(By.xpath("//button[@id='search']/span")).click();
+	    justWait();
 	    assertEquals("Institution", driver.findElement(By.xpath("//td")).getText());
 	}
 	
 	@Test 
-	public void g_searchFail() {
+	public void g_searchFail() throws Exception{
 		addCategoryPage.getByname().click();
 		addCategoryPage.getByname().clear();
 		addCategoryPage.getByname().sendKeys("asdadas");
 	    driver.findElement(By.xpath("//button[@id='search']/span")).click();
+	    justWait();
 	    assertTrue(addCategoryPage.isSwalVisible());
 		assertEquals("Error!", driver.findElement(By.id("swal2-title")).getText());
 	    assertEquals("Category not found", driver.findElement(By.id("swal2-content")).getText());

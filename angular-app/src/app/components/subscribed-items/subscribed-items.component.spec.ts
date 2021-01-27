@@ -43,6 +43,7 @@ describe('SubscribedItemsComponent', () => {
         }
       ])),
     unsubscribeUser: jasmine.createSpy('unsubscribeUser')
+      .and.returnValue(of({}))
   };
 
   beforeEach( () => {

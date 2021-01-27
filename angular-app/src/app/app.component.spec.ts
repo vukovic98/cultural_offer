@@ -29,6 +29,6 @@ describe('AppComponent', () => {
   });
 
   it(`should have as title 'angular-app'`, () => {
-    expect(component.title).toEqual('angular-app');
+    expect(component.title).toEqual('Culture on the palm');
   });
 });

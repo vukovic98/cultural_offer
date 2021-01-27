@@ -115,7 +115,6 @@ public class RegisteredUserController {
     	
     	Authentication data = SecurityContextHolder.getContext().getAuthentication();
 		String email = data.getName();
-		
 		RegisteredUser user = this.registeredUserService.findOneByEmail(email);
 		
 		if(user != null) {
@@ -123,8 +122,10 @@ public class RegisteredUserController {
 			
 			if(ok)
 				return new ResponseEntity<>(HttpStatus.OK);
-			else
+			else {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+				
+			}
 		} else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
