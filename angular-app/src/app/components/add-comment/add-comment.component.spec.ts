@@ -16,7 +16,7 @@ describe('AddCommentComponent', () => {
       addComment: jasmine.createSpy('addComment')
       .and.returnValue(of({
 
-        body:{
+        body: {
           "id": 20,
           "commenterEmail": "test@maildrop.com",
           "commenterName": "Marko",
@@ -32,7 +32,7 @@ describe('AddCommentComponent', () => {
       providers: [
         { provide: CulturalOfferService, useFactory: culturalOfferServiceStub }, AuthService
       ],
-      imports:[RouterTestingModule, HttpClientTestingModule]
+      imports: [RouterTestingModule, HttpClientTestingModule]
     })
     .compileComponents();
 

@@ -13,12 +13,12 @@ describe('PostComponent', () => {
   let offerService: CulturalOfferService;
 
   beforeEach( () => {
-    let offerServiceMock = {
+    const offerServiceMock = {
       deletePost: jasmine.createSpy('deletePost')
         .and.returnValue(of({body: {statusCode: 200}}))
-    }
+    };
 
-    let routerMock = {
+    const routerMock = {
       navigate: jasmine.createSpy('navigate')
     };
 

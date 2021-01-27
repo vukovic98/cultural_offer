@@ -17,11 +17,11 @@ describe('EditOfferComponent', () => {
 
   beforeEach(() => {
 
-    let matDialogRefMock = {
+    const matDialogRefMock = {
       close: jasmine.createSpy('close')
     };
 
-    let modelMock = {
+    const modelMock = {
       "id": 10,
       "name": "adasdaas",
       "images": [],
@@ -34,13 +34,13 @@ describe('EditOfferComponent', () => {
       "description": "adasdas",
       "avgGrade": 4,
       "subscribersCount": 10
-    }
+    };
 
-    let offerServiceMock = {
+    const offerServiceMock = {
       getLocationName: jasmine.createSpy('getLocationName')
         .and.returnValue(of()),
     };
-    
+
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       imports: [ ReactiveFormsModule, FormsModule ],
@@ -63,12 +63,7 @@ describe('EditOfferComponent', () => {
   it('can load instance', () => {
     expect(component).toBeTruthy();
   });
-/*
-  it('ngOnInit should init map', () => {
-    component.ngOnInit();
-    expect(component.initMap).toHaveBeenCalled();
-  });
-*/
+
   it('should close dialog on save', () => {
     component.myForm.value.name = "newname";
     component.myForm.value.description = "newdescription";
@@ -81,10 +76,4 @@ describe('EditOfferComponent', () => {
     component.close();
     expect(matDialogRef.close).toHaveBeenCalled();
   });
-/*
-  it('makes expected calls', () => {
-    component.initMap();
-    expect(offerService.getLocationName).toHaveBeenCalled();
-  });
-*/
 });

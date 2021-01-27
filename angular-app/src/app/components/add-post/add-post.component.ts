@@ -25,8 +25,7 @@ export class AddPostComponent implements OnInit {
   submitPost() {
     this.data.title = this.addPostForm.value.title;
     this.data.content = this.addPostForm.value.content;
-
-    this.dialogRef.close({data:this.data});
+    this.dialogRef.close({data: this.data});
   }
 
 }

@@ -16,8 +16,8 @@ describe('CommentToBeApprovedComponent', () => {
 
     fixture = TestBed.createComponent(CommentToBeApprovedComponent);
     component = fixture.componentInstance;
-    spyOn(component.denyComment,'emit');
-    spyOn(component.approveComment,'emit');
+    spyOn(component.denyComment, 'emit');
+    spyOn(component.approveComment, 'emit');
     fixture.detectChanges();
   });
 

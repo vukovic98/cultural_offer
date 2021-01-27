@@ -29,10 +29,12 @@ export class OfferDetailsComponent implements OnInit{
   //newModel: AddPostModel = { id: 0, content: "", culturalOfferId: 0, title: "" };
   timer: number = 0;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private service: CulturalOfferService,
     private authService: AuthService,
-    public locationDialog: MatDialog) { }
+    public locationDialog: MatDialog
+  ) { }
 
   ngOnInit() {
     Swal.fire({
@@ -41,13 +43,13 @@ export class OfferDetailsComponent implements OnInit{
       showCancelButton: false,
       showConfirmButton: false,
       onBeforeOpen: () => {
-        Swal.showLoading()
+        Swal.showLoading();
       },
     });
     if (this.authService.isUser()) {
       this.service.getSubscribedItems().subscribe((data) => {
         this.subscribedItems = data;
-      })
+      });
     }
     //@ts-ignore
     this.id = this.route.snapshot.paramMap.get('id');
@@ -81,7 +83,6 @@ export class OfferDetailsComponent implements OnInit{
     let offerId = this.offer.id;
     this.service.gradeOffer(parseInt(userId), parseInt(offerId), this.selectedValue)
       .subscribe(response => {
-        console.log("gradeOffer = ", response);
         Swal.fire({
           title: 'Success!',
           text: 'We marked you grade! ' ,
@@ -92,9 +93,9 @@ export class OfferDetailsComponent implements OnInit{
         let i = 1;
         for (let p of this.offer.grades) {
           sum += p.value;
-          i+=1;
+          i += 1;
         }
-        this.offer.avgGrade = sum/i;
+        this.offer.avgGrade = sum / i;
     }, error => {
       Swal.fire({
         title: 'Error!',
@@ -109,7 +110,7 @@ export class OfferDetailsComponent implements OnInit{
   }
 
   subscribeToggle(event: MatSlideToggleChange, offer_id: string) {
-    let id: number = Number(offer_id);
+    const id: number = Number(offer_id);
     if (event.checked) { // subscribe to offer
       this.service.subscribeUser(id)
         .subscribe(response => {
@@ -129,9 +130,9 @@ export class OfferDetailsComponent implements OnInit{
             confirmButtonColor: '#DC143C',
             confirmButtonText: 'OK'
           });
-        })
+        });
     }
-    else {//unsubscribe from offer
+    else { // unsubscribe from offer
       this.service.unsubscribeUser(id)
         .subscribe(response => {
           console.log("unsubscribeUser = ", response);
@@ -150,7 +151,7 @@ export class OfferDetailsComponent implements OnInit{
             confirmButtonColor: '#DC143C',
             confirmButtonText: 'OK'
           });
-        })
+        });
     }
   }
 
@@ -163,7 +164,6 @@ export class OfferDetailsComponent implements OnInit{
   }
 
   isSubscribed(offer: OfferDetailsModel): boolean {
-    console.log("isSubscribed = ", offer);
     if (this.authService.isLoggedIn()) {
       for (let i of this.subscribedItems) {
         if (i.id === Number(offer.id))

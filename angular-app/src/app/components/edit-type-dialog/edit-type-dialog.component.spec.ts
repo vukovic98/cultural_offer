@@ -15,20 +15,21 @@ describe('EditTypeDialogComponent', () => {
 
   beforeEach(() => {
 
-    let matDialogRefMock = {
+    const matDialogRefMock = {
       close: jasmine.createSpy('close')
     };
 
-    let typeServiceMock = {
+    const typeServiceMock = {
       updateType: jasmine.createSpy('updateType')
         .and.returnValue(of({})),
-    }
-    let modelMock = {
+    };
+
+    const modelMock = {
       'id': 10,
       'name': "asdf",
       'categoryId': 15,
       'categoryName': "Category"
-    }
+    };
 
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],

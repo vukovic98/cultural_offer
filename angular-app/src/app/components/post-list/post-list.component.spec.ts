@@ -14,9 +14,10 @@ describe('PostListComponent', () => {
   let fixture: ComponentFixture<PostListComponent>;
   let offerService: CulturalOfferService;
   let matDialog: MatDialog;
+
   beforeEach(() => {
 
-    let offerServiceMock = {
+    const offerServiceMock = {
 
       getPostsForOffer: jasmine.createSpy('getPostsForOffer')
         .and.returnValue(of({
@@ -77,15 +78,17 @@ describe('PostListComponent', () => {
         }))
     };
 
-    let matDialogMock = {
+    const matDialogMock = {
       open: jasmine.createSpy('open')
     };
 
     TestBed.configureTestingModule({
       declarations: [ PostListComponent ],
       providers: [
-        {provide: CulturalOfferService, useValue: offerServiceMock},{ provide: MatDialog, useValue: matDialogMock }, AuthService]
-      ,
+        {provide: CulturalOfferService, useValue: offerServiceMock},
+        { provide: MatDialog, useValue: matDialogMock },
+        AuthService
+      ],
       imports: [RouterTestingModule, HttpClientTestingModule, MatDialogModule]
     })
     .compileComponents();
@@ -113,29 +116,29 @@ describe('PostListComponent', () => {
 
   });
 
-  it('should reload posts on next page', () =>{
+  it('should reload posts on next page', () => {
 
-    let pageNum = component.pageNum;
+    const pageNum = component.pageNum;
     component.nextPage();
     expect(offerService.getPostsForOffer).toHaveBeenCalled();
     expect(component.pageNum).toBe(pageNum + 1);
   });
 
-  it('should reload posts on previous page', () =>{
-    let pageNum = component.pageNum;
+  it('should reload posts on previous page', () => {
+    const pageNum = component.pageNum;
     component.previousPage();
     expect(offerService.getPostsForOffer).toHaveBeenCalled();
     expect(component.pageNum).toBe(pageNum - 1);
   });
 
-  it('should reload posts on first page', () =>{
+  it('should reload posts on first page', () => {
 
     component.firstPage();
     expect(offerService.getPostsForOffer).toHaveBeenCalled();
     expect(component.pageNum).toBe(1);
   });
 
-  it('should reload posts on last page', () =>{
+  it('should reload posts on last page', () => {
 
     component.lastPage();
     expect(offerService.getPostsForOffer).toHaveBeenCalled();

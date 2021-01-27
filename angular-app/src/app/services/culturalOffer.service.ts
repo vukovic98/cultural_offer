@@ -4,11 +4,12 @@ import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import Swal from "sweetalert2";
-import { CulturalOffer } from '../model/offer-mode';
-import {AddPostModel} from '../model/post-model';
-import { ImageModel } from '../model/comment-model';
+import {CulturalOffer, OfferDetailsModel, PageObject} from '../model/offer-mode';
+import {AddPostModel, PostModel} from '../model/post-model';
+import {CommentModel, ImageModel} from '../model/comment-model';
 import {DomEvent} from 'leaflet';
 import off = DomEvent.off;
+import {PageEvent} from '@angular/material/paginator';
 
 @Injectable()
 export class CulturalOfferService {
@@ -30,28 +31,28 @@ export class CulturalOfferService {
     return this.http.get('https://us1.locationiq.com/v1/reverse.php?key=pk.fc61974e4d8d7d9a2df2bdc98b5ad87e&format=json&lat='+location.lat+'&lon='+location.lng)
   }
 
-  getCommentsForOffer(offer_id: number, page: number): Observable<any> {
+  getCommentsForOffer(offer_id: number, page: number): Observable<PageObject<CommentModel>> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     });
-    return this.http.get(environment.apiUrl + this.commentsForOfferEndPoint + offer_id + "/" + page);
+    return this.http.get<PageObject<CommentModel>>(environment.apiUrl + this.commentsForOfferEndPoint + offer_id + "/" + page);
   }
 
-  getPostsForOffer(offer_id: number, page: number): Observable<any> {
+  getPostsForOffer(offer_id: number, page: number): Observable<PageObject<PostModel>> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     });
-    return this.http.get(environment.apiUrl + this.postsForOfferEndPoint + offer_id + "/" + page);
+    return this.http.get<PageObject<PostModel>>(environment.apiUrl + this.postsForOfferEndPoint + offer_id + "/" + page);
   }
 
-  getByPage(page: number): Observable<any> {
+  getByPage(page: number): Observable<PageObject<CulturalOffer>> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     });
-    return this.http.get(environment.apiUrl + this.offersPageEndPoint + page, {headers: headers})
+    return this.http.get<PageObject<CulturalOffer>>(environment.apiUrl + this.offersPageEndPoint + page, {headers: headers})
   }
 
   createOffer(offer: any): Observable<any> {
@@ -98,14 +99,14 @@ export class CulturalOfferService {
 
   }
 
-  getSubscribedItems(): Observable<any> {
+  getSubscribedItems(): Observable<Array<CulturalOffer>> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
     });
 
-    return this.http.get(environment.apiUrl + this.subscribedItemsEndPoint, { headers: headers })
+    return this.http.get<Array<CulturalOffer>>(environment.apiUrl + this.subscribedItemsEndPoint, { headers: headers })
   }
 
   addPost(postDto: AddPostModel): Observable<any> {
@@ -120,17 +121,17 @@ export class CulturalOfferService {
 
   }
 
-  getOffer(id: string): any {
+  getOffer(id: string): Observable<OfferDetailsModel> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
     });
-    return this.http.get(environment.apiUrl + this.offerDetailsById + id, { headers: headers })
+    return this.http.get<OfferDetailsModel>(environment.apiUrl + this.offerDetailsById + id, { headers: headers })
       .pipe(map((response) => response));
   }
 
-  getByPageFilter(page: number, exp: string, types: string[]): Observable<any> {
+  getByPageFilter(page: number, exp: string, types: string[]): Observable<PageObject<CulturalOffer>> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept'       : 'application/json'
@@ -138,7 +139,7 @@ export class CulturalOfferService {
 
     // @ts-ignore
     let params = new HttpParams().set('expression', exp).set('types', types);
-    return this.http.get(environment.apiUrl + this.offersPageEndPointFilter + page, {params: params,headers: headers})
+    return this.http.get<PageObject<CulturalOffer>>(environment.apiUrl + this.offersPageEndPointFilter + page, {params: params,headers: headers})
   }
 
   gradeOffer(userId: number, offerId: number, value: number): Observable<any> {

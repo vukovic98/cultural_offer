@@ -19,7 +19,7 @@ describe('SignUpComponent', () => {
   let swal: any;
 
   beforeEach( () => {
-    let authServiceMock = {
+    const authServiceMock = {
       signUp: jasmine.createSpy('signUp').
         and.returnValue(of({
         "id": 0,
@@ -28,11 +28,11 @@ describe('SignUpComponent', () => {
         "email": 'test@maildrop.cc',
         "password": '123456da'
       }))
-    }
-    let routerMock = {
+    };
+    const routerMock = {
       navigate: jasmine.createSpy('navigate')
     };
-    let swalMock = {
+    const swalMock = {
       fire: jasmine.createSpy('fire').
       and.returnValue(of({
         title: 'Error!',
@@ -45,7 +45,7 @@ describe('SignUpComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [SignUpComponent],
-      providers:[
+      providers: [
         {provide: AuthService, useValue: authServiceMock},
         {provide: Router, useValue: routerMock},
         { provide: Swal, useValue: swalMock},

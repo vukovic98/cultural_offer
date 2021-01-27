@@ -12,12 +12,12 @@ export class FilterOffersService{
 
   constructor(private http: HttpClient) {}
 
-  getTypes(): Observable<String[] | any>{
+  getTypes(): Observable<string[] | any>{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization' : 'Bearer ' + localStorage.getItem("accessToken")
     });
-    return this.http.get<String[]>(environment.apiUrl + this.getTypesPath, {headers: headers});
+    return this.http.get<string[]>(environment.apiUrl + this.getTypesPath, {headers: headers});
   }
 
 }

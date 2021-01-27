@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TypeModel, AllTypesModel } from '../model/type-model';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
+import {PageObject} from '../model/offer-mode';
 
 @Injectable({
   providedIn: 'root'
@@ -23,10 +24,10 @@ export class TypeService {
 
   }
 
-  getByPage(page: number): any {
+  getByPage(page: number): Observable<PageObject<AllTypesModel>> {
     const headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("accessToken"));
 
-    return this.http.get(environment.apiUrl + this.manageTypesEndPointPage + page, { headers: headers });
+    return this.http.get<PageObject<AllTypesModel>>(environment.apiUrl + this.manageTypesEndPointPage + page, { headers: headers });
   }
 
   getTypesForCategory(id: string): Observable<Array<TypeModel>> {

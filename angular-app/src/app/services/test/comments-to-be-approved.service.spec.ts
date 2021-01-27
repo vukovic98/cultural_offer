@@ -6,6 +6,7 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {CommentsToBeApprovedService} from "../comments-to-be-approved.service";
 import {CommentToBeApprovedModel} from "../../model/comment-to-be-approved-model";
 import {statusCodeModel} from "../../model/auth-model";
+import {PageObject} from '../../model/offer-mode';
 
 describe('CommentsToBeApprovedService', () => {
   let service: CommentsToBeApprovedService;
@@ -34,7 +35,19 @@ describe('CommentsToBeApprovedService', () => {
     expect(true).toBe(true);
   });
   it('getCommentsByPage() should return some pending comments',fakeAsync(() => {
-    let pendingCommentsPage : string = "";
+    let pendingCommentsPage : PageObject<CommentToBeApprovedModel> = {
+      content: [],
+      "totalElements": 2,
+      "last": true,
+      "totalPages": 1,
+      "size": 5,
+      "number": 0,
+      "numberOfElements": 2,
+      "first": true,
+      "empty": false,
+      "pageNumber": 0,
+      "pageSize": 5
+    };
 
     const mockComments  = {
       "content":
@@ -67,7 +80,7 @@ describe('CommentsToBeApprovedService', () => {
     "pageSize": 5
     };
 
-    service.getCommentsByPage(1).subscribe((response: any) => pendingCommentsPage = response);
+    service.getCommentsByPage(1).subscribe((response) => pendingCommentsPage = response);
 
 
     const req = httpMock.expectOne('https://localhost:8080/comments/pendingComments/1');
@@ -78,7 +91,7 @@ describe('CommentsToBeApprovedService', () => {
 
     expect(pendingCommentsPage).toBeDefined();
 
-    let comments = JSON.parse(pendingCommentsPage);
+    let comments = pendingCommentsPage;
 
     expect(comments.content.length).toEqual(2);
 
@@ -98,7 +111,20 @@ describe('CommentsToBeApprovedService', () => {
 
   }));
   it('getCommentsByPage() should not return comments for not existing page',fakeAsync(() => {
-    let pendingCommentsPage : string = "";
+    let pendingCommentsPage : PageObject<CommentToBeApprovedModel> = {
+      "content": [],
+      "totalElements": 0,
+      "last": true,
+      "totalPages": 0,
+      "size": 5,
+      "number": 0,
+      "numberOfElements": 0,
+      "first": true,
+      "empty": true,
+      "pageNumber": 0,
+      "pageSize": 5
+
+    };
 
     const mockComments  = {
         "content": [],
@@ -124,7 +150,7 @@ describe('CommentsToBeApprovedService', () => {
 
     tick();
 
-    let comments = JSON.parse(pendingCommentsPage);
+    let comments = pendingCommentsPage;
     expect(comments).toBeDefined();
     expect(comments.content.length).toBe(0);
     expect(comments.numberOfElements).toEqual(0);

@@ -34,13 +34,11 @@ export class PostListComponent implements OnInit {
     console.log("postlist id = ", this.offer_id);
     this.offerService.getPostsForOffer(Number(this.offer_id), this.pageNum)
       .subscribe((data: any) => {
-        console.log("posts = ", data);
         this.posts = data.content;
         this.totalPages = data.totalPages;
         this.nextBtn = data.last;
-        console.log(this.nextBtn);
         this.totalElements = data.totalElements;
-      })
+      });
   }
 
   addPost() {
@@ -62,7 +60,7 @@ export class PostListComponent implements OnInit {
               confirmButtonText: 'OK'
             }).then(() => {
               location.reload();
-            })
+            });
 
           }, error => {
             Swal.fire({
@@ -86,7 +84,7 @@ export class PostListComponent implements OnInit {
       .subscribe((data) => {
         this.posts = data.content;
         this.nextBtn = data.last;
-      })
+      });
   }
 
   nextPage() {

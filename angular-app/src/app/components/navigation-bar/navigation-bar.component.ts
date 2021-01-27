@@ -13,7 +13,7 @@ export class NavigationBarComponent implements OnInit {
   constructor(private service: AuthService) { }
 
   ngOnInit(): void {
-    let token: string | null = localStorage.getItem("accessToken");
+    const token: string | null = localStorage.getItem("accessToken");
 
     this.userLoggedIn = token !== null;
   }
@@ -31,7 +31,7 @@ export class NavigationBarComponent implements OnInit {
   }
 
   getUserName(): any {
-    let token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem("accessToken");
     let payload: string = '';
     if (token) {
       payload = token.split(".")[1];

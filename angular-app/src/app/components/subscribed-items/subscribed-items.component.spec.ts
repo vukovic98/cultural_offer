@@ -10,7 +10,7 @@ describe('SubscribedItemsComponent', () => {
   let fixture: ComponentFixture<SubscribedItemsComponent>;
   let offerService: CulturalOfferService;
 
-  let offerServiceMock = {
+  const offerServiceMock = {
     getSubscribedItems: jasmine.createSpy('getSubscribedItems')
       .and.returnValue(of([
         {

@@ -1,13 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TypeService } from '../../services/type.service';
 import { CategoryService } from '../../services/category.service';
 import { CategoryModel } from '../../model/category-model';
-import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms'
-import { TypeModel, AllTypesModel } from '../../model/type-model';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AllTypesModel } from '../../model/type-model';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from "sweetalert2";
-import { map } from 'rxjs/operators';
 import { EditTypeDialogComponent } from '../edit-type-dialog/edit-type-dialog.component';
 
 @Component({
@@ -30,9 +28,11 @@ export class AddTypeComponent implements OnInit {
   });
 
 
-  constructor(private typeService: TypeService,
+  constructor(
+    private typeService: TypeService,
     private categoryService: CategoryService,
-    public dialog: MatDialog) {}
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.getTypes();
@@ -59,7 +59,7 @@ export class AddTypeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      if (data != undefined) {
+      if (data !== undefined) {
         this.getTypes();
       }
     });
@@ -85,7 +85,7 @@ export class AddTypeComponent implements OnInit {
   }
 
   onSubmit() {
-    let dto = new AllTypesModel()
+    const dto = new AllTypesModel();
     dto.name = this.typeForm.value.name;
     dto.categoryId = this.typeForm.value.category;
     this.typeService.save(dto)
@@ -105,7 +105,7 @@ export class AddTypeComponent implements OnInit {
           confirmButtonColor: '#DC143C',
           confirmButtonText: 'OK'
         });
-      })
+      });
   }
 
   onSubmitByName() {
@@ -137,7 +137,7 @@ export class AddTypeComponent implements OnInit {
   deleteType(type: AllTypesModel) {
     this.typeService.deleteType(type.id)
       .subscribe(response => {
-        this.types = this.types.filter(item => item.id != type.id);
+        this.types = this.types.filter(item => item.id !== type.id);
         Swal.fire({
           title: 'Success!',
           text: 'Type successfully deleted!',
@@ -152,7 +152,7 @@ export class AddTypeComponent implements OnInit {
           confirmButtonColor: '#DC143C',
           confirmButtonText: 'OK'
         });
-      })
+      });
   }
 
   getAllTypes(): Array<AllTypesModel> {

@@ -16,14 +16,14 @@ describe('FilterOffersComponent', () => {
 
   beforeEach( () => {
 
-    let filterServiceMock = {
+    const filterServiceMock = {
       getTypes: jasmine.createSpy('getTypes').and
         .returnValue(of(
           ["Type1", "Type2", "Type3"]
         ))
     };
 
-    let routerMock = {
+    const routerMock = {
       navigate: jasmine.createSpy('navigate')
     };
 

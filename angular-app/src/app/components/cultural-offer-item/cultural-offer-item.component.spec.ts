@@ -1,18 +1,11 @@
 import {ComponentFixture, fakeAsync, TestBed} from '@angular/core/testing';
-
 import { CulturalOfferItemComponent } from './cultural-offer-item.component';
 import {of} from 'rxjs';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RouterTestingModule} from '@angular/router/testing';
-import {CommentItemComponent} from '../comment-item/comment-item.component';
 import {CulturalOfferService} from '../../services/culturalOffer.service';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
-import {HttpClient} from '@angular/common/http';
-import {Location} from '../../model/offer-mode';
 import {MatSlideToggle, MatSlideToggleChange, MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {By} from '@angular/platform-browser';
-import {by} from 'protractor';
 import {HarnessLoader} from '@angular/cdk/testing';
 import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -28,18 +21,18 @@ describe('CulturalOfferItemComponent', () => {
 
 
   beforeEach( () => {
-    let offerServiceMock = {
+    const offerServiceMock = {
       subscribeUser: jasmine.createSpy('subscribeUser')
         .and.returnValue(of({})),
       unsubscribeUser: jasmine.createSpy('unsubscribeUser')
         .and.returnValue(of({}))
     }
 
-    let routerMock = {
+    const routerMock = {
       navigate: jasmine.createSpy('navigate')
     };
 
-    let authMock = {
+    const authMock = {
       isUser: jasmine.createSpy('isUser')
         .and.returnValue(true),
       isAdmin: jasmine.createSpy('isAdmin')
@@ -116,7 +109,7 @@ describe('CulturalOfferItemComponent', () => {
     expect(component.editOffer.emit).toHaveBeenCalledWith(component.offer);
   });
 
-  it('should subscribe user to existing offer', async() => {
+  it('should subscribe user to existing offer', async () => {
 
     const sliderHarness = await loader.getHarness(MatSlideToggleHarness);
 
@@ -135,7 +128,7 @@ describe('CulturalOfferItemComponent', () => {
     expect(offerService.subscribeUser).toHaveBeenCalledWith(26);
   });
 
-  it('should unsubscribe user from existing offer', async() => {
+  it('should unsubscribe user from existing offer', async () => {
 
     const sliderHarness = await loader.getHarness(MatSlideToggleHarness);
 
@@ -156,13 +149,13 @@ describe('CulturalOfferItemComponent', () => {
 
   it('should determine if user is registered user', () => {
 
-    let isUser: boolean = component.isUser();
+    const isUser: boolean = component.isUser();
 
     expect(isUser).toBeTrue();
   });
 
   it('should determine if user is admin', () => {
-    let isUser: boolean = component.isAdmin();
+    const isUser: boolean = component.isAdmin();
 
     expect(isUser).toBeTrue();
   });

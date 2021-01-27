@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms'
+import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { CategoryService } from '../../services/category.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CategoryModel } from '../../model/category-model';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from "sweetalert2";
@@ -40,13 +39,13 @@ export class AddCategoryComponent implements OnInit {
   }
 
   types(): FormArray {
-    return this.categoryForm.get("types") as FormArray
+    return this.categoryForm.get("types") as FormArray;
   }
 
   newType(): FormGroup {
     return new FormGroup({
       name: new FormControl('', Validators.required)
-    })
+    });
   }
 
   editCategory(category: CategoryModel) {
@@ -57,17 +56,15 @@ export class AddCategoryComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(data => {
 
-      if (data != undefined) {
+      if (data !== undefined) {
         this.getCategories();
       }
     });
   }
 
   deleteCategory(id: number) {
-    console.log("callservicedelete");
     this.categoryService.deleteCategory(id).subscribe((response) => {
-      this.categories = this.categories.filter(item => item.id != id);
-      console.log("success = ", response);
+      this.categories = this.categories.filter(item => item.id !== id);
       Swal.fire({
         title: 'Success!',
         text: 'Category successfully deleted!',
@@ -83,7 +80,7 @@ export class AddCategoryComponent implements OnInit {
         confirmButtonColor: '#DC143C',
         confirmButtonText: 'OK'
       });
-    })
+    });
   }
 
   getCategories() {

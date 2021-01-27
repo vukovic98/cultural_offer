@@ -1,20 +1,6 @@
-  
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-//ng test --karma-config src/karma.conf.js
-
 import { AddPostComponent } from './add-post.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RouterTestingModule} from '@angular/router/testing';
-import {CommentItemComponent} from '../comment-item/comment-item.component';
-import {CulturalOfferService} from '../../services/culturalOffer.service';
-import {Router} from '@angular/router';
-import {AuthService} from '../../services/auth.service';
-import {HttpClient} from '@angular/common/http';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
-import {By} from '@angular/platform-browser';
-import {of} from 'rxjs';
-import Spy = jasmine.Spy;
 
 describe('AddPostComponent', () => {
   let component: AddPostComponent;
@@ -23,11 +9,11 @@ describe('AddPostComponent', () => {
 
   beforeEach( () => {
 
-    let matDialogRefMock = {
+    const matDialogRefMock = {
       close: jasmine.createSpy('close')
     };
 
-    let dialogDataMock = {
+    const dialogDataMock = {
       id: 0,
       title: "New post",
       content: "Brand new post",

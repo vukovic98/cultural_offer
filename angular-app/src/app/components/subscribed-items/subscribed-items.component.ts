@@ -36,7 +36,7 @@ export class SubscribedItemsComponent implements OnInit {
        confirmButtonText: 'OK'
      });
    });
-   this.offers = this.offers.filter(item => item.id != id);
+   this.offers = this.offers.filter(item => item.id !== id);
   }
 
   getSubscribedItems(): Array<CulturalOffer> {
@@ -44,7 +44,7 @@ export class SubscribedItemsComponent implements OnInit {
   }
 
   getUserName(): any {
-    let token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem("accessToken");
     let payload: string = '';
     if (token) {
       payload = token.split(".")[1];

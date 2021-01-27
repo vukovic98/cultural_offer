@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   loginUser(): void {
-    let loginDto = {
+    const loginDto = {
       "email": this.loginForm.value.email,
       "password": this.loginForm.value.password
     };
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("accessToken", response.authenticationToken);
           this.route.navigate(['/']);
         } else {
-          this.route.navigate(['/auth/verify'],{  queryParams: {  email: response.email } });
+          this.route.navigate(['/auth/verify'], {  queryParams: {  email: response.email } });
         }
       }, error => {
         Swal.fire({
@@ -43,8 +43,8 @@ export class LoginComponent implements OnInit {
           icon: 'error',
           confirmButtonColor: '#DC143C',
           confirmButtonText: 'OK'
-        })
-      })
+        });
+      });
   }
 
   ngOnInit(): void {

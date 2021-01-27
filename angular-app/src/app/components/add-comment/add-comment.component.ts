@@ -24,13 +24,15 @@ export class AddCommentComponent implements OnInit {
     fileSource: new FormControl('', [])
   });
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private offerService: CulturalOfferService,
-    private authService: AuthService) { }
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
-    let token = this.authService.getToken();
-    let data = this.authService.decodeToken(token);
+    const token = this.authService.getToken();
+    const data = this.authService.decodeToken(token);
 
     this.userEmail = data?.sub || "";
     this.offerId = this.route.snapshot.paramMap.get('id');
@@ -45,21 +47,17 @@ export class AddCommentComponent implements OnInit {
   }
 
   onFileChange(event: any){
-
-    console.log("form changed")
     for (let i = 0; i < event.target.files.length; i++) {
       this.files.push(event.target.files[i]);
     }
 
     if (event.target.files && event.target.files[0]) {
       const filesAmount = event.target.files.length;
-      console.log(filesAmount);
-      console.log(event.target.files[0]);
       for (let i = 0; i < filesAmount; i++) {
-        let reader = new FileReader();
+        const reader = new FileReader();
         reader.onload = (event: any) => {
           if (this.image != event.target.result) {
-            this.image = event.target.result
+            this.image = event.target.result;
             this.addForm.patchValue({
               fileSource: this.image
             });
@@ -72,13 +70,10 @@ export class AddCommentComponent implements OnInit {
   }
 
 
-  
+
   submit(): void{
+    let file;
 
-    console.log(this.image);
-
-    var file;
-    
     if(this.image == null){
       file = "";
     }else{
@@ -101,7 +96,7 @@ export class AddCommentComponent implements OnInit {
         confirmButtonColor: '#DC143C',
         confirmButtonText: 'OK'
       });
-    })
+    });
 
   }
 

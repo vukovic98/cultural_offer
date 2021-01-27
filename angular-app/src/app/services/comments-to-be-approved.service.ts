@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {CommentToBeApprovedModel} from "../model/comment-to-be-approved-model";
+import {PageObject} from '../model/offer-mode';
 
 @Injectable()
 export class CommentsToBeApprovedService{
@@ -15,14 +16,13 @@ export class CommentsToBeApprovedService{
 
   constructor(private http: HttpClient) {}
 
-  getCommentsByPage(page: number):Observable<any>{
+  getCommentsByPage(page: number):Observable<PageObject<CommentToBeApprovedModel>>{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       "Authorization" :  "Bearer " + localStorage.getItem("accessToken")
     });
-    return this.http.get(environment.apiUrl + this.commentsToBeApprovedEndPoint + page, {headers: headers})
-     .pipe(map((response) => JSON.stringify(response)));
+    return this.http.get<PageObject<CommentToBeApprovedModel>>(environment.apiUrl + this.commentsToBeApprovedEndPoint + page, {headers: headers})
   }
 
   approveComment(commentId: number): Observable<CommentToBeApprovedModel | any> {

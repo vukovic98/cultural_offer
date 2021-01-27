@@ -13,7 +13,7 @@ describe('CommentListComponent', () => {
 
   beforeEach(() => {
 
-    let offerServiceMock = {
+    const offerServiceMock = {
 
       getCommentsForOffer: jasmine.createSpy('getCommentsForOffer')
       .and.returnValue(of({
@@ -42,7 +42,7 @@ describe('CommentListComponent', () => {
         "pageSize": 5
       }))
 
-    }
+    };
 
     TestBed.configureTestingModule({
       declarations: [ CommentListComponent ],
@@ -71,29 +71,29 @@ describe('CommentListComponent', () => {
     expect(offerService.getCommentsForOffer).toHaveBeenCalled();
   });
 
-  it('should reload comments on next page', () =>{
+  it('should reload comments on next page', () => {
 
-    let pageNum = component.pageNum;
+    const pageNum = component.pageNum;
     component.nextPage();
     expect(offerService.getCommentsForOffer).toHaveBeenCalled();
     expect(component.pageNum).toBe(pageNum + 1);
   });
 
-  it('should reload comments on previous page', () =>{
-    let pageNum = component.pageNum;
+  it('should reload comments on previous page', () => {
+    const pageNum = component.pageNum;
     component.previousPage();
     expect(offerService.getCommentsForOffer).toHaveBeenCalled();
     expect(component.pageNum).toBe(pageNum - 1);
   });
 
-  it('should reload comments on first page', () =>{
+  it('should reload comments on first page', () => {
 
     component.firstPage();
     expect(offerService.getCommentsForOffer).toHaveBeenCalled();
     expect(component.pageNum).toBe(1);
   });
 
-  it('should reload comments on last page', () =>{
+  it('should reload comments on last page', () => {
 
     component.lastPage();
     expect(offerService.getCommentsForOffer).toHaveBeenCalled();

@@ -21,11 +21,11 @@ describe('OfferDetailsComponent', () => {
 
   beforeEach(() => {
 
-    let matDialogMock = {
+    const matDialogMock = {
       open: jasmine.createSpy('open')
     };
 
-    let offerServiceMock = {
+    const offerServiceMock = {
       getSubscribedItems: jasmine.createSpy('getSubscribedItems').and.returnValue(of([])),
       getOffer: jasmine.createSpy('getOffer').and.returnValue(of(
         {
@@ -161,7 +161,7 @@ describe('OfferDetailsComponent', () => {
       unsubscribeUser: jasmine.createSpy('unsubscribeUser').and.returnValue(of()),
     };
 
-    let authServiceMock = {
+    const authServiceMock = {
       isUser: jasmine.createSpy('isUser')
         .and.returnValue(true),
       isLoggedIn: jasmine.createSpy('isLoggedIn')
@@ -182,7 +182,7 @@ describe('OfferDetailsComponent', () => {
         }),
       getUserId: jasmine.createSpy('getUserId').and.returnValue(of()),
       isAdmin: jasmine.createSpy('isAdmin').and.returnValue(of(false)),
-    }
+    };
 
     TestBed.configureTestingModule({
       declarations: [OfferDetailsComponent],
@@ -218,7 +218,7 @@ describe('OfferDetailsComponent', () => {
   });
 
   it('isSubscribed makes expected calls', () => {
-    let offerDetailsModel: OfferDetailsModel = {
+    const offerDetailsModel: OfferDetailsModel = {
       "id": "10",
       "name": "asdasdsa",
       "images": [],
@@ -241,7 +241,8 @@ describe('OfferDetailsComponent', () => {
       "subscribersCount": 2,
       "postsCount": 2,
       "commentsCount": 2
-    }
+    };
+
     component.isSubscribed(offerDetailsModel);
     expect(authService.isLoggedIn).toHaveBeenCalled();
   });

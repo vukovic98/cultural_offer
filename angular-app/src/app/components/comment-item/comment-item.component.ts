@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 })
 export class CommentItemComponent implements OnInit {
 
-  @Input() comment: CommentModel ={
+  @Input() comment: CommentModel = {
     commenterEmail: "",
     commenterName: "",
     content: "",
@@ -22,8 +22,10 @@ export class CommentItemComponent implements OnInit {
     offer:  null
   };
 
-  constructor(private offerService: CulturalOfferService,
-    private authService: AuthService) { }
+  constructor(
+    private offerService: CulturalOfferService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -57,7 +59,7 @@ export class CommentItemComponent implements OnInit {
         confirmButtonColor: '#DC143C',
         confirmButtonText: 'OK'
       });
-    })
+    });
 
   }
 

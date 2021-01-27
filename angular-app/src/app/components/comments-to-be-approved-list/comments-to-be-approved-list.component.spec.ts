@@ -14,9 +14,9 @@ describe('CommentsToBeApprovedListComponent', () => {
 
   beforeEach( () => {
 
-    let commentToBeApprovedServiceMock = {
+    const commentToBeApprovedServiceMock = {
       getCommentsByPage: jasmine.createSpy('getCommentsByPage').
-        and.returnValue(of(JSON.stringify({
+        and.returnValue(of(({
       "content":
       [{
         "id": 2,
@@ -55,7 +55,8 @@ describe('CommentsToBeApprovedListComponent', () => {
       and.returnValue(of({
 
       }))
-    }
+    };
+
     TestBed.configureTestingModule({
       declarations: [ CommentsToBeApprovedListComponent ],
       providers:    [

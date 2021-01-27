@@ -16,7 +16,7 @@ describe('AddCategoryComponent', () => {
 
   beforeEach(() => {
 
-    let categoryServiceMock = {
+    const categoryServiceMock = {
       getCategoriesByPage: jasmine.createSpy('getCategoriesByPage')
         .and.returnValue(of({
           body: {
@@ -109,7 +109,7 @@ describe('AddCategoryComponent', () => {
 
     };
 
-    let matDialogMock = {
+    const matDialogMock = {
       open: jasmine.createSpy('open')
     };
 
@@ -150,7 +150,7 @@ describe('AddCategoryComponent', () => {
     component.deleteCategory(5);
     expect(categoryService.deleteCategory).toHaveBeenCalled();
     expect(categoryService.deleteCategory).toHaveBeenCalledWith(5);
-  })
+  });
 
   it('should retrieve categories', () => {
     component.pageNum = 1;
@@ -160,20 +160,20 @@ describe('AddCategoryComponent', () => {
   });
 
   it('should retrieve categories for next page', () => {
-    let oldPage = component.pageNum;
+    const oldPage = component.pageNum;
     component.nextPage();
     expect(component.pageNum).toBe(oldPage + 1);
     expect(categoryService.getCategoriesByPage).toHaveBeenCalled();
-    expect(categoryService.getCategoriesByPage).toHaveBeenCalledWith(oldPage+1);
+    expect(categoryService.getCategoriesByPage).toHaveBeenCalledWith(oldPage + 1);
   });
 
   it('should retrieve categories for previous page', () => {
     component.pageNum = 10;
-    let oldPage = component.pageNum;
+    const oldPage = component.pageNum;
     component.previousPage();
     expect(component.pageNum).toBe(oldPage - 1);
     expect(categoryService.getCategoriesByPage).toHaveBeenCalled();
-    expect(categoryService.getCategoriesByPage).toHaveBeenCalledWith(oldPage-1);
+    expect(categoryService.getCategoriesByPage).toHaveBeenCalledWith(oldPage - 1);
   });
 
   it('should create category', () => {

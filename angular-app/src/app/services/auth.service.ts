@@ -18,7 +18,7 @@ export class AuthService {
   constructor(private http: HttpClient, private route: Router) {
   }
 
-  login(loginDto: string):Observable<any> {
+  login(loginDto: string):Observable<loginResponse|any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
@@ -26,14 +26,14 @@ export class AuthService {
     return this.http.post<loginResponse>(environment.apiUrl + this.loginPath, loginDto, {headers: headers})
   }
 
-  verifyCode(verifyDto: string):Observable<any>{
+  verifyCode(verifyDto: string):Observable<verifyResponse | any>{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
     return this.http.post<verifyResponse>(environment.apiUrl + this.verificationCodePath, verifyDto, {headers: headers})
   }
 
-  signUp(signupDto: string):Observable<any> {
+  signUp(signupDto: string):Observable<signupResponse | any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
@@ -112,6 +112,6 @@ export class AuthService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.post<String>(environment.apiUrl + this.sendCodeAgainPath, email, {headers: headers})
+    return this.http.post<string>(environment.apiUrl + this.sendCodeAgainPath, email, {headers: headers})
   }
 }

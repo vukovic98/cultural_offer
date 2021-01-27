@@ -34,7 +34,7 @@ export class SignUpComponent implements OnInit {
 
 
   signUp(): void{
-    let signUpDto = {
+    const signUpDto = {
       "id": 0,
       "firstName": this.signupForm.value.firstName,
       "lastName": this.signupForm.value.lastName,
@@ -44,7 +44,7 @@ export class SignUpComponent implements OnInit {
 
     this.service.signUp(JSON.stringify(signUpDto))
       .subscribe(response => {
-        this.route.navigate(['auth/verify'],{  queryParams: {  email: response.email } })
+        this.route.navigate(['auth/verify'], {  queryParams: {  email: response.email } });
       }, error => {
         Swal.fire({
           title: 'Error!',
@@ -53,7 +53,7 @@ export class SignUpComponent implements OnInit {
           confirmButtonColor: '#DC143C',
           confirmButtonText: 'OK'
         });
-      })
+      });
   }
   ngOnInit(): void {
   }

@@ -58,9 +58,9 @@ export class CulturalOfferItemComponent implements OnInit {
             confirmButtonColor: '#DC143C',
             confirmButtonText: 'OK'
           });
-        })
+        });
     }
-    else {//unsubscribe from offer
+    else { // unsubscribe from offer
       this.service.unsubscribeUser(offer_id)
         .subscribe(response => {
           Swal.fire({
@@ -77,7 +77,7 @@ export class CulturalOfferItemComponent implements OnInit {
             confirmButtonColor: '#DC143C',
             confirmButtonText: 'OK'
           });
-        })
+        });
     }
   }
 
@@ -90,7 +90,7 @@ export class CulturalOfferItemComponent implements OnInit {
   }
 
   showDetails(): void {
-    this.route.navigate(['/cultural-offer/offer-details/'+this.offer.id]);
+    this.route.navigate(['/cultural-offer/offer-details/' + this.offer.id]);
   }
 
 }
